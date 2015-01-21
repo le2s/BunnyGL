@@ -1,0 +1,477 @@
+/**
+\page dicomservice DICOM Service/Web Application Example
+
+This example shows how you can develop web-services to aid complex web-applications. Medical imaging is a classical example of a desktop
+centric software. Using GCFApplicationServer it is now possible to take medical imaging to the Web! The source code of the DICOMService 
+component and that of the HTML Web Application is quite large and complex. In this page, we will only be describing the key aspects 
+of the code. We encourage you to take a look at the complete code to get a complete understanding.
+
+<i>Note: You can download DICOM samples from http://pubimage.hcuge.ch:8080/. We encourage you to use the PHENIX sample, which 
+can be downlaoded from http://pubimage.hcuge.ch:8080/DATA/PHENIX.zip </i>
+
+\section dicomservice_intro Introduction
+
+The purpose of this example is to come up with a HTML Web Application that can be used to browse one or more DICOM Series available on 
+a server. 
+
+\image html PatientList.jpg
+
+The user should be able select one DICOM series among the many and scroll through DICOM images in a series. 
+
+\image html 2DViewer.jpg
+
+The user should also be able to be able to explore the DICOM series in a MPR (Multi Planar) view, where he can simultaneously look at
+the axial, coronal and sagittal planes. He should be able to manipulate the cursor and view any part of the DICOM series.
+
+\image html MPRView.jpg
+
+Applications of this sort were traditionally desktop centric. In this example we showcase how it is possible to design a solution 
+such that the DICOM processing aspects are packaged into a web-service and the rendering/interaction aspects are packaged into 
+a web-application.
+
+\section dicomservice_patientlist PatientList Web-Service Object
+
+The server could contain one or more DICOM Series stored in it. We will need some sort of a web-service to help query information 
+about the available DICOM Series on the server. The PatientList class is written to offer that web-service. The class definition 
+is as follows
+
+\include ApplicationServer/DICOM/PatientList.h
+
+The methods marked Q_INVOKABLE are web-service methods from the \c PatientList class.
+Lets look at the key functions from the PatientList class:
+
+\li \c addPatient(), \c removePatient() and \c patientCount() methods help in populating the patient list.
+
+\li \c patientList() method is a \b client-independent web-service method that returns a list of all patient
+information. It returns a \c QVariantList object. This returned list contains a list of QVariantMap objects.
+Each QVariantMap in the list contains \b key=value pairs of information about a single DICOM series. To understand
+the contents of each QVariantMap in the list, lets take a look at how the \c addPatient() method is implemented.
+\code
+void PatientList::addPatient(const QString& seriesDir)
+{
+    QString patientName;
+    QImage sampleImage;
+    int sliceCount;
+
+	// Load some meta information about the DICOM series 
+	// contained in directory - seriesDir
+    bool success = DICOMImageSeries::LoadInformation(seriesDir, patientName,
+                                                     sampleImage, sliceCount);
+    if(!success)
+        return;
+
+	// Construct a key=value map with meta-information
+    QVariantMap patientInfo;
+    patientInfo["PatientName"] = patientName;
+    patientInfo["SampleImage"] = sampleImage;
+    patientInfo["SliceCount"] = sliceCount;
+    patientInfo["SeriesPath"] = seriesDir;
+
+	// Append it to the internal list of patient information.
+    d->patientInfoList.append(patientInfo);
+}
+\endcode
+The \c patientList() method is implemented to return \c d->patientInfoList.
+\code
+QVariantList PatientList::patientList() const
+{
+    return d->patientInfoList;
+}
+\endcode
+
+\li \c nameAt(), \c sampleImageAt(), \c sliceCountAt() and \c pathAt() methods basically
+return information contained in the QVariantMap at the given index. 
+\code
+QString PatientList::nameAt(int index) const
+{
+    if(index < 0 || index >= d->patientInfoList.count())
+        return QString();
+
+    QVariantMap info = d->patientInfoList.at(index).toMap();
+    return info["PatientName"].toString();
+}
+
+QImage PatientList::sampleImageAt(int index) const
+{
+    if(index < 0 || index >= d->patientInfoList.count())
+        return QImage();
+
+    QVariantMap info = d->patientInfoList.at(index).toMap();
+    return info["SampleImage"].value<QImage>();
+}
+
+int PatientList::sliceCountAt(int index) const
+{
+    if(index < 0 || index >= d->patientInfoList.count())
+        return 0;
+
+    QVariantMap info = d->patientInfoList.at(index).toMap();
+    return info["SliceCount"].toInt();
+}
+
+QString PatientList::pathAt(int index) const
+{
+    if(index < 0 || index >= d->patientInfoList.count())
+        return QString();
+
+    QVariantMap info = d->patientInfoList.at(index).toMap();
+    return info["SeriesPath"].toString();
+}
+\endcode
+
+In order to make available an instance of \c PatientList as a web-service object, we will need to 
+implement the \c fetchObject() method in the DICOMService component class to return pointer to it.
+
+\code
+QObject* DICOMService::fetchObject(const QString& completeName) const
+{
+	static PatientList patientList;
+    if(completeName == "DICOMService.PatientList")
+        return &patientList;
+		
+    return 0;
+}
+\endcode
+
+Apart from returning a pointer to an instance of \c PatientList from \c fetchObject(), we must also 
+ensure that the object is marked for remote access in the GUIXML file for DICOMService.
+
+\code
+<component name="DICOMService" allowRemoteAccess="true">
+
+    <object name="PatientList" autoDelete="false"
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true" />
+
+</component>
+\endcode
+
+The \c DICOMService component and its classes, including \c PatientList, can be launched on any server. 
+The location of DICOM series on each server could be different. So, we cannot hard code the path where
+DICOM series should be looked up on the server. Towards this we make use of the \b Parameters XML element
+in GCFApplicationServer.xml file.
+
+\code
+<Application>
+	<Components>
+		<Component Name="DICOMService" Library="DICOMService" />
+	</Components>
+	
+	<Parameters>
+		<Parameter Name="DICOMService_BaseDirectory">C:/Work/Documentation/DICOMSamples</Parameter>
+		<Parameter Name="DICOMService_Series">PHENIX</Parameter>
+	</Parameters>
+</Application>
+\endcode
+
+The GCFApplicationServer.xml file, as you know, is read by the GCFApplicationServer executable to figure out 
+what components to load. The same XML file can also contain several other types of configuration parameters
+and meta-information for GCF modules like the Updater Module. The \c Parameter XML elements under \c Parameters
+block can contain several key=value pairs. Over here we define the base-directory (\c DICOMService_BaseDirectory)
+on the server where DICOM series can be looked up. The \c DICOMService_Series parameter describes a list of comma
+separated DICOM series directory names.
+
+The \c PatientList class's constructor makes use of these parameters to load meta information about DICOM 
+series available on the server.
+
+\code
+#include <GCF/Application>
+
+PatientList::PatientList(QObject* parent)
+: QObject(parent)
+{
+    d = new PatientListData;
+
+    QString baseDir = gApp->parameterValue("DICOMService_BaseDirectory");
+    if(!baseDir.isEmpty())
+    {
+        QStringList seriesList = gApp->parameterValue("DICOMService_Series").split(",");
+        Q_FOREACH(QString series, seriesList)
+        {
+            series = series.remove("\n");
+            series = series.trimmed();
+            if(series.isEmpty())
+                continue;
+
+            QString seriesDir = baseDir + "/" + series;
+            this->addPatient(seriesDir);
+        }
+    }
+}
+\endcode
+
+\subsection dicomservice_patientlist_webapp Accessing PatientList from the HTML Web Application
+
+The HTML Web Application shows a \b Patient-List panel along its right edge.
+
+\image html PatientList.jpg
+
+To show the patient list on the Web Application, we make use of the following HTML code
+
+\code
+<html>
+<body onload="initialize()">
+<div id="patientListTable"></div>
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+
+<script language="Javascript" type="text/javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+function initialize() {
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("DICOMService.PatientList");
+    msg.setMethodName("patientList");
+    msg.onReply = function(reply) {
+        var listDiv = document.getElementById('patientListTable');
+        listDiv.innerHTML = '';
+
+        if(reply.isValid() && reply.hasResult()) {
+			// ...
+            var infoList = reply.getResult();
+            var i=0;
+            			
+            for(i=0; i<infoList.values.length; i++)
+            {
+                var patientInfoMap = infoList.values[i].getValue();
+                var sampleImage = patientInfoMap.valueOf("SampleImage").getValue();
+				var patientName = patientInfoMap.valueOf("PatientName"),getValue();
+				var sliceCount = patientInfoMap.valueOf("SliceCount"),getValue();
+				var seriesPath = patientInfoMap.valueOf("SeriesPath"),getValue();
+				
+				// Show information on the HTML web-page.
+            } 
+        } else {
+			listDiv.innerHTML = '<font color="red">Could not load patient list</font>';
+        }
+    }
+    msg.send();
+}
+</script>
+
+</html>
+\endcode
+
+<i>Note: The entire HTML code is not shown above. Only relevant parts are shown. We encourage you to take 
+a look at the complete HTML code to get a full-comprehension of the web-application</i>
+
+\section dicomservice_dicomseries The DICOMImageSeries class
+
+The \c DICOMImageSeries class helps in loading DICOM images from one single series. This class basically aids
+the 2DViewer module of the Web Application. Shown below is the class definition of the \c DICOMImageSeries class 
+
+\include ApplicationServer/DICOM/DICOMImageSeries.h
+
+<b>Notice how none of the methods in the \c DICOMImageSeries are Q_INVOKABLE methods</b>. This is because 
+an instance of \c DICOMImageSeries is not directly made available to the "external" world as a web-service. 
+More on this when we look into the \c DICOMService class.
+
+Some key function groups in this class are
+
+\li \c GetImageSeries() - This function helps in creating a DICOMImageSeries object for loading and managing
+DICOM images in a series directory.
+
+\li \c patientName(), \c studyUID(), \c studyID(), \c dimensions() and \c pixelSpacing() methods help
+in accessing meta information about the DICOM image series.
+
+\li \c sliceCount(), \c sliceImageWidth() and \c sliceImageHeight() methods help in accessing the dimensions
+of the DICOM image series.
+
+\li \c currentSliceIndex(), \c currentSliceImage(), \c currentSliceImageFullRes(), \c nextSliceImage(), 
+\c previousSliceImage() and \c sliceImage() methods help in accessing slice sequentially or randomly.
+By default the \c currentSliceImage(), \c currentSliceImage(), \c previousSliceImage() and 
+\c sliceImage() methods return a low-resolution image of the DICOM image. This is because transmitting low-resolution
+images takes very little time and we can ensure that the web-application remains interactive while slices are 
+being fetched. The \c currentSliceImageFullRes() method returns a high-resolution image of the currenty slice.
+
+\li \c windowLevel() and \c windowWidth() methods return the Window-Level and Window-Width parameters
+used by the DICOM engine while converting a DICOM image into a gray scale image. Altering these parameters
+can help in emphasising bone, muscle and other layers in a DICOM image. The \c setWindowLevelAndWidth()
+method helps in altering the Window-Level and Window-Width parameters.
+
+\li Finally the \c mpr() method helps in fetching a multi-planar image slicer for the DICOM image series. 
+More on this later.
+
+<i>Note: Implementation of the \c DICOMImageSeries class is not explained here. Please refer to the source code
+to get a complete understanding of the implementation</i>
+
+\subsection dicomservice_dicomseries_1 How is DICOMImageSeries used?
+
+The DICOMSeries component class offers web-service methods through which methods of the \c DICOMImageSeries
+class are accessed.
+
+\code
+class DICOMService : public GCF::AbstractComponent
+{
+    Q_OBJECT
+    GCF_DECLARE_COMPONENT(DICOMService)
+
+public:
+    static DICOMService& instance();
+    ~DICOMService();
+
+    Q_INVOKABLE bool loadDICOMSeries(const QString& dirName);
+    Q_INVOKABLE void releaseDICOMSeries();
+
+    Q_INVOKABLE bool isValid() const;
+    Q_INVOKABLE QString directoryName() const;
+    Q_INVOKABLE int sliceCount() const;
+    Q_INVOKABLE int sliceImageWidth() const;
+    Q_INVOKABLE int sliceImageHeight() const;
+    Q_INVOKABLE int currentSliceIndex() const;
+    Q_INVOKABLE QImage currentSliceImage() const;
+    Q_INVOKABLE QImage currentSliceImageFullRes() const;
+    Q_INVOKABLE QImage nextSliceImage(int count) const;
+    Q_INVOKABLE QImage previousSliceImage(int count) const;
+    Q_INVOKABLE QImage sliceImage(int index) const;
+    Q_INVOKABLE double windowLevel() const;
+    Q_INVOKABLE double windowWidth() const;
+    Q_INVOKABLE QImage setWindowLevelAndWidth(double wl, double ww);
+
+    // Patient information
+    Q_INVOKABLE QString patientName() const;
+    Q_INVOKABLE QString studyUID() const;
+    Q_INVOKABLE QString studyID() const;
+    Q_INVOKABLE QString dimensions() const;
+    Q_INVOKABLE QString pixelSpacing() const;
+
+	// ....
+	
+protected:
+	// ...
+	QObject* fetchObject(const QString& completeName) const;
+};
+\endcode
+
+Here we can notice a lot of \c Q_INVOKABLE methods. Firstly, when we look at the implementation of \c fetchObject(),
+we can see that \b DICOMService.Core is mapped to an instance of the \c DICOMService component class itself.
+
+\code
+QObject* DICOMService::fetchObject(const QString& completeName) const
+{
+	static PatientList patientList;
+    if(completeName == "DICOMService.PatientList")
+        return &patientList;
+		
+	if(completeName == "DICOMService.Core")
+		return const_cast<DICOMService*>(this);
+		
+    return 0;
+}
+\endcode
+
+Before we look into methods like \c loadDICOMSeries(), \c releaseDICOMSeries() etc; we need to understand macros like 
+\c GCF_CURRENT_CLIENT_ID, \c GCF_CURRENT_CLIENT_IP and \c GCF_CURRENT_CLIENT_PORT.
+
+A web-service could be serving data to <i><b>N</b></i> number of clients. These clients could be HTML web-applications
+or they could be Qt/GCF desktop applications. A web-service should be able to differentiate between calls made by one
+client and the calls made by another client. To help with this, GCFApplicationServer ensures that each web-service
+function can make use of the \c GCF_CURRENT_CLIENT_ID macro to get a unique ID associated with the client that is 
+currently making the web-service call. The \c GCF_CURRENT_CLIENT_IP and \c GCF_CURRENT_CLIENT_PORT macros help in
+figuring out the IP address and the port number from which the call was made.
+
+The \c DICOMService::loadDICOMSeries() function makes use of \c GCF_CURRENT_CLIENT_ID macro to help identify the 
+client that made a request to it.
+
+\code
+
+struct DICOMServiceData
+{
+    QMap<QString, DICOMImageSeries*> dcmImageSeriesMap;
+	QImage blankImage;
+};
+
+bool DICOMService::loadDICOMSeries(const QString& directoryName)
+{
+    QString dirName = directoryName;
+    dirName = dirName.replace('\\', '/');
+
+	// Unload any previously loaded DICOM series for this client
+    if(d->dcmImageSeriesMap.contains(GCF_CURRENT_CLIENT_ID))
+    {
+        DICOMImageSeries* dcmSeries = d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID];
+        if(dcmSeries->directoryName() == dirName)
+            return dcmSeries->isValid();
+
+        dcmSeries->deref();
+        d->dcmImageSeriesMap.remove(GCF_CURRENT_CLIENT_ID);
+    }
+	
+	// Load the new DICOM series for this client.
+    DICOMImageSeries* dcmSeries = DICOMImageSeries::GetImageSeries(dirName);
+    if(dcmSeries)
+    {
+        dcmSeries->ref();
+        d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID] = dcmSeries;
+        return dcmSeries->isValid();
+    }
+
+    return false;
+}
+\endcode
+
+The function creates an instance of \c DICOMImageSeries object using its \c GetImageSeries() method and stores
+a pointer to it in the private \c dcmImageSeriesMap QMap. That way when the same client later requests 
+\c sliceCount(), \c currentSliceImageFullRes(), \c nextSliceImage(), \c sliceImage() etc, it can pick the 
+previously loaded DICOMImageSeries object and operate on it.
+
+\code
+int DICOMService::sliceCount() const
+{
+    if(d->dcmImageSeriesMap.contains(GCF_CURRENT_CLIENT_ID))
+        return d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID]->sliceCount();
+
+    return 0;
+}
+
+QImage DICOMService::currentSliceImageFullRes() const
+{
+    if(d->dcmImageSeriesMap.contains(GCF_CURRENT_CLIENT_ID))
+        return d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID]->currentSliceImageFullRes();
+
+    return d->blankImage;
+}
+
+QImage DICOMService::nextSliceImage(int count) const
+{
+    if(d->dcmImageSeriesMap.contains(GCF_CURRENT_CLIENT_ID))
+        return d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID]->nextSliceImage(count);
+
+    return d->blankImage;
+}
+
+QImage DICOMService::sliceImage(int index) const
+{
+    if(d->dcmImageSeriesMap.contains(GCF_CURRENT_CLIENT_ID))
+        return d->dcmImageSeriesMap[GCF_CURRENT_CLIENT_ID]->sliceImage(index);
+
+    return d->blankImage;
+}
+\endcode
+
+This way a single instance of \c DICOMService can make its web-service methods current-client-context sensitive.
+Put in other words, web-service methods can maintain session information based on the values of \c GCF_CURRENT_CLIENT_ID
+and/or a combination of \c GCF_CURRENT_CLIENT_IP and \c GCF_CURRENT_CLIENT_PORT.
+
+\subsection dicomservice_dicomseries_2 Accessing DICOMImageSeries methods from a HTML Web Application
+
+As described before, instances of \c DICOMImageSeries are accessed through the \c DICOMService.Core object. The 2DViewer 
+module of the DICOM HTML Web Application makes use of the \c DICOMService.Core object to not only load a selected DICOM 
+image series, but also to scroll through images in a series. We encourage you to take a look at the following page
+for a listing of the 2DViewer code.
+
+\subpage dicom_2dviewer
+
+\section dicomservice_mpr The DICOMImageSeriesMPR and MPR View module in HTML Web Application
+
+The \c DICOMImageSeriesMPR class helps with the MPR slicing of a \c DICOMImageSeries. Thie class, in design, is very similar to
+\c DICOMImageSeries class. It offers methods to slice data along the axial, coronal and sagittal planes of a DICOM image series.
+Slices images are returned in low-resolution by default, and high-resolution upon demand. The \c DICOMService class offers
+web-service methods through which methods in the \c DICOMImageSeriesMPR are made available.
+We encourage you to study the source code of \c DICOMImageSeriesMPR, \c DICOMService and the HTML Web Application to get a 
+full understanding of the classes and how they are used by the web-application.
+*/
+
+
+

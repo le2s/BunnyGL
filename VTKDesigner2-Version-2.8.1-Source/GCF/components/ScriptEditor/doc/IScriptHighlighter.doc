@@ -1,0 +1,73 @@
+/**
+\ingroup scripteditorcomponent
+\interface IScriptHighlighter IScriptHighlighter
+\brief Through this interface you can access the syntax highlighter used by the 
+script editor.
+
+The script editor shows highlighted QtScript code and context sensitive popups.
+
+\image html scripteditorcompletion.png
+
+What if you wanted to reuse the syntax highlighter in your own QTextEdits? 
+What if you wanted to change the highlighter used by the script editor?
+Thats exactly what this interface helps you to do. 
+
+To use the script editor's syntax highlighter, you can 
+
+\code
+QTextEdit* myTextEdit = new QTextEdit;
+IScriptHighlighter* highlighter = GCF::findObject<IScriptHighlighter*>();
+if(highlighter)
+{
+    QSyntaxHighlighter* syntaxHigh = highlighter->newDefaultHighlighter();
+    syntaxHigh->setParent(myTextEdit);
+    syntaxHigh->setDocument(myTextEdit->document());
+}
+\endcode
+
+To change the script editor's syntax highlighter, you can
+
+\code
+QSyntaxHighlighter* newSyntaxHigh = ....;
+IScriptHighlighter* highlighter = GCF::findObject<IScriptHighlighter*>();
+if(highlighter)
+    highlighter->setHighlighter();
+\endcode
+
+To restore the default highlighter in the script editor, you can
+
+\code
+IScriptHighlighter* highlighter = GCF::findObject<IScriptHighlighter*>();
+if(highlighter)
+    highlighter->setDefaultHighlighter();
+\endcode
+
+\sa \ref vtkd2_synt
+*/
+
+/**
+\fn virtual QSyntaxHighlighter* IScriptHighlighter::highlighter() const = 0
+
+Returns the syntax highlighter currently used by the script editor.
+*/
+
+/**
+\fn virtual void IScriptHighlighter::setHighlighter(QSyntaxHighlighter* h) = 0
+
+Changes the syntax highlighter currently used by the script editor.
+*/
+
+/**
+\fn virtual void IScriptHighlighter::setDefaultHighlighter() = 0
+
+Restores the syntax highlighter currently used by the script editor to the default one.
+*/
+
+/**
+\fn virtual QSyntaxHighlighter* IScriptHighlighter::newDefaultHighlighter() const = 0
+
+Creates a new instance of the default syntax highlighter that can be used with 
+custom QTextEdits.
+*/
+
+

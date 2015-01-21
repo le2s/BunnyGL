@@ -1,0 +1,46 @@
+/**
+\page ipc_tictactoe TicTacToe - IPC Example
+
+GCF has a very robust IPC (Inter-Process-Communication) mechanism. Using this mechanism GCF applications 
+and components can communicate with each other with ease. For example: you can connect signal emitted by
+an object in one application to a slot of an object available in another application. This example shows
+how the IPC mechanism in GCF can be used to create a 2 player tic-tac-toe game, across different computers
+and operating systems!.
+
+\image html ipc_tictactoe.png
+
+This example contains 
+\li A TicTacToeWidget class that shows the tic-tac-toe board and also interaction mechanisms.
+\li A TicTacToeComponent class that "exposes" an instance of TicTacToeWidget and also manages IPC
+with a remote "second" player. 
+\li A Main program that registers the TicTacToeComponent and triggers the start of the program.
+
+We will begin by looking into the source code of TicTacToe program first.
+
+\include IPC/TicTacToe/TicTacToeWidget.h
+\include IPC/TicTacToe/TicTacToeWidget.cpp
+
+Next, lets take a look at the TicTacToeComponent class. This class inherits from GCF::AbstractComponent,
+therefore it is a GCF Component. The class 
+\li "Exposes" an instance of TicTacToeWidget 
+\li Uses GCF::RemoteAppAccessDiscovery to "discover" a second player on the LAN
+\li Uses GCF's remote signal-slot connection capability to exchange turns and reflect moves made
+by one player on another player's TicTacToeWidget.
+
+\include IPC/TicTacToe/TicTacToeComponent.h
+\include IPC/TicTacToe/TicTacToeComponent.cpp
+
+Next, lets take a look at the GUIXML file for TicTacToeComponent
+
+\verbinclude IPC/TicTacToe/TicTacToeComponent.xml
+
+Now, lets take a look at the main() function
+
+\include IPC/TicTacToe/Main.cpp
+
+Finally lets take a look at the project and resource file.
+
+\verbinclude IPC/TicTacToe/TicTacToe.qrc
+\verbinclude IPC/TicTacToe/TicTacToe.pro
+
+*/

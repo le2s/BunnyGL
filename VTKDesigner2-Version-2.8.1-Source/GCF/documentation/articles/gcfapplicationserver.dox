@@ -1,0 +1,2497 @@
+/**
+\page gcfappserver GCF Application Server
+
+The web is increasingly playing an important role in the business of software. Progress in the recent years give an impression that just about everything will be on the Web! Hitherto desktop centric software are now available on the Web. Office365 (Microsoft Office on the Web), SplashUp (Image Editor on the Web) and Google Docs to name a few. It would not be a bold prediction at all if one says that going forward every desktop centric software will move to, or atleast have a representation on, the Web!
+
+Generic Component Framework (GCF) has proven to be very successful in authoring of component based desktop software. Using GCF it is now possible to author large scale, extensible and manageable desktop software with ease. The IPC module of GCF made it dead simple to have inter-process communication possible between two or more GCF processes across hardware and operating-system boundaries. 
+
+With GCF 2.4.0, we introduced a new tool for GCF called "GCF Application Server". GCF Application Server makes it possible to host GCF components for access from a web-browser and/or a remote Qt/GCF desktop application. This means, you can now have your GCF applications work on the browser as well! 
+
+\image html gcfas_image27.png "A medical visualization web-application!"
+
+Click on the following links to explore more about GCF-Application-Server
+
+- \subpage gcfappserver_introduction
+- \subpage gcfappserver_developing_web_applications
+- \subpage gcfappserver_ipc_overview
+- \subpage gcfappserver_authoring_gcf_server_components
+- \subpage gcfappserver_authoring_gcf_web_applications
+- \subpage gccfappserver_gcfmessage
+- \subpage gcfappserver_examples_and_casestudies
+- \subpage gcfappserver_qtcreator
+- \subpage gcfappserver_rest
+- \subpage gcfappserver_roadmap
+
+[Next: \ref gcfappserver_introduction]
+
+*/
+
+/**
+\page gcfappserver_introduction Introduction to GCF Application Server
+
+The Web has become a super-important virtual-estate for software vendors and users alike. These days users expect to find anything and everything on the web. As the demand for web-applications increase, technology and frameworks required to build such applications are coming out in abundance. There were always a plethora of frameworks out there for building web-applications that were database centric. However there were fewer frameworks available for building scientific web-applications. If you are a vendor of scientific applications for desktop and are considering to go to the Web, we might just have the right tool for you!
+
+With GCF 2.4.0, we introduced a new tool called "GCF Application Server". GCF Application Server makes it possible to host GCF components for access from a web-browser. This means, you can now have your GCF applications work on the browser as well!
+
+\section gcfappserver_introduction_1 Where is GCF Application Server useful?
+
+GCF Application Server is best used when you want to create a brand new web-application from scratch and/or for making an existing application available on the Web! 
+
+Suppose that one needs to have a part or whole of their existing desktop application available on the Web. The existing desktop application can be
+
+- An existing Qt/GCF desktop application.
+- An existing Qt desktop application (NO GCF)
+- Non-Qt application. Perhaps something written in GTK, wxWidgets etc..
+
+GCF Application Server can be used with all of the above scenarios, including a scenario where you might want to build a brand new web-application from scratch. 
+
+We encourage you read on to figure out how all of this is possible.
+
+\section gcfappserver_introduction_2 The big picture
+
+To really get clarity of whats possible with GCF Application Server, we have to start by defining the following terms and concepts
+
+- \ref gcfappserver_introduction_2_1
+- \ref gcfappserver_introduction_2_2
+- \ref gcfappserver_introduction_2_3
+
+\subsection gcfappserver_introduction_2_1 Server Components (or Web Services)
+
+Server components or web-services are components or modules that are written primarily for access from the web. These components offer functions that provide some business logic. Business logic offered by a server component can be mix-and-matched with those offered by other server components (perhaps written in other technologies and/or frameworks) to arrive at interesting results.
+
+\subsection gcfappserver_introduction_2_2 Application Server 
+
+Application Server is a software program that
+- Offers means to host server-components in it
+- Offers access to objects and methods available in the server-components it hosts.
+
+An application server basically releases server-components from having to deal with messaging and synchronization logic that is inherent in any client-server communication setup. It offers a standard way 
+- for accepting incoming "business-logic-function" invocation requests, 
+- for mapping such requests to actual function calls on relevant server-components hosted in it, 
+- for shipping back results in response messages.
+
+\subsection gcfappserver_introduction_2_3 Web Application
+
+A web application is an application that is accessed over a network such as the Internet or an intranet. The term may also mean a computer software application that is hosted in a browser-controlled environment (e.g. a Java applet) or coded in a browser-supported language (such as JavaScript, combined with a browser-rendered markup language like HTML) and reliant on a common web browser to render the application executable. (Courtesy Wikipedia - http://en.wikipedia.org/wiki/Web_application)
+
+Simply put, web-application is a HTML-XML-JavaScript document loaded and executed by any standard web-browser. The web-application creates and sends "business-logic-function" invocation requests to the "application-server" and wait (asynchronously) for the response to arrive. Based on the response received the web-application updates its HTML document and therefore the presentation layer of the application.
+
+\section gcfappserver_introduction_3 Where does GCF and GCF Application Server come in?
+
+GCF has all along been providing an infrastructure to offer functionality though components. The same infrastructure can be used to create "server components". 
+
+GCF 2.4 comes tool called "GCF Application Server" that offers means to host GCF components and provides access to the objects and methods in them.
+
+GCF 2.4 comes with JavaScript libraries to enable development of AJAX web-applications that issue invocation requests to GCF Application Server and help in asynchronously dealing with responses.
+
+[Next: \ref gcfappserver_developing_web_applications] [Up: \ref gcfappserver]
+*/
+
+/**
+\page gcfappserver_developing_web_applications Developing Web Applications
+
+Web-applications are basically HTML+Javascript documents that are rendered by any standard browser. The document rendered by the browser contains two aspects, as already mentioned:
+
+- HTML part - presentation layer of the web-application. It provides layout, content and structure of the document. 
+- JavaScript part - functionality aspect of the web-application. We can say that JavaScript brings a HTML document to 'life' and hence make it a web-application!
+
+Over the next few sections we will explore several aspects of web-application development. The intention of this chapter is to leave you able to explore web-application development by yourself. The chapter is by no means an exhaustive explanation of web-application development in general. We only introduce key aspects of web-application development that are important for using GCF Application Server. 
+
+\section gcfappserver_developing_web_applications_1 EMI Calculator - First Web Application
+
+Most people take a loan when they purchase a large asset like land, house, farm land or car. While taking a loan they agree on the repayment period and interest with the lender, usually a bank. Repayment is usually done by means of "equated monthly installments". Basically a pre-computed amount of money is paid to the lender every month for an agreed period of time. At the end of that period the loan principal and interest will both have been cleared. 
+
+Lets write a simple web-application using HTML and JavaScript to help make it easy to compute EMI based on principal, interest and duration.
+
+\subsection gcfappserver_developing_web_applications_1_1 The presentation layer
+
+We want the UI of our web-application to look like the preview shown below
+
+\image html gcfas_image1.png
+
+Towards this we create a HTML document as follows
+
+\code
+<html>
+
+    <head>
+        <title>EMI Calculator</title>
+    </head>
+
+    <body>
+
+        <h2>EMI Calculator</h2>
+
+        <table border="1" cellspacing="0" cellpadding="9">
+            <tr>
+                <td>Principal</td>
+                <td>
+                    <input id="txtPrincipal"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Rate of Interest</td>
+                <td>
+                    <input id="txtInterest"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Duration (months)</td>
+                <td>
+                    <input id="txtMonths"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>EMI</td>
+                <td>
+                    <div id="emi">Click on Compute</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Total Interest</td>
+                <td>
+                    <div id="interest">Click on Compute</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="compute" style="width: 120; height: 30">
+                      Compute</button>
+                </td>
+            </tr>
+        </table>
+        
+    </body>
+    
+</html>
+\endcode
+
+\subsection gcfappserver_developing_web_applications_1_2 Scripting the browser
+
+All browsers offer support for interpreting and executing scripts (usually JavaScript) placed inside them. Scripts should be written within a special <script> HTML element. The <script> element can be placed anywhere in the HTML document. The only rule is that it should be placed within the HTML tag.
+
+\code
+<script language="JavaScript" type="text/javascript">
+    // Javascript goes here...
+</script>
+\endcode
+
+These scripts can utilize elements from the already loaded document in the browser and compute/generate new content to be shown in designated areas of the document. For example, if we want to know the values of principal, interest and duration entered in the corresponding text-boxes; we can make use of the following JavaScript.
+
+\code
+<script language="JavaScript" type="text/javascript">
+    var p = document.getElementById("txtPrincipal").value;
+    var r = document.getElementById("txtInterest").value;
+    var t = document.getElementById("txtMonths").value;
+</script>
+\endcode
+
+The document object in the script refers to the HTML document currently loaded by the browser. We can invoke methods on the document to traverse through all the content of the document. The getElementById method helps in fetching reference to an object by it's ID. ID is any string that is specified within the id attribute of the corresponding element in HTML code.
+Suppose that we wanted to dynamically fill content in a HTML document. We can make use of <div> and/or <span> HTML elements to create place holders in the document and then dynamically fill their values at run time. For example, the following script dynamically alters text in the EMI calculator table.
+
+\code
+<script language="JavaScript" type="text/javascript">
+    document.getElementById("emi").innerHTML = "Dynamic Text";
+</script>
+\endcode
+
+\subsection gcfappserver_developing_web_applications_1_3 Implementing the functionality
+
+In the "EMI Calculator" web-application, when the user enters valid values against principal, interest and duration; and clicks on the "Compute" button we would like to have a computed value of EMI and Interest shown in the appropriate cells of the table.
+
+Towards this, we insert a script as shown below
+
+\code
+<script language="JavaScript" type="text/javascript">
+    function computeEMI() {
+        var p = document.getElementById("txtPrincipal").value;
+        var r = document.getElementById("txtInterest").value;
+        var t = document.getElementById("txtMonths").value;
+        var r2 = (r>0) ? r/(12*100) : 0;
+        var k = (r>0) ? Math.pow( (1+r2), t ) : 0;
+        var emi = (r>0) ? Math.round(p*r2*k/(k-1)) : Math.round(p/t);
+        var extra = Math.round((emi*t)-p);
+        var extraPercent = Math.round((extra/p)*100);
+        
+        document.getElementById("emi").innerHTML 
+            = "<b>" + emi + "</b>";
+        document.getElementById("interest").innerHTML 
+                = extra + " (" + extraPercent + " %)";
+    }
+</script>
+\endcode
+
+Further we want the computeEMI() function to be invoked when the "Compute" button is clicked. We modify the <button> HTML element in the presentation layer as follows
+
+\code
+<button id="compute" style="width: 120; height: 30" 
+        onclick="computeEMI()">Compute</button>
+\endcode
+
+The above is very similar to a signal/slot connection in Qt. When the button is clicked the computeEMI() function in the document is called.
+
+With this the entire web-application is now fully implemented. You can enter values in the appropriate text boxes and click on "Compute" to view the EMI and Interest.
+
+\image html gcfas_image2.png
+
+\section gcfappserver_developing_web_applications_2 Browser Objects
+
+Browsers offer access to two categories of objects. 
+
+- Document Objects - these are objects that are created when a HTML document is loaded into the browser. Document Objects are created when the HTML document is loaded and are completely destroyed when the document is unloaded1. Every HTML tag in a document becomes a "Document Object". These objects are organized into the same hierarchy as in the HTML document itself. The document objects and their access mechanism together is called "document object model" or DOM.
+
+- Browser Objects - these are objects that are ever available within a browser. These objects are offered by the browser-application and not by the document that it loads. These objects together with their access mechanism is called "browser object model" or BOM. The image below shows all browser objects available to a JavaScript developer.
+
+\image html gcfas_image3.png
+
+We encourage you read more about browser and document objects from http://www.javascriptkit.com/.
+
+\section gcfappserver_developing_web_applications_3 AJAX - Asynchronous JavaScript And XML
+
+<p>Traditionally interaction between the browser and the server was always initiated by the browser. "Interaction" specifically means HTTP Request packets sent by the browser to the server along with the HTTP Response packets posted back by the server to the browser. This way of interaction worked great for static web-pages. However over a period of time web-pages became dynamic - or put in another way web-pages started becoming web-applications!</p>
+
+<p>Initially the dynamism was implemented by using JavaScript to automate certain client-side (presentation) aspects of the web-page. Over a period of time however, it became possible to initiate HTTP requests from JavaScript and respond to HTTP Responses in JavaScript itself. Moreover responses were asynchronously handled for every request. That means, in JavaScript it became possible to send a HTTP request and register a function to handle the response as it arrived at some point in the future.</p>
+
+<p>Gradually developers started to use XML to represent both structure and content of the web-page (in the form of XHTML and traverse-able DOM)  and messages sent and received via HTTP Packets. With XML it was now possible to send any sort of data-structure from the browser and quickly process any response sent by the server. Developers could write server programs to receive HTTP POST Requests and look for XML payloads in them, process them on the server side and ship responses back in XML format. On the client side they could use JavaScript to make HTTP POST Requests (with XML payloads) and register functions to asynchronously handle HTTP Response packets (with XML payloads).</p>
+
+<p>A combination of all of the above programming styles aka JavaScript + Asynchronous HTTP Requests + XML became "Asynchronous JavaScript And XML" or "AJAX". So strictly speaking AJAX is not a technology or a framework; but is just a way of writing web-applications using JavaScript and XML.</p>
+
+\subsection gcfappserver_developing_web_applications_3_1 The XMLHttpRequest class
+
+Central to AJAX programming is a JavaScript class called XMLHttpRequest. Developers can create instances of this class to synchronously send HTTP Requests and asynchronously handle responses. 
+
+Suppose that you wanted to write a simple search web-application that simultaneously searches for a given phrase in Google, Yahoo and Bing. In the following sub-sections we will discover how a web-application of that sort can be written.
+
+\subsubsection gcfappserver_developing_web_applications_3_1_1 Step 1: UI - Presentation Layer
+
+From the UI/presentation layer point of view, we would need to have something like this:
+
+\image html gcfas_image4.png
+
+The HTML code corresponding to the above page is as follows
+
+\code
+
+<html>
+
+    <head>
+        <title>Multi Search Web-Application</title>
+    </head>
+
+    <body>
+
+        <center>
+            <input type="text" id="searchString" size="100"></input>
+            <button id="search">Multi Search</button>
+        </center>
+
+        <p>&nbsp;</p>
+        
+        <table width="100%" height="80%" 
+               style="table-layout: fixed" 
+               cellspacing="0" cellpadding="9" border="1">
+            
+            <tr>
+                <td align="center" height="30px">Google</td>
+                <td align="center" height="30px">Bing</td>
+                <td align="center" height="30px">Yahoo</td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <div id="emptyArea" 
+                         align="center">No Search Results to show</div>
+                <iframe id="googleSearchResults" scrolling="yes" 
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="bingSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="yahooSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                </td>
+            </tr>
+            
+        </table>
+
+    </body>
+    
+</html>
+
+\endcode
+
+\subsubsection gcfappserver_developing_web_applications_3_1_2 Step 2: Making the web-application interactive.
+
+We would like the top three table-cells to behave like the tabs of a tab-widget. This means when Bing is clicked, bingSearchResults div should be shown and so on. Towards this we modify the web-application code as follows
+
+\code
+<html>
+
+<head>
+    <title>Multi Search Web-Application</title>
+</head>
+
+<body>
+
+    <center>
+        <input type="text" id="searchString" size="100"></input>
+        <button id="search">Multi Search</button>
+    </center>
+
+    <p>&nbsp;</p>
+    
+    <table width="100%" style="table-layout: fixed" cellspacing="0" 
+           cellpadding="9" border="1">
+        
+        <tr>
+            <td align="center" height="30px" 
+                onclick="showGoogleSearchResults()"
+                id="googleTab">Google</td>
+            <td align="center" height="30px" 
+                onclick="showBingSearchResults()"
+                id="bingTab">Bing</td>
+            <td align="center" height="30px" 
+                onclick="showYahooSearchResults()"
+                id="yahooTab">Yahoo</td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <div id="emptyArea" align="center">
+                    No Search Results to show
+                </div>
+                <iframe id="googleSearchResults" scrolling="yes" 
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="bingSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="yahooSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+            </td>
+        </tr>
+        
+    </table>
+
+</body>
+
+<script language="Javascript" type="text/javascript">
+reset();
+document.getElementById('emptyArea').style.visibility = "visible";
+document.getElementById('emptyArea').style.height = "100%"
+
+function reset() {
+    document.getElementById('emptyArea').style.visibility = "hidden";
+    document.getElementById('googleSearchResults').style.visibility = "hidden";
+    document.getElementById('yahooSearchResults').style.visibility = "hidden";
+    document.getElementById('bingSearchResults').style.visibility = "hidden";
+    
+    document.getElementById('emptyArea').style.height = "0px";
+    document.getElementById('googleSearchResults').style.height = "0px";
+    document.getElementById('yahooSearchResults').style.height = "0px";
+    document.getElementById('bingSearchResults').style.height = "0px";
+    
+    document.getElementById('emptyArea').style.width = "100%";
+    document.getElementById('googleSearchResults').style.width = "100%";
+    document.getElementById('yahooSearchResults').style.width = "100%";
+    document.getElementById('bingSearchResults').style.width = "100%";
+    
+    document.getElementById('googleTab').style.backgroundColor = "#ffffff";
+    document.getElementById('yahooTab').style.backgroundColor = "#ffffff";
+    document.getElementById('bingTab').style.backgroundColor = "#ffffff";
+}
+
+function showGoogleSearchResults() {
+    reset();
+    document.getElementById('googleSearchResults').style.visibility = "visible";
+    document.getElementById('googleSearchResults').style.height = "100%"
+    document.getElementById('googleTab').style.backgroundColor = "#c7c7c7";
+}
+
+function showYahooSearchResults() {
+    reset();
+    document.getElementById('yahooSearchResults').style.visibility = "visible";
+    document.getElementById('yahooSearchResults').style.height = "100%"
+    document.getElementById('yahooTab').style.backgroundColor = "#c7c7c7";
+}
+
+function showBingSearchResults() {
+    reset();
+    document.getElementById('bingSearchResults').style.visibility = "visible";
+    document.getElementById('bingSearchResults').style.height = "100%"
+    document.getElementById('bingTab').style.backgroundColor = "#c7c7c7";
+}
+</script>
+    
+</html>
+\endcode
+
+Notice particularly, the JavaScript that got added to the HTML code above. Basically we make use of HTML-DOM and CSS to achieve the tab-widget effect. Shown below is a screenshot of the web-application when the Bing tab is clicked.
+
+\image html gcfas_image5.png
+
+\subsubsection gcfappserver_developing_web_applications_3_1_3 Step 3: Hosting on a web-server
+
+Thus far we were writing simple-web applications (EMI-Calculator for example). Such web-applications did not need a valid web-server. But when we begin with AJAX, we will need a web-server. In this document we use the Apache Web-Server (http://projects.apache.org/projects/http_server.html). However there is no compulsion for you to use the same. You can use any web-server you want.
+
+While writing this document and for the sake of explaining this example, the author is using Apache Web-Server for Windows that comes as a part of XAMPP. 
+
+The author has saved Search.html (with the code above) into the C:\Temp folder. In order to configure apache to serve pages from this folder, we will need to edit the httpd.conf file. Specifically the DocumentRoot1 and Directory directives in the configuration file have to be updated. Please refer Apache documentation for more details about these directives.
+
+Shown below is a snapshot of the configuration file with the directives modified:
+
+\code
+ServerRoot "C:/WebServer/xampp/apache"
+
+LoadModule actions_module modules/mod_actions.so
+LoadModule alias_module modules/mod_alias.so
+....
+....
+....
+
+ServerName localhost:80
+DocumentRoot "C:/Temp"
+....
+....
+....
+
+<Directory "C:/Temp">
+    Options Indexes FollowSymLinks Includes ExecCGI
+    AllowOverride All
+    Allow from all
+</Directory>
+
+....
+....
+....
+\endcode
+
+After the configuration changes are made and the apache web-server is restarted, you will now be able to launch a browser and type http://localhost/Search.html in the address-bar to view the web-application developed so far.
+
+\subsubsection gcfappserver_developing_web_applications_3_1_4 Step 4: Implementing the functionality of "Multi Search" button
+
+Next we implement a function that will be called when the button 'Multi Search' is clicked. That function basically takes the search string from the searchString text box and send HTTP Requests to Google, Yahoo and Bing to perform the searches.
+
+\note VERY IMPORTANT NOTE: Browsers don't allow scripts to access any server/port other than the one from which the document and script were downloaded. This means if the current web-application is downloaded (or accessed from) http://www.myserver.com/, then scripts within the web-application can only access http://www.myserver.com/. If the current web-application is downloaded (or accessed from) http://www.myserver.com:8080/, then scripts within the web-application can only access http://www.myserver.com:8080/. 
+
+This being the case, the function cannot directly call Google, Yahoo and Bing servers for returning search results. As a work around, what we do is 
+
+- Write a PHP script on the server that will accept a URL as data in its POST request and return the contents at the URL.
+- Write JavaScript function in the web-application to forward search URLs to the PHP script.
+
+So, the updated web-application now looks as follows:
+
+\code
+<html>
+
+<head>
+    <title>Multi Search Web-Application</title>
+</head>
+
+<body>
+
+    <center>
+        <input type="text" id="searchString" size="100"></input>
+        <button id="search" onclick="doSearch()">Multi Search</button>
+    </center>
+
+    <p>&nbsp;</p>
+    
+    <table width="100%" height="80%" style="table-layout: fixed" cellspacing="0" cellpadding="9" border="1">
+        
+        <tr>
+            <td align="center" height="30px" 
+                onclick="showGoogleSearchResults()"
+                id="googleTab">Google</td>
+            <td align="center" height="30px" 
+                onclick="showBingSearchResults()"
+                id="bingTab">Bing</td>
+            <td align="center" height="30px" 
+                onclick="showYahooSearchResults()"
+                id="yahooTab">Yahoo</td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <div id="emptyArea" align="center">
+                    No Search Results to show
+                </div>
+                
+                <iframe id="googleSearchResults" scrolling="yes" 
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="bingSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+                <iframe id="yahooSearchResults" scrolling="yes"
+                        frameborder="0" style="visibility: hidden">
+                </iframe>
+            </td>
+        </tr>
+        
+    </table>
+
+</body>
+
+<script language="Javascript" type="text/javascript">
+reset();
+document.getElementById('emptyArea').style.visibility = "visible";
+document.getElementById('emptyArea').style.height = "100%"
+    
+function loadUrl(url, frameId) {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "fetchSearchResults.php", true);
+    ajax.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            var frame = document.getElementById(frameId)
+            var frameDoc = frame.contentDocument;
+            if(frameDoc == undefined || frameDoc == null)
+                frameDoc = testFrame.contentWindow.document;
+            frameDoc.open();
+            frameDoc.write( this.responseText );
+            frameDoc.close();
+        }
+    }
+    ajax.send(url);
+}
+
+function googleSearch(searchStr) {
+    var url = "http://www.google.com/search?q=" + searchStr;
+    loadUrl(url, 'googleSearchResults');
+}
+
+function yahooSearch(searchStr) {
+    var url = "http://in.search.yahoo.com/search?p=" + searchStr;
+    loadUrl(url, 'yahooSearchResults');
+}
+
+function bingSearch(searchStr) {
+    var url = "http://www.bing.com/search?q=" + searchStr;
+    loadUrl(url, 'bingSearchResults');
+}
+
+function doSearch() {
+    var searchStr = document.getElementById('searchString').value;
+    searchStr = searchStr.replace(' ', '+');
+    
+    googleSearch(searchStr);
+    yahooSearch(searchStr);
+    bingSearch(searchStr);
+    
+    showGoogleSearchResults();
+}
+
+function reset() {
+    // same as before
+}
+
+function showGoogleSearchResults() {
+    // same as before
+}
+
+function showYahooSearchResults() {
+    // same as before
+}
+
+function showBingSearchResults() {
+    // same as before
+}
+</script>
+    
+</html>
+\endcode
+
+Notice carefully the changes in the HTML code above.
+
+- Firstly we associate a JavaScript function called doSearch() with the 'onclick' event of 'Multi Search'
+\code
+<center>
+    <input type="text" id="searchString" size="100"></input>
+    <button id="search" onclick="doSearch()">Multi Search</button>
+</center>
+\endcode
+
+- Next, we implement the doSearch() function to simultaneously trigger requests to Google, Yahoo and Bing search engines.
+\code
+function doSearch() {
+    var searchStr = document.getElementById('searchString').value;
+    searchStr = searchStr.replace(' ', '+');
+    
+    googleSearch(searchStr);
+    yahooSearch(searchStr);
+    bingSearch(searchStr);
+    
+    showGoogleSearchResults();
+}
+\endcode
+
+- Next, we implement the googleSearch(), yahooSearch() and bingSearch() functions to help perform the actual searching. Lets take a look at googleSearch() function (other functions are similar)
+\code
+function googleSearch(searchStr) {
+    var url = "http://www.google.com/search?q=" + searchStr;
+    loadUrl(url, 'googleSearchResults');
+}
+\endcode
+
+- The loadUrl() function accepts as parameters the URL and the Frame-ID into which the contents of the URL should be shown. The loadUrl() function is implemented to use XMLHttpRequest as follows
+\code
+function loadUrl(url, frameId) {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "fetchSearchResults.php", true);
+    ajax.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            var frame = document.getElementById(frameId)
+            var frameDoc = frame.contentDocument;
+            if(frameDoc == undefined || frameDoc == null)
+                frameDoc = testFrame.contentWindow.document;
+            frameDoc.open();
+            frameDoc.write( this.responseText );
+            frameDoc.close();
+        }
+    }
+    ajax.send(url);
+}
+\endcode
+
+- Notice how the loadUrl() function sends a POST request to the fetchSearchResults.php server-side script. Also notice how we set an onreadystatechange event handler variable to a custom function that handles responses asynchronously. Once the response becomes available, we set the response into the frame.
+
+\note Note: The above 'multi search' example can be written in a much better way. We request developers to look at the above example from the context of 'really getting to know AJAX programming basics'. We dont intend this chapter to be an AJAX programming primer :-)
+
+After implementing the above functions and reloading the web-application in the browser, we will now be in a position to actually do some multi-search. The following table shows the output of the three tabs upon entering a search query.
+
+\htmlonly
+<table style="table-layout: fixed" cellspacing="0" cellpadding="15" border="1">
+<tr><td>
+\endhtmlonly
+
+\image html gcfas_image7.png "Enter the Search String and click 'Multi Search'"
+
+\htmlonly
+</td><td>
+\endhtmlonly
+
+\image html gcfas_image8.png "Google Search Results"
+
+\htmlonly
+</td></tr><tr><td>
+\endhtmlonly
+
+\image html gcfas_image9.png "Bing Search Results"
+
+\htmlonly
+</td><td>
+\endhtmlonly
+
+\image html gcfas_image10.png "Yahoo Search Results"
+
+\htmlonly
+</td></tr></table>
+\endhtmlonly
+
+We hope that you now have a good overview of web-application development.
+
+[Next: \ref gcfappserver_ipc_overview] [Up: \ref gcfappserver]
+
+*/
+
+/**
+\page gcfappserver_ipc_overview Overview of GCF's Component Architecture and IPC
+
+At the most fundamental level a GCF component contains one object that implements the GCF::AbstractComponent interface. GCF::AbstractComponent acts as a factory for objects, widgets, actions, menu and toolbar items coming out of the component. 
+
+Every GCF Component has a GUI object associated with it. This GUI object internally stores the information about all objects offered by the component. GCF has methods like GCF::findObject() that help with searching of objects based on the interfaces that they implement. 
+
+GCF's in-built GCF::ComponentLoaderComponent component loads all components listed in a ComponentLoaderComponent.xml file. While loading each component it initializes the GUI of the component by referring to the component's GUIXML file. GUIXML file for a component lists out objects of the component, which are then loaded via factory methods available in GCF::AbstractComponent. Objects listed in the GUIXML file are called "exposed" objects. In the GUIXML, developers can also specify whether an object will be "exposed" for remote access or not.
+
+GCF's IPC module makes it possible to remotely invoke methods on exposed objects. Remote objects are addressed using their full name which is in the form of ComponentName.ObjectName. Methods (Q_INVOKABLE, signal and slot methods) on the remote objects can be invoked by specifying the name of the method and parameter values passed to the method.
+
+\note For more information read \ref gcfipc
+
+Hitherto only a GCF application had the capacity to invoke methods on an object hosted in a remote GCF application. With GCF 2.4 however, even non-GCF applications can invoke methods on an object hosted in a remote GCF application.
+
+\section gcfappserver_ipc_overview_1 IPC Messaging Internals
+
+The code below shows how a remote object can be accessed and a method on it be invoked.
+
+\code
+#include <GCF/RemoteObject>
+#include <GCF/RemoteAppAccessPoint>
+
+QHostAddress address = ...;
+quint16 port = ...;
+GCF::RemoteAppAccessPoint* rap = 0;
+
+// First we attempt to connect to the remote (GCF) application
+rap = GCF::RemoteAppAccessPoint::getRemoteAppAccessPoint(address, port);
+
+// Next we attempt to fetch reference to a remote object
+GCF::RemoteObject* rObj = 0;
+rObj = rap->getRemoteObject("SomeComponent.SomeObject");
+
+// Next we place method calls on the remote object
+rObj->call("SomeFunction", param1, param2, ....);
+\endcode
+
+Now, lets look at the things that are happening in the background in response to each and every function call.
+
+\section gcfappserver_ipc_overview_2 GCF::Message and subclasses
+
+Whenever an IPC message is sent or received, GCF internally creates a GCF::Message object. GCF::Message is the base class for all IPC messages in GCF. There are different types of IPC messages. So there is one subclass of GCF::Message for each type of IPC message handled by GCF. 
+
+The base class, or the GCF::Message class, contains the following key functions
+
+- QByteArray GCF::Message::toByteArray() - This member function converts the contents of a GCF::Message into a byte-array. The byte-array returned by this function can contain binary or text (XML) data.
+
+- GCF::Message* GCF::Message::fromByteArray(const QByteArray& ba) - This member function converts the contents of a GCF::Message into a byte-array. The byte-array returned by this function can contain binary or text (XML) data.
+
+As you can notice, the byte-representation of GCF::Message can vary. So we will need to have an abstraction to help us go from GCF::Message to QByteArray and back. This abstraction is provided by the IMessageEncoderDecoder interface.
+
+\subsection gcfappserver_ipc_overview_3 The IMessageEncoderDecoder interface
+
+GCF::Message objects are encoded and decoded through the IMessageEncoderDecoder interface. This interface is declared as follows
+
+\code
+class IMessageEncoderDecoder : virtual public IContainer
+{
+public:
+    virtual bool canDecodeMessage(const QByteArray& ba) const = 0;
+    virtual GCF::Message* decodeMessage(QByteArray& ba) const = 0;
+    virtual QByteArray encodeMessage(const GCF::Message* msg) = 0;
+    virtual bool isCloseSocketUponSendMessage() const = 0;
+};
+Q_DECLARE_INTERFACE(IMessageEncoderDecoder, 
+                    "com.vcreatelogic.IMessageEncoderDecoder/1.0")
+\endcode
+
+GCF provides two ready made implementations of this interface.
+
+- GCF::DefaultMessageEncoderDecoder - This implementation is used by GCF for encoding and decoding IPC messages that are passed between two GCF applications over a TCP network. For example, when a remote-access-point is created using the following code below - all messages between this and the remote application are encoded and decoded using DefaultMessageEncoderDecoder.
+\code
+QHostAddress address = ...;
+quint16 port = ...;
+GCF::RemoteAppAccessPoint* rap = 0;
+rap = GCF::RemoteAppAccessPoint::getRemoteAppAccessPoint(address, port);
+\endcode
+
+- GCF::HttpMessageEncoderDecoder - This implementation is used by GCF for encoding and decoding IPC messages coming from a HTTP protocol. For example in the code below, messages between this and the remote application are encoded and decoded using HttpMessageEncoderDecoder.
+\code
+QUrl url("http://gcfserver.company.com:4232");
+GCF::RemoteAppAccessPoint* rap = 0;
+rap = GCF::RemoteAppAccessPoint::getRemoteAppAccessPoint(url);
+\endcode
+
+Custom implementations of IMessageEncoderDecoder can be registered with GCF using the following function.
+\code
+GCF::AppAccessPoint::registerMessageEncoderDecoder(IMessageEncoderDecoder*)
+\endcode
+
+
+In the code snippet below, you can get an idea as to how a custom message encoder/decoder can be installed.
+
+\code
+#include <QObject>
+#include <GCF/IMessageEncoderDecoder>
+
+class MyEncoderDecoder : public QObject, public IMessageEncoderDecoder
+{
+    Q_OBJECT
+    Q_INTERFACES(IMessageEncoderDecoder)
+
+public:
+    QObject* containerObject() { 
+        return this;
+    }
+
+    bool canDecodeMessage(const QByteArray& ba) const {
+        // .... 
+        return true;
+    }
+
+    GCF::Message* decodeMessage(QByteArray& ba) const {
+        GCF::Message* retPtr = 0;
+        // ...
+        return retPtr;
+    }
+
+    QByteArray encodeMessage(const GCF::Message* msg) {
+        QByteArray ret;
+        // ...
+        return ret;
+    }
+
+    bool isCloseSocketUponSendMessage() const {
+        // ...
+        return true;
+    }
+};
+
+void MyComponent::creationAnnounced()
+{
+    GCF::AppAccessPoint& ap = GCF::AppAccessPoint::instance();
+    ap.registerMessageEncoderDecoder(new MyEncoderDecoder(this));
+}
+\endcode
+
+\subsection gcfappserver_ipc_overview_4 Journey of an IPC Message in GCF
+
+In order to truly understand how an IPC message goes from one end to the other end and back, we will need to look at the journey of a IPC message. Consider for example the IPC call made in the code construct below.
+
+\code
+void MyComponent::someFunction()
+{
+    QUrl url("http://www.myserver.com:8080");
+    GCF::RemoteAppAccessPoint* rap = 0;
+    
+    rap = GCF::RemoteAppAccessPoint::getRemoteAppAccessPoint(url);
+    QObject::connect(rap, 
+              SIGNAL(methodInvocationResult(qint32,bool,QVariant,QString,QString)),
+              receiver, 
+              SLOT(slotResult(qint32,bool,QVariant,QString,QString)));
+    d->lastCallId = rap->call("Component.Object", "functionName", arg1, arg2);
+}
+
+void MyComponent::slotResult(qint32 callId, bool success, QVariant result,
+                             QString objectName, QString methodName)
+{
+    if(callId == d->lastCallId)
+    {
+        if(success)
+        {
+            // do something with result
+        }
+        else
+        {
+            // report error
+        }
+    }
+
+    Q_UNUSED(objectName);
+    Q_UNUSED(methodName);
+}
+\endcode
+
+The first noticeable IPC message is constructed while executing the last line of the MyComponent::someFunction() method, ie when a call to a remote method is placed. At that point
+
+- An instance of GCF::AsyncInvokeMethodMessage is constructed. The instance is populated with all information (object name, method name and parameters) about the remote method invocation.
+
+- The toByteArray() function is called on the GCF::AsyncInvokeMethodMessage to get a byte representation of the whole message. The byte representation is returned in the form of a QByteArray object.
+
+- This QByteArray is then sent across to the server process hosted at www.myserver.com port 8080. The server process is assumed to be a GCF application.
+
+- The server process stores all the bytes that it receives into a QByteArray. It uses GCF::Message::fromByteArray() to extract a GCF::AsyncInvokeMethodMessage object from the QByteArray. The extracted message object will be same as the one constructed and sent in steps 1-3.
+
+- The message is then sent for 'handling' to GCF::AppAccessPoint::handleMessage(). This function performs the actual method invocation on the intended object and fetches the return value of the method. The response from the method invocation is loaded into a new GCF::AsyncInvokeMethodResMessage instance. Such messages are called as response or result messages.
+
+- The result message is then converted to QByteArray by invoking the toByteArray() method on it.
+
+- The resulting byte array is sent back as response.
+
+- The calling process calls GCF::Message::fromByteArray() on the response QByteArray and gets access to a GCF::AsyncInvokeMethodResMessage instance.
+
+- The result is extracted from the message instance and GCF::RemoteAppAccessPoint emits the methodInvocationResult() signal.
+
+The diagram below captures the complete journey of a IPC message.
+
+\image html gcfas_image11.png
+
+Irrespective of the message type; or put more clearly - irrespective of the actual subclass of GCF::Message - the story of a IPC message journey is the same. 
+
+- Request messages are encoded into QByteArray and sent to the server
+- Server unpacks the request message from the QByteArray it receives. It then processes the message and constructs a response message.
+- Response message is encoded back to QByteArray and sent back to the client.
+- Client unpacks the response from the QByteArray it receives and processes it.
+
+Since the process of converting from message to QByteArray and QByteArray to message is extensible via IMessageEncoderDecoder, we can come up with extremely innovative ways to communicate between GCF and any other application. 
+
+For example, we could implement the IMessageEncoderDecoder to convert a GCF Message into a SOAP envelope and back. This way we can have GCF applications communicate with business server objects via the SOAP protocol.
+
+\subsection gcfappserver_ipc_overview_5 GCF Application Server and its implementation of IMessageEncoderDecoder
+
+GCF Application Server is nothing but a simple GCF application that loads components as usual from their DLL files, by reading their GUIXML files. In addition to being a simple GCF application - it registers a custom implementation of IMessageEncoderDecoder that encodes all subclasses of GCF::Message into an XML; and extracts GCF::Message from XML.
+
+Because of this, it has now become possible for GCF Application Server to receive IPC messages from a non-GCF application; more specifically a browser. In the coming chapters we will explore how all of this infrastructure makes way for creation of highly innovative web-applications.
+
+[Next: \ref gcfappserver_authoring_gcf_server_components]  [Up: \ref gcfappserver]
+
+*/
+
+/**
+\page gcfappserver_authoring_gcf_server_components Authoring and Hosting GCF Server Components
+
+Web-Applications are increasingly becoming more and more powerful. Today it is possible to have applications on the browser that was hither-to limited only to desktop. However if we closely observe - it is the server-side software that makes a web-application powerful; not the browser itself! For example, GMAIL is powerful more because of the mail server and less because of Chrome/Firefox/IE. Although the browser played a very critical role in taking the power of GMAIL to millions of users all over the world.
+
+Thus far we have looked at how we can use browser technologies to author simple web-applications. Now lets take a look at how powerful server components can be created in GCF. At this stage it is important to revisit a few concepts covered in the first chapter - so that the expectations are set right. In the table below - certain key concepts are redefined
+
+\htmlonly
+
+<table style="table-layout: fixed" cellspacing="0" cellpadding="15" border="1">
+
+<tr>
+
+<td>Server Components</td>
+<td>Server components or web-services are components or modules that are written primarily for access from the web. These components offer functions that provide some business logic. Business logic offered by a server component can be mix-and-matched with those offered by other server components (perhaps written in other technologies and/or frameworks) to arrive at interesting results.</td>
+
+</tr>
+
+<tr>
+
+<td>Application Server</td>
+<td>Application Server is a software program that offers means to host server-components in it and provides access to objects and methods available in the server-components it hosts.
+
+An application server basically releases server-components from having to deal with messaging and synchronization logic that is inherent in any client-server communication setup. It offers a standard way for accepting incoming "business-logic-function" invocation requests, for mapping such requests to actual function calls on relevant server-components hosted in it and for shipping back results in response messages.</td>
+
+</tr>
+
+<tr>
+
+<td>Web Application</td>
+<td>Web-application is a HTML-XML-JavaScript document loaded and executed by any standard web-browser. The web-application creates and sends "business-logic-function" invocation requests to the "application-server" and wait (asynchronously) for the response to arrive. Based on the response received the web-application updates its HTML document and therefore the presentation layer of the application.</td>
+
+</tr>
+
+</table>
+
+\endhtmlonly
+
+\section gcfappserver_authoring_gcf_server_components_1 Web-Service Classes and Objects
+
+While GCF supports IPC for different variety of message passing (signal/slot, invokable methods etc) between Qt objects, it is only the Q_INVOKABLE method type that makes sense for developing web-services.
+
+To create web-service objects, one has to
+- Subclass from QObject 
+- Use the Q_OBJECT macro in the subclass.
+- Declare web-service methods using the Q_INVOKABLE macro
+
+For example, shown below is a web-service class for computing EMI
+
+\code
+#include <QObject>
+
+// 1. Web-Service object must subclass from QObject
+class EMICalculatorService : public QObject
+{
+    // 2. It must use the Q_OBJECT macro
+    Q_OBJECT
+
+public:
+    EMICalculatorService(QObject* parent=0);
+    ~EMICalculatorService();
+
+    // 3. Web-Service methods must be marked
+    //    using Q_INVOKABLE macro
+    Q_INVOKABLE double computeEMI(double principal,
+                                  double rateOfInterest,
+                                  int numberOfMonths);
+};
+\endcode
+
+Ideally web-service classes are singleton classes. 
+
+\section gcfappserver_authoring_gcf_server_components_2 Web Service Methods
+
+Web Service methods (referred to hereafter as web-services) are basically Qt/C++ and \c Q_INVOKABLE methods in a QObject subclass. They can be re-entrant, in which case one call to a web-service doesn't adversely affect another call to the same web-service happening at the same time or at a future point in time. They may be thread-safe, in which case it is perfectly fine to invoke the web-service from several threads simultaneously. The web-service internally makes use of appropriate locking mechanisms to ensure that shared data is accessed in a serialized manner using appropriate locking mechanisms. Every re-entrant function is quite-obviously thread-safe. This means re-entrant functions can also be invoked from threads!
+
+GCF offers macros to tag your web-service methods so that the application server can automatically figure out the right mechanism to use for invoking it. Listed below are tags that you can use (by including <GCF/WSMacros>).
+
+\li GCF_NOT_WS : Use this macro to mark a \c Q_INVOKABLE method as not-a-web-service. By default all \c Q_INVOKABLE methods in a web-service class are assumed to be web-services.
+\li If no tag is specified for a \c Q_INVOKABLE, then GCF assumes that the tag is \c GCF_NORMAL_WS
+\li GCF_NORMAL_WS: Calls made to such functions are redirected to a child-process for handling. When a call from  a remote application (which could be a web-browser or Qt/GCF desktop application) is received for the first time;  it is redirected to a new or available child-process for handling. Subsequent calls from the same remote application are redirected to the same child-process.
+\li GCF_ATOMIC_WS: Calls made to such functions are handled by the request-broker itself. They will \b not be  redirected to a child process. Developers have to keep in mind that \c GCF_ATOMIC_WS web-service methods must  be implemented to be quick and easy. This is because while an \c GCF_ATOMIC_WS web-service method is running; no other incoming requests are handled by GCFApplicationServer. Long and heavy \c GCF_ATOMIC_WS web-service methods  might cause GCFApplicationServer to appear slow to clients.
+\li GCF_CLIENT_INDEPENDENT_WS: Calls made to such functions are redirected to a child-process for handling. GCFApplicationServer makes no effort to ensure that calls from the sample remote application are redirected to the same child-process.
+
+Suppose that you wanted to mark the computeEMI() function of EMICalculatorService class as re-entrant, you can declare the class as follows.
+
+\code
+#include <QObject>
+#include <GCF/WSMacros>
+
+class EMICalculatorService : public QObject
+{
+    Q_OBJECT
+
+public:
+    EMICalculatorService(QObject* parent=0);
+    ~EMICalculatorService();
+
+    Q_INVOKABLE GCF_CLIENT_INDEPENDENT_WS double computeEMI(double principal,
+                                                   double rateOfInterest,
+                                                   int numberOfMonths);
+};
+\endcode
+
+\section gcfappserver_authoring_gcf_server_components_3 Server Components
+
+Server components are nothing but GCF components that serve web-service objects! This means that you can subclass from GCF::AbstractComponent and implement the fetchObject() method to return pointers to web-service objects. Such objects can be marked for remote access in the GUIXML. We will look into an actual example in a bit.
+
+A direct benefit of having server-components as simply GCF::AbstractComponent implementations is that you can host your existing GCF components into the application server! 
+
+\section gcfappserver_authoring_gcf_server_components_4 The GCF_CURRENT_CLIENT_ID macro
+
+On several occasions you might want to tweak the functionality of your web-services based on the client (browser) from which the call was initiated. The GCFMessage JavaScript library for web-browsers ensure that a globally unique identifier is used for all communication between a the current session of the browser and the GCF application server.
+
+Within your web-service implementations you can make use of the GCF_CURRENT_CLIENT_ID to figure out the GUID of the client (as a QString) that has caused the web-service to be invoked. Using that information you can figure out the next course of action.
+
+Example:
+
+\code
+void EMICalculatorService::computeEMI(double principal, double rateOfInterest,
+                                      int numberOfMonths)
+{
+    // Fetch surcharge for the customer
+    double surchargePercent = d->surchargePercentMap[GCF_CURRENT_CLIENT_ID];
+
+    double emi = 0;
+
+    // ....
+
+    emi = emi * (100+surchargePercent)/100;
+    return emi;
+}
+\endcode
+
+\note Note: The GCF_CURRENT_CLIENT_ID macro is valid only within the web-service method.
+
+\section gcfappserver_authoring_gcf_server_components_5 Case Study : Fractal Generator Server Component
+
+Suppose that you wanted to create a whole bunch of server components that generate fractal images. Being a Qt developer you are already aware of QPainter / QImage / QPen / QBrush and friends. Using these classes you will easily be able to create fractal images. But getting it to show on a web-browser is a bit challenging (although not very challenging once you know the tricks of the trade).
+
+Lets see how we can make it simple by using GCF Application Server. We will implement a fractal algorithm that generates a Menger Square (also known as Sierpinski Carpet), given the number of iterations to perform. The following table shows how the fractal is actually generated. The red borders shown against iteration 0 to 3 are only for your understanding.
+
+\htmlonly
+<table style="table-layout: fixed" cellspacing="0" cellpadding="15" border="1">
+<tr><td>
+\endhtmlonly
+
+\image html gcfas_image12.png "Iteration 0"
+
+\htmlonly
+</td><td>
+\endhtmlonly
+
+\image html gcfas_image13.png "Iteration 1"
+
+\htmlonly
+</td></tr><tr><td>
+\endhtmlonly
+
+\image html gcfas_image14.png "Iteration 2"
+
+\htmlonly
+</td><td>
+\endhtmlonly
+
+\image html gcfas_image15.png "Iteration 3"
+
+\htmlonly
+</td></tr><tr><td>
+\endhtmlonly
+
+\image html gcfas_image16.png "Iteration 4"
+
+\htmlonly
+</td><td>
+\endhtmlonly
+
+\image html gcfas_image17.png "Iteration 5"
+
+\htmlonly
+</td></tr></table>
+\endhtmlonly
+
+\subsection gcfappserver_authoring_gcf_server_components_5_1 The MengerSquareFractal class
+
+Lets create a class called MengerSquareFractal that helps in the generation of "Menger Square" fractals. The class is declared as follows.
+
+\code
+class MengerSquareFractal : public QObject
+{
+    Q_OBJECT
+
+public:
+    MengerSquareFractal(QObject* parent=0);
+    ~MengerSquareFractal();
+
+    Q_INVOKABLE QImage generateFractal(int iterations, int imageSize);
+};
+\endcode
+
+Notice how the the MengerSquareFractal::generateFractal() is declared as Q_INVOKABLE method. This means that the method can be dynamically invoked using QMetaObject::invokeMethod() function. It also means that the function can be invoked from a remote application.
+
+We implement the MengerSquareFractal class as follows. The constructor and destructor are empty functions, hence we have not shown them below.
+
+\code
+struct Square
+{
+    Square() : x(0), y(0), size(1000) { }
+    Square(double _x, double _y, double _size)
+        : x(_x), y(_y), size(_size) { }
+
+    double x;
+    double y;
+    double size;
+
+    QRectF rect() const {
+        return QRectF(x-size/2, y-size/2, size, size);
+    }
+};
+
+QList<Square> DivideSquare(const Square& s, int iterations);
+
+QImage MengerSquareFractal::generateFractal(int iterations, int imageSize)
+{
+    if( imageSize%2 == 0)
+        imageSize = imageSize+1;
+
+    if(iterations < 0)
+        imageSize = 0;
+    else if(iterations >= 5)
+        iterations = 5;
+
+    Square sq( imageSize>>1, imageSize>>1, imageSize );
+    QList<Square> sqList = DivideSquare(sq, iterations);
+
+    QImage retImage(imageSize, imageSize);
+
+    QPainter paint(&retImage);
+    paint.fillRect(retImage.rect(), Qt::white);
+    Q_FOREACH(Square square, sqList)
+        paint.fillRect(square.rect(), Qt::blue);
+    paint.end();
+
+    return retImage;
+}
+\endcode
+
+The function basically constructs a Square object of some size, placed at some position. It calls the iterative DivideSquare function, which divides the squares recursively. The DivideSquare function is implemented as follows.
+
+\code
+QList<Square> DivideSquare(const Square& s, int iterations)
+{
+    QList<Square> ret;
+
+    if(iterations <= 0)
+    {
+        // No more iterations to perform. Return
+        // Square S as the divided square!
+        ret.append( s );
+        return ret;
+    }
+
+    // Perform division.
+    double s2 = s.size/3;
+
+    double x1 = s.x - s2;
+    double x2 = s.x;
+    double x3 = s.x + s2;
+
+    double y1 = s.y - s2;
+    double y2 = s.y;
+    double y3 = s.y + s2;
+
+    ret+= DivideSquare( Square( x1, y1, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x2, y1, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x3, y1, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x1, y2, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x3, y2, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x1, y3, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x2, y3, s2 ), iterations-1 );
+    ret+= DivideSquare( Square( x3, y3, s2 ), iterations-1 );
+
+    // Return the grand total list
+    return ret;
+}
+\endcode
+
+\subsection gcfappserver_authoring_gcf_server_components_5_2 The FractalGeneratorServiceComponent class
+
+We now create a simple fractal generator component class that implements the GCF::AbstractComponent interface as follows.
+
+\code
+struct FractalGeneratorServiceComponentData;
+class FractalGeneratorServiceComponent : public GCF::AbstractComponent
+{
+    Q_OBJECT
+    GCF_DECLARE_COMPONENT(FractalGeneratorServiceComponent)
+
+public:
+    static FractalGeneratorServiceComponent& instance();
+    ~FractalGeneratorServiceComponent();
+
+    QObject* containerObject();
+
+protected:
+    FractalGeneratorServiceComponent();
+    void initializeComponent();
+    void finalizeComponent();
+    QObject* fetchObject(const QString& completeName) const;
+
+private:
+    FractalGeneratorServiceComponentData* d;
+};
+\endcode
+
+The above class definition would look familiar to GCF developers. We have created a simple subclass of GCF::AbstractComponent and have implemented only the key methods from the base class.
+
+Lets look at the implementation of FractalGeneratorServiceComponent.
+
+\code
+GCF_DEFINE_COMPONENT(FractalGeneratorServiceComponent)
+
+struct FractalGeneratorServiceComponentData
+{
+    MengerSquareFractal mengerSquareFractal;
+};
+
+FractalGeneratorServiceComponent& FractalGeneratorServiceComponent::instance()
+{
+    static FractalGeneratorServiceComponent theInstance;
+    return theInstance;
+}
+
+FractalGeneratorServiceComponent::FractalGeneratorServiceComponent()
+{
+    d = new FractalGeneratorServiceComponentData;
+}
+
+FractalGeneratorServiceComponent::~FractalGeneratorServiceComponent()
+{
+    delete d;
+}
+
+QObject* FractalGeneratorServiceComponent::containerObject()
+{
+    return this;
+}
+
+void FractalGeneratorServiceComponent::initializeComponent()
+{
+    this->setComponentName("FractalGeneratorService");
+}
+
+void FractalGeneratorServiceComponent::finalizeComponent()
+{
+    // Do nothing
+}
+
+QObject* FractalGeneratorServiceComponent::fetchObject(const QString& completeName) const
+{
+    QStringList comps = completeName.split('.');
+
+    if(comps.last() == "MengerSquare")
+        return &d->mengerSquareFractal;
+
+    return 0;
+}
+
+GCF_EXPORT_COMPONENT_PLUGIN(FractalGeneratorServiceComponent)
+\endcode
+
+The above code is very simple to understand. In summary the above code achieves the following
+
+- Name of the component is set to FractalGeneratorService.
+- Object-name "FractalGeneratorService.MengerSquare" corresponds to an instance of MengerSquareFractal class.
+
+\subsection gcfappserver_authoring_gcf_server_components_5_3 The FractalGeneratorService.xml GUIXML file.
+
+The GUIXML file for FractalGeneratorService component is written as follows.
+
+\code
+<component name="FractalGeneratorService" allowRemoteAccess="true">
+
+    <object name="MengerSquare" autoDelete="false" 
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true"
+          allowRemoteSignalConnect="true"
+          allowRemoteSignalDelivery="true" />
+          
+</component>
+\endcode
+
+Notice how the component and the "MengerSquare" objects are marked for remote-access. Unless they are explicitly marked as such, GCF will not allow the component or any of the objects in it to be accessed from outside the boundaries of the process in which it is loaded.
+
+\subsection gcfappserver_authoring_gcf_server_components_5_4 Compiling the FractalGeneratorService component.
+
+Compiling the FractalGeneratorService component is just like compiling any other GCF component. You can create a project file with the following contents (most of it are pretty standard).
+
+\code
+TEMPLATE        = lib
+TARGET          = FractalGeneratorService
+CONFIG         += gcf_component
+HEADERS         = FractalGeneratorServiceComponent.h \
+                  MengerSquareFractal.h                
+SOURCES         = FractalGeneratorServiceComponent.cpp \
+                  MengerSquareFractal.cpp
+\endcode
+
+\note If you are using QtCreator, you can have all of these files automatically generated for you. Refer \ref gcfappserver_qtcreator for more details.
+
+Once the project file is created, it is simply a matter of executing qmake and make/nmake/mingw32-make. After executing both the commands you will notice a FractalGeneratorService.dll in the bin directory of your project.
+
+\subsection gcfappserver_authoring_gcf_server_components_5_5 Loading the component in GCFApplicationServer tool
+
+When you compile GCF, you will see an executable called "GCFApplicationServer.exe"1 in the bin directory of GCF. This executable is the "application server" of GCF. It loads all components marked in it's ComponentLoaderComponent.xml. The ComponentLoaderComponent.xml file for GCFApplicationServer can be found in the "GCFAppServerGUIXML" directory2 of the project's bin folder. 
+
+Open GCFAppServerGUIXML/ComponentLoaderComponent.xml and edit to have the following contents.
+
+\code
+<component name="ComponentLoaderComponent">
+    
+    <object name="controller"/>
+  
+    <method param1="FractalGeneratorServiceComponent" 
+            param2="FractalGeneratorService" 
+            methodName="ComponentLoaderComponent.controller::loadComponent2"/>
+    
+</component>
+\endcode
+
+Basically the above file instructs GCFApplicationServer to load the FractalGeneratorService component. Having made all these changes, simply launch the GCFApplicationServer executable. You will not notice any window showing up; but just a system-tray icon.
+
+\image html gcfas_image18.png "GCFApplicationServer system-tray icon is on the extreme left"
+
+Click on the system-tray icon to see the server-window.
+
+\image html gcfas_image19.png
+
+The server-window shows all the components that are currently available for access from a browser. The server window also generates quick documentation for each and every web-service object and invokable methods in them. We will look into 'AJAX Usage' in the next chapter.
+
+\subsection gcfappserver_authoring_gcf_server_components_5_6 The web-application
+
+At this point the web-services are ready and are loaded into the application-server. The application-server is ready to serve the 'generateFractal' method from 'FractalGeneratorService.MengerSquare' object. Now lets look at a web-application that issues calls to our web-service and shows results on the browser.
+
+\note The actual process of creating the web-application, together with all of the GCF + AJAX programming concepts are explained \ref gcfappserver_authoring_gcf_web_applications. Right now we will just take a look at the web-application to have an idea of results that can be shown on the browser side.
+
+In the screenshot below is a web-application (running inside a browser of-course). It accepts as input the number of iterations and fetches the fractal image from the server.
+
+\image html gcfas_image20.png
+
+The complete HTML web-application code is as follows.
+
+\code
+<html>
+
+<head>
+    <title>Fractal Generator Service Example</title>
+</head>
+
+<body>
+
+    Number of iterations: 
+    <input type="text" maxlength="1" size="1" value="0" id="txtIterations"></input>
+    <button onclick="fetchFractalImage()">Generate Fractal</button>
+    <br/>&nbsp;<br/>&nbsp;<br/>
+
+    <div id="fractalImage" style="border: 1px; border-style: solid; border-color: #000000; width: 500px; height: 500px; text-align: center;">
+        Click on 'Generate Fractal' to show the fractal here...
+    </div>
+    
+</body>
+
+<!-- Include the GCFMessage JavaScript library -->
+<script type="text/javascript" language="Javascript" src="GCFMessage.js"></script>
+
+<script type="text/javascript" language="Javascript">
+function fetchFractalImage() {
+    var nrIterations = parseInt( document.getElementById("txtIterations").value );
+
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("FractalGeneratorService.MengerSquare");
+    msg.setMethodName("generateFractal");
+    msg.addIntegerArg(nrIterations);
+    msg.addIntegerArg(500);
+    msg.onReply = function(reply) {
+        if(!reply.isValid() || !reply.hasResult()) {
+            // show error message
+            return;
+        }
+
+        // Returned value is a image
+        document.getElementById('fractalImage').innerHTML = '';
+        var img = reply.getResult();
+        document.getElementById('fractalImage').appendChild( reply.getResult() );
+    }
+    msg.send();
+}
+</script>
+
+</html>
+\endcode
+
+[Next: \ref gcfappserver_authoring_gcf_web_applications] [Up: \ref gcfappserver]
+
+*/
+
+/**
+\page gcfappserver_authoring_gcf_web_applications Authoring web-applications to access GCF Application Server and its components
+
+Web-applications are basically HTML+Javascript documents that are rendered by any standard browser. The document rendered by the browser contains two aspects, as already mentioned
+
+- HTML part - presentation layer of the web-application. It provides layout, content and structure of the document. 
+- JavaScript part - functionality aspect of the web-application. We can say that JavaScript brings a HTML document to 'life' and hence make it a web-application!
+
+All programming is done using JavaScript that is embedded within the HTML document. In order to make it easy for developers to communicate with GCF-Application-Server, we have a GCFMessage library written in JavaScript. 
+
+The GCFMessage.js library comes bundled with GCF and can be used with any browser. As of writing GCFMessage.js is supported by Chrome, Firefox, WebKit based browsers and Internet Explorer 7 and 8. For the demos on this document, however, we will be using Google Chrome.
+
+\note You can find GCFMessage.js in $GCF_SOURCE/tools/GCFApplicationServer/Scripts folder.
+
+Browsers don't allow scripts to send POST and GET messages to any server other than the one from which the web-application (which includes the script and HTML file) was downloaded. Infact scripts cannot even directly communicate to any port other than 80 on the server from which the web-application was downloaded. This being the case, GCF provides a GCFApplicationServer.php server-side-script to help communicate with the 'real' GCF Application Server. 
+
+In short, the communication path looks like the one shown in the image below.
+
+\image html gcfas_image21.png
+
+Now lets look at both GCFMessage.js and GCFApplicationServer.php in more detail. 
+
+\note We assume that you know enough about hosting a web-server on your local computer or on a computer in your LAN. If you are not very clear about it, please refer Apache manuals. Developers who are using Windows can take a look at the XAMPP (http://www.apachefriends.org/en/xampp.html) project, to create a Apache setup on their Windows box. We don't impose Apache or any web-server on you. You can choose any web-server (IIS, ngix etc) of your choice. Irrespective of the server you use, you will need a server side script. GCF 2.4 comes bundled with a PHP based server-side script. If your web-server doesnt support PHP, then you can write a similar script in any language of your choice. It is also necessary to ensure that GCFApplicationServer is executed on the web-server or on a machine that is directly accessible from the web-server.
+
+\section gcfappserver_authoring_gcf_web_applications_1 Using GCFMessage.js library in your HTML web-application(s)
+
+In C++ if we wanted to include a library into our program, we would use the #include line to include one or more header files from the library and link our program against the .lib/.a/.so file(s) of the library. Similarly in JavaScript, we have to 'include' the library in our web-application - however there is no linking involved. Shown below is a HTML code skeleton that includes GCFMessage.js library.
+
+\code
+<html>
+
+<!-- content of the HTML web-application -->
+<head>
+    ....
+</head>
+
+<body>
+    ....
+</body>    
+    
+<!-- including the GCFMessage.js library -->
+<script type="text/javascript" language="Javascript" src="GCFMessage.js"></script>
+
+<script type="text/javascript" language="Javascript">
+    // web-application specific script
+</script>
+    
+</html>
+\endcode
+
+Pay special attention to the first <script> element in the code-listing above. The src attribute of <script> HTML element can be used to include an external JavaScript into the current HTML web-application. The src attribute accepts a file-name that is relative to the current HTML document. It can also contain an absolute path, example: http://www.myserver.com/scripts/GCFMessage.js.
+
+The GCFMessage.js script contains code for the following JavaScript classes
+- GCFValue - Stores a type, value tuple. Using this class it is possible to read and write integer, double, string, boolean, map, list and image objects into a XML file. This class loosely corresponds to the QVariant class of Qt.
+- GCFList - Stores a list of GCFValue objects. Each object in the list can be of different types. The class is capable of reading and writing itself into an XML file. This class loosely corresponds to the QVariantList class of Qt.
+- GCFDictionary - Stores a series of key=value pairs. Like GCFList, it can read and write itself into an XML file. This class loosely corresponds to QMap of Qt.
+- GCFRequestMessage and GCFResponseMessage - These classes are used to handle request and response message in a HTML web-application. More on this in the next section.
+- GCFMultiRequestMessage and GCFMultiResponseMessage - These classes are used to handle multiple request and response messages at one go. More on this in a later section.
+
+\section gcfappserver_authoring_gcf_web_applications_2 GCFRequestMessage and GCFResponseMessage JavaScript classes
+
+GCFRequestMessage and GCFResponseMessage classes help in performing AJAX style request/response communication with the GCF-Application-Server. The GCFRequestMessage class internally uses XMLHttpRequest (AJAX Object) to send request messages to the GCF-Application-Server and handles responses asynchronously.
+
+Suppose that you wanted to invoke the the generateFractal method of FractalGeneratorService.MengerSquare object in the application-server and show the result of the function in the browser. You would start with the following code for achieving the same.
+
+\code
+<html>
+
+    <!-- content of the HTML web-application -->
+    <body>
+        <div id="fractalImage" style="width: 500px; height: 500px;"></div>
+    </body>
+
+    <!-- including the GCFMessage.js library -->
+    <script type="text/javascript" language="Javascript" 
+            src="GCFMessage.js">
+    </script>
+
+    <script type="text/javascript" language="Javascript">
+
+        var msg = new GCFRequestMessage();
+        msg.setObjectName("FractalGeneratorService.MengerSquare");
+        msg.setMethodName("generateFractal");
+        msg.addIntegerArg(5); // Number of iterations
+        msg.addIntegerArg(500); // Size of the image required
+        msg.send();
+
+    </script>
+
+</html>
+\endcode
+
+Notice how we
+- Create an instance of GCFRequestMessage
+- Set the name of the object and method into it to point out the exact web-service to invoke.
+- Add arguments that needs to be passed to the web-service. Notice that we pass the first argument as iteration-count and second argument as image-size. This is consistent with the signature of the web-service function declared in the server-component.
+- Make use of the send() function to synchronously send the request-message to the server.
+
+In the code-listing above we have managed to to send a request, but we are not handling the response that will be sent back from the server. Have a look at the slightly modified version of the code below - to see how responses are asynchronously handled.
+
+\code
+<html>
+
+    <!-- content of the HTML web-application -->
+    <body>
+        <div id="fractalImage" style="width: 500px; height: 500px;"></div>
+    </body>
+
+    <!-- including the GCFMessage.js library -->
+    <script type="text/javascript" language="Javascript" 
+            src="GCFMessage.js">
+    </script>
+    <script type="text/javascript" language="Javascript">
+
+        var msg = new GCFRequestMessage();
+        msg.setObjectName("FractalGeneratorService.MengerSquare");
+        msg.setMethodName("generateFractal");
+        msg.addIntegerArg(5); // Number of iterations
+        msg.addIntegerArg(500); // Size of the image required
+
+        // Asynchronously handle responses
+        msg.onReply = function(reply) {
+            // reply is a GCFResponseMessage object.
+            if( reply.isValid() && reply.isValid() ) {
+                var fractalDiv = document.getElementById('fractalImage');
+                fractalDiv.innerHTML = '';
+                var img = reply.getResult();
+                fractalDiv.appendChild( reply.getResult() );
+            }
+        }
+
+        msg.send();
+
+    </script>
+
+</html>
+\endcode
+
+Notice how we associate a function with the onReply variable of GCFRequestMessage. When the send() function on GCFRequestMessage is called, an XML representation of the function request is created and sent to the server via a POST request. Shown below is the XML representation of the request created in the code-listing above.
+
+\code
+<GCFMessage Type="262" GUID="03eec918-7630-4e0e-b1bf-77b7fafbe34b">
+    <MessageID>0</MessageID>
+    <ObjectName>FractalGeneratorService.MengerSquare</ObjectName>
+    <MethodName>generateFractal</MethodName>
+    <Args>
+        <Variant Type="int">5</Variant>
+        <Variant Type="int">500</Variant>
+    </Args>
+    <SessionID>-1</SessionID>
+</GCFMessage>
+\endcode
+
+This XML is sent in a POST request using XMLHttpRequest, which waits for a response to arrive. The response is also an XML file. Shown below is a part of the response that was received for the above request.
+
+\code
+<GCFMessage Type="3863">
+    <MessageID>0</MessageID>
+    <ObjectName>FractalGeneratorService.MengerSquare</ObjectName>
+    <MethodName>generateFractal</MethodName>
+    <Success>true</Success>
+    <Result>
+        <Variant Type="QImage">data:image/png;base64;charset=utf-8,iVBORw...</Variant>
+    </Result>
+    <CustomData/>
+    <SessionID>4</SessionID>
+</GCFMessage>
+\endcode
+
+As soon as XMLHttpRequest receives the response, the GCFRequestMessage instance that sent the request intercepts the response and automatically constructs an instance of GCFResponseMessage by parsing the response XML. It then calls the function stored in its onReply variable by passing as parameter to it the GCFResponseMessage that was constructed from the reply.
+
+Since the onReply function is provided by the web-application developer, he can deal with the response in any way he chooses. This way GCFRequestMessage and GCFResponseMessage classes can be used to perform asynchronous request-response communication.
+
+\section gcfappserver_authoring_gcf_web_applications_3 GCFMultiRequestMessage and GCFMultiResponseMessage JavaScript classes
+
+GCFMultiRequestMessage and GCFMultiResponseMessage classes help in sending across request for several web-services at once and processing their response at once. For example, the GCFApplicationServer program offers two of its own web-service objects: ApplicationServer.Core and ApplicationServer.GradientGenerator. While the former web-service object helps in fetching quick details about the application server itself, the latter helps with generation of color gradients for use with web-pages.
+
+Lets look at the methods offered by ApplicationServer.Core:
+
+- gcfVersion [string]
+- os [string]
+- location [string]
+- currentDateTime [string]
+- upTime [string]
+- applicationServerLogo [image]
+
+Suppose that we wanted to show information about the application server in a web-page. We begin by constructing the HTML document as follows.
+
+\code
+<html>
+
+    <!-- content of the HTML web-application -->
+    <head><title>GCF Application Server Info</title></head>
+
+    <body onload="fetchServerInfo()">
+        <h1>GCF Application Server Info</h1>
+
+        <table width="50%" border="1">
+            <tr><td>GCF Version</td><td><div id="gcfVersion"></div></td></tr>
+            <tr><td>Operating System</td><td><div id="os"></div></td></tr>
+            <tr><td>Location</td><td><div id="location"></div></td></tr>
+            <tr><td>Date/Time</td><td><div id="currentDateTime"></div></td></tr>
+            <tr><td>Up Time</td><td><div id="upTime"></div></td></tr>
+            <tr><td>App Server Logo</td>
+                <td><div id="applicationServerLogo"></div></td>
+            </tr>
+            <tr><td>Client ID</td><td><div id="clientID"></div></td></tr>
+        </table>
+
+    </body>
+
+    <!-- including the GCFMessage.js library -->
+    <script type="text/javascript" language="Javascript" 
+            src="GCFMessage.js">
+    </script>
+    <script type="text/javascript" language="Javascript">
+
+        function fetchServerInfo() {
+                // TODO
+        }
+        
+    </script>
+
+</html>
+\endcode
+
+When the above HTML file is saved and loaded in a browser, we will see an output like this:
+
+\image html gcfas_image22.png
+
+Next, to fetch information about the server, we will need to call 6 different web-services. If we have to call each of them separately, we will need to write lot of code. Instead we can pack all web-service calls into a single request. This is where GCFMultiRequestMessage is useful. Shown below is the implementation of the fetchServerInfo() function.
+
+\code
+function fetchServerInfo4() {
+    var msg = new GCFMultiRequestMessage();
+
+    msg.add('ApplicationServer.Core', 'gcfVersion');
+    msg.add('ApplicationServer.Core', 'os');
+    msg.add('ApplicationServer.Core', 'location');
+    msg.add('ApplicationServer.Core', 'currentDateTime');
+    msg.add('ApplicationServer.Core', 'upTime');
+    msg.add('ApplicationServer.Core', 'applicationServerLogo');
+
+    msg.onReply = function(reply) {
+        if(reply.isValid()) {
+            document.getElementById('gcfVersion').innerHTML 
+                    = reply.getResult('ApplicationServer.Core', 'gcfVersion');
+
+            document.getElementById('os').innerHTML 
+                    = reply.getResult('ApplicationServer.Core', 'os');
+
+            document.getElementById('location').innerHTML 
+                    = reply.getResult('ApplicationServer.Core', 'location');
+
+            document.getElementById('currentDateTime').innerHTML 
+                    = reply.getResult('ApplicationServer.Core', 'currentDateTime');
+
+            document.getElementById('upTime').innerHTML 
+                    = reply.getResult('ApplicationServer.Core', 'upTime');
+
+            document.getElementById('applicationServerLogo').innerHTML = '';
+            document.getElementById('applicationServerLogo').appendChild(
+                      reply.getResult('ApplicationServer.Core', 
+                                      'applicationServerLogo')
+                      );
+    }
+
+    msg.send();
+}
+\endcode
+
+In the code-listing above notice the following
+- Several web-service calls are 'added' to a single GCFMultiRequestMessage object. 
+- The onReply function receives as parameter a GCFMultiResponseMessage object. The response object will contain responses against each web-service call.
+- The usage semantics of GCFMultiRequestMessage and GCFRequestMessage are very similar.
+
+After implementing the above function and reloading the web-page, you will be able to see the following output.
+
+\image html gcfas_image23.png
+
+In a single GCFMultiRequestMessage, you can also pack web-service calls on different objects. For example, take a look at the code below.
+
+\code
+<html>
+
+    <!-- content of the HTML web-application -->
+    <head><title>GCF Application Server Info</title></head>
+
+    <body onload="fetchServerInfo4()">
+        <h1>GCF Application Server Info</h1>
+
+        <table width="80%" border="1" cellpadding="5">
+            <tr><td>GCF Version</td><td><div id="gcfVersion"></div></td></tr>
+            <tr><td>Fractal (4)</td><td><div id="fractal"  
+                                             align="center"></div></td></tr>
+        </table>
+
+    </body>
+
+    <!-- including the GCFMessage.js library -->
+    <script type="text/javascript" language="Javascript" 
+            src="GCFMessage.js">
+    </script>
+
+    <script type="text/javascript" language="Javascript">
+
+        function fetchServerInfo4() {
+        
+            var msg = new GCFMultiRequestMessage();
+            
+            msg.add('ApplicationServer.Core', 'gcfVersion');
+            
+            var args = new GCFList(); 
+            args.addInteger(4); 
+            args.addInteger(200);
+            msg.add('FractalGeneratorService.MengerSquare', 'generateFractal', 
+                    args);
+                        
+            msg.onReply = function(reply) {
+                if(reply.isValid()) {
+                    document.getElementById('gcfVersion').innerHTML 
+                            = reply.getResult('ApplicationServer.Core', 
+                                              'gcfVersion');
+
+                    document.getElementById('fractal').innerHTML = '';
+                    document.getElementById('fractal').appendChild(
+                              reply.getResult('FractalGeneratorService.MengerSquare'
+                                              , 'generateFractal')
+                              );
+                } 
+            }
+            msg.send();
+        }
+        
+    </script>
+
+</html>
+\endcode
+
+Here we place a call to 'gcfVersion' web-service on 'ApplicationServer.Core' and 'generateFractal' web-service on 'FractalGeneratorService.MengerSquare' using a single GCFMultiRequestMessage. Also notice how we can also pass arguments to web-services while using  GCFMultiRequestMessage. When the above HTML code is written and executed, the following output is generated.
+
+\image html gcfas_image24.png
+
+\section gcfappserver_authoring_gcf_web_applications_4 GCFApplicationServer.php - server-side script
+
+As mentioned in a previous section of this document, browsers don't allow scripts to send POST and GET messages to any server other than the one from which the web-application (which includes the script and HTML file) was downloaded. Infact scripts cannot even directly communicate to any port other than 80 on the server from which the web-application was downloaded. This being the case, GCF provides a GCFApplicationServer.php server-side-script to help communicate with the 'real' GCF Application Server. 
+
+GCFApplicationServer.php is a script that acts as a broker between the client (browser) making request and the application server. GCF comes bundled with a default GCFApplicationServer.php script, whose content is as follows
+
+\code
+<?php
+if( $HTTP_RAW_POST_DATA )
+{
+    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+    if($socket == false)
+    {
+        echo "Could not connect to GCFApplicationServer";
+    }
+    else
+    {
+        $result = socket_connect($socket, "127.0.0.1", 4232);
+        if($result == false)
+        {
+            echo "Could not connect to GCFApplicationServer";
+        }
+        else
+        {
+            header("Content-type: text/xml");
+            socket_write($socket, $HTTP_RAW_POST_DATA, strlen($HTTP_RAW_POST_DATA));
+            while($out = socket_read($socket, 4096))
+            {
+                echo $out;
+                
+                if(strripos($out, "</GCFMessage>"))
+                    break;
+            }
+
+            socket_close($socket);
+        }
+    }
+}
+?>
+
+
+\endcode
+
+Basically the PHP script accepts and forwards the entire $HTTP_RAW_POST_DATA that it receives to a GCFApplicationServer and waits for the server to respond. When the response is received it relays the response back to the browser. Infact, if you peek into GCFMessage.js script and look at the implementation of GCFRequestMessage class's send() method, you will notice that it is sending an XML representation of the request message to the GCFApplicationServer.php script.
+
+\code
+var GCFServerSideScript = "GCFApplicationServer.php";
+
+GCFRequestMessage.prototype.send = function(url, username, password) {
+    var ajax = false;
+    try { 
+        ajax = new XMLHttpRequest(); 
+    } catch(e) {
+        return false;
+    }
+    
+    if(!url)
+        url = GCFServerSideScript;
+    
+    ajax.open("POST", url, true, username, password);
+    ajax.setRequestHeader("Content-Type", "text/xml");
+    if(this.onReply)
+    {
+        var replyFunction = this.onReply;
+        ajax.onreadystatechange = function() {
+            if(ajax.readyState == 4) {
+                if(ajax.status == 200) {
+                    var rMsg = new GCFResponseMessage(ajax.responseXML);
+                    replyFunction(rMsg);
+                }
+                else {
+                    var rMsg = new GCFResponseMessage('');
+                    replyFunction(rMsg);
+                }
+            }
+        }
+    }
+
+    ajax.send(this.toXML());
+}
+\endcode
+
+Developers can modify the GCFApplicationServer.php script and offer customized access to GCFApplicationServer.
+
+\section gcfappserver_authoring_gcf_web_applications_5 Configuring Apache Server
+
+In order to launch the web-applications you wrote from a browser, you will need to host your HTML-Web Application code along with \c GCFApplicationServer.php and \c GCFMessage.js within the \c DocumentRoot of your Apache installation or modify the \c DocumentRoot to suit the directory where your HTML-Web application is created. After that ofcourse, you will need to ensure that Apache is running!
+
+[Next: \ref gcfappserver_examples_and_casestudies] [Up: \ref gcfappserver]
+
+*/
+
+/**
+\page gccfappserver_gcfmessage The GCFMessage JavaScript Library
+
+GCFMessage.js is a JavaScript library that offers easy to use classes to author asynchronous communication between a web-application and GCFApplicationServer. To know more about using GCFMessage.js in your HTML web-applications, refer \ref gcfappserver_authoring_gcf_web_applications.
+
+This page provides a reference of classes and their functions in GCFMessage.js library.
+
+- \ref gccfappserver_gcfmessage_1
+- \ref gccfappserver_gcfmessage_2
+- \ref gccfappserver_gcfmessage_3
+- \ref gccfappserver_gcfmessage_4
+- \ref gccfappserver_gcfmessage_5
+- \ref gccfappserver_gcfmessage_6
+- \ref gccfappserver_gcfmessage_7
+- \ref gccfappserver_gcfmessage_8
+- \ref gccfappserver_gcfmessage_9
+
+\section gccfappserver_gcfmessage_1 GUID Variable
+
+GUID is a variable in GCFMessage.js. This variable contains the globally unique  identifier used by this library while sending messages to and receiving messages  from the GCF Application Server.Exactly the same GUID is used for all communication  between the browser and  the GCF Application Server, as long as the current browser session is active. You can use GUID with cookies to extend its validity for more than one browser session.
+
+Example:
+
+\code
+<script src="GCFMessage.js" language="Javascript"></script>
+
+<script>
+<!-- show the current GUID in a div of the HTML page -->
+document.getElementById("guid").innerText = GUID;
+</script>
+\endcode
+
+\section gccfappserver_gcfmessage_2 GCFServerSideScript Variable
+
+This variable contains the name of the PHP script on the server-side to which the GCFMessages are sent. By default its value is 'GCFApplicationServer.php'. If you want to change the value of this variable, do so before any request message is sent by the 
+web-application. 
+
+\section gccfappserver_gcfmessage_3 GCFValue class
+
+Instances of this class contain one value. A value is described in terms of its type and the actual value contained in it. You will never have to create instances of this class. The GCFMessage.js automatically creates instances for you and you can use getter methods to explore whats in the instance.
+
+\subsection gccfappserver_gcfmessage_3_1 GCFValue.getType() function
+
+This function returns the type of GCFValue.
+
+\subsection gccfappserver_gcfmessage_3_2 GCFValue.getValue() function
+
+This function returns the value of GCFValue.
+
+\subsection gccfappserver_gcfmessage_3_2 GCFValue.isValid() function
+
+This function is used to check whether the value is valid or not.
+
+\section gccfappserver_gcfmessage_4 GCFList class
+
+Instances of this class contain an array of GCFValue objects. (\ref gccfappserver_gcfmessage_3). 
+
+\subsection gccfappserver_gcfmessage_4_1 GCFList.getLength() and GCFList.getSize() functions
+
+These functions return the number of items in the list.
+
+\subsection gccfappserver_gcfmessage_4_2 GCFList.at(index) function
+
+This function returns the GCFValue at \c index in the list.
+
+\subsection gccfappserver_gcfmessage_4_3 GCFList.addInteger(val) function
+
+This function adds an integer to the list.
+
+\subsection gccfappserver_gcfmessage_4_3 GCFList.addBoolean(val) function
+
+This function adds a boolean value to the list.
+
+\subsection gccfappserver_gcfmessage_4_4 GCFList.addDouble(val) function
+
+This function adds a \c double (or floating point) value to the list.
+
+\subsection gccfappserver_gcfmessage_4_5 GCFList.addString(val) function
+
+This function adds a string to the list.
+
+\subsection gccfappserver_gcfmessage_4_6 GCFList.addColor(val) function
+
+This function adds a color to the list. \c val can be a HTML color value. Example: #f2f2f2. Values this added will be interpreted as QUrl in the server.
+
+\subsection gccfappserver_gcfmessage_4_7 GCFList.addUrl(val) function
+
+This funtion can be used to add a URL string to the list. Values thus added will be interpreted as QUrl in the server.
+
+\subsection gccfappserver_gcfmessage_4_8 GCFList.addDate(val), GCFList.addTime(val) and GCFList.addDateTime(val) functions
+
+This funtion can be used to add date, time and date-time strings to the list. Values this added will be interpreted as QDate, QTime and QDateTime in the server.
+
+\subsection gccfappserver_gcfmessage_4_9 GCFList.addList(val) function
+
+This function can be used to add a list to this list. \c val should point to a GCFList. The function doesnt concatenate the list in \c val into this list, it however things of the last item as a list. Lists added to a list will be interpreted as QList<QVariant> in the server.
+
+\subsection gccfappserver_gcfmessage_4_10 GCFList.addStringList(val) function
+
+This function can be used to add an array of strings to the list. Values thus added will be interpreted as QStringList in the server. Example:
+
+\code
+var strings = new Array("str1", "str2", "str3");
+var list = new GCFList;
+list.addStringList(list);
+\endcode
+
+\section gccfappserver_gcfmessage_5 GCFDictionary class
+
+The GCFDictionary class provides a QMap<QString,QVariant> eqvuivalent for JavaScript. Instances of the dictionary can be created, and items can be added to it using something like the following code-snippet
+
+\code
+var dict = new GCFDictionary();
+dict.addInteger("Count", 10);
+dict.addBoolean("ComputeSum", true);
+dict.addString("Name", "Krishnamurthy");
+dict.addUrl("Address", "http://kfi.com");
+\endcode
+
+Every-item that is added to the dictionary is a GCFValue type. Dictionary objects can be explored using a code snippet like the one below
+
+\code
+var dict = .... // get dictionary from somewhere.
+
+var count = dict.valueOf("Count").getValue();
+var addr = dict.valueOf("Address").getValue();
+\endcode
+
+\subsection gccfappserver_gcfmessage_5_1 GCFDictionary.getLength() and GCFDictionary.getSize() functions
+
+These functions return the number of items in the dictionary.
+
+\subsection gccfappserver_gcfmessage_5_2 GCFDictionary.getKeys() function
+
+This function returns an array of keys in the dictionary
+
+\subsection gccfappserver_gcfmessage_5_3 GCFDictionary.getValues() function
+
+This function returns a GCFList of values in the dictionary
+
+\subsection gccfappserver_gcfmessage_5_4 GCFDictionary.valueOf(key) function
+
+This function returns the GCFValue associated with \c key.
+
+\subsection gccfappserver_gcfmessage_5_5 GCFDictionary.addInteger(key, val) function
+
+This function adds an integer to the list.
+
+\subsection gccfappserver_gcfmessage_5_6 GCFDictionary.addBoolean(key, val) function
+
+This function adds a boolean value to the list.
+
+\subsection gccfappserver_gcfmessage_5_7 GCFDictionary.addDouble(key, val) function
+
+This function adds a \c double (or floating point) value to the list.
+
+\subsection gccfappserver_gcfmessage_5_8 GCFDictionary.addString(key, val) function
+
+This function adds a string to the list.
+
+\subsection gccfappserver_gcfmessage_5_9 GCFDictionary.addColor(key, val) function
+
+This function adds a color to the list. \c val can be a HTML color value. Example: #f2f2f2. Values this added will be interpreted as QUrl in the server.
+
+\subsection gccfappserver_gcfmessage_5_10 GCFDictionary.addUrl(key, val) function
+
+This funtion can be used to add a URL string to the list. Values thus added will be interpreted as QUrl in the server.
+
+\subsection gccfappserver_gcfmessage_5_11 GCFDictionary.addDate(key, val), GCFDictionary.addTime(key, val) and GCFDictionary.addDateTime(key, val) functions
+
+This funtion can be used to add date, time and date-time strings to the list. Values this added will be interpreted as QDate, QTime and QDateTime in the server.
+
+\subsection gccfappserver_gcfmessage_5_12 GCFDictionary.addList(key, val) function
+
+This function can be used to add a list to this list. \c val should point to a GCFDictionary. The function doesnt concatenate the list in \c val into this list, it however things of the last item as a list. Lists added to a list will be interpreted as QList<QVariant> in the server.
+
+\subsection gccfappserver_gcfmessage_5_13 GCFDictionary.addStringList(key, val) function
+
+This function can be used to add an array of strings to the list. Values thus added will be interpreted as QStringList in the server.
+
+\subsection gccfappserver_gcfmessage_5_13 GCFDictionary.addDictionary(key, val) function
+
+This function can be used to add a dictionary to this dictionary. Values thus added will be interpreted as QMap<QString,QVariant> in the server
+
+\section gccfappserver_gcfmessage_6 GCFRequestMessage class
+
+This class helps in creating a request message for despatch to the server. The request message can contain only one web-service invocation request. Read \ref gcfappserver_authoring_gcf_web_applications_2 for more information.
+
+\subsection gccfappserver_gcfmessage_6_1 GCFRequestMessage.setObjectName(val) function
+
+This method sets the object name of the server object on which a function will be called when this request message is sent.
+
+\subsection gccfappserver_gcfmessage_6_2 GCFRequestMessage.getObjectName() function
+
+Returns the object-name set using GCFRequestMessage.setObjectName() method.
+
+\subsection gccfappserver_gcfmessage_6_3 GCFRequestMessage.setMethodName(val) function
+
+Sets the name of the method on the server-object that needs to be called when this request message is sent.
+
+\subsection gccfappserver_gcfmessage_6_4 GCFRequestMessage.getMethodName() function
+
+Returns the method name set using GCFRequestMessage.setMethodName()
+
+\subsection gccfappserver_gcfmessage_6_5 GCFRequestMessage.addIntegerArg(val) function
+
+This function adds an integer to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_6 GCFRequestMessage.addBooleanArg(val) function
+
+This function adds a boolean to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_7 GCFRequestMessage.addDoubleArg(val) function
+
+This function adds a double to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_8 GCFRequestMessage.addStringArg(val) function
+
+This function adds a string to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_9 GCFRequestMessage.addColorArg(val) function
+
+This function adds a color to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_10 GCFRequestMessage.addUrlArg(val) function
+
+This function adds a url to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_11 GCFRequestMessage.addDateArg(val) function
+
+This function adds a date to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_12 GCFRequestMessage.addTimeArg(val) function
+
+This function adds a time to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_13 GCFRequestMessage.addDateTimeArg(val) function
+
+This function adds a datetime to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_14 GCFRequestMessage.addDateTimeArg(val) function
+
+This function adds a datetime to the argument list of the GCFRequestMessage
+
+\subsection gccfappserver_gcfmessage_6_15 GCFRequestMessage.send(url, username, password) function
+
+This function sends an XML representation of meassage to the server via a POST request.  Parameters \c url, \c username and \c password are optional.
+
+\subsection gccfappserver_gcfmessage_6_16 GCFRequestMessage.onReply callback
+
+Set this parameter to a function() object that accepts as parameter a reply object. The function thus set will be called when reply to this message is received. The reply parameter passed to function will be an instance of GCFResponseMessage.
+
+\section gccfappserver_gcfmessage_7 GCFResponseMessage class
+
+This class helps in dealing with responses from the server when a request message is sent. Read \ref gcfappserver_authoring_gcf_web_applications_2 for more information.
+
+\subsection gccfappserver_gcfmessage_7_1 GCFResponseMessage.isValid() function
+
+This function is used to check whether the response message is valid or not
+
+\subsection gccfappserver_gcfmessage_7_2 GCFResponseMessage.getObjectName() function
+
+This function returns the object name of GCFResponseMessage
+
+\subsection gccfappserver_gcfmessage_7_3 GCFResponseMessage.getMethodName() function
+
+This function returns the method name of GCFResponseMessage
+
+\subsection gccfappserver_gcfmessage_7_4 GCFResponseMessage.hasResult() function
+
+This function can be used to check whether the response message's result is valid or not
+
+\subsection gccfappserver_gcfmessage_7_5 GCFResponseMessage.getResultType() function
+
+This function returns the result type of GCFResponseMessage
+
+\subsection gccfappserver_gcfmessage_7_6 GCFResponseMessage.getResult() function
+
+This function returns the result of GCFResponseMessage
+
+\subsection gccfappserver_gcfmessage_7_7 GCFResponseMessage.getErrorMessage() function
+
+This function returns the error message of GCFResponseMessage
+
+\section gccfappserver_gcfmessage_8 GCFMultiRequestMessage class
+
+This class helps in creating a request message for despatch to the server. The request message can contain several web-service invocation request. Read \ref gcfappserver_authoring_gcf_web_applications_3 for more information.
+
+\subsection gccfappserver_gcfmessage_8_1 GCFMultiRequestMessage.add(objectName, methodName, args) function
+
+This function can be used to add a methodName of objectName with argument 'args' to GCFMultiRequestMessage. Here args is an instance of GCFList. For example if there is a web-service that accepts three integer parameters, then you can
+
+\code
+var list = new GCFList;
+list.addInteger(10);
+list.addInteger(20);
+list.addInteger(30);
+
+var msg = new GCFMultiRequestMessage;
+msg.add('Component.Object', 'function', list)
+msg.onReply = function(reply) {
+    // ...
+}
+msg.send();
+\endcode
+
+\subsection gccfappserver_gcfmessage_8_2 GCFMultiRequestMessage.onReply callback
+
+Set this parameter to a function() object that accepts as parameter a reply object. The function thus set will be called when reply to this message is received. The reply parameter passed to function will be an instance of GCFMultiResponseMessage.
+
+\subsection gccfappserver_gcfmessage_8_3 GCFMultiRequestMessage.send(url, username, password) function
+
+This function sends an XML representation of the message to the server via a POST request. Parameters \c url, \c username and \c password are optional.
+
+\section gccfappserver_gcfmessage_9 GCFMultiResponseMessage class
+
+This class helps in dealing with responses from the server when a request messag was sent. Read \ref gcfappserver_authoring_gcf_web_applications_3 for more information
+
+\subsection gccfappserver_gcfmessage_9_1 GCFMultiResponseMessage.isValid() function
+
+This function is used to check whether GCFMultiResponseMessage is valid or not
+
+\subsection gccfappserver_gcfmessage_9_2 GCFMultiResponseMessage.hasResult(objectName, methodName) function
+
+This function is used to check whether the result of methodName in the object specified by objectName is valid or not.
+
+\subsection gccfappserver_gcfmessage_9_3 GCFMultiResponseMessage.getResultType(objectName, methodName) function
+
+This function returns the result type of methodName in the object specified by objectName.
+
+\subsection gccfappserver_gcfmessage_9_4 GCFMultiResponseMessage.getResult(objectName, methodName) function
+
+This function returns the result of methodName in the object specified by objectName.
+
+*/
+
+/**
+\page gcfappserver_examples_and_casestudies Examples and Case Studies
+
+\section gcfappserver_examples_and_casestudies_1 GCF Application Server Examples
+
+Click on the following links to take a look at a few examples that come bundled with GCF
+
+\li \ref simplewebservice
+\li \ref fractalservice
+\li \ref dicomservice
+
+\section gcfappserver_examples_and_casestudies_2 SequelWeb - A Case Study
+
+SEQUEL (A Solver for circuit EQuations with User-defined ELements) is a general-purpose simulation package developed at IIT Bombay. It has been extensively used for R and D activities at IIT Bombay. Recently, several examples in electronics and power electronics have been added to the package, making it attractive for teaching purposes. Further information about SEQUEL can be found on its official website here: http://www.ee.iitb.ac.in/~sequel/. 
+
+SEQUEL also comes with a package called SEQUEL GUI that helps users in interactively create and edit circuits for simulation using SEQUEL.
+
+\image html gcfas_image28.png
+
+SEQUEL Web is a web application that allows you to view and explore circuit files created using SEQUEL GUI. Shown below are a few screenshots of SequelWeb in action.
+
+\image html gcfas_image29.png "A circuit being loaded in the web-application"
+\image html gcfas_image30.png "Output being visualized as a graph in the web-application"
+
+Visit http://apps.vcreatelogic.com/SequelWeb to catch a glimpse of this web-application. The copyright of this application rests with IIT Powai, Mumbai, India. For this reason, VCreate Logic cannot share the source code of the server components and/or the web-application itself.
+
+[Next: \ref gcfappserver_qtcreator] [Up: \ref gcfappserver]
+
+*/
+
+/**
+\page gcfappserver_qtcreator Writing server components using Qt Creator
+
+Creating a server component using Qt Creator, is just as simple as creating a GCF Component using Qt Creator. GCF comes bundled with a wizard for Qt Creator that will help make creation of GCF Server Component from a template easy. Just copy and 
+paste tne \c gcfservercomponent folder from \c $GCFDIR/tools/QtCreatorWizards to any of the following folders
+
+\li \c $QT_CREATOR_INSTALL_DIRECTORY/share/qtcreator/templates/wizards
+\li \c $HOME/.config/Nokia/qtcreator/templates/wizards
+\li \c %APPDATA%\\Nokia\\qtcreator\\templates\\wizards (On Windows Only)
+
+After copy/pasting the folders; restart Qt Creator. When you select File -> New you will be able to see a new project type category called "GCF Server Component" in the "GCF Projects" category.
+
+\image html gcfas_image32.png
+
+\section gcfappserver_qtcreator_1 Text Image Server - An example
+
+For the purpose of understanding how to use Qt Creator for creating GCF Application Server based web-services, let's consider the following example:
+
+\htmlonly
+<div style="margin: 20px; border: 1px; border-style: solid;">
+We want a web-service that accepts a string as parameter and returns an image that contains the string printed in a fancy way. Suppose we pass as parameter to the web-service a string called "Components", it would return an image as shown here
+\endhtmlonly
+
+\image html gcfas_image31.png
+
+\htmlonly
+</div>
+\endhtmlonly
+
+As a Qt developer, you would know how simple it is to create the above image using classes like QPainter, QImage, QPainterPath and QLinearGradient. With GCF Application Server, you can now use your competence in Qt to create the above functionality and gave GCFApplicationServer offer access to your functionality for access and display on  on a web-browser.
+
+\section gcfappserver_qtcreator_2 Creating the server component
+
+Start Qt Creator and create a GCF Server Component by name \c TextToImageService. The following screenshots show you the steps to take in order to create the server-component.
+
+\image html gcfas_image32.png "Select File->New to see this dialog. Select GCF Server Component and click Next"
+
+\image html gcfas_image33.png "Enter project name as TextToImageService. Click Next"
+
+\image html gcfas_image34.png "Click Finish"
+
+\image html gcfas_image35.png "The server-component code is generated and opened in Qt Creator"
+
+\section gcfappserver_qtcreator_3 Implementing the toImage() service in the server-component
+
+Next, lets declare a function called \c toImage() in the \c TextToImageService class.
+
+\code
+#include <QImage>
+
+struct TextToImageServiceData;
+class TextToImageService : public GCF::AbstractComponent
+{
+    Q_OBJECT
+    GCF_DECLARE_COMPONENT(TextToImageService)
+
+public:
+    // ...
+    
+    Q_INVOKABLE QImage toImage(const QString& text) const;
+
+    // ...
+};
+\endcode
+
+This function is implemented as follows
+
+\code
+#include <QPainter>
+#include <QPainterPath>
+#include <QLinearGradient>
+#include <QFont>
+
+QImage TextToImageService::toImage(const QString& text) const
+{
+    QFont font("Times New Roman", 36);
+    font.setBold(true);
+
+    QPainterPath path;
+    path.addText(0, 0, font, text);
+
+    QRect pathRect = path.boundingRect().toRect().adjusted(-10, -10, 10, 10);
+
+    QImage image(pathRect.size(), QImage::Format_ARGB32);
+    image.fill(Qt::color0);
+
+    QLinearGradient gradient(pathRect.topLeft(), pathRect.topRight());
+    gradient.setColorAt(0, Qt::red);
+    gradient.setColorAt(0.5, Qt::blue);
+    gradient.setColorAt(1, Qt::green);
+
+    QPainter paint(&image);
+    paint.setRenderHint(QPainter::Antialiasing);
+    paint.translate(10, image.height()-10);
+    paint.setBrush(QBrush(gradient));
+    paint.drawPath(path);
+    paint.end();
+
+    return image;
+}
+\endcode
+
+Notice that the GUIXML file (\c TextToImageService.xml) generated by QtCreator marks both the component and the \c TextToImageService.Core object is marked as remotely accesible.
+
+\verbatim
+<component name="TextToImageService" allowRemoteAccess="true" >
+
+    <object name="Core" 
+            allowRemoteAccess="true" 
+            allowRemoteMethodInvocation="true" />
+
+</component>
+\endverbatim
+
+Also, notice that the \c TextToImageService.Core complete name is mapped on to the of the \c TextToImageService component.
+
+\code
+QObject* TextToImageService::fetchObject(const QString &completeName) const
+{
+    if(completeName == "TextToImageService.Core")
+        return const_cast<TextToImageService*>(this);
+
+    return 0;
+}
+\endcode
+
+After saving the above changes, just compile the component and notice that the binary (DLL or SO file) gets created in the Binary folder of the server-component-project directory.
+
+\section gcfappserver_qtcreator_4 Registering the TextToImageService component with GCFApplicationServer
+
+You can find \c GCFApplicationServer executable in the \c $GCFDIR/bin folder. Within that folder is a \c GCFApplicationServer-GUIXML where the \c GCFApplicationServer looks for GUIXML files. The \c $GCFDIR/bin/GCFApplicationServer-GUIXML/GCFApplicationServer.xml is the ApplicationXML file for \c GCFApplicationServer. Edit this file and include the following line in there
+
+\verbatim
+<Application>
+
+    <Components>
+    
+        <!-- .... -->
+    
+        <Component Name="TextToImageService"
+                   Library="C:/Work/Research/TextToImageService/Binary/TextToImageService" />
+    
+        <!-- .... -->
+        
+    </Components>
+
+</Application>
+\endverbatim
+
+Notice how we are specifying the full path of the server-component DLL/SO file in the \c Library attribute to \c Component. Save the changes to \c GCFApplicationServer.xml and launch \c $GCFDIR/bin/GCFApplicationServer. 
+
+\note If you have compiled the server-component in debug mode (the default), launch \c $GCFDIR/bin/GCFApplicationServerd.exe on Windows or \c $GCFDIR/bin/GCFApplicationServerd on Linux. This is because \c GCFApplicationServerd is a version of application-server compiled in debug mode and it can only load components that have also been compiled in debug mode.
+
+Once you launch the application-server, you can notice an icon on the system tray that indicates that the application-server is running.
+
+\image html gcfas_image18.png
+
+If you click on the system-tray icon, you can see the GCFApplicationServer window with a tree display of all loaded server-components and their objects. Clicking on any of the objects will give you a brief description of the service methods available in them.
+
+\image html gcfas_image42.png
+
+\note Closing the GCFApplicationServer window will not quit the application server. To quit the application server, you will need to right click on the system-tray icon and select "Quit".
+\image html gcfas_image44.png
+
+You can now implement a HTML web-application to access the \c toImage() function offered by this server component. Read \ref gcfappserver_authoring_gcf_web_applications for more information.
+
+[Next: \ref gcfappserver_rest] [Up: \ref gcfappserver]
+*/
+
+/**
+\page gcfappserver_rest CleanURL / RESTful access to web-services
+
+With GCF version 2.6.0, we have added support for calling methods (on objects hosted in GCF Application Server) using CleanURLs. CleanURLs make it easy to show results of web-service calls within a larger HTML document quite easily. One will not have to deal with or even know of AJAX to fetch and show web-service call results.
+
+In the chapter on \ref gcfappserver_authoring_gcf_server_components, we demonstrated how one can \ref gcfappserver_authoring_gcf_server_components_5_6 "author interactive web-applications" to dynamically call web-services and show their results on the web-page. In this chapter we will see how we can make explicit calls to the web-service without having to use JavaScript. 
+
+In the chapter on \ref gcfappserver_authoring_gcf_server_components we have written a \ref gcfappserver_authoring_gcf_server_components_5 "Fractal Generator Web-Service" that enables us to request for fractal images at different depths of iterations. 
+
+\image html gcfas_image19.png
+
+Hitherto, we were making calls to the \c FractalGeneratorService.MengerSquare object's \c generateFractal method using the \ref gcfappserver_authoring_gcf_web_applications_2 "GCFRequestMessage class from GCFMessage.js". With GCF 2.6.0, we can can issue a HTTP request to the web-service directly by constructing a CleanURL. CleanURLs are constructed in the following format
+
+\code
+http://{host}:{port}/{component-name}.{object-name}.{method-name}/{param-1}/{param-2}/{param-3}....
+\endcode
+
+So - if we wanted to invoke the generateFractal method with parameters 3 (\c iterationCount) and 400 (\c imageSize), we can construct the following CleanURL
+
+\code
+http://localhost:4232/FractalGeneratorService.MengerSquare.generateFractal/3/400
+\endcode
+<b><i>Note: Here we assume that GCF Application Server is hosted locally. If not, you can replace localhost with the domain name of the server where GCF Application Server is hosted.</i></b>
+
+When we open the above URL in a browser, we get the following response. <i>We have clipped base-64 image data below</i>
+
+\code
+<GCFMessage Type="3863" Timestamp="Tue Jan 17 13:47:50 2012">
+ <MessageID>0</MessageID>
+ <ObjectName>FractalGeneratorService.MengerSquare</ObjectName>
+ <MethodName>generateFractal</MethodName>
+ <Success>true</Success>
+ <Result>
+  <Variant Type="QImage">data:image/png;base64;charset=utf-8,.....</Variant>
+ </Result>
+ <CustomData/>
+ <SessionID>-1</SessionID>
+</GCFMessage>
+\endcode
+
+If we are only interested in the result and not the complete GUIXML message, we can modify the URL as follows
+
+\code
+http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/3/400
+\endcode
+
+Notice the use of "RESULT" in the URL above. We we open the above URL in a browser, we get the following response. 
+
+\image html gcfas_image36.png
+
+So, if you wanted to display menger square fractals at different iterations in a table;  we can use the following HTML code.
+
+\code
+<html><body>
+<table>
+<tr>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/1/200"></td>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/2/200"></td>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/3/200"></td>
+</tr>
+<tr>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/4/200"></td>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/5/200"></td>
+	<td><img src="http://localhost:4232/RESULT/FractalGeneratorService.MengerSquare.generateFractal/6/200"></td>
+</tr>
+</table>
+</body></html>
+\endcode
+
+When the above HTML file is opened in a browser, we can see the following result.
+
+\image html gcfas_image37.png
+
+[Next: \ref gcfappserver_roadmap] [Up: \ref gcfappserver]
+*/
+
+/**
+\page gcfappserver_roadmap Roadmap - What lies ahead!
+
+GCFApplicationServer is a relatively new module in GCF, and there is still a good lot of ground to cover. However at this point it is already usable for mid-to-large server components. We at VCreate Logic are committed to making it an application server of choice for Qt developers. Currently GCF Application Server creates the possibility of using Qt for writing server components. Going forward we want to ensure that the server can scale. In this chapter we would like to outline the roadmap for GCFApplicationServer, so that you know where we are headed.
+
+With version 2.5, GCFApplicationServer initially launches itself in a request broker mode and then launches several other instances of GCFApplicationServer in request handler-mode. Requests from the browser, received by the broker, are forwarded to the request-handlers which then handle the request and send a reply which is then relayed back to the browser. The diagram below captures the new architecture.
+
+\image html gcfas_image53.png
+
+Not only does GCFApplicationServer do this for requests sent from browser applications, it also does the same for requests sent from any other native Qt/GCF desktop applications. This means that you can now author server components that can simultaneously be accessed from both the browser and desktop applications.
+
+\section gcfappserver_roadmap_2 Load Balancing using multiple systems
+
+A natural next step of the above architecture would be to have the request-broker manage a whole bunch of child processes on different systems. GCF already has an excellent IPC infrastructure. Together with GCF Application server, we can have a setup where the request-broker can function on one computer in a LAN and it can relay requests to child processes launched on the same computer or on any other computer within the LAN!
+
+\image html gcfas_image54.png
+
+An architecture like this calls for specialized configuration mechanisms to help configure the systems that can (or will) be used for distribution of "load". Given GCF's powerful GUIXML technology, it would be easily possible to come up with configuration mechanisms.
+
+We will have the above architecture implemented and ready for use by July 2012.
+
+We look forward to hearing feedback from you about GCF Application Server. Do write to us at support@vcreatelogic.com.
+
+[Up: \ref gcfappserver]
+ 
+*/

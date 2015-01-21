@@ -1,0 +1,6 @@
+<component name="HelloQML">
+
+    <qml src="HelloQML.qml" title="Hello QML" parentWidget="MainWindowComponent.workspace" />
+
+</component>
+

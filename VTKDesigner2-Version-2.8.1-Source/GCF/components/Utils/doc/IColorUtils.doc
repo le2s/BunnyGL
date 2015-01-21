@@ -1,0 +1,47 @@
+/**
+\ingroup utilscomponent 
+\interface IColorUtils GCF/Utils/IColorUtils
+\brief This interface provides access to a few simple color manipulation routines
+*/
+
+/**
+\fn virtual QColor IColorUtils::randomColor(const QPair<qreal,qreal>& redRange = qMakePair(0.0,1.0),
+										   const QPair<qreal,qreal>& greenRange = qMakePair(0.0,1.0),
+										   const QPair<qreal,qreal>& blueRange = qMakePair(0.0,1.0),
+										   const QPair<qreal,qreal>& alphaRange = qMakePair(1.0,1.0)) = 0
+
+This function generates a random color whose red, green, blue and alpha values are in the range specified by
+\c redRange, \c greenRange, \c blueRange and \c alphaRange.										   
+*/
+
+/**
+\fn QColor IColorUtils::randomColor(qreal rStart, qreal rEnd, qreal gStart, qreal gEnd, qreal bStart, qreal bEnd, qreal aStart, qreal aEnd) 
+
+Same as 
+\code
+randomColor(qMakePair(rStart,rEnd), qMakePair(gStart,gEnd), qMakePair(bStart,bEnd), qMakePair(aStart,aEnd));
+\endcode
+*/
+
+/**
+\fn QColor IColorUtils::randomColor(const QColor& start, const QColor& end) 
+
+Same as
+
+\code
+qreal rStart, gStart, bStart, aStart;
+qreal rEnd, gEnd, bEnd, aEnd;
+start.getRgbF(&rStart, &gStart, &bStart, &aStart);
+end.getRgbF(&rEnd, &gEnd, &bEnd, &aEnd);
+return randomColor(rStart, rEnd, gStart, gEnd, bStart, bEnd, aStart, aEnd);
+\endcode
+
+*/
+
+/**
+\fn virtual QColor IColorUtils::interpolatedColor(qreal value, const QColor& start, const QColor& end) = 0
+
+Returns a linearly interpolated color between \c start and \c end. \c value must be a value between 0 and 1. If \c value is 0
+then \c start is returned. If \c value is 1 then \c end is returned. For all values a color is interporated between
+\c start and \c end.
+*/

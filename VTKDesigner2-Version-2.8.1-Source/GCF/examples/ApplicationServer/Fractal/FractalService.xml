@@ -1,0 +1,9 @@
+<component name="FractalService" allowRemoteAccess="true">
+
+    <object name="MengerSquareFractal" allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true" />
+
+    <object name="SierpinskiTriangleFractal" allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true" />
+
+</component>

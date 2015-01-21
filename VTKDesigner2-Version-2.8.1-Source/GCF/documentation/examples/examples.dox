@@ -1,0 +1,37 @@
+/**
+\page examples GCF Examples
+
+GCF includes a set of examples that explains nearly every aspect of GCF. These examples are the best way to explore key aspects of GCF.
+The examples are not meant to be jazzy and/or impressive when run (although some examples might impress you), but they are meant to 
+help you understand one or more concepts in GCF.
+
+We encourage you to take a look at the examples in the following order
+
+\section examples_1 Getting Started
+
+\li \subpage simplegcfexample
+
+\section examples_2 IPC - Inter Process Communication
+
+\li \subpage ipc_tictactoe
+\li \subpage ipc_simpleirc
+
+\section examples_3 Software Updater Module
+
+\li \subpage example_updater
+
+\section examples_4 Web Services and Web Applications
+
+\li \subpage simplewebservice
+\li \subpage fractalservice
+\li \subpage dicomservice
+
+\section examples_5 Extending GUIXML File Format
+
+\li \subpage extending_guixml_example
+
+\section examples_6 Using QML with GCF
+
+\li \subpage example_qml_simple
+
+*/

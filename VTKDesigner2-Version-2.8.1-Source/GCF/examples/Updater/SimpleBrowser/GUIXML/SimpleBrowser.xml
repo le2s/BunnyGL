@@ -1,0 +1,8 @@
+<Application>
+
+    <Components>
+        <!-- Load none here. Updated components are loaded from 
+             the ComponentLoaderComponent.xml -->
+    </Components>
+
+</Application>

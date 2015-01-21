@@ -1,0 +1,58 @@
+<html>
+
+<head><title>Web-Application for SimpleWebService component</title></head>
+
+<body>
+
+<h1>Web-Application for SimpleWebService component</h1>
+
+<p>Please ensure that GCFApplicationServer is running and that the SimpleWebService.Core 
+object is listed as an available object in the application server</p>
+
+<img src="images/simple.jpg">
+
+<p>Enter some text in the text-box below and click on the "To Upper" button to 
+issue a call to the toUpper() service method in SimpleWebService.Core. Upon recepit
+of the response, the result is show in the result box below. This web-application
+also shows the request XML message sent and the response XML message received.</p>
+
+Enter some text here: <input type="text" id="inputString"></input> <button onclick="callToUpper()">To Upper</button>
+<div id="result" style="width: 100%; height: 30px; border-color: #00000; border: 1px; border-style: solid; padding: 4px;"></div>
+
+<br/>
+
+<p>Request XML Message</p>
+<div id="requestXML"></div>
+
+</body>
+
+<script language="Javascript" src="scripts/GCFMessage.js"></script>
+
+<script>
+GCFServerSideScript = "scripts/GCFApplicationServer.php";
+
+function callToUpper() {
+	var text = document.getElementById("inputString").value;
+
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("SimpleWebService.Core");
+	msg.setMethodName("toUpper");
+	msg.addStringArg( text );
+	msg.onReply = function(reply) {
+		if(!reply.isValid() || !reply.hasResult()) {
+			document.getElementById("result").innerHTML = "Could not fetch result!";
+			return;
+		}
+
+		// Returned value is a QString
+		document.getElementById('result').innerHTML = reply.getResult();
+	}
+	
+	document.getElementById("requestXML").innerText = msg.toXML();
+	
+	msg.send();
+}
+</script>
+
+</html>
+

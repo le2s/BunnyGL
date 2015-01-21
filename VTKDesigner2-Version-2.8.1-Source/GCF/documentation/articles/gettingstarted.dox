@@ -1,0 +1,253 @@
+/**
+\page gettingstarted Getting started with GCF
+
+You can create GCF applications and components using Qt Creator or any-other IDE. GCF is just another Qt library, so
+you can use \c qmake and all of Qt tools and APIs along with GCF. At the most fundamental level, GCF is a plugin framework
+for Qt. Qt already provides a framework for creation and loading of plugins. However, GCF takes it one step forward by
+offering GUI merging and plugin management. In the following sections certian core concepts of GCF's component model
+are explained with the help of an example.
+
+\note The complete source code of the example discussed in this article is available in  \c $GCFDIR/examples/Simple.
+
+Click on the following links to quickly jump to a section
+
+\li \ref gettingstarted_concepts
+\li \ref gettingstarted_example
+\li \ref gettingstarted_component1
+\li \ref gettingstarted_component2
+
+\section gettingstarted_concepts Key Concepts
+
+The GCF component model is built on the following key concepts:
+
+\li In the GCF world, plugins are called "GCF components". Each component either shows up as a DLL/shared-object file on the 
+disk or is statically initialized by the application. Each GCF component is represented by a class, which is subclassed
+from GCF::AbstractComponent.
+
+\li Components are loaded by an application, which is called as "GCF Application". The key thing about a GCF Application
+is that it offers a "application-container-widget" into which widgets, menu-items and toolbar items, offered by the 
+GCF components it loads, are merged into. Typically the "application-container-widget" is offered by a static GCF Component
+in the application. This static GCF component is referred to as "container-component".
+
+\li A GCF Application must be accompanied by an XML file called as the ApplicationXML file. This XML file contains information
+about the components that must be loaded by the application. It also contains key configuration parameters for the 
+software-updater and IPC modules. It could also potentially contain certain custom but application or component-specific 
+parameters, but more on that later.
+
+\li A XML file must and should accompany every GCF component. This XML file is called as GUIXML. It lists the objects and widgets 
+offerred by a GCF component. For every object and/or widget, the GUIXML could also specify how the object/widget must "merge" with 
+the already existing UI in the "application-container-widget" offered by GCF Application.
+
+\section gettingstarted_example Simple GCF Application example
+
+Lets create a simple GCF application that initializes a static GCF Component, which offers a \c QWidget with a \c QVBoxLayout as 
+"application-container-widget". Take a look at the "container-component" class definition below. Pay attention to the comments
+in the code listing below.
+
+\includelineno Simple/Application/ApplicationContainerComponent.h
+
+Next, lets take a look at implementation of the \c ApplicationContainerComponent class. Again, pay attention to the comments
+in the code listing below.
+
+\includelineno Simple/Application/ApplicationContainerComponent.cpp	
+
+Notice how we are specifying the "container-component" name and load its GUIXML file from the Qt Resource File System in 
+\c initializeComponent() [Line 65 and 66]. Also notice how we are setting the "application-container-widget" as a simple 
+\c QWidget with a \c QVBoxLayout in the constructor [Line 33-37]. The \c addChildWidget() and \c removeChildWidget()
+methods help with the GUI merging process. The \c fetchObject() and \c fetchWidget() methods help with resolving names
+to object/widget pointers.
+
+Next, lets take a look at the GUIXML file associated with the "container-component". Again, pay attention to the comments.
+Name of the GUIXML file is ApplicationContainer.xml. It is loaded from a resource file by the component. Refer to line
+66 in the code listing for \c ApplicationContainerComponent above.
+
+\verbinclude Simple/Application/ApplicationContainer.xml
+
+The GUIXML file has a root XML element called \c component. Within this root XML element it has two child XML elements 
+called \c object and \c widget. While the the \c object XML element is being processed, GCF picks the name of the object
+from the XML element ("Core" in this case) and constructs a complete-name of the object name by prefixing the component
+name to it ("ApplicationContainer.Core" in this case). The complete-name is then passed to the \c fetchObject() method 
+of the \c ApplicationContainerComponent class, which is implemented as follows
+
+\code
+QObject* ApplicationContainerComponent::fetchObject(const QString &completeName) const
+{
+    if(completeName == "ApplicationContainer.Core")
+        return const_cast<ApplicationContainerComponent*>(this);
+
+    return 0;
+}
+\endcode
+
+The \c QObject pointer returned by \c fetchObject() method is then mapped on to the complete-name "ApplicationContainer.Core". 
+From this point on, wherever the name "ApplicationContainer.Core" is used in GUIXML; it will always refer to the \c QObject
+returned by \c fetchObject() - in this case it happens to be the instance of \c ApplicationContainerComponent class.
+
+Similarly, when the \c widget XML element is being processed the \c fetchWidget() method is called in \c ApplicationContainerComponent.
+The value returned by the \c fetchWidget() method will be mapped to complete-name "ApplicationContainer.Container".
+
+As described in \ref gettingstarted_concepts, the "container-component" is statically initialized by the GCF application. 
+Lets now take a look at the \c main() function for this GCF Application and notice how the "container-component" 
+(ApplicationContainerComponent in this example) is registered using \c GCF_REGISTER_COMPONENT macro and initialized
+explicitly.
+
+\includelineno Simple/Application/Main.cpp
+
+Notice how we are making use of GCF::Application class instead of QApplication. It is very important that you use 
+\ref GCF::Application class instead of QApplication while creating GCF Applications, because a bunch of really important
+GCF static variables are initialized by this class. GCF::Application inherits from QApplication, so you can use it like
+QApplication! Infact, we also provide a \c gApp macro to help you dereference the only instance of \c GCF::Application 
+a GCF Application. 
+
+Next, lets take a look at the ApplicationXML file for this application.
+
+\includelineno Simple/Application/SimpleApplication.xml
+
+Notice how the XML file declares that two components by name \c Component1 and \c Component2 must be loaded. We will
+take a look at these components in the next section.
+
+Finally, lets now look at the QMake project file for the entire application.
+
+\htmlonly
+<pre>
+TEMPLATE = app
+TARGET = SimpleApplication
+CONFIG += gcf_app
+
+SOURCES += \
+    Main.cpp \
+    ApplicationContainerComponent.cpp
+
+HEADERS += \
+    ApplicationContainerComponent.h
+
+OTHER_FILES += \
+    ApplicationContainer.xml \
+    SimpleApplication.xml
+
+RESOURCES += \
+    Application.qrc
+</pre>
+\endhtmlonly
+
+Notice the use of <code>CONFIG += gcf_app</code> in the project file. For the above line to work you will have to 
+setup the environment variable \ref QMAKEFEATURES as described in \ref installation_windows_postcompile or 
+\ref installation_linux_postcompile. Essentially, when qmake processes the \c CONFIG line, it looks for a file
+called gcf_app.prf in \c QMAKEFEATURES folder. If it finds one, then it processes the contents of that file 
+as though it was inline-included here. \c gcf_app.pri contains the configuration required for compiling your 
+application as a GCF Application.
+
+\section gettingstarted_component1 Component1 - A GCF Component that offers QCalendarWidget
+
+In the previous section (\ref gettingstarted_example) we looked at how a "GCF Application" can be written to statically
+instantiate a "container-component" that offers a "application-container-widget". In this section we will look at how a GCF 
+Component can be written. This GCF component will be loaded by the GCF Application written in the previous section.
+
+First lets look at the component class declaration. 
+
+\includelineno Simple/Component1/Component1.h
+
+The class declaration was quite simple. \c Component1 is declared to be a subclass of GCF::AbstractComponent and it 
+implements a few virtual methods from the base class. Lets now look at the implementation of \c Component1. Pay
+attention to the comments in the code listing below.
+
+\includelineno Simple/Component1/Component1.cpp
+
+The last line in the code-listing above is very important. The \c GCF_EXPORT_COMPONENT_PLUGIN macro generates code
+required for GCF to instantiate \c Component1 from its DLL or shared object file. 
+
+Next, lets take a look at the GUIXML file for \c Component1.
+
+\verbinclude Simple/Component1/Component1.xml
+
+Notice how the \c <widget> XML element requests for a widget by name \c Calendar to be placed on a widget 
+by name \c ApplicationContainer.Container. As this XML element is being processed by GCF, the following things happen
+
+\li First \c Component1:fetchWidget() method is called with "Component1.Calendar" as parameter. \c Component1:fetchWidget()
+method is implemented as follows
+\code
+QWidget* Component1::fetchWidget(const QString &completeName) const
+{
+    if(completeName == "Component1.Calendar")
+    {
+        if(!d->calendar)
+            d->calendar = new QCalendarWidget;
+
+        return d->calendar;
+    }
+
+    return 0;
+}
+\endcode
+\li GCF then maps the \c QCalendarWidget widget instance returned by \c Component1::fetchObject() to the 
+complete-name "Component1.Calendar".
+\li GCF then looks at the \c parentWidget attribute of the \c widget XML element. Its value is \b ApplicationContainer.Container.
+This complete-name was mapped to "application-container-widget" by ApplicationContainerComponent. Because
+\b ApplicationContainer.Container is owned by the ApplicationContainerComponent class; it then requests 
+\c ApplicationContainerComponent::addChildWidget() method to show the calendar widget on its widget. This method is 
+implemented as follows
+\code
+void ApplicationContainerComponent::addChildWidget(QWidget *parent, QWidget *child, const QString &hint)
+{
+    Q_UNUSED(hint);
+
+    if(parent == d->container)
+    {
+        if(child)
+            d->container->layout()->addWidget(child);
+    }
+}
+\endcode
+As you can see, the \c addChildWidget() method basically adds the \c child (the calendar widget in this case)
+to the layout of the \c parent (the application-container-widget in this case). 
+
+This is how the GUI merging is done.
+
+Since we want the GUIXML file for Component1 to be made available via the Qt Resource System [Line 31 and 32 of 
+Component1's class implementation], we will need the following resource file.
+
+\verbinclude Simple/Component1/Component1.qrc
+
+Next, lets take a look at Component1's project file.
+
+\htmlonly
+<pre>
+TEMPLATE = lib
+TARGET = Component1
+CONFIG += gcf_component 
+
+HEADERS = Component1.h
+SOURCES = Component1.cpp
+OTHER_FILES = Component1.xml
+RESOURCES = Component1.qrc
+</pre>
+\endhtmlonly
+
+Notice the use of <code>CONFIG += gcf_component</code> in the project file above. As explained previously, this line
+causes qmake to look for \c $QMAKEFEATURES/gcf_component.prf and include its contents inline within this project file. 
+\c $QMAKEFEATURES/gcf_component.prf contains configuration options for compiling the project and generating a 
+GCF Component. 
+
+\note DLL or shared object file generated as a result of compiling this project must be loadable by the GCF Application
+which intents to load it. This means that the DLL or shared-object file must be \c %PATH% or \c $LD_LIBRARY_PATH.
+
+\section gettingstarted_component2 Component2 - A GCF Component that offers QDial
+
+\c Component2 is very similar to \c Component1. The only difference is that \c Component2 "exposes" a \c QDial widget 
+instance instance of \c QCalendarWidget widget instance. We wont be looking into the implementation of Component2
+here, please refer to the source code in the \c $GCFDIR/examples/Simple/Component1 folder.
+
+\section gettingstarted_result Launching the GCF application
+
+When the GCF Application is launched, we can see the following output
+
+\image html example_simple.png
+
+Notice how the \c QCalendarWidget and \c QDial widgets are shown on "application-container-widget".
+
+\section gettingstarted_summary Summary
+
+We encourage you to write the above application and components yourself by referring to this page and experience the 
+process of writing GCF application from scratch. Once you get a hang of the basic concepts, you will be able to easily
+export other functionality and modules of GCF.
+*/

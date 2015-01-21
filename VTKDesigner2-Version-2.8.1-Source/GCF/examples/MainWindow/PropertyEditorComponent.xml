@@ -1,0 +1,18 @@
+<component name="PropertyEditorComponent">
+
+    <!-- PropertyEditorComponent.controller maps to an instance of the
+         component class -->
+    <object name="controller" />
+
+    <!-- PropertyEditorComponent.propertyEditor maps to an instance of the
+         main property-editor widget offered by the component.
+
+         Notice how we request GCF to merge this widget on to the right
+         dock widget area of the application-container-widget,
+         which is GCF's standard main-window in this case. -->
+    <widget name="propertyEditor" title="Property Editor"
+            scriptName="PropertyEditor"
+            parentWidget="MainWindowComponent.rightDockArea" />
+
+</component>
+

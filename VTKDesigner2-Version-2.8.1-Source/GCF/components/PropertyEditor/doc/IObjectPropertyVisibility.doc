@@ -1,0 +1,67 @@
+/**
+\ingroup propertyeditorcomp
+\interface IObjectPropertyVisibility IObjectPropertyVisibility 
+\brief This interface can be implemented to hide certain properties in the property editor.
+
+Sometimes you may have several properties declared for your QObject subclass. However,
+you may not want all of those properties to be visible for editing in the propert-editor.
+In such cases you can implement this interface and control the visibility of properties
+in the property editor.
+
+For example, take a look at the code below.
+
+\code
+class MyWidget : public QWidget, virtual public IObjectPropertyVisibility,
+                                 virtual public IEditableProperties
+{
+    Q_OBJECT
+    Q_INTERFACES(IObjectPropertyVisibility IEditableProperties)
+    
+public:
+    MyWidget(QWidget* parent) : QWidget(parent) { }
+    ~MyWidget() { }
+    
+    // IContainer implementation
+    QObject* containerObject() { return this; }
+    
+    // IObjectPropertyVisibility
+    bool isQPropertyVisible(int qPropertyIndex) const { 
+        QMetaProperty prop = this->metaObject()->property(qPropertyIndex);
+        // now decide whether or not to show the property
+        if( condition(prop) )
+            return true;
+            
+        return false;
+    }
+    
+    bool isEditablePropertyVisible(int ePropertyIndex) const {
+        IEditableProperties* props = (IEditableProperties*)(const_cast<MyWidget*>(this));
+        QString propName = props->propertyName(ePropertyIndex);
+        
+        // now decide whether or not to show the property
+        if(condition(propName))
+            return true;
+            
+        return false;
+    }
+};
+\endcode
+*/
+
+/**
+\fn bool IObjectPropertyVisibility::isQPropertyVisible(int qPropertyIndex) const = 0;
+
+This function is called to figure out whether the Qt property at \c qPropertyIndex
+should be shown in the property editor or not.
+*/
+
+/**
+\fn virtual bool IObjectPropertyVisibility::isEditablePropertyVisible(int ePropertyIndex) const = 0;
+
+This function is called to figure out whether the editable-property (\ref IEditableProperties) 
+at \c ePropertyIndex should be shown in the property editor or not.
+*/
+
+
+
+

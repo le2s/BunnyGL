@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="project"
+        class="qt4project" firstpage="10"
+        id="A.GCFApplication" category="B.GCFProjects">
+    <icon>vcl-gcf.png</icon>
+    <description>Creates a GCF Application project that uses the built-in main-window container</description>
+    <displayname>GCF Application</displayname>;
+    <displaycategory>GCF Projects</displaycategory>
+    <files>
+        <file source="Main.cpp" openeditor="true"/>
+        <file source="Application.pro" target="%ProjectName%.pro" openproject="true"/>
+		<file source="Application.xml" target="%ProjectName%.xml" />
+		<file source="MainWindowComponent.xml" target="MainWindowComponent.xml" />
+    </files>
+</wizard>

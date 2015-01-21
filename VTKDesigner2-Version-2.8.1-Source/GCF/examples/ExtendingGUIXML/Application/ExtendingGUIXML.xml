@@ -1,0 +1,9 @@
+<Application>
+
+    <Components>
+        <!-- Load components here.. -->
+        <Component Name="Component1" Library="ExtendingGUIXMLComponent1" />
+        <Component Name="Component2" Library="ExtendingGUIXMLComponent2" />
+    </Components>
+
+</Application>

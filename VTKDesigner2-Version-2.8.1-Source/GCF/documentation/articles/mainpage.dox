@@ -1,0 +1,75 @@
+/**
+\mainpage Generic Component Framework (GCF)
+
+GCF is an application framework library built using Qt 4.7.4+. Using GCF, you can create highly extensible and maintainable 
+software applications. In addition to this, GCF also enables developers to do communicate with other GCF applications by
+means of remote signal/slot connections and asynchronous remote method calls (IPC). GCF components can be hosted on 
+GCF Application Server and accessed by remote desktop and/or HTML web-applications. 
+
+\htmlonly
+<center>
+<table width="90%">
+<tr>
+<td valign="top">
+\endhtmlonly
+\section mainpage_devguide GCF Developer Guide
+\li \subpage installation
+\li \subpage gettingstarted
+\li \subpage componentarch
+\li \subpage gcfwithqtcreator
+\section mainpage_appserv GCF Application Server
+\li \subpage gcfappserver "GCF Application Server Guide"
+\htmlonly
+</td>
+<td valign="top">
+\endhtmlonly
+\section mainpage_articles Articles
+\li \subpage guixmlref
+\li \subpage extending_guixml
+\li \subpage qmlsupport
+\li \subpage kparts
+\li \subpage activex
+\li \subpage ipcarch
+\li \subpage updaterarch
+\li \subpage loggermechanisms
+\htmlonly
+</tr>
+</tr>
+<tr>
+<td valign="top">
+\endhtmlonly
+\section mainpage_api GCF API
+\li \ref stdinterfaces
+\li \ref clipboardcomponent
+\li \ref projectmanagercomp
+\li \ref propertyeditorcomp
+\li \ref scripteditorcomponent
+\li \ref utilscomponent
+\htmlonly
+</td>
+<td valign="top">
+\endhtmlonly
+\section mainpage_examples Examples
+\li \subpage examples "All Examples"
+\li \ref simplegcfexample
+\li \ref ipc_tictactoe
+\li \ref example_updater
+\li \ref fractalservice
+\li \ref extending_guixml_example
+\li \ref example_qml_simple
+\htmlonly
+</td>
+</tr>
+</table>
+</center>
+\endhtmlonly
+
+\htmlonly 
+<div style="visibility: hidden; width: 0px; height: 0px;">
+\endhtmlonly
+\image html vcl_logo_small.png
+\image html gcf_logo_small.png
+\htmlonly
+</div>
+\endhtmlonly
+*/

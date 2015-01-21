@@ -1,0 +1,13 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+
+    <qresource prefix="/guixml">
+        <file alias="ApplicationServer.xml">ApplicationServer.xml</file>
+    </qresource>
+
+    <qresource prefix="/icons">
+        <file alias="vcl.png">AppIcon.png</file>
+        <file alias="logo.png">GCFLogo.png</file>"
+    </qresource>
+
+</RCC>

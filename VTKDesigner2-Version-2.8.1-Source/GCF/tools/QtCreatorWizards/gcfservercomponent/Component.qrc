@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/%ProjectName%_GUIXML">
+        <file>%ProjectName%.xml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="VNG" >
+    <file alias="Node.h">../VNFComponentGen/Resources/Node_h</file>
+    <file alias="Node.cpp">../VNFComponentGen/Resources/Node_cpp</file>
+  </qresource>
+</RCC>

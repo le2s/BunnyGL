@@ -1,0 +1,55 @@
+/**
+\page example_qml_simple Simple QML - Example
+
+The purpose of this example is to showcase how you can make use of GUIXML tags to embed a QML view into GCF applications. With GCF 2.7.0, we have introduced a new XML element called \ref guixmlref_qml in GUIXML. Using the \c qml element, we can now load QML views into the application.
+
+Lets start with a simple GCF application that uses the standard main-window as follows
+
+\includelineno QML/SimpleQML/Main.cpp
+
+The above code makes use of the standard main-window container. The GUIXML file of the standard main-window container is as follows
+
+\verbinclude QML/SimpleQML/MainWindowComponent.xml
+
+Notice that we are only initializing the \c workspace area of the standard main-window component. Dockareas are not initalized.
+
+Now, lets create a simple QML UI as follows in \c HelloQML.qml
+
+\includelineno QML/SimpleQML/HelloQML.qml
+
+To load this QML view into the application, we can create GUIXML for a QML component as follows in \c HelloQML.xml
+
+\verbinclude QML/SimpleQML/HelloQML.xml
+
+Notice how we are creating a \c qml view to load the \c HelloQML.qml file and embed it into the \c workspace area of the standard main-window. We could also optionally load the QML source from the XML file itself. For example:
+
+\code
+<component name="HelloQML">
+
+    <qml title="Hello QML" parentWidget="MainWindowComponent.workspace">
+	import QtQuick 1.0
+
+	Rectangle {
+		width: 100
+		height: 62
+
+		Text {
+			anchors.centerIn: parent
+			font.pointSize: 30
+			text: "Hello World"
+		}
+	}
+	</qml>
+
+</component>
+\endcode
+
+Now that the GUIXML file for \c HelloQML component is ready, lets load the component in the \ref componentarch_applicationxml "ApplicationXML" file.
+
+\verbinclude QML/SimpleQML/SimpleQMLApp.xml
+
+The \c QMLComponent tag (newly introduced in GCF Version 2.7) requests GCF to create a new QML component called \c HelloQML and load it using GUIXML file \c HelloQML.xml. Now, when SimpleQMLApp application is launched; you can see the result as follows
+
+\image html example_simple_qml.png
+
+*/

@@ -1,0 +1,12 @@
+<component name="DICOMService" allowRemoteAccess="true">
+
+    <object name="Core" autoDelete="false"
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true" />
+
+    <object name="PatientList" autoDelete="false"
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true" />
+
+</component>
+

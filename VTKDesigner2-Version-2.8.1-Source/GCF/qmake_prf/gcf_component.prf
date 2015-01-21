@@ -1,0 +1,65 @@
+GCF_SDK = $$PWD/../
+isEmpty(ROOT_DIR) {
+    GCF_SDK_LIBS = $$GCF_SDK
+} else {
+    GCF_SDK_LIBS = $$ROOT_DIR
+}
+
+INCLUDEPATH  += $$GCF_SDK/components/Clipboard/interfaces \
+           $$GCF_SDK/components/Helpsystem/interfaces \
+           $$GCF_SDK/components/MainWindow/interfaces \
+           $$GCF_SDK/components/MessageLog/interfaces \
+           $$GCF_SDK/components/ProjectManager/interfaces \
+           $$GCF_SDK/components/PropertyEditor/interfaces \
+           $$GCF_SDK/components/ScriptEditor/interfaces \
+           $$GCF_SDK/components/Utils/interfaces \
+           $$GCF_SDK/include/SDK
+
+DEPENDPATH += $$GCF_SDK/components/Clipboard/interfaces \
+           $$GCF_SDK/components/Helpsystem/interfaces \
+           $$GCF_SDK/components/MainWindow/interfaces \
+           $$GCF_SDK/components/MessageLog/interfaces \
+           $$GCF_SDK/components/ProjectManager/interfaces \
+           $$GCF_SDK/components/PropertyEditor/interfaces \
+           $$GCF_SDK/components/ScriptEditor/interfaces \
+           $$GCF_SDK/components/Utils/interfaces \
+           $$GCF_SDK/include/SDK
+
+win32-msvc* {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/GCFd2.lib
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/GCF2.lib
+    }
+}
+
+win32-g++ {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/libGCFd2.a
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/libGCF2.a
+    }
+}
+
+unix {
+    CONFIG(debug, debug|release) {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lGCFd2
+    } else {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lGCF2
+    }
+}
+
+win32-msvc* {
+ DEFINES    += -D_CRT_SECURE_NO_DEPRECATE
+} else {
+ DEFINES    += _CRT_SECURE_NO_DEPRECATE
+}
+
+TEMPLATE = lib
+CONFIG += shared
+QT += xml
+
+
+CONFIG(debug, debug|release) {
+    TARGET = $$join(TARGET,,,d)
+}

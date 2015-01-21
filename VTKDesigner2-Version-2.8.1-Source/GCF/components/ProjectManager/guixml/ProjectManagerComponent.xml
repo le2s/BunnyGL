@@ -1,0 +1,54 @@
+<component title="Project Manager" version="1.0" name="ProjectManagerComponent" >
+    
+    <object title="" name="controller" />
+    <object title="Project" name="visProject" />
+    
+    <action title="New" 
+            shortcut="Ctrl+N" 
+            triggerSlot="ProjectManagerComponent.visProject::slotNewProject()" 
+            icon=":/ProjectManager/new.png" 
+            name="newProject" />
+    <action title="Save" 
+            shortcut="Ctrl+S" 
+            triggerSlot="ProjectManagerComponent.visProject::slotSaveProject()" 
+            icon=":/ProjectManager/save.png" 
+            name="saveProject" />
+    <action title="Open" 
+            shortcut="Ctrl+O" 
+            triggerSlot="ProjectManagerComponent.visProject::slotLoadProject()" 
+            icon=":/ProjectManager/open.png" 
+            name="loadProject" />
+    <action title="Save As" 
+            shortcut="Ctrl+Shift+S" 
+            triggerSlot="ProjectManagerComponent.visProject::slotSaveProjectAs()" 
+            icon=":/ProjectManager/saveas.png" 
+            name="saveProjectAs" />
+    <action title="Close" 
+            shortcut="Ctrl+W" 
+            triggerSlot="ProjectManagerComponent.visProject::slotCloseProject()" 
+            icon=":/ProjectManager/close.png" 
+            name="closeProject" />
+
+    <menu mergeWith="MainWindowComponent.fileMenu" >
+        <menuitem actionName="ProjectManagerComponent.newProject" 
+                  before="MainWindowComponent.fileQuit"/>
+        <menuitem actionName="ProjectManagerComponent.loadProject" 
+                  before="MainWindowComponent.fileQuit"/>
+        <menuitem actionName="ProjectManagerComponent.saveProject" 
+                  before="MainWindowComponent.fileQuit"/>
+        <menuitem actionName="ProjectManagerComponent.saveProjectAs"
+                  before="MainWindowComponent.fileQuit"/>
+        <menuitem before="MainWindowComponent.fileQuit"/>
+    </menu>
+
+    <toolbar mergeWith="MainWindowComponent.fileTools" >
+        <toolbaritem actionName="ProjectManagerComponent.newProject" />
+        <toolbaritem actionName="ProjectManagerComponent.loadProject" />
+        <toolbaritem actionName="ProjectManagerComponent.saveProject" />
+    </toolbar>
+
+    <property key="ProjectManagerComponent.visProject::ProjectRootTagName" value="VWVisProject" />
+    <property key="ProjectManagerComponent.visProject::ProjectFileSuffix" value="vwproj" />
+    <property key="ProjectManagerComponent.visProject::DefaultProjectPath" value="${APPDIR}/Samples" />
+
+</component>

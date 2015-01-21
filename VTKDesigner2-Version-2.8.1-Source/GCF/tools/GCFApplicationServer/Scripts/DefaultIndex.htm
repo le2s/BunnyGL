@@ -1,0 +1,69 @@
+<html>
+
+    <head><title>GCF Application Server Test</title></head>
+
+    <body onload="fetchServerInfo()">
+        <h1>GCF Application Server Test</h1>
+
+        <table width="50%" border="1">
+            <tr><td>GCF Version</td><td><div id="gcfVersion"></div></td></tr>
+            <tr><td>Operating System</td><td><div id="os"></div></td></tr>
+            <tr><td>Location</td><td><div id="location"></div></td></tr>
+            <tr><td>Date/Time</td><td><div id="currentDateTime"></div></td></tr>
+            <tr><td>Up Time</td><td><div id="upTime"></div></td></tr>
+            <tr><td>App Server Logo</td><td><div id="applicationServerLogo"></div></td></tr>
+        </table>
+    </body>
+
+    <script language="Javascript" type="text/javascript" src="GCFMessage.js"></script>
+
+    <script language="Javascript" type="text/javascript">
+        function fetchServerInfo() {
+            var msg = new GCFMultiRequestMessage();
+            msg.add('ApplicationServer.Core', 'gcfVersion');
+            msg.add('ApplicationServer.Core', 'os');
+            msg.add('ApplicationServer.Core', 'location');
+            msg.add('ApplicationServer.Core', 'currentDateTime');
+            msg.add('ApplicationServer.Core', 'upTime');
+            msg.add('ApplicationServer.Core', 'applicationServerLogo');
+            msg.onReply = function(reply) {
+                if(reply.isValid()) {
+                    document.getElementById('gcfVersion').innerHTML
+                            = reply.getResult('ApplicationServer.Core', 'gcfVersion');
+                    document.getElementById('os').innerHTML
+                            = reply.getResult('ApplicationServer.Core', 'os');
+                    document.getElementById('location').innerHTML
+                            = reply.getResult('ApplicationServer.Core', 'location');
+                    document.getElementById('currentDateTime').innerHTML
+                            = reply.getResult('ApplicationServer.Core', 'currentDateTime');
+                    document.getElementById('upTime').innerHTML
+                            = reply.getResult('ApplicationServer.Core', 'upTime');
+                    document.getElementById('applicationServerLogo').innerHTML = '';
+                    document.getElementById('applicationServerLogo').appendChild(
+                              reply.getResult('ApplicationServer.Core', 'applicationServerLogo')
+                              );
+                } else {
+                    var errMsg = '<font color="red">Cannot contact server</font>';
+                    document.getElementById('gcfVersion').innerHTML = errMsg;
+                    document.getElementById('os').innerHTML = errMsg;
+                    document.getElementById('location').innerHTML = errMsg;
+                    document.getElementById('currentDateTime').innerHTML = errMsg;
+                    document.getElementById('upTime').innerHTML = errMsg;
+                    document.getElementById('applicationServerLogo').innerHTML = errMsg;
+                }
+            }
+            msg.send();
+
+            var statusMsg = '<font color="blue">Fetching server information...</font>';
+            document.getElementById('gcfVersion').innerHTML = statusMsg;
+            document.getElementById('os').innerHTML = statusMsg;
+            document.getElementById('location').innerHTML = statusMsg;
+            document.getElementById('currentDateTime').innerHTML = statusMsg;
+            document.getElementById('upTime').innerHTML = statusMsg;
+            document.getElementById('applicationServerLogo').innerHTML = statusMsg;
+        }
+
+    </script>
+
+</html>
+

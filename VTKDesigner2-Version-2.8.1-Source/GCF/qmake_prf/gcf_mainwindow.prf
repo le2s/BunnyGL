@@ -1,0 +1,33 @@
+GCF_SDK = $$PWD/../
+isEmpty(ROOT_DIR) {
+    GCF_SDK_LIBS = $$GCF_SDK
+} else {
+    GCF_SDK_LIBS = $$ROOT_DIR
+}
+
+INCLUDEPATH += $$GCF_SDK/components/MainWindow/interfaces
+DEPENDPATH += $$GCF_SDK/components/MainWindow/interfaces
+
+win32-msvc* {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/MainWindowd.lib
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/MainWindow.lib
+    }
+}
+
+win32-g++ {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/libMainWindowd.a
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/libMainWindow.a
+    }
+}
+
+unix {
+    CONFIG(debug, debug|release) {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lMainWindowd
+    } else {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lMainWindow
+    }
+}

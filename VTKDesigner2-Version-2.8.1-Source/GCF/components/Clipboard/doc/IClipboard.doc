@@ -1,0 +1,236 @@
+/**
+\ingroup clipboardcomponent
+\interface IClipboard IClipboard
+\brief Interface to the clipboard object in this component
+
+This interface provides access to methods that help in 
+\li Creating/Removing contexts
+\li Adding/Removing data into contexts
+\li Setting the default context.
+\li Fetch an item-model that holds information about the data
+contained in the clipboard interface.
+
+\section IClipboard1 Adding contexts to the clipboard
+
+\code
+IClipboard* clipboard = GCF::findObject<IClipboard*>();
+if(clipboard)
+    clipboard->addContext("ContextName");
+\endcode
+
+\section IClipboard2 Adding data to the clipboard
+
+\code
+QIcon icon = ...
+QVariant value = ...
+QString desc = ...
+
+ClipboardData data( icon, value, desc );
+
+IClipboard* clipboard = GCF::findObject<IClipboard*>();
+if(clipboard)
+    clipboard->addData(data);
+\endcode
+*/
+
+/**
+\fn void IClipboard::addContext(const QString& contextName) = 0;
+
+Adds a context whose name is \c contextName. The newly added context is
+automatically activated.
+*/
+
+
+/**
+\fn void IClipboard::removeContext(const QString& contextName) = 0;
+
+Removes a context whose name is \c contextName
+*/
+
+
+/**
+\fn QString IClipboard::context(int index) const = 0;
+
+Returns the context name at \c index.
+*/
+
+
+/**
+\fn int IClipboard::contextCount() const = 0;
+
+Returns the total number of contexts in the clipboard.
+*/
+
+
+/**
+\fn void IClipboard::activateContext(const QString& name) = 0;
+
+Activates the context whose name is \c name.
+*/
+
+
+/**
+\fn void IClipboard::activateContext(int contextIndex) = 0;
+
+Activates the context at \c contextIndex.
+*/
+
+
+/**
+\fn void IClipboard::activateDefaultContext() = 0;
+
+Activates the defailt context. Default context is a context whose name is
+"Default".
+*/
+
+
+/**
+\fn QString IClipboard::activeContextName() const = 0;
+
+Returns the name of the active context.
+*/
+
+
+/**
+\fn int IClipboard::activeContextIndex() const = 0;
+
+Returns the index of the active context.
+*/
+
+
+/**
+\fn bool IClipboard::isDefaultContextActive() const = 0;
+
+Returns true if the default context is active. False if any of the user
+added contexts is active.
+*/
+
+
+/**
+\fn void IClipboard::addData(const SClipboardData& data) = 0;
+
+Adds data into the currently active context.
+*/
+
+
+/**
+\fn bool IClipboard::removeDataAt(int index) = 0;
+
+Removes data at \c index in the currently active context
+*/
+
+
+/**
+\fn bool IClipboard::removeAll() = 0;
+
+Removes all data in the current context.
+*/
+
+
+/**
+\fn int IClipboard::dataCount() const = 0;
+
+Returns the number of data items in the current context
+*/
+
+
+/**
+\fn SClipboardData IClipboard::data(int index) const = 0;
+
+Returns the data at \c index in the currently active context.
+*/
+
+
+/**
+\fn QAbstractListModel* IClipboard::activeClipboardModel() const = 0;
+
+Returns an item-model that can be used with a \c QAbstractItemView to show 
+the contents of the currently active context.
+*/
+
+
+/**
+\fn void IClipboard::activeContextChanged(const QString& ctxName) = 0;
+
+This signal is emitted when-ever the currently active context changes.
+*/
+
+
+/**
+\fn void IClipboard::contextAdded(const QString& name) = 0;
+
+This signal is emitted when a context by name \c name has been added
+*/
+
+
+/**
+\fn void IClipboard::contextRemoved(const QString& name) = 0;
+
+This signal is emitted when a context by name \c name has been removed
+*/
+
+
+/**
+\fn void IClipboard::dataAdded(const SClipboardData& data) = 0;
+
+This signal is emitted when \c data is added to the current context
+*/
+
+
+/**
+\fn void IClipboard::dataRemoved(int index) = 0;
+
+This signal is emitted when data at \c index is removed from the current context
+*/
+
+
+/**
+\fn void IClipboard::dataCleared() = 0;
+
+This signal is emitted when data in the current context is cleared
+*/
+
+
+/**
+\ingroup clipboardcomponent
+\struct ClipboardData IClipboard.h
+\brief Represents one data element in the clipboard
+*/
+
+/**
+\fn ClipboardData::ClipboardData(const QIcon& i, const QVariant& d, const QString& desc)
+
+Constructs a clipboard data object
+*/
+
+/**
+\fn ClipboardData::ClipboardData(const ClipboardData& other)
+
+Constructs a clipboard data object from another object
+*/
+
+/**
+\fn ClipboardData::ClipboardData()
+
+Constructs an empty clipboard data object
+*/
+
+/**
+\var QIcon ClipboardData::Icon;
+
+Icon that represents the object. This icon will be shown in item-views that make
+use of the IClipboard::activeClipboardModel() model to show data in the clipboard.
+*/
+
+/**
+\var QVariant ClipboardData::Data;
+
+Contains the actual data that needs to be stored in the clipboard
+*/
+
+/**
+\var QString ClipboardData::Description;
+
+Contains a string description. This text will be shown item-views that make
+use of the IClipboard::activeClipboardModel() model to show data in the clipboard.
+*/

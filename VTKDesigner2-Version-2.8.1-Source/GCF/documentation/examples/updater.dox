@@ -1,0 +1,152 @@
+/**
+\page example_updater Software Updater - Example
+
+Since Version 2.2, GCF comes bundled with a Software Updater module that allows applications to automatically
+download updates for an application and install them. The Software Updater module offers solutions for 
+
+\li Making your application look up for component and/or application updates
+\li Creating update files 
+\li Hosting update files, in order to make it easy for client GCF applications to look it up and install them.
+
+GCF comes bundled with an example that showcases how the Software Updater module can be easily made use of 
+within GCF applications. This page explains how the example program can be examined, and also the code 
+of the example program.
+
+\section example_updater_1 Executing the example program
+
+\subsection example_updater_1_1 Preparing the updates
+
+This example consists of an application called \c SimpleBrowser. When the example program is run, it looks for 
+a server site on the local computer for updates. It then downloads and installs the updates upon explicit request
+from the user. In order to execute the example program successfully, we will first need to create the update
+files. Follow the steps below to create the update files 
+
+- On Windows
+	- Change to \c $GCFDIR/examples/Updater/DeployUpdates
+	- Execute the \c DeployUpdates.bat batch file
+	- Notice that the \c $GCFDIR/examples/Updater/SimpleBrowser/ServerSite now has two files \c Update1-Win32.gvz and \c Update2-Win32.gvz
+	
+- On Linux
+	- Change to \c $GCFDIR/examples/Updater/DeployUpdates in a terminal window
+	- Execute the \c DeployUpdates.sh shell script
+	- Notice that the \c $GCFDIR/examples/Updater/SimpleBrowser/ServerSite now has two files \c Update1-Lin32.gvz and \c Update2-Lin32.gvz
+
+With this the update files are now ready.
+
+\subsection example_updater_1_2 Deployment of Updates explained
+
+The \c SimpleBrowser example program makes use of \c $GCFDIR/examples/Updater/SimpleBrowser/ServerSite as the directory from where 
+it looks for updates. In this directory there is a file called \c Updates.xml that lists out updates available for download and install.
+
+\verbinclude Updater/SimpleBrowser/ServerSite/Updates.xml
+
+Notice how the \c Updates.xml file provides information about \c UpdateFile for different updates, and for different platforms.
+
+Files \c Update1-Lin32.gvz, \c Update1-Win32.gvz, \c Update2-Lin32.gvz and \c Update2-Win32.gvz must be available in the 
+server-site otherwise, a client GCF application will not be able to look up for and download the update-file for installation.
+The DeployUpdates scripts, explained in the previous section, prepare the update-files and moves them into the server-site.
+
+\subsection example_updater_1_3 Executing SimpleBrowser 
+
+\note You can follow this process on Windows or on Linux and you will notice the same result. This page however shows screenshots from
+Windows only.
+
+Launch the \c SimpleBrowser executable from \c $GCFDIR/bin to see the following window. As soon as you launch the program you will 
+notice that a new icon shows up on the "System Tray", and at that icon a baloon message is shown - informing you that updates are available
+for you to select and install.
+
+\image html updater1.png
+
+The \c SimpleBrowser is a very basic web-browser application that makes use of the QtWebKit module to view web-pages hosted on any URL.
+The application is rather simple, in that it shows the web-page requrested by the user. It cannot however create or store bookmarks,
+capture snapshots of webpages, manage cookies or anything. The purpose of this example is to showcase how you can add additional 
+functionality to GCF applications by offering incremental updates.
+
+Select Updates -> Download Updates menu item to launch the "Update Selection Dialog". 
+
+\image html updater2.png
+
+In this dialog box, you can select one or more updates for download. For the purpose of discussion, we assume that both the updates are selected.
+	
+\image html updater3.png
+
+Upon clicking "Ok" in the dialog box above, the selected updates are downloaded. As soon as the download process is complete, an information
+dialog box is shown - so that the user can choose to restart the application and install the updates.
+
+\image html updater4.png
+
+\note The updates are downloaded and stored in \c $GCFDIR/bin/Updates directory. This directory is created by \c SimpleBrowser at the said path
+because its executable file is available in \c $GCFDIR/bin directory.
+
+When you restart \c SimpleBrowser, you will notice a question asking you if you want to install the downloaded updates.
+
+\image html updater5.png
+
+If you choose "Yes" on this dialog-box, GCF will begin installing the updates for you. As updates are being installed the following dialog 
+box is shown.
+
+\image html updater6.png
+
+Once the downloaded updates are fully installed, the "Ok" button on the dialog box becomes enabled. You can now click on that button to
+start the updated \c SimpleBrowser application.
+
+\image html updater7.png
+
+Notice the menu items "Snapshot" and "Bookmarks" showing up in the application. These menu items come from the components that got installed
+during the last update. Select Updates -> Preferences -> Installed Updates to take a look at the list of updates that have been installed.
+
+\image html updater8.png
+
+In the remaining part of this page, lets take a look at how the \c SimpleBrowser application is implemented to allow for software updates.
+
+\section example_updater_2 Implementation of SimpleBrowser application
+
+The \c SimpleBrowser application consists of a application-container component called \c BrowserWindowComponent. This component offers a
+\c BrowserWindow main-window widget where the browser components and UI from other components will be merged into. In this page we will
+not be looking into the implementation of the components and the main-window itself. However, we will be taking a look at the \c main()
+function of the application; because that is where all of the "Software Updater" configuration is done.
+
+\includelineno Updater/SimpleBrowser/Main.cpp
+
+In the program listing above
+- We are setting the URL of the primary update server site in Line No. 24.
+- We are setting the update-selection-strategy to \c GCF::SelectByNotifyingUser in Line No. 27. This is the reason why
+GCF chose to show baloon messages on the system-tray when it detected the availability of updates.
+- We are setting the check-update-frequency to \c GCF::ApplicationStartupButOnceADay in Line No. 26. This is the reason
+why \c SimpleBrowser looks for updates when it is launched for the very first time. From then on it doesnt look for
+updates during application launch, unless it the application is launched on another day.
+- Finally we are enabling the updater-module in Line No. 28. At this point the updater-module will begin working on
+downloading updates.
+- Notice how we are showing the browser window after enabling the updater-module in Line No. 31. This is done because,
+we would like the updater-module to be able to ask the user for permission to install downloaded updates (if any); before
+any UI of the application itself is shown.
+
+\section example_updater_3 Update1 and Update2
+
+Code for the updates can be found in \c $GCFDIR/examples/Updater/Update1 and \c $GCFDIR/examples/Updater/Update2. We are 
+not going to discuss the code here, but we are going to discuss the installation script of these updates. The installation
+script is written separately for Windows and for Linux. The installation script of Update1 for Windows looks as follows
+
+\includelineno Updater/Update1/Binary/Install-Windows.js
+
+Notice how we are providing the logic for the actual installation of \c Update1 in the script above. For more information
+about the syntax of the script, refer to \ref updaterscript.
+
+Similarly, lets take a look at the installation script of Update2 for Windows.
+
+\includelineno Updater/Update2/Binary/Install-Windows.js
+
+\section example_updater_4 Using CreateGVZ to create update-files for deploying updates
+
+The \ref updaterTool1 tool helps with the creation of update-files. In order to create update files, we need to bring together
+the \ref updaterscript and the files that it installs on the client side into a single directory. We then execute the \ref updaterTool1 
+on that directory to generate the update-file. All of this is done, for this example, by making use of \c DeployUpdates script. Shown
+below is the \c DeployUpdates.bat script
+
+\verbinclude Updater/DeployUpdates/DeployUpdates.bat
+
+Once the update-files are deployed, we will need to create an appropriate \ref updatesxml for client GCF applications to figure
+out the updates available on the server-site. For this example the \ref updatesxml is as follows
+
+\verbinclude Updater/SimpleBrowser/ServerSite/Updates.xml
+*/

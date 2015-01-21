@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Linux)">
+	<META NAME="CREATED" CONTENT="20100908;17035000">
+	<META NAME="CHANGED" CONTENT="20100908;18352300">
+	<META NAME="Info 1" CONTENT="">
+	<META NAME="Info 2" CONTENT="">
+	<META NAME="Info 3" CONTENT="">
+	<META NAME="Info 4" CONTENT="">
+	<STYLE TYPE="text/css">
+	<!--
+		H3.western { font-family: "Albany", sans-serif }
+		H3.cjk { font-family: "HG Mincho Light J" }
+		H3.ctl { font-family: "Arial Unicode MS" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1>A quick guide to DICOM Web Viewer</H1>
+<P><FONT COLOR="#000000"><FONT ><FONT SIZE=3><SPAN LANG="en-GB"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">DICOM
+Web Viewer is an example application that comes bundled with
+GCFApplicationServer. This application lets you experience
+high-performance scientific applications on the Web. Medical
+visualization applications are traditionally desktop centric. Using
+GCFApplicationServer, it is now possible to perform fairly intensive
+medical visualization on the Web. <BR><BR>DICOM Web Viewer offers a
+simple yet powerful UI in your browser to look at axial slices
+stacked one behind other in a 2D Viewer. It also allows you to look
+at axial, coronal and sagittal planes together in the 'MPR Viewer'
+tab. The web application is hosted here purely for demo purposes
+only. Please send your feedback for <A HREF="mailto:feedback@vcreatelogic.com">feedback@vcreatelogic.com</A>.
+</SPAN></SPAN></SPAN></FONT></FONT></FONT>
+</P>
+<P><FONT ><FONT SIZE=3>Following
+sections give a brief description on how to use this web application
+most effectively.</FONT></FONT></P>
+<H3 CLASS="western">Patient List</H3>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Patient
+list shows a list of patients whose information is available on the
+server. Each entry has a “Load” button associated, which can be
+clicked to load the corresponding DICOM series. A screen shot of the
+“Patient List” is shown below.</FONT></FONT></P>
+<P ALIGN=LEFT><IMG SRC="images/PatientList.jpg" NAME="graphics1" ALIGN=LEFT WIDTH=266 HEIGHT=232 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<H3 CLASS="western">2D Viewer</H3>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Clicking
+on the “Load” button automatically shows the “2D Viewer” tab
+in the workspace. It shows a 2D image slice from the DICOM series at
+a time. The screen shot below shows the 2D Viewer with a sample
+slice.</FONT></FONT></P>
+<P ALIGN=LEFT><IMG SRC="images/2DViewer.jpg" NAME="graphics2" ALIGN=LEFT WIDTH=652 HEIGHT=512 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>You
+can browse through the slices using </FONT></FONT>
+</P>
+<OL>
+	<LI><P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Scroll
+	bar (on the right) OR </FONT></FONT>
+	</P>
+	<LI><P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Scrolling
+	over the image using mouse wheel OR </FONT></FONT>
+	</P>
+	<LI><P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Entering
+	a slice index in the input box that shows the current slice value
+	and then click “Fetch”. </FONT></FONT>
+	</P>
+</OL>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Also
+you can adjust the window level and window width values in the input
+fields and click “Apply” to apply those values on the DICOM
+images.</FONT></FONT></P>
+<H3 CLASS="western">MPR Viewer</H3>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Clicking
+on the MPR Viewer tab gives an MPR (multi-planar) view of the DICOM
+series, in three views namely <B>axial</B>, <B>sagittal </B>and
+<B>coronal</B>. A screenshot of a sample series is shown below.</FONT></FONT></P>
+<P ALIGN=LEFT><IMG SRC="images/MPRView.jpg" NAME="graphics4" ALIGN=LEFT WIDTH=648 HEIGHT=511 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>Similar
+to 2DViewer you can apply window level and window width filters here
+also. Also it is possible to scroll through the slices in each of the
+views by simply scrolling using the mouse wheel over the respective
+view. The cross-hair on each of the view are automatically updated to
+reflect the movement. A status bar below keeps an updated information
+on the current slice index of each of the views. </FONT></FONT>
+</P>
+<P LANG="en-GB" ALIGN=LEFT STYLE="font-weight: normal"><FONT ><FONT SIZE=3>You
+can move the mouse over the the center of the cross-hair, press the
+mouse over the center and drag it to any position within the image.
+Once you drop it – you will notice that the freshly sliced images
+in the other two views are fetched and shown.</FONT></FONT></P>
+</BODY>
+
+<script type="text/javascript" language="Javascript">
+
+function emptyInit() { }
+function emptyClear() { }
+
+window.top.setInitFunction(0, emptyInit);
+window.top.setClearFunction(0, emptyClear);
+
+</script>
+
+</HTML>

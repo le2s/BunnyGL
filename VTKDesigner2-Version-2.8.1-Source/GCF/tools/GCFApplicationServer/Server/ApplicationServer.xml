@@ -1,0 +1,22 @@
+<component name="ApplicationServer" allowRemoteAccess="true">
+
+    <object name="Core" autoDelete="false"
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true"
+          allowRemoteSignalConnect="true"
+          allowRemoteSignalDelivery="true" />
+
+    <object name="GradientGenerator" autoDelete="false"
+          allowRemoteAccess="true"
+          allowRemoteMethodInvocation="true"
+          allowRemoteSignalConnect="true"
+          allowRemoteSignalDelivery="true" />
+
+    <object name="XmlHandler" />
+
+    <widget name="window" autoDelete="false" visible="false" />
+
+    <!--property key="ApplicationServer.Core::ProcessPoolSize" value="10" /-->
+
+</component>
+

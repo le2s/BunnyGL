@@ -1,0 +1,24 @@
+<Application>
+
+    <Components>
+        <!-- 
+            The following components are sample components that come bundled with GCF itself! 
+            You may comment them out if you are using GCFApplicationServer to host your own
+            set of components.
+        -->
+        <Component Name="SimpleWebService" Library="SimpleWebService" />
+        <Component Name="FractalService" Library="FractalService" />
+        <Component Name="DICOMService" Library="DICOMService" />      
+    </Components>
+
+    <Parameters>
+        <!-- 
+            Edit the DICOMService_BaseDirectory and DICOMService_Series parmaeters
+            to hold appropriate values for your computer.
+        -->
+        <Parameter Name="DICOMService_BaseDirectory">D:/VTK/DICOMSamples</Parameter>
+        <Parameter Name="DICOMService_Series">PHENIX</Parameter>
+    </Parameters>
+    
+</Application>
+

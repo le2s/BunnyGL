@@ -1,0 +1,516 @@
+/**
+\page componentarch GCF's Component Model
+
+The GCF component model is built on the following key concepts:
+
+\li In the GCF world, plugins are called "GCF components". Each component either shows up as a DLL/shared-object file on the 
+disk or is statically initialized by the application. Each GCF component is represented by a class, which is subclassed
+from GCF::AbstractComponent. 
+
+\li Components are loaded by an application, known as "GCF Application". The key thing about a GCF Application
+is that it offers a "application-container-widget" into which widgets, menu-items and toolbar items, offered by the 
+GCF components it loads, are merged into. Typically the "application-container-widget" is offered by a static GCF Component
+in the application. This static GCF component is referred to as "container-component".
+
+\li A GCF Application must be accompanied by an XML file known as the ApplicationXML file. This XML file contains information
+about the components that must be loaded by the application. It also contains key configuration parameters for the 
+software-updater and IPC modules. It could also potentially contain certain custom but application or component-specific 
+parameters, but more on that later.
+
+\li An XML file must and should accompany every GCF component. This XML file is known as GUIXML. It lists the objects and widgets 
+offerred by a GCF component. For every object and/or widget, the GUIXML could also specify how the object/widget must "merge" with 
+the already existing UI in the "application-container-widget" offered by GCF Application.
+
+\li Objects, widgets, menus, toolbars and actions listed in a GUIXML file are known as "exposed" objects. GCF provides a methods
+\c GCF::findObject() and \c GCF::findObjects() to help search for one or more objects in the "exposed" objects list.
+
+\section componentarch_containercomp Application Container Component
+
+The most important thing in a GCF application is the "Container Component". This is the very first component that is loaded by
+a GCF application and it must adhere to the following rules
+
+\li The "Application Container Component" must be statically loaded in the \c main() function.
+\li It must provide a "Application Container Widget" on to which widgets, menu-items and toolbars from other components will be
+merged. The "Application Container Widget" must be set using the GCF::Application::setComponentHostWidget() method. 
+\li It must statically initialize itself before any other component is initialized.
+
+\ref gettingstarted_example section of \ref gettingstarted explains how a QWidget can be offered as an "Application Container Widget".
+To help make it easy for developers, GCF comes bundled with a ready made \c MainWindowComponent. This component adheres to the above 
+rules and it also offers areas into which you can merge different components.
+
+To use the standard main-window component you will have to author the \c main() function as follows
+
+\includelineno MainWindow/Main.cpp
+
+Thats it! The qmake project file to compile the above code should be written as follows
+
+\htmlonly
+<pre>
+TEMPLATE = app
+CONFIG += gcf_app gcf_mainwindow
+SOURCES += Main.cpp
+</pre>
+\endhtmlonly
+
+When you compile the code you will be able to use the resulting executable to get an empty main-window. It doesnt do much, so we 
+will need to write XML files to help load the required components into the main-window. The first XML file to create is the 
+\c MainWindowComponent.xml file. This XML file should list the objects and widgets-areas exposed by the \c MainWindowComponent. 
+Components loaded by this application will merge their widgets into the widget-areas exposed by \c MainWindowComponent via
+\c MainWindowComponent.xml. The following should be the contents of the \c MainWindowComponent.xml file.
+
+\verbinclude MainWindow/MainWindowComponent.xml
+
+This time, when we launch the application we will be able to see the main-window with a few predefined areas.
+
+\image html example_mainwindow1.png
+
+\section componentarch_applicationxml The ApplicationXML file
+
+ApplicationXML is an XML file whose name is same as the name set by using the function \c setApplicationName(), as done on
+line number 7 in the code listing above. If no application name is explicitly set, then application name is assumed to be 
+the name of the executable file (minus extension if any). In this case the ApplicationXML file name would be \c StdMainWindowExample.xml.
+The contents of this file are as follows
+
+\verbinclude MainWindow/StdMainWindowExample.xml
+
+In the ApplicationXML listed above, you can notice that we have requested the loading of two components: \c PropertyEditorComponent
+and \c ScriptEditorComponent. Both of these components are in-built components bundled with GCF. While loading these in-built components
+GCF looks for their GUIXML files \c PropertyEditorComponent.xml and \c ScriptEditorComponent.xml respectively. These GUIXML files 
+must describe how objects and widgets in their components "fit" into the application-container-widget offered by the application.
+
+\section componentarch_inbuiltcomps Using In-built GCF components
+
+The PropertyEditorComponent built-in component in GCF offers a ready-made property editor widget that can show key=value pairs of properties
+for any QObject in your application. The ScriptEditorComponent built-in component in GCF offers a scripting environment where any aspect
+of your GCF application can be scripted using ECMA script.
+
+\note The \c PropertyEditorComponent.xml and \c ScriptEditorComponent.xml files declare objects, widgets and make use of slots within
+their components. In this page we are only showcasing how the functionality offered by these components can be used within a GCF application.
+We are not discussing the implementation of the component classes. We encourage you to take a look at their source code in GCF.
+
+The \c PropertyEditorComponent.xml file is hence written as follows
+
+\verbinclude MainWindow/PropertyEditorComponent.xml
+
+When the above XML file is saved and the application is restarted, you can notice a property-editor widget merged into the right dock widget
+area of the main-window.
+
+\image html example_mainwindow2.png
+
+The \c ScriptEditorComponent.xml file is rather complex, we hence explain its contents one step at a time. GUIXML for ScriptEditorComponent
+consists of the following parts
+
+\li Object declarations
+\li Widget declarations
+\li "Script" menu and toolbar declarations
+\li "Edit" menu declarations
+\li "Find" menu declarations and
+\li Configuration options
+
+The XML for each part is shown below. Pay special attention to the comments! Also, as and when each and every block is explained; the 
+corresponding effect on the GUI is shown.
+
+<strong>Object declarations</strong>
+
+\verbatim
+<component name="ScriptEditorComponent" >
+
+    <!-- ScriptEditorComponent.controller maps to an instance of the component class -->
+    <object name="controller" />
+\endverbatim
+
+<strong>Widget declarations</strong>
+
+\verbatim
+    <!-- ScriptEditorComponent.scriptEditor maps to an instance of the editor-widget
+         where the user can type his scripts -->
+    <widget name="scriptEditor" title="Script Editor"
+            parentWidget="MainWindowComponent.workspace" />
+
+    <!-- ScriptEditorComponent.scriptableObjectExplorer maps to an instance of the
+         tree widget where all scriptable objects and its properties/methods are
+         listed -->
+    <widget name="scriptableObjectExplorer" title="Scriptable Objects"
+            parentWidget="MainWindowComponent.leftDockArea" />
+\endverbatim
+
+\image html example_mainwindow3.png
+
+<strong>"Script" menu and toolbar declarations</strong>
+
+\verbatim
+    <!-- We make use of GCF's GUIXML technology to create menus and toolbars for
+         offering access to functionality in this component -->
+
+    <!-- The Script menu and toolbar -->
+    <action name="executeMainScript" title="Execute"
+            triggerSlot="ScriptEditorComponent.controller::executeMainScript()"
+            shortcut="F5" icon=":/ScriptEditor/execute.png" />
+    <action name="fileLoadForm"  title="Load UI"
+            triggerSlot="ScriptEditorComponent.controller::loadForm()"
+            shortcut="Ctrl+M" icon=":/ScriptEditor/loadform.png" />
+    <action name="fileUnloadForm" title="Unload UI"
+            triggerSlot="ScriptEditorComponent.controller::unloadForm()"
+            shortcut="Ctrl+U" icon=":/ScriptEditor/unloadform.png" />
+    <widget title="Script Editor Configuration"
+            visible="false"
+            name="configPageSheet" />
+
+    <menu title="Script" hideWhenInactive="false" name="scriptMenu"
+          before="MainWindowComponent.viewMenu">
+        <menuitem actionName="ScriptEditorComponent.executeMainScript" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.fileLoadForm" />
+        <menuitem actionName="ScriptEditorComponent.fileUnloadForm" />
+        <menuitem />
+        <menuitem widgetName="ScriptEditorComponent.configPageSheet" />
+    </menu>
+
+    <toolbar name="scriptTools" title="Script Tools" hideWhenInactive="false" >
+        <toolbaritem actionName="ScriptEditorComponent.executeMainScript" hideWhenInactive="false" />
+        <toolbaritem />
+        <toolbaritem actionName="ScriptEditorComponent.fileLoadForm" hideWhenInactive="false" />
+        <toolbaritem actionName="ScriptEditorComponent.fileUnloadForm" hideWhenInactive="false" />
+    </toolbar>
+\endverbatim
+
+\image html example_mainwindow4.png
+
+<strong>"Edit" menu declarations</strong>
+
+\verbatim
+    <!-- Edit Menu -->
+    <action name="editCopy"  title="Copy" shortcut="Ctrl+C"
+            triggerSlot="ScriptEditorComponent.scriptEditor::copy()" />
+    <action name="editCut" title="Cut" shortcut="Ctrl+X"
+            triggerSlot="ScriptEditorComponent.scriptEditor::cut()"
+            mergeWith="MainWindowComponent.cut" />
+    <action name="editPaste" title="Paste"  shortcut="Ctrl+V"
+            triggerSlot="ScriptEditorComponent.scriptEditor::paste()"
+            mergeWith="MainWindowComponent.paste" />
+    <action name="editGotoLine"  title="Goto Line" shortcut="Ctrl+G"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showGotoLineDialog()"
+            icon=":/ScriptEditor/gotoline.png" />
+    <action name="editUndo" title="Undo"  shortcut="Ctrl+Z"
+            triggerSlot="ScriptEditorComponent.scriptEditor::undo()"
+            mergeWith="MainWindowComponent.undo" />
+    <action name="editRedo" title="Redo"  shortcut="Ctrl+Y"
+            triggerSlot="ScriptEditorComponent.scriptEditor::redo()"
+            mergeWith="MainWindowComponent.redo" />
+
+    <menu name="editMenu" title="Edit">
+        <menuitem actionName="ScriptEditorComponent.editCut" />
+        <menuitem actionName="ScriptEditorComponent.editCopy" />
+        <menuitem actionName="ScriptEditorComponent.editPaste" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.editGotoLine" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.editUndo" />
+        <menuitem actionName="ScriptEditorComponent.editRedo" />
+    </menu>
+\endverbatim
+
+\image html example_mainwindow5.png
+
+<strong>"Find" menu declarations</strong>
+
+\verbatim
+    <!-- Find menu -->
+    <action name="find" title="Find" shortcut="Ctrl+F"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showFindDialog()"
+            icon=":/ScriptEditor/find.png" />
+    <action name="findNext" title="Find Next" shortcut="F3"
+            triggerSlot="ScriptEditorComponent.scriptEditor::findNext()" />
+    <action name="findPrevious" title="Find Previous" shortcut="Shift+F3"
+            triggerSlot="ScriptEditorComponent.scriptEditor::findPrevious()" />
+    <action name="findAndReplace" title="Find And Replace" shortcut="Ctrl+H"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showFindAndReplaceDialog()"
+            icon=":/ScriptEditor/findreplace.png" />
+
+    <menu title="Find" name="findMenu" >
+        <menuitem actionName="ScriptEditorComponent.find" />
+        <menuitem actionName="ScriptEditorComponent.findAndReplace" />
+        <menuitem actionName="ScriptEditorComponent.findNext" />
+        <menuitem actionName="ScriptEditorComponent.findPrevious" />
+    </menu>
+\endverbatim
+
+\image html example_mainwindow6.png
+
+<strong>Configuration options</strong>
+
+\verbatim
+    <!-- Some default configuration properties -->
+    <property key="ScriptEditorComponent.scriptEditor::TabSpace" value="4" />
+    <property key="ScriptEditorComponent.scriptEditor::FontSize" value="15" />
+    <property key="ScriptEditorComponent.scriptEditor::FontName" value="Courier New" />
+
+</component>
+\endverbatim
+
+After creating \c ScriptEditorComponent.xml and saving it, we can restart the application to see a main-window with the UI of both
+PropertyEditorComponent and ScriptEditorComponent merged! You can infact type into the script-editor and even exeucte the scripts :-)
+
+\image html example_mainwindow7.png
+
+\section componentarch_customcomps Custom GCF components
+
+Components in GCF are subclassed from GCF::AbstractComponent. Each component either shows up as a DLL/shared-object file on the 
+disk. A XML file must and should accompany every GCF component. This XML file is known as GUIXML. It lists the objects and widgets 
+offerred by a GCF component. For every object and/or widget, the GUIXML could also specify how the object/widget must "merge" with 
+the already existing UI in the "application-container-widget" offered by GCF Application.
+
+Suppose that you wanted to write a custom component that offered a \c QCalendarWidget for showing on the main-window's workspace.
+You could begin by authoring the component class as follows.
+
+\include Simple/Component1/Component1.h
+
+The class declaration was quite simple. \c Component1 is declared to be a subclass of GCF::AbstractComponent and it 
+implements a few virtual methods from the base class. Lets now look at the implementation of \c Component1. Pay
+attention to the comments in the code listing below.
+
+\code
+#include "Component1.h"
+
+#include <QtDebug>
+#include <QCalendarWidget>
+
+GCF_DEFINE_COMPONENT(Component1)
+
+struct Component1Data
+{
+    Component1Data() : calendar(0) { }
+    QCalendarWidget* calendar;
+};
+
+Component1& Component1::instance()
+{
+    return *(GCF_CREATE_COMPONENT(Component1));
+}
+
+Component1::Component1()
+{
+    d = new Component1Data;
+}
+
+Component1::~Component1()
+{
+    delete d;
+}
+
+void Component1::initializeComponent() { }
+void Component1::finalizeComponent() { }
+
+QWidget* Component1::fetchWidget(const QString &completeName) const
+{
+    if(completeName == "Component1.Calendar")
+    {
+        if(!d->calendar)
+            d->calendar = new QCalendarWidget;
+
+        return d->calendar;
+    }
+
+    return 0;
+}
+
+/*
+  Since this component will be loaded from a dynamic library, we will need
+  to make use of the GCF_EXPORT_COMPONENT_PLUGIN macro to export the
+  component class as a plugin. If this macro is not placed, then GCF
+  applications will not be able to load this component.
+  */
+GCF_EXPORT_COMPONENT_PLUGIN(Component1)
+\endcode
+
+The last line in the code-listing above is very important. The \c GCF_EXPORT_COMPONENT_PLUGIN macro generates code
+required for GCF to instantiate \c Component1 from its DLL or shared object file. 
+
+Next, lets take a look at the GUIXML file for \c Component1.
+
+\verbatim
+<component name="Component1">
+    <widget name="Calendar" title="Calendar" parentWidget="MainWindowComponent.workspace" />
+</component>
+\endverbatim
+
+Notice how we are asking GCF to merge the \c Calendar widget of \c Component1 into the \c MainWindowComponent.workspace area. Next,
+we will need to ask the application to actually load Component1. This can be done by adding another \c Component XML element into
+the \b ApplicationXML file.
+
+\verbatim
+<Application>
+
+    <Components>
+        <!-- Here we load some in-built components! -->
+        <Component Name="PropertyEditorComponent" Library="PropertyEditor" />
+        <Component Name="ScriptEditorComponent" Library="ScriptEditor" />
+		
+		<!-- Here we load custom components -->
+		<Component Name="Component1" Library="Component1" />
+    </Components>
+
+</Application>
+\endverbatim
+
+When we restart the application, we can now notice that Component1's widget (Calendar) is merged into the main-window 
+of the application.
+
+\image html example_mainwindow8.png
+
+\section componentarch_findobject Searching for objects and/or functionality
+
+GCF offers many ways for searching objects and/or functionality in an application. Suppose that you wanted to look for a specific object 
+by its full name, you can do something like this
+
+\code
+#include <GCF/AbstractComponent>
+
+QObject* object = GCF::findObject("PropertyEditorComponent.propertyEditor");
+if(object)
+{
+	// Here you can make use of the propertyEditor object offered by PropertyEditorComponent.
+}
+\endcode
+
+Many times you may not be aware of the name of the object that you are searching. You may be interested in searching for an object 
+that implements a known interface. For example, let us say you wanted to look for all \c QTreeView instances in the GCF application. You could
+write code like this
+
+\code
+#include <GCF/AbstractComponent>
+
+QList<QTreeView*> treeViews = GCF::findObjects<QTreeView*>();
+Q_FOREACH(QTreeView* treeView, treeViews)
+{
+	// Do something here..
+}
+\endcode
+
+\note \c GCF::findObjects() and \c GCF::findObject() only looks for "exposed" objects.
+
+Even more interesting is the ability to use GCF::findObject() to search for functionality. Suppose that you wanted to look for an object that 
+implemented the \c IPropertyEditor interface, in \c Component1 so that the property-edior can be requested to show properties of its calendar widget.
+We can make this happen with the code below.
+
+\code
+#include <IPropertyEditor>
+
+void Component1::creationAnnounced()
+{
+    IPropertyEditor* propEditor = GCF::findObject<IPropertyEditor*>();
+    if(propEditor)
+        propEditor->setObject(d->calendar);
+}
+\endcode
+
+When compiled and executed, you will notice that the property-editor is showing properties of the Component1's calendar widget.
+
+\image html example_mainwindow9.png
+
+You can modify any property in the property editor and notice the change in behavior of the calendar widget immediately! However,
+notice that properties \c selectedDate, \c minimumDate and \c maximumDate are not shown. This is because their datatype \c QDate 
+is not supported by the \c PropertyEditorComponent. Support for \c QDate data-type can be added to the \c PropertyEditorComponent
+from \c Component1 itself by making use of the former's interfaces. Take a look at the code below.
+
+\code
+#include <IValueEditorCreator>
+#include <IValueEditorFactory>
+#include <QDateEdit>
+#include <QPainter>
+
+class QDateSupport : public IValueEditorCreator
+{
+public:
+    GCF_DECLARE_QUERYABLE;
+
+    const char* typeName() {
+        return "QDate";
+    }
+
+    QWidget* createEditor(QWidget* parent) {
+        return new QDateEdit(parent);
+    }
+
+    void connectEditor(QWidget* editor, QObject* receiver, const char* slot) {
+        QDateEdit* dateEdit = qobject_cast<QDateEdit*>(editor);
+        QObject::connect(dateEdit, SIGNAL(dateChanged(QDate)), receiver, slot);
+    }
+
+    bool setEditorValue(QWidget* editor, QVariant value) {
+        QDateEdit* dateEdit = qobject_cast<QDateEdit*>(editor);
+        dateEdit->setDate(value.toDate());
+        return true;
+    }
+
+    QVariant editorValue(QWidget* editor) {
+        QDateEdit* dateEdit = qobject_cast<QDateEdit*>(editor);
+        return dateEdit->date();
+    }
+
+    void closeEditor(QWidget* editor) {
+        Q_UNUSED(editor);
+    }
+
+    QString toString(QVariant value) {
+        return value.toDate().toString("dd MMM yyyy");
+    }
+
+    QVariant fromString(QString value) {
+        return QDate::fromString(value, "dd MMM yyyy");
+    }
+
+    bool paintValue(QPainter* paint, QRect rect, QVariant value) {
+        paint->drawText(rect, Qt::AlignLeft|Qt::AlignVCenter, toString(value));
+        return true;
+    }
+};
+
+GCF_BEGIN_QUERY_TABLE(QDateSupport)
+    GCF_IMPLEMENTS(IValueEditorCreator)
+GCF_END_QUERY_TABLE(QDateSupport)
+
+void Component1::creationAnnounced()
+{
+    IPropertyEditor* propEditor = GCF::findObject<IPropertyEditor*>();
+    IValueEditorFactory* veFactory = propEditor ? propEditor->editorFactory() : 0;
+    if(veFactory)
+        veFactory->registerCreator(new QDateSupport);
+
+    if(propEditor)
+        propEditor->setObject(d->calendar);
+}
+\endcode
+
+Notice how we are adding support for just the \c QDate data-type without modifying any thing in the \c PropertyEditorComponent itself! 
+When we compile the changes and restart the application we can notice that the \c selectedDate, \c minimumDate and \c maximumDate
+properties are now shown.
+
+\image html example_mainwindow10.png
+
+\section componentarch_summary Summary
+
+The purpose of this document was to explain and showcase the new programming paradigm offered by GCF. Once again, lets have a look at
+the key concepts in GCF's component model
+
+\li In the GCF world, plugins are called "GCF components". Each component either shows up as a DLL/shared-object file on the 
+disk or is statically initialized by the application. Each GCF component is represented by a class, which is subclassed
+from GCF::AbstractComponent. 
+
+\li Components are loaded by an application, known as "GCF Application". The key thing about a GCF Application
+is that it offers a "application-container-widget" into which widgets, menu-items and toolbar items, offered by the 
+GCF components it loads, are merged into. Typically the "application-container-widget" is offered by a static GCF Component
+in the application. This static GCF component is referred to as "container-component".
+
+\li A GCF Application must be accompanied by an XML file known as the ApplicationXML file. This XML file contains information
+about the components that must be loaded by the application. It also contains key configuration parameters for the 
+software-updater and IPC modules. It could also potentially contain certain custom but application or component-specific 
+parameters, but more on that later.
+
+\li An XML file must and should accompany every GCF component. This XML file is known as GUIXML. It lists the objects and widgets 
+offerred by a GCF component. For every object and/or widget, the GUIXML could also specify how the object/widget must "merge" with 
+the already existing UI in the "application-container-widget" offered by GCF Application.
+
+\li Objects, widgets, menus, toolbars and actions listed in a GUIXML file are known as "exposed" objects. GCF provides a methods
+\c GCF::findObject() and \c GCF::findObjects() to help search for one or more objects in the "exposed" objects list.
+*/

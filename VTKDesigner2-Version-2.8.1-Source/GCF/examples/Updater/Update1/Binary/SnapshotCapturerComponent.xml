@@ -1,0 +1,12 @@
+<component name="SnapshotCapturerComponent">
+
+ <object name="controller" />
+
+ <action name="captureSnapshot" title="Capture to JPG"
+         triggerSlot="SnapshotCapturerComponent.controller::captureSnapshot()" />
+
+ <menu name="snapshotMenu" title="Snapshot">
+    <menuitem actionName="SnapshotCapturerComponent.captureSnapshot" />
+ </menu>
+
+</component>

@@ -1,0 +1,35 @@
+GCF Application Server from VCreate Logic
+
+Copyright VCreate Logic (P) Ltd, Bangalore, India
+
+EMail: info@vcreatelogic.com
+URL  : http://www.vcreatelogic.com/oss/gcf
+SVN  : https://svn2.hosted-projects.com/vcreatelogic/GCF
+=================================================================
+
+LICENSE AGREEMENT FOR GCF APPLICATION SERVER
+
+All rights reserved. The software and accompanying material is Copyright (C) of VCreate Logic Private Limited.
+
+This non-exclusive non-transferable License Agreement ("Agreement") is between you ("Licensee") and VCreate Logic Private Limited (VCL), and pertains to the VCreate Logic Private Limited software product(s) accompanying this Agreement, which include(s) computer software and may include "online" or electronic documentation, associated media, and printed materials, including the source code, example programs and the documentation ("Software").
+
+DEFINITIONS
+
+"GCF Application Server - Developer Edition" is an edition of GCF that comes bunled with the Source code, documentation, libraries and executables of "GCF Application Server" for the purpose of developing and testing server components and for the purpose preparing them for deployment. 
+
+"GCF Application Server - Deployment License" is a deployment or royalty based license agreement for deploying Qt/GCF based applications on "GCF Application Server" for public use.
+
+"Server Components" are GCF components written for the purpose of hosting them on "GCF Application Server"
+
+PACKAGING
+
+Both open-source (GPL) and commercial licenses of GCF come bundled with a single copy of "GCF Application Server - Developer Edition".
+
+TERMS AND CONDITIONS
+
+* Free and Open Source Server components can be developed and deployed for free using the GPL or commercial license of GCF. The complete source code, build instructions and build-scripts of server components must be released under an OSI license.
+
+* Server components can be developed and tested using a commercial license of GCF. Testing can be done by hosting server components on a local server that can be accessed by atmost 3 users in a month. To deploy server components on a GCF Application Server for public access, you must purchase "GCF Application Server - Deployment License".  For more details and price information about "GCF Application Server - Deployment License",  please contact info@vcreatelogic.com
+
+VCL reserves the right to further clarify and change license terms on its discretion.
+

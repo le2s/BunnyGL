@@ -1,0 +1,56 @@
+/**
+\page simplegcfexample Simple GCF Example
+
+This example is the best way to figure out how to get started with GCF. In this example, we consider a 
+simple application that will load two GCF components. 
+
+\image html example_simple.png
+
+This simple example consists of a GCF application that offers a container widget, and two components;
+one component offering a calendar-widget and another component offering a dial widget.
+We look at them in more detail below:
+The example, therefore, has three main elements: application, calendar component and dial component.
+
+\li A GCF application that offers a container widget (\ref GCF::Application::setComponentHostWidget()) 
+and loads two other components.
+	- \c Simple/Application/Main.cpp
+	\include Simple/Application/Main.cpp
+	- \c Simple/Application/ApplicationContainerComponent.h
+	\include Simple/Application/ApplicationContainerComponent.h
+	- \c Simple/Application/ApplicationContainerComponent.cpp
+	\include Simple/Application/ApplicationContainerComponent.cpp
+	- \c Simple/Application/SimpleApplication.xml
+	\verbinclude Simple/Application/SimpleApplication.xml
+	- \c Simple/Application/ApplicationContainer.xml
+	\verbinclude Simple/Application/ApplicationContainer.xml
+	- \c Simple/Application/Application.pro
+	\verbinclude Simple/Application/Application.pro
+	- \c Simple/Application/Application.qrc
+	\verbinclude Simple/Application/Application.qrc
+
+\li Component 1 (A GCF Component) that uses GCF's GUIXML technology to merge its GUI (a calendar-widget) with the loading
+application.
+	- \c Simple/Component1/Component1.h
+	\include Simple/Component1/Component1.h
+	- \c Simple/Component1/Component1.cpp
+	\include Simple/Component1/Component1.cpp
+	- \c Simple/Component1/Component1.xml
+	\verbinclude Simple/Component1/Component1.xml
+	- \c Simple/Component1/Component1.pro
+	\verbinclude Simple/Component1/Component1.pro
+	- \c Simple/Component1/Component1.qrc
+	\verbinclude Simple/Component1/Component1.qrc
+
+\li Component 2 (A GCF Component) that uses GCF's GUIXML technology to merge its GUI (a dial widget) with the loading
+application.
+	- \c Simple/Component2/Component2.h
+	\include Simple/Component2/Component2.h
+	- \c Simple/Component2/Component2.cpp
+	\include Simple/Component2/Component2.cpp
+	- \c Simple/Component2/Component2.xml
+	\verbinclude Simple/Component2/Component2.xml
+	- \c Simple/Component2/Component2.pro
+	\verbinclude Simple/Component2/Component2.pro
+	- \c Simple/Component2/Component2.qrc
+	\verbinclude Simple/Component2/Component2.qrc
+*/

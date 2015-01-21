@@ -1,0 +1,8 @@
+<component name="ApplicationContainer">
+
+    <object name="Core" />
+
+    <widget name="MainWindow" title="Extending GUIXML Example" />
+    <widget name="Workspace" />
+
+</component>

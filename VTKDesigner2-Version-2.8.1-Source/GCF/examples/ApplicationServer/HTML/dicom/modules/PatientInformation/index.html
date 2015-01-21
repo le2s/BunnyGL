@@ -1,0 +1,73 @@
+<html>
+
+<body>
+
+<center>
+
+<table cellPadding="10" border="1" cellspacing="0">
+
+<tr><td><b>Patient Name</b></td><td><div id="patientNameDiv"></div></td></tr>
+<tr><td><b>Study UID</b></td><td><div id="studyUIDDiv"></div></td></tr>
+<tr><td><b>Study ID</b></td><td><div id="studyIDDiv"></div></td></tr>
+<tr><td><b>Dimensions</b></td><td><div id="dimensionsDiv"></div></td></tr>
+<tr><td><b>Pixel Spacing</b></td><td><div id="pixelSpacingDiv"></div></td></tr>
+
+</table>
+
+</center>
+
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+
+<script type="text/javascript" language="Javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+var patientInfoInitialized = false;
+
+function patientInfoViewerClearFunction() {
+    document.getElementById("patientNameDiv").innerHTML = '';
+    document.getElementById("studyUIDDiv").innerHTML = '';
+    document.getElementById("studyIDDiv").innerHTML = '';
+    document.getElementById("dimensionsDiv").innerHTML = '';
+    document.getElementById("pixelSpacingDiv").innerHTML = '';
+    patientInfoInitialized = false;
+}
+window.top.setClearFunction(4, patientInfoViewerClearFunction);
+patientInfoViewerClearFunction();
+
+function patientInfoViewerInitFunction() {
+    if(patientInfoInitialized)
+        return;
+        
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "patientName");
+    msg.add("DICOMService.Core", "studyUID");
+    msg.add("DICOMService.Core", "studyID");
+    msg.add("DICOMService.Core", "dimensions");
+    msg.add("DICOMService.Core", "pixelSpacing");
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        patientInfoInitialized = true;
+        
+        document.getElementById("patientNameDiv").innerHTML = 
+            reply.getResult("DICOMService.Core", "patientName");
+        document.getElementById("studyUIDDiv").innerHTML = 
+            reply.getResult("DICOMService.Core", "studyUID");
+        document.getElementById("studyIDDiv").innerHTML = 
+            reply.getResult("DICOMService.Core", "studyID");
+        document.getElementById("dimensionsDiv").innerHTML = 
+            reply.getResult("DICOMService.Core", "dimensions");
+        document.getElementById("pixelSpacingDiv").innerHTML = 
+            reply.getResult("DICOMService.Core", "pixelSpacing");
+    }
+    msg.send();
+}
+window.top.setInitFunction(4, patientInfoViewerInitFunction);
+
+</script>
+</html>
+
+

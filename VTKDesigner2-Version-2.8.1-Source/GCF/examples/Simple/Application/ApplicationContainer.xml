@@ -1,0 +1,10 @@
+<!-- The root element of a GUIXML file must be component. It must have
+     a valid name attribute. The value of the name attribute must and
+     should be the name of the component for which it is written -->
+<component name="ApplicationContainer">
+
+    <!-- Here we "expose" all the UI/non-UI resources of the component -->
+    <object name="Core" />
+    <widget name="Container" title="Simple Application Container" />
+
+</component>

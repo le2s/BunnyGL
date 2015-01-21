@@ -1,0 +1,30 @@
+/**
+\page ipc_simpleirc SimpleIRC - IPC Example
+
+This example shows how the IPC mechanism in GCF can be used to create a simple IRC program for having 2 or more users in a local-area-network
+can communicate with each other. 
+
+\image html ipc_simpleirc.png
+
+This example contains 
+
+\li A \c ContactList widget that shows a list of online users
+\li A \c IRCWindow widget that shows a chat area and the previously mentioned \c ContactList in a layout. 
+\li A \c SimpleIRC component class that manages the IPC between instances of the SimpleIRC program on the LAN.
+
+We begin by looking into the source code of ContactList first. Pay special attention to the comments in the code.
+
+\include IPC/SimpleIRC/ContactList.h
+\include IPC/SimpleIRC/ContactList.cpp
+
+Next, lets look at the IRCWindow where it brings together the \c ContactList and the chat-panel. Again pay attention to the comments
+in the code listing below.
+
+\include IPC/SimpleIRC/IRCWindow.h
+\include IPC/SimpleIRC/IRCWindow.cpp
+
+Finally, lets look at the SimpleIRC component class implementation.
+
+\include IPC/SimpleIRC/SimpleIRC.h
+\include IPC/SimpleIRC/SimpleIRC.cpp
+*/

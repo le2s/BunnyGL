@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/UtilsComponent">
+        <file alias="GUIXML">UtilsComponent.xml</file>
+    </qresource>
+</RCC>

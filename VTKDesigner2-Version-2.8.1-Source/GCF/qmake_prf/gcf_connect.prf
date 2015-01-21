@@ -1,0 +1,18 @@
+GCF_SDK = $$PWD/../
+INCLUDEPATH += $$GCF_SDK/tools/GCFConnect/Include 
+INCLUDEPATH += $$GCF_SDK/tools/GCFConnect/
+DEPENDPATH += $$GCF_SDK/tools/GCFConnect/Include
+DEPENDPATH += $$GCF_SDK/tools/GCFConnect/
+
+QT += network script
+
+
+HEADERS += $$GCF_SDK/tools/GCFConnect/RemoteApplication.h \
+           $$GCF_SDK/tools/GCFConnect/RemoteApplicationCall.h
+
+SOURCES += $$GCF_SDK/tools/GCFConnect/RemoteApplication.cpp \
+           $$GCF_SDK/tools/GCFConnect/RemoteApplicationCall.cpp
+
+CONFIG(debug, debug|release) {
+    TARGET = $$join(TARGET,,,d)
+}

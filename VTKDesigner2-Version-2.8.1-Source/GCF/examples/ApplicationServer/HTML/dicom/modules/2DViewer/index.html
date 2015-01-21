@@ -1,0 +1,367 @@
+<html>
+
+<body>
+
+<table width="100%" height="100%"  cellSpacing="0">
+
+<tr><td height="40px" align="center">
+
+<span id="patientNameDiv" style="background: #6d8db0; width: 30%">Patient Name: </span>
+&nbsp;&nbsp;
+<span>WL: </span><input id="windowLevelInput" type="text" value="400" size="4" style="text-align: center"/>
+&nbsp;&nbsp;
+<span>WW: </span><input id="windowWidthInput" type="text" value="60" size="4" style="text-align: center"/>
+<button onclick="changeWindowLevelAndWidth()" style="height: 100%">Apply</button>
+&nbsp;&nbsp;
+<span>Slice: </span><input id="currentSliceInput" type="text" value="0" size="4" style="text-align: center"/>
+ of <span id="sliceCountDiv">unknown</span>
+<button onclick="onSliceInputValueChange()" style="height: 100%">Fetch</button>
+
+</td></tr>
+
+<tr>
+	<td align="center" valign="center" style="background: #000000; width: 95%">
+		<div id="sliceImageDiv" style="background: #000000; height: 512px"></div>
+	</td>
+	<td align="center" valign="center" style="background: #000000">
+		<div id="sliderDiv" style="background: #000000; height: 90%"></div>
+	</td>
+</tr>
+
+<tr><td height="40px" align="center" valign="center">
+
+<span id="sliceInfoDiv"></span>
+
+</td></tr>
+
+</table>
+
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+<script type="text/javascript" language="Javascript" src="../ImageWidget.js"></script>
+<script type="text/javascript" language="Javascript" src="SliderWidget.js"></script>
+
+<script type="text/javascript" language="Javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+var twoDViewerInitFlag = false;
+var fetchingSliceImage = false;
+var twoDFetchFullResImageTimer = false;
+
+var sliderWidget = new SliderWidget("sliderWidget");
+sliderWidget.setMinimum(0);
+
+var imageWidget = new ImageWidget();
+
+function fetchFullResImage2() { 
+    if(fetchingSliceImage)
+        return;
+
+    var msg = new GCFRequestMessage(); 
+    msg.setObjectName('DICOMService.Core'); 
+    msg.setMethodName('currentSliceImageFullRes');  
+    msg.onReply = function(reply) { 
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+        } else
+            imageWidget.clearImage();
+    } 
+    msg.send();
+};
+                
+function fetchFullResImage() {
+    if(twoDFetchFullResImageTimer)
+        window.clearTimeout(twoDFetchFullResImageTimer);
+    
+    if(!twoDViewerInitFlag || fetchingSliceImage)
+        return;
+        
+    twoDFetchFullResImageTimer = window.setTimeout("fetchFullResImage2()", 200);
+}
+
+function twoDViewerClearFunction() {
+    document.getElementById("patientNameDiv").innerHTML = "Patient Name: ";
+    document.getElementById("windowLevelInput").value = 400;
+    document.getElementById("windowWidthInput").value = 60;
+    document.getElementById("sliceInfoDiv").innerHTML = '';
+    document.getElementById("currentSliceInput").value = 0;
+    document.getElementById("sliceCountDiv").innerHTML = 'unknown';
+    imageWidget.clearImage();
+    twoDViewerInitFlag = false;
+}
+window.top.setClearFunction(1, twoDViewerClearFunction);
+
+function twoDViewerInitFunction() {
+    if(twoDViewerInitFlag)
+        return;
+        
+    imageWidget.installOn( document.getElementById('sliceImageDiv') );
+        
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "patientName");
+    msg.add("DICOMService.Core", "sliceCount");
+    msg.add("DICOMService.Core", "currentSliceIndex");
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+    msg.add("DICOMService.Core", "currentSliceImage");
+    msg.onReply = function(reply) {
+        if(!reply.isValid()) {
+            document.getElementById("sliceInfoDiv").innerHTML = 'Cannot load DICOM series';
+            return;
+        }
+            
+        twoDViewerInitFlag = true;
+        fetchingSliceImage = false;
+                
+        var img = reply.getResult("DICOMService.Core", "currentSliceImage");
+        imageWidget.setImage( img );
+                
+        document.getElementById("patientNameDiv").innerHTML = 
+                reply.getResult("DICOMService.Core", "patientName");
+                
+        var sliceInfo = 'Showing slice ' +
+                        (reply.getResult("DICOMService.Core", "currentSliceIndex")+1) + 
+                        '. Total ' +
+                        reply.getResult("DICOMService.Core", "sliceCount") + ' slices';
+        document.getElementById("sliceInfoDiv").innerHTML = sliceInfo;
+
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+                
+        document.getElementById("sliceCountDiv").innerHTML = 
+                reply.getResult("DICOMService.Core", "sliceCount");
+                    
+        document.getElementById("currentSliceInput").value =
+            reply.getResult("DICOMService.Core", "currentSliceIndex")+1;
+        
+		sliderWidget.installOn(document.getElementById("sliderDiv"));
+		sliderWidget.setMaximum(reply.getResult("DICOMService.Core", "sliceCount"));
+		sliderWidget.onValueChange(onSliderValueChange);
+		sliderWidget.setValue(document.getElementById("currentSliceInput").value-1);
+		
+        fetchFullResImage();
+    }
+    msg.send();
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Loading...';
+    fetchingSliceImage = true;
+}
+window.top.setInitFunction(1, twoDViewerInitFunction);
+
+imageWidget.onScrollWheelUp = function(e) {
+    if(e.altKey)
+        fetchNextSlice(5);
+    else
+        fetchNextSlice(1);
+}
+
+imageWidget.onScrollWheelDown = function(e) {
+    if(e.altKey)
+        fetchPreviousSlice(5);
+    else
+        fetchPreviousSlice(1);
+}
+
+function fetchPreviousSlice(count) {
+    if(fetchingSliceImage)
+        return;
+
+    var args = new GCFList();
+    args.addInteger(count);
+
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "previousSliceImage", args);
+    msg.add("DICOMService.Core", "currentSliceIndex");
+    msg.add("DICOMService.Core", "sliceCount");
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        fetchingSliceImage = false;
+
+        var img = reply.getResult("DICOMService.Core", "previousSliceImage");
+        imageWidget.setImage( img );
+
+        var sliceInfo = 'Showing slice ' +
+                        (reply.getResult("DICOMService.Core", "currentSliceIndex")+1) + 
+                        '. Total ' +
+                        reply.getResult("DICOMService.Core", "sliceCount") + ' slices';
+        document.getElementById("sliceInfoDiv").innerHTML = sliceInfo;
+
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+            
+        document.getElementById("currentSliceInput").value =
+            reply.getResult("DICOMService.Core", "currentSliceIndex")+1;
+			
+		// Synchronise slider's value
+		if(document.getElementById("currentSliceInput").value != sliderWidget.value+1)
+			sliderWidget.setValue(document.getElementById("currentSliceInput").value-1);
+            
+        fetchFullResImage();
+    }
+    msg.send();
+    fetchingSliceImage = true;
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Fetching previous slice...';
+}
+
+function fetchNextSlice(count) {
+    if(fetchingSliceImage)
+        return;
+
+    var args = new GCFList();
+    args.addInteger(count);
+
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "nextSliceImage", args);
+    msg.add("DICOMService.Core", "currentSliceIndex");
+    msg.add("DICOMService.Core", "sliceCount");
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        fetchingSliceImage = false;
+
+        var img = reply.getResult("DICOMService.Core", "nextSliceImage");
+        imageWidget.setImage( img );
+        
+        var sliceInfo = 'Showing slice ' +
+                        (reply.getResult("DICOMService.Core", "currentSliceIndex")+1) + 
+                        '. Total ' +
+                        reply.getResult("DICOMService.Core", "sliceCount") + ' slices';
+        document.getElementById("sliceInfoDiv").innerHTML = sliceInfo;
+
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+            
+        document.getElementById("currentSliceInput").value =
+            reply.getResult("DICOMService.Core", "currentSliceIndex")+1;
+			
+		// Synchronise slider's value
+		if(document.getElementById("currentSliceInput").value != sliderWidget.value+1)
+			sliderWidget.setValue(document.getElementById("currentSliceInput").value-1);
+            
+        fetchFullResImage();
+            
+        fetchFullResImage();
+    }
+    msg.send();
+    fetchingSliceImage = true;
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Fetching next slice...';
+}
+
+function fetchSlice() {
+    if(fetchingSliceImage)
+        return;
+
+    var args = new GCFList();
+    args.addInteger( document.getElementById("currentSliceInput").value-1 );
+        
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "sliceImage", args);
+    msg.add("DICOMService.Core", "currentSliceIndex");
+    msg.add("DICOMService.Core", "sliceCount");
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        fetchingSliceImage = false;
+
+        var img = reply.getResult("DICOMService.Core", "sliceImage");
+        imageWidget.setImage( img );
+            
+        var sliceInfo = 'Showing slice ' +
+                        (reply.getResult("DICOMService.Core", "currentSliceIndex")+1) + 
+                        '. Total ' +
+                        reply.getResult("DICOMService.Core", "sliceCount") + ' slices';
+        document.getElementById("sliceInfoDiv").innerHTML = sliceInfo;
+
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+
+        document.getElementById("currentSliceInput").value =
+            reply.getResult("DICOMService.Core", "currentSliceIndex")+1;
+            
+        fetchFullResImage();
+    }
+    msg.send();
+    fetchingSliceImage = true;
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Fetching slice ' + (args.at(0).getValue()+1) + '...';
+}
+
+function changeWindowLevelAndWidth() {
+    if(fetchingSliceImage)
+        return;
+        
+	var args = new GCFList();
+    args.addDouble( document.getElementById("windowLevelInput").value );
+	args.addDouble( document.getElementById("windowWidthInput").value );
+		
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "setWindowLevelAndWidth", args);
+    msg.add("DICOMService.Core", "currentSliceImage");
+    
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        fetchingSliceImage = false;
+
+        var img = reply.getResult("DICOMService.Core", "currentSliceImage");
+        imageWidget.setImage(img);
+            
+        var sliceInfo = 'Showing slice ' +
+                        (reply.getResult("DICOMService.Core", "currentSliceIndex")+1) + 
+                        '. Total ' +
+                        reply.getResult("DICOMService.Core", "sliceCount") + ' slices';
+        document.getElementById("sliceInfoDiv").innerHTML = sliceInfo;
+    
+        fetchFullResImage();
+    }
+    msg.send();
+    fetchingSliceImage = true;
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Applying WL/WW on slice ' + (args.at(0).getValue()+1) + '...';
+}
+
+function onSliceInputValueChange() {
+	// Synchronise slider
+	if(document.getElementById("currentSliceInput").value != sliderWidget.value+1)
+		sliderWidget.setValue(document.getElementById("currentSliceInput").value-1);
+
+	fetchSlice();
+}
+
+onSliderValueChange = function(value) {
+    if(document.getElementById("currentSliceInput").value == value)
+        return;
+
+    document.getElementById("currentSliceInput").value = value;
+    if(!fetchingSliceImage)
+        fetchSlice();
+}
+</script>
+
+</html>
+

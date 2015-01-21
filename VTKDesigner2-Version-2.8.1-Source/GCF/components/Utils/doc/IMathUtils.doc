@@ -1,0 +1,71 @@
+/**
+\ingroup utilscomponent 
+\interface IMathUtils GCF/Utils/IMathUTils
+\brief This interface provides access to few time-saving math routines
+*/
+
+/**
+\fn virtual double IMathUtils::toRadians(double angle) = 0;
+
+Through this interface method you can convert given angle in degrees to radians.
+*/
+
+/**
+\fn virtual double IMathUtils::toDegrees(double radians) = 0;
+
+Through this interface method you can convert given angle in radians to degrees.
+*/
+
+/**
+\fn virtual double IMathUtils::sinAngle(double angle) = 0;
+
+Returns sine of given angle.
+
+\note angle should be in degrees.
+*/
+
+/**
+\fn virtual double IMathUtils::cosAngle(double angle) = 0;
+
+Returns cosine of given angle.
+
+\note angle should be in degrees.
+*/
+
+/**
+\fn virtual double IMathUtils::tanAngle(double angle) = 0;
+
+Returns tangent of given angle.
+
+\note angle should be in degrees.
+*/
+
+
+/**
+\fn virtual double IMathUtils::aSinAngle(double val) = 0;
+
+Returns inverse sine of given value.
+*/
+
+
+/**
+\fn virtual double IMathUtils::aCosAngle(double val) = 0;
+
+Returns inverse cosine of given value
+*/
+
+
+/**
+\fn virtual double IMathUtils::aTanAngle(double val) = 0;
+
+Returns inverse tangent of given value.
+*/
+
+
+/**
+\fn virtual double IMathUtils::randomNumber(double min, double max) = 0;
+
+Generates random number betwenn max and min values.
+*/
+
+

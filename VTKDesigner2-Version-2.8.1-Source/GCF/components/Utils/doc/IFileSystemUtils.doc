@@ -1,0 +1,52 @@
+/**
+\ingroup utilscomponent 
+\interface IFileSystemUtils GCF/Utils/IFileSystemUtils
+\brief This interface provides access to a few powerful file-system routines
+*/
+
+/**
+\fn virtual QString IFileSystemUtils::findFileInPath(const QString& fileName) = 0;
+
+This function looks for \c fileName in the application directory followed by each and every directory
+in PATH environment variable. It returns a complete path of the file where it was first found. If the 
+file was not found, then a NULL string is returned.
+
+- On Windows the search order is 
+	- application directory (\c QCoreApplication::applicationDirPath())
+	- current working directory (\c QDir::currentDirPath())
+	- each and every directory in the PATH environment variable
+	
+- On Linux the search order is 
+	- application directory (\c QCoreApplication::applicationDirPath())
+	- current working directory (\c QDir::currentDirPath())
+	- each and every directory in the PATH environment variable
+	- each and every directory in the LD_LIBRARY_PATH environment variable
+	
+\note This function is faster than calling findFilesInPath(...).first().
+*/
+
+/**
+\fn virtual QStringList IFileSystemUtils::findFilesInPath(const QString& fileName) = 0;
+
+This function returns a list of complete-paths where the given \c fileName is found on the system. If the file was 
+not found anywhere; then an empty list is returned.
+
+- On Windows the search order is 
+	- application directory (\c QCoreApplication::applicationDirPath())
+	- current working directory (\c QDir::currentDirPath())
+	- each and every directory in the PATH environment variable
+	
+- On Linux the search order is 
+	- application directory (\c QCoreApplication::applicationDirPath())
+	- current working directory (\c QDir::currentDirPath())
+	- each and every directory in the PATH environment variable
+	- each and every directory in the LD_LIBRARY_PATH environment variable
+*/
+
+/**
+\fn virtual void IFileSystemUtils::deleteDirectory(const QString& dir, bool deleteDir=false) = 0;
+
+This function recursively deletes the contents of directory whose name/path is specified by \c dir. If
+\c deleteDir is true, then the directory is also removed at the end.
+*/
+

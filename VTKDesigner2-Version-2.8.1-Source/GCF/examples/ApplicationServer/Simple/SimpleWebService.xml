@@ -1,0 +1,6 @@
+<component name="SimpleWebService" allowRemoteAccess="true">
+
+    <object name="Core" allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true" />
+
+</component>

@@ -1,0 +1,17 @@
+<component name="Component1">
+
+    <widget name="Calendar"
+            title="Calendar"
+            parentWidget="ApplicationContainer.Workspace" />
+
+    <action name="action1" title="Action 1 (Component1)" />
+    <action name="action2" title="Action 2 (Component1)" />
+    <action name="action3" title="Action 3 (Component1)" />
+
+    <menutab name="tab1" title="Tab 1  (Component1)">
+        <menutabitem actionName="Component1.action1" />
+        <menutabitem actionName="Component1.action2" />
+        <menutabitem actionName="Component1.action3" />
+    </menutab>
+
+</component>

@@ -1,0 +1,81 @@
+/**
+\page extending_guixml_example Extending GUIXML - An Example
+
+This example shows how you can extend GUIXML file format by making use of \ref GCF::AbstractGuiXmlExtender and 
+\ref GCF::AbstractNodeInitializer interfaces Suppose that you wanted to offer a tabbed-menu widget for your main-window. 
+Suppose that you wanted to offer developers means by which they can create tabs and add actions to each tab in the main-window 
+via GUIXML. For example, consider the following two GUIXML files and the resulting main-window below.
+
+NOTE: Complete source code of the example is available in \c $GCFDIR/examples/ExtendingGUIXML directory
+
+\htmlonly
+<center>
+<table border="1" cellspacing="0" cellpadding="4">
+<tr>
+<td>
+<center><font size="+2">Component1's GUIXML</font></center>
+\endhtmlonly
+\includelineno ExtendingGUIXML/Component1/Component1.xml
+\htmlonly
+</td>
+<td>
+<center><font size="+2">Component2's GUIXML</font></center>
+\endhtmlonly
+\includelineno ExtendingGUIXML/Component2/Component2.xml
+\htmlonly
+</td>
+</tr>
+<tr>
+<td colspan=2">
+<center><font size="+2">Result</font></center><br/>
+<center>
+\endhtmlonly
+\image html example_extendingguixml.png
+\htmlonly
+</center></td>
+</tr>
+</table>
+</center>
+\endhtmlonly
+
+Notice how we are making use of user-defined XML elements like <menutab> and <menutabitem> in the GUIXML file. Support for these XML elements are 
+provided by implementing the \ref GCF::AbstractGuiXmlExtender and \ref GCF::AbstractNodeInitializer interfaces. These interfaces are 
+implemented as follows
+
+\include ExtendingGUIXML/Application/GUIExtenders.h
+
+Class \c MenuWidgetTabExtender provides support for processing <menutab> XML element, while class \c MenuWidgetTabItemExtender provides
+support for processing the <menutabitem> element. Instances of these classes are registered with GCF within the constructor of the application
+container component.
+
+\code
+ApplicationContainerComponent::ApplicationContainerComponent()
+{
+    d = new ApplicationContainerComponentData;
+
+    d->mainWindow = new QMainWindow;
+    d->mainWindow->setMinimumSize(640, 480);
+    gApp->setComponentHostWidget(d->mainWindow);
+
+    d->workspace = new QTabWidget;
+    d->mainWindow->setCentralWidget(d->workspace);
+
+    d->menuWidget = new QTabWidget;
+    d->menuWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    d->menuWidget->setFixedHeight(80);
+    d->mainWindow->setMenuWidget(d->menuWidget);
+
+    GCF::registerGuiXmlExtender(new MenuWidgetTabExtender);
+    GCF::registerGuiXmlExtender(new MenuWidgetTabItemExtender);
+}
+\endcode
+
+Classes \c MenuWidgetTabExtender and \c MenuWidgetTabItemExtender are implemented as follows
+
+\include ExtendingGUIXML/Application/GUIExtenders.cpp
+
+You can see how the GUI-Extenders help "mingle" the new XML elements into GUIXML.
+*/
+
+
+

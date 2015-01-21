@@ -1,0 +1,105 @@
+<component name="ScriptEditorComponent" >
+
+    <!-- ScriptEditorComponent.controller maps to an instance of the component class -->
+    <object name="controller" />
+
+    <!-- ScriptEditorComponent.scriptEditor maps to an instance of the editor-widget
+         where the user can type his scripts -->
+    <widget name="scriptEditor" title="Script Editor"
+            parentWidget="MainWindowComponent.workspace" />
+
+    <!-- ScriptEditorComponent.scriptableObjectExplorer maps to an instance of the
+         tree widget where all scriptable objects and its properties/methods are
+         listed -->
+    <widget name="scriptableObjectExplorer" title="Scriptable Objects"
+            parentWidget="MainWindowComponent.leftDockArea" />
+
+    <!-- We make use of GCF's GUIXML technology to create menus and toolbars for
+         offering access to functionality in this component -->
+
+    <!-- The Script menu and toolbar -->
+    <action name="executeMainScript" title="Execute"
+            triggerSlot="ScriptEditorComponent.controller::executeMainScript()"
+            shortcut="F5" icon=":/ScriptEditor/execute.png" />
+    <action name="fileLoadForm"  title="Load UI"
+            triggerSlot="ScriptEditorComponent.controller::loadForm()"
+            shortcut="Ctrl+M" icon=":/ScriptEditor/loadform.png" />
+    <action name="fileUnloadForm" title="Unload UI"
+            triggerSlot="ScriptEditorComponent.controller::unloadForm()"
+            shortcut="Ctrl+U" icon=":/ScriptEditor/unloadform.png" />
+    <widget title="Script Editor Configuration"
+            visible="false"
+            name="configPageSheet" />
+
+    <menu title="Script" hideWhenInactive="false" name="scriptMenu"
+          before="MainWindowComponent.viewMenu">
+        <menuitem actionName="ScriptEditorComponent.executeMainScript" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.fileLoadForm" />
+        <menuitem actionName="ScriptEditorComponent.fileUnloadForm" />
+        <menuitem />
+        <menuitem widgetName="ScriptEditorComponent.configPageSheet" />
+    </menu>
+
+    <toolbar name="scriptTools" title="Script Tools" hideWhenInactive="false" >
+        <toolbaritem actionName="ScriptEditorComponent.executeMainScript" hideWhenInactive="false" />
+        <toolbaritem />
+        <toolbaritem actionName="ScriptEditorComponent.fileLoadForm" hideWhenInactive="false" />
+        <toolbaritem actionName="ScriptEditorComponent.fileUnloadForm" hideWhenInactive="false" />
+    </toolbar>
+
+    <!-- Edit Menu -->
+    <action name="editCopy"  title="Copy" shortcut="Ctrl+C"
+            triggerSlot="ScriptEditorComponent.scriptEditor::copy()" />
+    <action name="editCut" title="Cut" shortcut="Ctrl+X"
+            triggerSlot="ScriptEditorComponent.scriptEditor::cut()"
+            mergeWith="MainWindowComponent.cut" />
+    <action name="editPaste" title="Paste"  shortcut="Ctrl+V"
+            triggerSlot="ScriptEditorComponent.scriptEditor::paste()"
+            mergeWith="MainWindowComponent.paste" />
+    <action name="editGotoLine"  title="Goto Line" shortcut="Ctrl+G"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showGotoLineDialog()"
+            icon=":/ScriptEditor/gotoline.png" />
+    <action name="editUndo" title="Undo"  shortcut="Ctrl+Z"
+            triggerSlot="ScriptEditorComponent.scriptEditor::undo()"
+            mergeWith="MainWindowComponent.undo" />
+    <action name="editRedo" title="Redo"  shortcut="Ctrl+Y"
+            triggerSlot="ScriptEditorComponent.scriptEditor::redo()"
+            mergeWith="MainWindowComponent.redo" />
+
+    <menu name="editMenu" title="Edit">
+        <menuitem actionName="ScriptEditorComponent.editCut" />
+        <menuitem actionName="ScriptEditorComponent.editCopy" />
+        <menuitem actionName="ScriptEditorComponent.editPaste" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.editGotoLine" />
+        <menuitem />
+        <menuitem actionName="ScriptEditorComponent.editUndo" />
+        <menuitem actionName="ScriptEditorComponent.editRedo" />
+    </menu>
+
+    <!-- Find menu -->
+    <action name="find" title="Find" shortcut="Ctrl+F"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showFindDialog()"
+            icon=":/ScriptEditor/find.png" />
+    <action name="findNext" title="Find Next" shortcut="F3"
+            triggerSlot="ScriptEditorComponent.scriptEditor::findNext()" />
+    <action name="findPrevious" title="Find Previous" shortcut="Shift+F3"
+            triggerSlot="ScriptEditorComponent.scriptEditor::findPrevious()" />
+    <action name="findAndReplace" title="Find And Replace" shortcut="Ctrl+H"
+            triggerSlot="ScriptEditorComponent.scriptEditor::showFindAndReplaceDialog()"
+            icon=":/ScriptEditor/findreplace.png" />
+
+    <menu title="Find" name="findMenu" >
+        <menuitem actionName="ScriptEditorComponent.find" />
+        <menuitem actionName="ScriptEditorComponent.findAndReplace" />
+        <menuitem actionName="ScriptEditorComponent.findNext" />
+        <menuitem actionName="ScriptEditorComponent.findPrevious" />
+    </menu>
+
+    <!-- Some default configuration properties -->
+    <property key="ScriptEditorComponent.scriptEditor::TabSpace" value="4" />
+    <property key="ScriptEditorComponent.scriptEditor::FontSize" value="15" />
+    <property key="ScriptEditorComponent.scriptEditor::FontName" value="Courier New" />
+
+</component>

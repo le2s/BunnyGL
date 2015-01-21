@@ -1,0 +1,1117 @@
+/**
+\page updaterarch Software Updater in GCF
+
+\section updater1 Introduction
+
+Modern software systems are large and complex. It is common practice to release software and then
+offer incremental updates. Incremental updates can be offered in several ways
+
+\li Updates are created and hosted on the vendors website. EMails are sent to users of the software
+to visit the website, download and install the update. The problem with this approach is that users may not notice
+the email, and even if they notice they may not want to spend time downloading and installing the
+update. They would much rather wait for a new release or a service pack than install updates.
+
+\li Updates are created and sent via email or snail mail to customers. This approach is not cost
+effective. Plus, it has the same problem as before. Users may not want to spend time downloading and
+installing the update.
+
+\li Bundle a set of updates into a large service pack and ask users to download and install it.
+This approach is effective because most users are serious about service packs. But the main draw
+back is that critical updates cannot be delivered immediately.
+
+\li Updates are hosted in a central location. Installed copies of the software automatically downloads
+the updates; and then asks the user for permission to install one or more updates.
+
+I am sure you will agree that the last option was the best among all the available options.
+
+GCF 2.2.0 introduced a new "Software Updater" module that enables your applications to automatically
+download updates from one or more known update sources and install them. This document explains
+the architecture of the "Software Updater" module and also explains how you can use it in your 
+applications.
+
+\sa \ref example_updater
+
+\section updater2 The Big Picture
+
+GCF's "Software Updater" module supports \b serving, \b downloading and \b installation of updates 
+automatically against a \b baseline. As highlighted in the previous sentence, there are four key
+concepts here :
+
+\li \ref updater21
+\li \ref updater22
+\li \ref updater23
+\li \ref updater24
+
+\subsection updater21 Baseline
+
+Baseline is defined as "version of an application against which a set of updates can be installed".
+Updates are made available for a baseline. An application installs an update only if the update is
+prepared for the same baseline to which it belongs. For example: Updates for Windows XP 
+cannot be installed on Windows Vista because "Windows XP" and "Windows Vista" are different baselines. 
+
+Applications must provide mechanisms to identify the baseline that they belong to. In GCF the 
+string returned by \c QCoreApplication::applicationVersion() is used to identify the baseline to which 
+it belongs.
+
+\subsection updater22 Serving of Updates
+
+An update is defined as a file that consists of one or more files and an installation script. The
+script provides the logic as to how the files within the update are to be installed on top of a
+baseline.
+
+In GCF, update is a compressed file that contains one or more files and a \ref updaterscript script
+that contains instructions for installing the update. Special tools like \ref updaterTool1 and 
+\ref updaterTool2 are used to create and extract updates.
+
+Once an update is created, it must be hosted somewhere so that installed copies of the software
+can find the update; download and install locally. GCF does not require you to make use of any
+special server software for hosting updates. You can make use of existing FTP and HTTP servers
+to host updates. 
+
+In addition to hosting the update itself, a special XML file that provides a summary of all 
+updates available from it must be made available on the server. This special XML file is 
+called \ref updatesxml.
+
+The directory within which updates are hosted is called as a \b server \b site. A single FTP
+or HTTP server can host several server sites. A unique URL is used to locate a server site.
+A server site should provide updates only for a single baseline of a GCF-application.
+
+\subsection updater23 Automatic download of updates
+
+Applications must be built to look for updates in one or more server sites and download them
+whenever new updates are available; subject to permission from the user. 
+
+\subsubsection updater231 Specifying Update Server Site(s)
+
+As a vendor when you build a GCF application, you will need to hardcode the primary update
+server site into your program by making use of the following piece of code in the main() function.
+
+\code
+gApp->setPrimaryServerSite("http://www.vcreatelogic.com/products/vtkdesigner/updates");
+gApp->setAutoUpdatesEnabled(); // This should be done at the end, after all updater configuration
+                               // is complete.
+\endcode
+
+If you want to allow third party developers to create components for your product and make them
+available via software update, you can write the following lines of code in the main() function
+
+\code
+gApp->.setPrimaryServerSite("http://www.vcreatelogic.com/products/vtkdesigner/updates");
+gApp->.setAllowThirdPartyServerSites(true); // by default, this is disabled
+gApp->setAutoUpdatesEnabled();
+\endcode
+
+Third party update servers can be registered either by editing the ApplicationXML file as follows
+
+\verbatim
+<Application>
+
+    <Components>
+        <!-- Components info here -->
+    </Components>
+         
+    <Updater>
+        <ServerSites>
+            <Site>http://www.thirdpartyvendor.com/vtkdesigner/updates</Site>
+            <Site>http://www.anotherthirdpartyvendor.com/vtkdesigner/updates</Site>
+        </ServerSites>
+    </Updater>
+         
+</Application>
+\endverbatim
+
+\note Third party server sites from the ApplicationXML file will be used only if you have explicitly
+allowed third-party-server sites using \c gApp->setAllowThirdPartyServerSites(true).
+
+The "Updater" configuration page can also be used for adding/removing server sites.
+
+\image html updaterconfigpage.png
+
+\subsubsection updater232 How and when are updates downloaded?
+
+Updates must be downloaded in the "background" without affecting the functioning of the application. GCF
+does this by spawing a background thread that monitors the update server sites regularly, checking to
+see if updates are available. This thread is internally managed by \ref GCF::UpdaterComponent and 
+developers have no access to this thread.
+
+GCF::UpdaterComponent can be configured to make use of the "background thread" to check for updates
+
+\li Everytime the application is started
+\li Everytime the application is started, but only once in a given day
+\li Upon request by the user
+\li Once in every \i N hours.
+
+One or more of the above strategies can be set by making use of the 
+\ref GCF::Application::setCheckUpdateFrequency() method.
+
+Everytime the "background thread" looks for updates, it downloads Updates.xml file from each of the
+server sites (See \ref updater22 for more information). Contents of all the Updates.xml file are 
+assimilated and processed to arrive at the list of updates that are applicable to the application.
+Once such a list of evaluated, any one of the following strategies can be used to figure out what
+updates to download.
+
+\li All applicable updates are downloaded and stored for installation at the next restart, without
+    seeking permission from the user.
+\li A visual cue is provided asking for the user to look into a special widget to figure out what 
+    updates are to be downloaded.
+\li The user is immediately notified about the available updates in a dialog box. He can then select
+    what updates to download and what to ignore.
+    
+The strategy to use can be configured by making use of the \ref GCF::Application::setUpdateSelectionStrategy()
+method.
+
+Once updates are selected, they will then be downloaded from the corresponding server sites on to the
+local filesystem. The downloaded updates will be stored in ${APPDIR}/Updates/Incoming directory. Once
+an update is downloaded it will be registered with ${APPDIR}/Updates/System/AvailableUpdates.xml
+for installation at the next restart.
+
+\subsection updater24 Automatic installation of updates
+
+As mentioned in \ref updater231, whenever the UpdaterComponent is initialized as a part of the 
+application startup it checks the ${APPDIR}/Updates/System/AvailableUpdates.xml file to see if 
+there are downloaded updates that need to be installed. If so, the application spaws another process
+in which a special program called \ref updaterTool3 is launched. Once it is launched, the application
+terminates itself allowing \ref updaterTool3 to install the updates.
+
+After installing the updates \ref updaterTool3 deletes temporary files if any and restarts the application.
+The user will be able to use the updated application. Whenever a GCF-application is restarted for the first 
+time after it is updated, a dialog box is shown summarizing the installation of updates.
+
+\subsubsection updater241 Why use Update Installer (The UINST tool)?
+
+Sometimes it is not possible to update a program while it is running. This is because the files that
+need to be updated might be locked by the program. It is therefore very important to stop the program
+that is being updated in-order to install updates for it.
+
+\section updaterTool1 CreateGVZ
+
+A single update can consist of several files. For example, lets say you are serving an update for a 
+component in your GCF application. At the very least the update will consist of a DLL file and a GUIXML
+file. As mentioned in \ref updater22 the update should also contain \ref updaterscript. 
+
+Instead of sending files independently, we can compress them into a single file and serve that. 
+GCF uses a custom compression format for compressing independent files into a single update-file.
+
+The CreateGVZ tool helps in compressing a directory into an update file. Its usage is explained below
+
+\code
+C:\> cd GCF
+C:\GCF\> cd bin
+C:\GCF\bin\> CreateGVZ.exe
+
+Usage
+     CreateGVZ.exe -i <path-to-update-file-directory> -o <output-file-name>
+or
+     CreateGVZ.exe --input <path-to-update-file-directory> --output <output-file-name>
+     
+C:\GCF\bin\> 
+\endcode
+
+Lets say you wanted to provide an update to the ScriptEditor component. You would create
+a directory called \c C:\GCF\bin\ScriptEditorUpdate and then copy into it the following files
+
+\li ScriptEditor.dll and
+\li ScriptEditorComponent.xml
+\li \ref updaterscript
+
+To create an update file from the \c ScriptEditorUpdate directory, you should run the following
+command
+
+\code
+C:\GCF\bin\> CreateGVZ.exe -i ScrpitEditorUpdate -o ScriptEditor-Windows-32bit-i386
+
+Setting output file extension to gvz. Output file is now C:/GCF/bin/ScriptEditor-Windows-32bit-i386.gvz
+\endcode
+
+Note: Update must have gvz as their filename extension.
+
+\section updaterTool2 ExtractGVZ
+
+The ExtractGVZ command performs the reverse operation of \ref updaterTool1. It takes as input a
+compressed update-file and dumps the extracted contents into a directory.
+
+\code
+C:\> cd GCF
+C:\GCF\> cd bin
+C:\GCF\bin\> ExtractGVZ.exe
+
+Usage
+     ExtractGVZ.exe -i <input-file-name> -o <path-where-files-should-be-extracted>
+or
+     ExtractGVZ.exe --input <input-file-name> --output <path-where-files-should-be-extracted>
+\endcode
+
+Suppose for example you wanted to extract the contents of the ScriptEditor-Windows-32bit-i386.gvz 
+update file created in \ref updaterTool1 into a directory called test. You just need to execute the following command
+
+\code
+C:\GCF\bin\> ExtractGVZ.exe -i ScriptEditor-Windows-32bit-i386.gvz -o .\test
+
+\endcode
+
+After the ExtractGVZ command exits, you will be able to find a ScriptEditorUpdate directory inside test.
+
+\note ExtractGVZ will overwrite existing files and directories with the same name.
+
+\section updaterTool3 Update Installer (The UINST tool)
+
+UINST is a tool that actually installs downloaded updates. It looks into the AvailableUpdates.xml
+file and figures out the updates that need to be installed and the order in which they have to be installed.
+
+It then performs the following on each update file
+
+\li Extracts the update file into a temporary directory
+\li Executes the Install.js script contianed in the update file
+\li Caches logs generated by Install.js and 
+\li Deletes all extracted contents and files created by Install.js
+
+After all the updates are installed, the AvailableUpdates.xml file is deleted and downloaded updates are moved
+from ${APPDIR}/Updates/Incoming to ${APPDIR}/Updates/Cache. Once this is done, the updated application is 
+restarted and \ref updaterTool3 quits.
+
+\section updaterscript Install.js
+
+Every update should contain an Install.js script that contains the installation logic for an update. The 
+script is executed by \ref updaterTool3, which makes available special objects for use in the script for
+performing the installation of the update.
+
+In its smallest form, Install.js should contain a function called DoInstall(), which performs the installation
+and returns true or false depending on whether the installation was a success or failure. This function is called by
+\ref updaterTool3. Shown below is the smallest form of the script
+
+\code
+function DoInstall()
+{
+    // do some work
+    return true;
+}
+\endcode
+
+\subsection updaterscript1 Objects available to Install.js
+
+The Install.js has access to special objects that are made available by the \ref updaterTool3. These objects
+can be used in the script during the installation process. The following table summarizes the custom objects
+and their methods made available by \ref updaterTool3.
+
+\note All the functions below return true/false depending on whether the function call was a success
+or failure, unless the return type is explicitly specified in the Description column.
+
+\htmlonly
+<center>
+<table border="1" cellspacing="0" cellpadding="2" width="85%">
+ 
+ <tr>
+   <td colspan="3" bgcolor="#0a7bbf"><center><font size="+1" color="#ffffff"><b><code>System</code></b></font></center></td>
+ </tr>
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>Exec(String)</code></td>
+   <td width="70%">Executes the command passed as parameter</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>ExecWait( String )</code></td>
+   <td width="70%">Executes the command and waits for it to finish</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>DebugLog( String )</code></td>
+   <td width="70%">Writes the string passed as parameter into the log file as a debug message</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>ErrorLog( String )</code></td>
+   <td width="70%">Writes the string passed as parameter into the log file as an error messages</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>WarningLog( String )</code></td>
+   <td width="70%">Writes the string passed as parameter into the log file as a warning message</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>CriticalLog( String )</code></td>
+   <td width="70%">Writes the string passed as parameter into the log file as a critical message. The message will also be shown to the user in a dialog box.</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>MessageBox( String )</code></td>
+   <td width="70%">Shows a message box with the string passed as parameter</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>Progress( int, String )</code></td>
+   <td width="70%">Updates the progress bar shown for this script with the first parameter as percentage, and second parameter as messaage</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>RegisterComponent( String, String )</code></td>
+   <td width="70%">
+   Registers a component whose name is passed as first parameter and whose library is passed as second parameter. 
+   For example, consider the script below.<br><br>
+   <code>
+   System.RegisterComponent("BrightnessImageFilterComponent", "BrightnessImageFilter");
+   </code><br><br>
+   When the above script is executed, an XML element like the one below is created.<br><br>
+   <code>
+   &lt;method param1="BrightnessImageFilterComponent" param2="BrightnessImageFilter" 
+              methodName="ComponentLoaderComponent.controller::loadComponent2" /&gt;
+   </code><br><br>
+   and inserted into the <code>&lt;component&gt;</code> XML element of <code>ComponentLoaderComponent.xml</code>
+   </td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>UnregisterComponent( String, String )</code></td>
+   <td width="70%">
+   Unregisters a component whose name is passed as first parameter and whose library is passed as second parameter. 
+   The function basically removes an appropriate <code>method</code> XML element from the <code>ComponentLoaderComponent.xml</code>
+   file.
+   </td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>ShowLicensePlain(String)</code></td>
+   <td width="70%">Shows a dialog box with the license information contained in the file name
+   passed as parameter. If the user clicks on Accept in the dialog box, the function returns
+   true. It returns false otherwise. <strong>Note</strong>: This function assumes that the
+   license file contains a plain-text document</td>
+ </tr> 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>ShowLicenseHtml(String)</code></td>
+   <td width="70%">Shows a dialog box with the license information contained in the file name
+   passed as parameter. If the user clicks on Accept in the dialog box, the function returns
+   true. It returns false otherwise. <strong>Note</strong>: This function assumes that the
+   license file contains a HTML document</td>
+ </tr>  
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="2" width="85%">
+ 
+ <tr>
+   <td colspan="2" bgcolor="#0a7bbf"><center><font size="+1" color="#ffffff"><b><code>
+   FileSystem
+   </code></b></font></center></td>
+ </tr>
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   CreateFile( String )
+   </code></td>
+   <td width="70%">
+   Creates a new file whose name is as specified by the string. Hints like ${APPDIR},
+   ${TEMPDIR}, ${HOME} can be used in the file name. If no absolute path is specified
+   then the path is assumed to be relative to the location of the script itself.<br><br>
+   <b>Note:</b> If the file is created in ${TEMPDIR} or in the directory where the 
+   script is located, it will be deleted after the script finishes execution.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   CreateDirectory( String )
+   </code></td>
+   <td width="70%">
+   Creates a new directory. Hints like ${APPDIR}, ${TEMPDIR}, ${HOME} can be used in the 
+   directory name. Intermediatory directories not found in the file system will be created
+   as well.<br><br>
+   <b>Note:</b> If the directory is created in ${TEMPDIR} or in the directory where the 
+   script is located, it will be deleted after the script finishes execution.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   RemoveFile( String )   
+   </code></td>
+   <td width="70%">
+   Removes a file. Hints can be used.   
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   RemoveDirectory( String )   
+   </code></td>
+   <td width="70%">
+   Directory will be removed only if it is empty.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   RemoveDirectoryRecursive( String )   
+   </code></td>
+   <td width="70%">
+   All contents of the directory will be recursively removed. And then the directory itself is 
+   removed.
+   </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    Copy( String, String )   
+    </code></td>
+    <td width="70%">
+    Copies a file from source to destination. The first parameter is the source file and second
+    parameter is the destination file.
+    </td>
+  </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   Move( String, String )
+   </code></td>
+   <td width="70%">
+   Moves a file from source to destination. The first parameter is the source file and second parameter
+   is the destination file.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   CopyDirectory( String, String )   
+   </code></td>
+   <td width="70%">
+   Copies a directory from source to destination. The first parameter is the source directory and
+   second parameter is the destination directory. The contents are recursively copied.
+   </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    MoveDirectory( String, String )   
+    </code></td>
+    <td width="70%">
+    Moves a directory from source to destination. The first parameter is the source directory and
+    second parameter is the destination directory. The contents are recursively moved.
+    </td>
+  </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   Rename( String, String )
+   </code></td>
+   <td width="70%">
+   Renames a file or directory from source to destination. First parameter is the source name 
+   second parameter is the destination name.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsExists( String )
+   </code></td>
+   <td width="70%">
+   Returns whether the file or directory name passed as parameter exists. You can use hints like
+   ${APPDIR}, ${HOME} and ${TEMPDIR} in the file name. If an absolute path is not passed, then
+   the file is assumed to be relative to the script.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsReadable( String )
+   </code></td>
+   <td width="70%">
+   Returns whether the file or directory is readable or not. You can use hints like
+   ${APPDIR}, ${HOME} and ${TEMPDIR} in the file name. If an absolute path is not passed, then
+   the file is assumed to be relative to the script.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsWritable( String )
+   </code></td>
+   <td width="70%">
+   Returns whether the file or directory is writable or not. You can use hints like
+   ${APPDIR}, ${HOME} and ${TEMPDIR} in the file name. If an absolute path is not passed, then
+   the file is assumed to be relative to the script.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   NewFile( String )
+   </code></td>
+   <td width="70%">
+   Creates a \"File\" object instance and returns it. See the next table for more details.
+   </td>
+ </tr> 
+ 
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="2" width="85%">
+
+ <tr>
+   <td colspan="2" bgcolor="#0a7bbf"><center><font size="+1" color="#ffffff"><b><code>
+   File
+   </code></b></font></center></td>
+ </tr>
+ 
+ <tr>
+   <td colspan="2" bgcolor="#cccccc"><center>
+   Instances of the File object can be created by making use of the following<br>
+   <font size="+1"><code>var file = FileSystem.NewFile( String );</code></font><br>
+   The string parameter to <code>FileSystem.NewFile</code> should refer to an existing or new file. Hints like ${APPDIR}, ${HOME} and ${TEMPDIR}
+   can be used in the file name. If an absolute path is not specified, then the file is assumed to be relative to the location
+   of Install.js
+   </center></td>
+ </tr>
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   OpenForRead()
+   </code></td>
+   <td width="70%">
+   Opens for reading the file
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   OpenForWrite()
+   </code></td>
+   <td width="70%">
+   Opens for writing the file. If the file exists, its contents will be deleted.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   OpenForReadWrite()
+   </code></td>
+   <td width="70%">
+   Opens for reading and writing the file.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   Close()
+   </code></td>
+   <td width="70%">
+   Closes the open file
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsOpen()
+   </code></td>
+   <td width="70%">
+   Returns whether the file is open or closed
+   </td>
+ </tr> 
+ 
+  <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ReadAll()
+    </code></td>
+    <td width="70%">
+    Reads the entire file and returns its contents as a string. 
+    </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   ReadLine()
+   </code></td>
+   <td width="70%">
+   Returns the current line and moves the read cursor to the next line.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   ReadField( String )
+   </code></td>
+   <td width="70%">
+   Reads the current field. The string passed as parameter is the delimiter to use
+   for differentiating fields.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   Write( String )
+   </code></td>
+   <td width="70%">
+   Writes the string into the file.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   Position
+   </code></td>
+   <td width="70%">
+   This property can be read and written. It contains the value of the read/write cursor within the file. 
+   If the value is set as -1, then the read/write cursor is positioned at the end of the file.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsAtEnd()
+   </code></td>
+   <td width="70%">
+   Returns true if the cursor is at the end of the file
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   IsAtBeginning()
+   </code></td>
+   <td width="70%">
+   Returns true if the cursor is at the start of the file
+   </td>
+ </tr> 
+ 
+</table>
+
+</center>
+\endhtmlonly
+
+Filenames used in Install.js script can make use of one or more hints. These hints get dynamically 
+resolved at run time.
+
+The following hints can be used within the Install.js script.
+
+\htmlonly
+<center>
+<table border="1" cellspacing="0" cellpadding="2" width="85%">
+
+ <tr>
+   <td width="30%" bgcolor="#eeeeee"><code>
+   ${APPDIR}
+   </code></td>
+   <td width="70%">
+   Application directory. (Location of the application's EXE file)
+   </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ${APP}
+    </code></td>
+    <td width="70%">
+    Name of the application
+    </td>
+ </tr> 
+
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ${GUIXMLDIR}
+    </code></td>
+    <td width="70%">
+    Location of the GUIXML directory of the application
+    </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ${HOME}
+    </code></td>
+    <td width="70%">
+    Home directory on the client computer.
+    </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ${TEMPDIR}
+    </code></td>
+    <td width="70%">
+    Temporary directory
+    </td>
+ </tr> 
+ 
+ <tr>
+    <td width="30%" bgcolor="#eeeeee"><code>
+    ${CWD}
+    </code></td>
+    <td width="70%">
+    Current working directory
+    </td>
+ </tr> 
+ 
+</table>
+</center>
+
+\endhtmlonly
+
+
+\subsection updaterscript2 Example
+
+Lets suppose that you have an update for the "Script Editor" component. You would create an update file with the
+<code>Install.js</code> script along with files <code>ScriptEditor.dll</code> and <code>ScriptEditorComponent.xml</code>.
+
+The contents of the Install.js script would be
+
+\code
+function DoInstall()
+{
+    System.Progress(0, "Installing ScriptEditor component");
+    FileSystem.Copy("ScriptEditor.dll", "${APPDIR}/ScriptEditor.dll");
+
+    System.Progress(50, "Configuring ScriptEditor component");
+    FileSystem.Copy("ScriptEditorComponent.xml", "${GUIXMLDIR}/ScriptEditorComponent.xml");
+
+    System.Progress(95, "Registering the update");
+    System.RegisterComponent("ScriptEditorComponent", "ScriptEditor");
+
+    System.Progress(100, "Finished installing update to ScriptEditor component");
+    
+    return true;
+}
+\endcode
+
+\section updatesxml Updates.xml
+
+The Updates.xml file lists out all the updates available in a server site. Against each update it provides
+the following kinds of information
+
+\li Update Name (String)
+\li Description (HTML String)
+\li Release Date and Time
+\li Version Number (\ref updatesxml_version_nr)
+\li Update file on a per-platform, per-architecture basis.
+\li Dependency list
+
+\note We make use of the term UpdateXML (singular) and UpdatesXML (plural) to mean the same thing, which is the 
+Updates.xml file.
+
+A typical Updates.xml file would look like this:
+
+\code
+<Updates Baseline="2.7.1"> <!-- The base line specified here applies to all updates
+                                listed in this XML file -->
+
+    <!-- The Source XML element can be used to provide a short descriptive
+         name for the update-source -->
+    <Source>Official Updates</Source>
+
+    <Update>
+    
+        <Name>ScriptEditorComponent</Name>
+        <Type>Critical</Type>
+        <ForceInstall>true</ForceInstall>
+        <Description>
+            <![CDATA[
+            This update contains update to the script editor component in
+            VTK Designer 2. The update provides better code completion hints
+            and debugging facilities.
+            ]]>
+        </Description>
+        <Release>27 January 2009 14:13:09</Release>
+        <Version>2.7.2</Version>
+        
+        <UpdateFile Arch="x86" OS="Windows">ScriptEditorUpdate-2.7.2-Windows-x86.gvz</UpdateFile>
+        <UpdateFile Arch="x86" OS="Linux">ScriptEditorUpdate-2.7.2-Linux-x86.gvz</UpdateFile>
+        
+        <!-- You need not mention dependencies if they are a part of the baseline -->
+        <DependsOn>Utils [2.1]</DependsOn>
+        
+    </Update>
+
+    <Update>
+        ....
+    </Update>
+
+    <Update>
+        ....
+    </Update>
+        
+</Updates>
+\endcode
+
+\subsection updatesxml_version_nr Update version numbers
+
+Version numbers for updates are used by GCF::UpdaterComponent to figure out what version of a component
+is more recent than what. This way only updates that are more recent than the ones already installed
+are downloaded and installed.
+
+Version numbers in Updates.xml should follow certain rules. GCF::UpdaterComponent parses version numbers
+asuming that these rules are met.
+
+\li Version number is a string consists of numbers separated by . (dots)
+\li Each component in the version number must be a base-10 integer 
+\li Version number A is said to be greater than version number B if any one of the 
+    components of B from the right is greater than the corresponding component in A.
+
+Examples
+
+\li 2
+\li 2.0
+\li 2.1.4
+\li 2.1.5 > 2.1.4
+\li 2.2.1 > 2.1.4
+\li 2.2.1 < 2.3.0
+
+\subsection updatexml1 XML Elements Reference
+
+The parent-child relationships of XML elements in the update file can be best understood by the bullet 
+list below
+
+\html
+<ul>
+<li>Updates</li>
+<ul>
+<li>Source</li>
+<li>Update</li>
+<ul>
+<li>Name</li>
+<li>Type</li>
+<li>ForceInstall</li>
+<li>Description</li>
+<li>Release</li>
+<li>Version</li>
+<li>UpdateFile</li>
+<li>DependsOn<br>
+</li>
+</ul>
+</ul>
+</ul>
+\endhtml
+
+The following table lists out XML elements and their attributes allowed for use within the Updates.xml file.
+
+\htmlonly
+<center>
+<table border="1" cellspacing="0" cellpadding="2" width="85%">
+
+ <tr>
+   <td width="20%" bgcolor="#0a7bbf">
+   <font color="#ffffff" size="+1"><b>XML Element</b></font>
+   </td>
+
+   <td width="20%" bgcolor="#0a7bbf">
+   <font color="#ffffff" size="+1"><b>Attribute</b></font>
+   </td>
+
+   <td width="60%" bgcolor="#0a7bbf">
+   <font color="#ffffff" size="+1"><b>Description</b></font>
+   </td>
+ </tr> 
+ </font>
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Updates</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Root element of the Updates.xml file
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>&nbsp;</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   Baseline
+   </code></td>
+
+   <td width="60%">
+   Baseline of the GCF-application against which updates in this server site can be installed.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Source</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   A short title for the update-server site. This title is shown in the update-selection dialog box.
+\endhtmlonly
+Read \ref updatercomponent33 for more on this.
+\htmlonly
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Update</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Root XML element within which a single XML element is described.
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Name</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Provides the name of the update. The name can contain spaces, but no special characters 
+   like [, ], (, ), &, ? etc.
+   
+   Normally name of the update is same as the name of the component for which the update
+   is released. While checking for updates if GCF finds that the component by this name
+   already exists, then this update is marked for installation by default. Otherwise
+   the update will be listed but not marked for installation, unless the <code>ForceInstall</code>
+   XML element contains true;
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Type</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Specifies the type of update. Type can be any string. GCF apps can choose to automatically
+   install "Critical" updates, but ask for permission to install "OptionalAddOn"s. Read
+   documentation for INewUpdatesHandler for more information on handling Type.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>ForceInstall</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Value of this XML Element should be true or false depending on whether you want the 
+   update to be marked for installation or not. If this XML element is unspecified, then
+   the default value is assumed to be false.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Description</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Provides a brief human-readable description of the update. It can be a plain
+   string or a HTML string.
+   </td>
+ </tr> 
+ 
+  <tr>
+    <td width="20%" bgcolor="#cccccc"><code>
+    <b>Release</b>
+    </code></td>
+ 
+    <td width="20%" bgcolor="#eeeeee"><code>
+    &nbsp;
+    </code></td>
+ 
+    <td width="60%">
+    Release date and time of the update. The format of this string should be such that
+    QDateTime::toString() function should be able to decode it.
+    </td>
+ </tr> 
+
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>Version</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Version of the update. Read the section on <a href="#updatesxml_version_nr">Update version numbers</a> for more details.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>UpdateFile</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   Update file associated with this update
+   </td>
+ </tr> 
+
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>&nbsp;</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   Arch
+   </code></td>
+
+   <td width="60%">
+   Architecture that the update file corresponds to. The value of this attribute is compared
+   with the string returned by GCF::UpdaterComponent::architecture() for validation.
+   </td>
+ </tr> 
+  
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>&nbsp;</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   OS
+   </code></td>
+
+   <td width="60%">
+   Architecture that the update file corresponds to. The value of this attribute is compared
+   with the string returned by GCF::UpdaterComponent::os() for validation.
+   </td>
+ </tr> 
+ 
+ <tr>
+   <td width="20%" bgcolor="#cccccc"><code>
+   <b>DependsOn</b>
+   </code></td>
+
+   <td width="20%" bgcolor="#eeeeee"><code>
+   &nbsp;
+   </code></td>
+
+   <td width="60%">
+   A string of the form <font size="+1">UpdateName</font>[<font size="+1">Version</font>].
+   Version number of the update is specified within brackets, preceeding which the update name is provided. 
+   
+   GCF's UpdaterComponent and \ref updaterTool3 ensures that the dependencies are recursively installed first
+   before installing this update. Dependencies that are not found are ignored.
+   </td>
+ </tr> 
+ 
+</table>
+</center>
+\endhtmlonly
+
+*/
+

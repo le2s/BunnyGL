@@ -1,0 +1,79 @@
+<html>
+
+<body onload="initialize()">
+
+<div id="patientListTable"></div>
+
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+
+<script language="Javascript" type="text/javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+function initialize() {
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("DICOMService.PatientList");
+    msg.setMethodName("patientList");
+    msg.onReply = function(reply) {
+        var listDiv = document.getElementById('patientListTable');
+        listDiv.innerHTML = '';
+
+        if(reply.isValid() && reply.hasResult()) {
+        
+            var table = document.createElement("table");
+            listDiv.appendChild(table);
+            table.setAttribute("width", "100%");
+            table.setAttribute("border", "0");
+        
+            var infoList = reply.getResult();
+            var i=0;
+            			
+            for(i=0; i<infoList.values.length; i++)
+            {
+                var patientInfoMap = infoList.values[i].getValue();
+                var sampleImage = patientInfoMap.valueOf("SampleImage").getValue();
+                
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+                
+                var td1 = document.createElement("td");
+                tr.appendChild(td1);
+                td1.setAttribute("width", "50%");
+                td1.appendChild( sampleImage );
+                
+                var td2 = document.createElement("td");
+                tr.appendChild(td2);
+                td2.setAttribute("width", "50%");
+                td2.setAttribute("valign", "top");
+                td2.innerHTML = '<table border="0" width="100%" height="' + sampleImage.height + 'px">' +
+                                '<tr><td valign="top">' + patientInfoMap.valueOf('PatientName').getValue() + '</td></tr>' +
+                                '<tr><td valign="middle">' + patientInfoMap.valueOf('SliceCount').getValue() + ' Slices</td></tr>' +
+                                '<tr><td valign="bottom"><button style="width: 100px; height: 25px;" ' +
+                                'onclick="loadDICOMSeries(\'' + 
+                                patientInfoMap.valueOf('SeriesPath').getValue() + '\');">Load</button></td></tr>' +
+                                '</table>'
+                                
+                tr = document.createElement("tr");
+                table.appendChild(tr);
+                
+                td1 = document.createElement("td");
+                tr.appendChild(td1);
+                td1.setAttribute("colspan", "2");
+                td1.innerHTML = '<div style="background-color: #2158d9; height: 2px; width: 100%"></div>';
+            } 
+        } else {
+                listDiv.innerHTML = '<font color="red">Could not load patient list</font>';
+        }
+    }
+    msg.send();
+}
+
+function loadDICOMSeries(seriesPath) {
+    window.top.loadDICOMSeries(seriesPath);
+}
+
+</script>
+
+</html>
+

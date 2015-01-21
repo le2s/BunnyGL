@@ -1,0 +1,8 @@
+<component name="MainWindowComponent" >
+
+    <object name="controller" />
+    <widget name="window" scriptName="MainWindow" visible="false" />
+    <widget name="statusBar" scriptName="StatusBar" />
+    <widget name="workspace" />
+
+</component>

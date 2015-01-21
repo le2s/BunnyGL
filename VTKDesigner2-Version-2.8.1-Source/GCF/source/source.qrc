@@ -1,0 +1,13 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/GCF">
+    <file alias="configure.png">icons/configure.png</file>
+    <file alias="checkForUpdates.png">icons/checkForUpdates.png</file>
+    <file>guixml/AppAccessPointComponent.xml</file>
+    <file>guixml/ComponentLoaderConfigComponent.xml</file>
+    <file>guixml/ConfigurationDialogComponent.xml</file>
+    <file>guixml/UpdaterComponent.xml</file>
+    <file>guixml/ComponentLoaderComponent.xml</file>
+</qresource>
+</RCC>
+
+

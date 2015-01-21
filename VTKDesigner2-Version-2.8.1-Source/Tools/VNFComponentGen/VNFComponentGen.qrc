@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="VNF" >
+    <file alias="ProjectFile.pro">Resources/ProjectFile_pro</file>
+    <file alias="Component.h">Resources/Component_h</file>
+    <file alias="Component.cpp">Resources/Component_cpp</file>
+    <file alias="Node.h">Resources/Node_h</file>
+    <file alias="Node.cpp">Resources/Node_cpp</file>
+    <file alias="Project.qrc">Resources/Project_qrc</file>
+  </qresource>
+</RCC>

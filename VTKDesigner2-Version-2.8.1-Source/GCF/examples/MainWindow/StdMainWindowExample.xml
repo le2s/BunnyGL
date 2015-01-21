@@ -1,0 +1,10 @@
+<Application>
+
+    <Components>
+        <!-- Here we load some in-built components! -->
+        <Component Name="PropertyEditorComponent" Library="PropertyEditor" />
+        <Component Name="ScriptEditorComponent" Library="ScriptEditor" />
+    </Components>
+
+</Application>
+

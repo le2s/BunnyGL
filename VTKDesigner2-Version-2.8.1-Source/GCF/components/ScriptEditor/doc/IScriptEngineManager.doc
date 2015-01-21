@@ -1,0 +1,98 @@
+/**
+\ingroup scripteditorcomponent
+\interface IScriptEngineManager IScriptEngineManager
+\brief Through this interface you can access the object that manages the scripting environment
+
+This interface lets you access the key object in the scripting environment. Through this interface
+you can 
+
+\li Add/Remove QObjects to the scripting environment
+\li Change names of the QObjects within the scripting environment
+\li Fetch a pointer to the QScriptEngine object used by the scripting environment
+\li Set/Fetch/Execute a script
+\li Add/Remove custom types to the scripting environment
+
+*/
+
+/**
+\fn virtual void IScriptEngineManager::addScriptableObject(QObject* object, QString name, bool excludeChildren=true) = 0;
+
+This function adds an object \c object to the scripting environment. The object will be accessible 
+as \c name in the scripting environment. By default the object's children are exluded, but that can
+be changed by passing \c excludeChildren as false.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::removeScriptableObject(QObject* object) = 0;
+
+This function removes \c object from the scriptable environment. The object will not be deleted, but
+it can no longer be scripted.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::removeScriptableObject(QString name) = 0;
+
+This function removes object whose name is \c name from the scriptable environment. The object will 
+not be deleted, but it can no longer be scripted.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::changeScriptableObjectName(QObject* object, QString newName) = 0;
+
+This function changes the name that is used to identify \c object to \c newName
+*/
+
+/**
+\fn virtual QScriptEngine* IScriptEngineManager::engine() = 0;
+
+Returns pointer to the QScriptEngine internally used by the scripting environment.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::resetEngine() = 0;
+
+Resets the script-engine. This means that any previously evaluated script will be discarded.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::setScript(QString script) = 0;
+
+Sets the script to evaluate/exeucte
+*/
+
+/**
+\fn virtual QString IScriptEngineManager::script() = 0;
+
+Fetches the script that has been evaluated/executed.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::executeScript() = 0;
+
+Evaluates the script set via setScript() method.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::addScriptDataType(IScriptDataType* type) = 0;
+
+Registers a scriptable data type with the script engine.
+*/
+
+/**
+\fn virtual void IScriptEngineManager::removeScriptDataType(IScriptDataType* type) = 0;
+
+Unregisters a scriptable data type with the script engine.
+*/
+
+/**
+\fn virtual int IScriptEngineManager::scriptDataTypeCount() = 0;
+
+Returns the total number of scriptable data types reigstered with the script engine.
+*/
+
+/**
+\fn virtual IScriptDataType* IScriptEngineManager::scriptDataType(int index) = 0;
+
+Returns the scriptable data type interface at \c index.
+*/
+

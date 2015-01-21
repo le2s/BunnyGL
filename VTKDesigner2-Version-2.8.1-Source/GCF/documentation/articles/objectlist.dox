@@ -1,0 +1,449 @@
+/**
+\class GCF::AbstractObjectList GCF/ObjectList
+\brief Base class for object and interface lists in GCF.
+
+Instances of this class cannot be created. Only instances of the classes derived 
+from this class can be created. We recommend that you read documentation of the
+classes listed in the "See Also" section below.
+
+\sa GCF::ObjectList
+\sa GCF::IContainerList
+\sa GCF::ObjectMap 
+\sa GCF::IContainerMap
+*/
+
+/**
+\fn void GCF::AbstractObjectList::clear(bool deleteObjects=true)
+
+This function removes all object pointers from this list. If \c deleteObjects is true; then not only 
+are the pointers from the list deleted - the objects that they point to are also deleted.
+*/
+
+/**
+\fn void GCF::AbstractObjectList::objectRemovedAt(int index)
+
+This signal is emited whenever an object is removed from this list.
+The parameter reports index of the object that got removed. This signal 
+can be connected to a slot and within that slot, the \c at() function 
+can be called to fetch a pointer to the object that got removed.
+*/
+
+/**
+\fn void GCF::AbstractObjectList::objectDestroyedAt(int index)
+
+This signal is emited whenever an object, whose pointer is in this list, is deleted. 
+The parameter reports index of the object that got deleted. This signal 
+can be connected to a slot and within that slot, the \c at() function 
+can be called to fetch a pointer to the object that got deleted.
+
+\note Even when an object gets destroyed, it does infact get removed from the list.
+Hence the \ref objectRemovedAt(int) signal is emitted as well.
+*/
+
+
+/**
+\class GCF::ObjectList GCF/ObjectList
+
+This class helps in storing a list of pointers to \c QObject. While QList<QObject*>
+can also be used to store a list of pointers to \c QObject, using this class 
+ensures objects once inserted into the list are automatically removed when they 
+get deleted. This class ensures that only "existing" QObject instances are available
+in it. For example
+
+\code
+// GCF::ObjectList is a template class
+GCF::ObjectList<QTcpSocket> socketList;
+
+// Insert pointers into the object list using the add method.
+for(int i=0; i<10; i++)
+	socketList.add(new QTcpSocket);
+
+// Fetch size of the list using the count() method
+qDebug() << socketList.count(); // reports 10
+
+// Access pointers in the list using the at() method.
+QTcpSocket* thirdSocket = socketList.at(2);
+
+// Objects in the list that get deleted (from any part of your application)
+// are automatically removed from the list.
+delete thirdSocket;
+qDebug() << socketList.count(); // reports 9
+\endcode
+
+GCF::ObjectList emits a signal called \ref objectRemovedAt(int) whenever 
+an object from the list got removed. 
+
+GCF::ObjectList emits a \ref objectDestroyedAt(int) signal whenever 
+an object from the list got destroyed. The parameter reports index of the 
+object that got removed. This signal can be connected to a slot and 
+within that slot, the \c at() function can be called to fetch a pointer 
+to the object that got deleted.
+*/
+
+/**
+\fn GCF::ObjectList<T>::ObjectList(QObject* parent=0)
+
+Constructs an object list of type T. The list itself is made a child of \c parent.
+
+\note T must be a subclass of \c QObject.
+*/
+
+/**
+\fn GCF::ObjectList<T>::~ObjectList()
+
+Destroys the list. Objects in the list are not destroyed.
+*/
+
+/**
+\fn bool GCF::ObjectList<T>::add(T* object)
+
+Appends pointer to an \c object of type T at the end of the list. The function
+returns true if the append operation was successful, false otherwise. Append
+can fail if the \c object pointer is NULL or if the object pointer already 
+exists in the list.
+
+\note Ownership of the object is <b>not</b> taken up by this list.
+*/
+
+/**
+\fn bool GCF::ObjectList<T>::remove(T* object)
+
+Removes pointer to \c object from this list. The object is not deleted. The
+function returns true if the object was removed from the list, false otherwise.
+This function can return false if \c object is NULL or if it doesnt exist 
+in this list.
+*/
+
+/**
+\fn bool GCF::ObjectList<T>::insert(int index, T* object)
+
+Inserts pointer to \c object at \c index in the list. If index is negative,
+then the object pointer is prepended to the list. If index is greater than or
+equal to \ref count(), then the object pointer is appended to the list. The function
+returns true if the insert operation was successful, false otherwise. Insert
+can fail if the \c object pointer is NULL or if the object pointer already 
+exists in the list.
+*/
+
+/**
+\fn bool GCF::ObjectList<T>::move(int fromIndex, int toIndex)
+
+Moves an object pointer from \c fromIndex to \c toIndex. This function returns 
+false if \c fromIndex or \c toIndex is out-of-range. For all othercases it returns true.
+*/
+
+/**
+\fn int GCF::ObjectList<T>::count() const
+
+Returns the number of object pointers in this list.
+*/
+
+/**
+\fn T* GCF::ObjectList<T>::at(int index) const
+
+Returns object pointer at \c index. The function returns NULL if index is 
+out-of-bounds.
+*/
+
+/**
+\fn const QList<T*> GCF::ObjectList<T>::toList() const 
+
+Returns a QList of pointers to objects in this list.
+*/
+
+/**
+\fn QList<T*> GCF::ObjectList<T>::toList() 
+
+Returns a QList of pointers to objects in this list.
+*/
+
+/**
+\fn bool GCF::ObjectList<T>::contains(T* object) const
+
+Returns \c true if \c object is a part of this list. False otherwise.
+*/
+
+/**
+\fn int GCF::ObjectList<T>::indexOf(T* object) const
+
+Returns the index of \c object pointer in this list. The function returns -1
+if no such object was found.
+*/
+
+
+/**
+\class GCF::IContainerList GCF/ObjectList
+
+This class helps in storing a list of pointers to \c IContainer. While QList<IContainer*>
+can also be used to store a list of pointers to \c IContainer, using this class 
+ensures objects once inserted into the list are automatically removed when they 
+get deleted. This class ensures that only "existing" IContainer instances are available
+in it. For example
+
+One of the things to note about IContainer interface is that - the interface is always
+"contained" in a QObject. This means that GCF::IContainerList<T> actually stores pointers
+to the objects inside which they are "contained". It only offers friendly template methods
+to make it easy for developers to manage IContainer interface pointer lists.
+
+\code
+// GCF::IContainerList is a template class
+GCF::IContainerList<IProjectPart> projectParts;
+
+// Insert pointers into the object list using the add method.
+for(int i=0; i<10; i++)
+	projectParts.add( get_IProjectPart_from_somwhere() );
+
+// Fetch size of the list using the count() method
+qDebug() << projectParts.count(); // reports 10
+
+// Access pointers in the list using the at() method.
+IProjectPart* thirdProjectPart = projectParts.at(2);
+
+// Objects in the list that get deleted (from any part of your application)
+// are automatically removed from the list.
+delete thirdProjectPart;
+qDebug() << projectParts.count(); // reports 9
+\endcode
+
+GCF::IContainerList emits a signal called \ref objectRemovedAt(int) whenever 
+an object from the list got removed. 
+
+GCF::IContainerList emits a \ref objectDestroyedAt(int) signal whenever 
+an object from the list got destroyed. The parameter reports index of the 
+object that got removed. This signal can be connected to a slot and 
+within that slot, the \c at() function can be called to fetch a pointer 
+to the object that got deleted.
+*/
+
+/**
+\fn GCF::IContainerList<T>::IContainerList(IContainer* parent=0)
+
+Constructs an object list of type T. The list itself is made a child of \c parent.
+
+\note T must be a subclass of \c IContainer.
+*/
+
+/**
+\fn GCF::IContainerList<T>::~IContainerList()
+
+Destroys the list. Objects in the list are not destroyed.
+*/
+
+/**
+\fn bool GCF::IContainerList<T>::add(T* object)
+
+Appends pointer to an \c object of type T at the end of the list. The function
+returns true if the append operation was successful, false otherwise. Append
+can fail if the \c object pointer is NULL or if the object pointer already 
+exists in the list.
+
+\note Ownership of the object is <b>not</b> taken up by this list.
+*/
+
+/**
+\fn bool GCF::IContainerList<T>::remove(T* object)
+
+Removes pointer to \c object from this list. The object is not deleted. The
+function returns true if the object was removed from the list, false otherwise.
+This function can return false if \c object is NULL or if it doesnt exist 
+in this list.
+*/
+
+/**
+\fn bool GCF::IContainerList<T>::insert(int index, T* object)
+
+Inserts pointer to \c object at \c index in the list. If index is negative,
+then the object pointer is prepended to the list. If index is greater than or
+equal to \ref count(), then the object pointer is appended to the list. The function
+returns true if the insert operation was successful, false otherwise. Insert
+can fail if the \c object pointer is NULL or if the object pointer already 
+exists in the list.
+*/
+
+/**
+\fn bool GCF::IContainerList<T>::move(int fromIndex, int toIndex)
+
+Moves an object pointer from \c fromIndex to \c toIndex. This function returns 
+false if \c fromIndex or \c toIndex is out-of-range. For all othercases it returns true.
+*/
+
+/**
+\fn int GCF::IContainerList<T>::count() const
+
+Returns the number of object pointers in this list.
+*/
+
+/**
+\fn T* GCF::IContainerList<T>::at(int index) const
+
+Returns object pointer at \c index. The function returns NULL if index is 
+out-of-bounds.
+*/
+
+/**
+\fn const QList<T*> GCF::IContainerList<T>::toList() const 
+
+Returns a QList of pointers to objects in this list.
+*/
+
+/**
+\fn QList<T*> GCF::IContainerList<T>::toList() 
+
+Returns a QList of pointers to objects in this list.
+*/
+
+/**
+\fn bool GCF::IContainerList<T>::contains(T* object) const
+
+Returns \c true if \c object is a part of this list. False otherwise.
+*/
+
+/**
+\fn int GCF::IContainerList<T>::indexOf(T* object) const
+
+Returns the index of \c object pointer in this list. The function returns -1
+if no such object was found.
+*/
+
+/**
+\class GCF::ObjectMap GCF/ObjectMap
+
+This class helps manage a map of Key=QObject* pairs. While QMap<Key,QObject*> can also
+be used for storing such a map; this class ensures that when a QObject in the map is 
+destroyed - its correspinding key entry is automatically removed.
+*/
+
+/**
+\fn GCF::ObjectMap<Key,T>::ObjectMap(QObject* parent=0)
+
+Constructs an empty object map.
+*/
+
+/**
+\fn GCF::ObjectMap<Key,T>::~ObjectMap()
+
+Destroys the object map. Objects in the map are not destroyed.
+*/
+
+/**
+\fn bool GCF::ObjectMap<Key,T>::map(const Key& key, T* object)
+
+Maps \c key to \c object pointer. The function returns false if the object was already 
+mapped to another key or if the \c object pointer is NULL. It returns true in all 
+other cases.
+*/
+
+/**
+\fn bool GCF::ObjectMap<Key,T>::unmap(const Key& key)
+
+Unmaps \c key from \c object pointer. The function returns false if \c key did not 
+exists in the map. For all other cases it returns true.
+*/
+
+/**
+\fn T* GCF::ObjectMap<Key,T>::value(const Key& key) const
+
+Returns pointer to the object that was mapped to \c key. The function returns NULL
+pointer if no such \c key was found.
+*/
+
+/**
+\fn bool GCF::ObjectMap<Key,T>::contains(const Key& key) const
+
+Returns true if \c key exists in this map. 
+*/
+
+/**
+\fn Key GCF::ObjectMap<Key,T>::key(T* object) const
+
+Returns the key associated with \c object in this map. The function returns a default
+constructed key if no such object was found.
+*/
+
+/**
+\fn QList<Key> GCF::ObjectMap<Key,T>::keys() const
+
+This function returns a list of keys available in this map.
+*/
+
+/**
+\fn QList<T*> GCF::ObjectMap<Key,T>::values() const
+
+This function returns a list of values available in this map.
+*/
+
+/**
+\class GCF::IContainerMap GCF/IContainerMap
+
+This class helps manage a map of Key=IContainer* pairs. While QMap<Key,IContainer*> can also
+be used for storing such a map; this class ensures that when a IContainer in the map is 
+destroyed - its correspinding key entry is automatically removed.
+*/
+
+/**
+\fn GCF::IContainerMap<Key,T>::IContainerMap(IContainer* parent=0)
+
+Constructs an empty object map.
+*/
+
+/**
+\fn GCF::IContainerMap<Key,T>::~IContainerMap()
+
+Destroys the object map. Objects in the map are not destroyed.
+*/
+
+/**
+\fn bool GCF::IContainerMap<Key,T>::map(const Key& key, T* object)
+
+Maps \c key to \c object pointer. The function returns false if the object was already 
+mapped to another key or if the \c object pointer is NULL. It returns true in all 
+other cases.
+*/
+
+/**
+\fn bool GCF::IContainerMap<Key,T>::unmap(const Key& key)
+
+Unmaps \c key from \c object pointer. The function returns false if \c key did not 
+exists in the map. For all other cases it returns true.
+*/
+
+/**
+\fn T* GCF::IContainerMap<Key,T>::value(const Key& key) const
+
+Returns pointer to the object that was mapped to \c key. The function returns NULL
+pointer if no such \c key was found.
+*/
+
+/**
+\fn bool GCF::IContainerMap<Key,T>::contains(const Key& key) const
+
+Returns true if \c key exists in this map. 
+*/
+
+/**
+\fn Key GCF::IContainerMap<Key,T>::key(T* object) const
+
+Returns the key associated with \c object in this map. The function returns a default
+constructed key if no such object was found.
+*/
+
+/**
+\fn QList<Key> GCF::IContainerMap<Key,T>::keys() const
+
+This function returns a list of keys available in this map.
+*/
+
+/**
+\fn QList<T*> GCF::IContainerMap<Key,T>::values() const
+
+This function returns a list of values available in this map.
+*/
+
+
+
+
+
+
+
+
+

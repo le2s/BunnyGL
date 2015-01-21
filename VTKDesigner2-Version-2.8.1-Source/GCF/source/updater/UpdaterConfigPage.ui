@@ -1,0 +1,164 @@
+<ui version="4.0" >
+ <class>UpdaterConfigPage</class>
+ <widget class="QWidget" name="UpdaterConfigPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>566</width>
+    <height>421</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Software Updater Configuration</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="font" >
+      <font>
+       <pointsize>17</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Software Updater Configuration</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabServerSites" >
+      <attribute name="title" >
+       <string>Server &amp;Sites</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item>
+        <widget class="QCheckBox" name="chkEnableUpdater" >
+         <property name="text" >
+          <string>Enable Updater</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>Primary Server Site</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout" >
+          <item>
+           <widget class="QLineEdit" name="txtPrimaryServerSite" >
+            <property name="autoFillBackground" >
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet" >
+             <string notr="true" />
+            </property>
+            <property name="text" >
+             <string>http://www.vcreatelogic.com/oss/vtkdesigner/updates/2.8</string>
+            </property>
+            <property name="readOnly" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Third Party Server Sites</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="0" colspan="3" >
+           <widget class="QListWidget" name="lstServerSites" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QPushButton" name="cmdAddSite" >
+            <property name="text" >
+             <string>&amp;Add Site</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QPushButton" name="cmdRemoveSite" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="text" >
+             <string>&amp;Remove Site</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <spacer name="horizontalSpacer" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>352</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabAvailableUpdates" >
+      <attribute name="title" >
+       <string>&amp;Downloaded Updates</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3" >
+       <item row="0" column="0" >
+        <widget class="GCF::AvailableUpdatesView" name="lstAvailableUpdates" >
+         <column>
+          <property name="text" >
+           <string>1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabInstalledUpdates" >
+      <attribute name="title" >
+       <string>&amp;Installed Updates</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4" >
+       <item row="0" column="0" >
+        <widget class="GCF::InstalledUpdatesView" name="lstInstalledUpdates" >
+         <column>
+          <property name="text" >
+           <string>1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GCF::AvailableUpdatesView</class>
+   <extends>QTreeWidget</extends>
+   <header location="global" >UpdaterConfigPage.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GCF::InstalledUpdatesView</class>
+   <extends>QTreeWidget</extends>
+   <header location="global" >UpdaterConfigPage.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

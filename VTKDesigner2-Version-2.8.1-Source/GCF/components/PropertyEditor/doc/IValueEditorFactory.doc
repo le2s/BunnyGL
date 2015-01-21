@@ -1,0 +1,91 @@
+/**
+\ingroup propertyeditorcomp
+\interface IValueEditorFactory IValueEditorFactory
+\brief Interface to the value editor factory
+
+This interface provides access to the value editor factory in the property
+editor component. It is basically an entity that maintains a registry of 
+value editor creators.
+
+Value editor creator is an entity that helps in
+\li Creating editors for different data types
+\li Converting data values to a string and from a string
+\li Paints data values using a QPainter
+
+Value editor creators, which are implementations of the IValueEditorCreator interface, 
+can be registered with the value editor factory. The factory can then help in
+
+\li Fetch creators based on a data type
+\li Creating editors based on a data type
+
+The property editor provides a default factory and a default set of value editor
+creators for several commonly used data types. However you can add your own creators
+via the \ref registerCreator() method. You can also replace the default value editor 
+factory with your own factory via the IPropertyEditor::setEditorFactory() method.
+
+\note IEnumValueEditorCreator is a special type of value editor creator that 
+specializes in creating editors for enum data types, irrespective of what their
+name may be.
+*/
+
+/**
+\fn virtual void IValueEditorFactory::setEnumCreator(IEnumValueEditorCreator* creator) = 0
+
+This function sets the editor-creator interface for use with enumerated property data-types.
+Editors returned by such creators must provide a means by which the user can select a value
+from the enumeration.
+*/
+
+/**
+\fn virtual IEnumValueEditorCreator* IValueEditorFactory::enumCreator() = 0
+
+Returns the editor-creator interface that is used for enumerated property data types.
+*/
+
+/**
+\fn virtual void IValueEditorFactory::registerCreator(IValueEditorCreator* creator) = 0
+
+Registers a value editor creator.
+*/
+
+/**
+\fn virtual void IValueEditorFactory::unregisterCreator(IValueEditorCreator* creator) = 0
+
+Unregisters a value editor creator.
+*/
+
+/**
+\fn virtual int IValueEditorFactory::creatorCount() = 0
+
+Returns the total number of editor-creators available with this factory.
+*/
+
+/**
+\fn virtual IValueEditorCreator* IValueEditorFactory::creator(int index) = 0
+
+Returns the editor-creator at \c index.
+*/
+
+/**
+\fn virtual IValueEditorCreator* IValueEditorFactory::creator(const char* typeName) = 0
+
+Returns an editor-creator that can provide editors for the data type name specified in \c typeName.
+*/
+
+/**
+\fn virtual QWidget* IValueEditorFactory::createEditor(const char* typeName, QWidget* parent, IValueEditorCreator** creator) = 0
+
+Creates an editor widget for data type \c typeName. The parent of the created editor widget would be set to \c parent.
+The \c creator parameter is non-null will point to the editor creator used for creating the returned widget.
+*/
+
+/**
+\fn virtual QWidget* IValueEditorFactory::createEnumEditor(const char* typeName, QObject* object, QWidget* parent, IEnumValueEditorCreator** creator) = 0
+
+Returns an enumeration editor for an enumeration \c typeName within \c object. 
+The parent of the created editor widget would be set to \c parent.
+The \c creator parameter is non-null will point to the editor creator used for 
+creating the returned widget. 
+*/
+
+

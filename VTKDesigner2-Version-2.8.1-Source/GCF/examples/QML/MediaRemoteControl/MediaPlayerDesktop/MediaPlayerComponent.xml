@@ -1,0 +1,8 @@
+<component name="MediaPlayerComponent">
+
+    <object name="Core" />
+    <object name="audioLibraryModel" qmlName="audioLibraryModel" />
+    <object name="videoLibraryModel" qmlName="videoLibraryModel" />
+    <widget name="mediaPlayer" qmlName="mediaPlayer" />
+
+</component>

@@ -1,0 +1,118 @@
+<html>
+
+<head><title>DICOM Web Viewer</title></head>
+
+<body onload="initialize()" onresize="resizeEvent()" onunload="finalize()" bgcolor="#3E67A9">
+
+    <table width="100%" height="100%" border="0" style="table-layout: fixed" >
+    
+        <tr>
+            <td width="80%"><div id="workspaceDiv" style="width: 100%; height: 100%"></div></td>
+            <td width="250px"><div id="panelDiv" style="width: 100%; height: 100%"></div></td>
+        </tr>
+    
+    </table>
+
+</body>
+
+<script type="text/javascript" language="Javascript" src="../scripts/GCFMessage.js"></script>
+<script type="text/javascript" language="Javascript" src="TabWidget.js"></script>
+
+<script type="text/javascript" language="Javascript">
+GCFServerSideScript = '../scripts/GCFApplicationServer.php';
+
+var workspaceTabWidget = new TabWidget('workspaceTabWidget');
+var panelTabWidget = new TabWidget('panelTabWidget');
+
+panelTabWidget.inactiveTabColor = "#98c5f5";
+panelTabWidget.activeTabColor = "#0478f5";
+
+workspaceTabWidget.inactiveTabColor = "#98c5f5";
+workspaceTabWidget.activeTabColor = "#0478f5";
+workspaceTabWidget.backgroundColor = "#7091d2";
+
+workspaceTabWidget.onCurrentTabIndexChanged = function(index) {
+    // InitFunctions defined below!
+    if(index < 0 || index >= InitFunctions.length)
+        return;
+        
+    InitFunctions[index]();
+}
+
+function initialize() {
+    workspaceTabWidget.installOn( document.getElementById('workspaceDiv') );
+    workspaceTabWidget.addTab('Welcome', 'modules/Welcome/index.html');
+    workspaceTabWidget.addTab('2D Viewer', 'modules/2DViewer/index.html');
+    workspaceTabWidget.addTab('MPR Viewer', 'modules/MPRViewer/index.html');
+	workspaceTabWidget.addTab('Volume', 'modules/VolumeViewer/index.html');
+    workspaceTabWidget.addTab('Information', 'modules/PatientInformation/index.html');
+    
+    panelTabWidget.installOn( document.getElementById('panelDiv') );
+    panelTabWidget.addTab('Patient List', 'modules/PatientList/index.html');
+    // panelTabWidget.addTab('Tools', 'modules/Tools/index.html');
+    
+    resizeEvent();
+}
+
+function resizeEvent() {
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("ApplicationServer.GradientGenerator");
+    msg.setMethodName("generateVerticalGradient");
+    msg.addIntegerArg(document.body.clientHeight);
+    msg.addIntegerArg(2);
+    msg.addColorArg("#6c8cd9");
+    // msg.addColorArg("#b8c2d9");
+    msg.addColorArg("#e7ecf7");
+    msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            panelTabWidget.changeBackgroundImage(reply.getResult());
+            workspaceTabWidget.changeBackgroundImage(reply.getResult());
+        }
+    }
+    msg.send();
+}
+
+var InitFunctions = new Array();
+function setInitFunction( index, fn ) {
+    InitFunctions[ index ] = fn;
+}
+
+var ClearFunctions = new Array();
+function setClearFunction( index, fn ) {
+    ClearFunctions[ index ] = fn;
+}
+
+function loadDICOMSeries(seriesPath) {    
+    // Clear all the tabs.
+    var i = 0;
+    for(i=0; i<ClearFunctions.length; i++)
+        ClearFunctions[i]();
+
+    // Actually load the series in the server..
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("DICOMService.Core");
+    msg.setMethodName("loadDICOMSeries");
+    msg.addStringArg(seriesPath);
+    msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult() && reply.getResult()) {
+            workspaceTabWidget.activateTab(1);
+            InitFunctions[1]();
+        } else {
+            // Show error message
+            alert("Cannot load DICOM series");
+        }
+    }
+    msg.send();
+}
+
+function finalize() {
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("DICOMService.Core");
+    msg.setMethodName("releaseDICOMSeries");
+    msg.send();
+}
+
+</script>
+
+</html>
+

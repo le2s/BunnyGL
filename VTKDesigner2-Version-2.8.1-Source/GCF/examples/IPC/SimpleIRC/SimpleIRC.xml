@@ -1,0 +1,14 @@
+<component name="SimpleIRC"
+           allowRemoteAccess="true" >
+
+    <object name="Core"
+            allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true" />
+
+    <widget name="IRCWindow"
+            allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true"
+            allowRemoteSignalConnect="true"
+            allowRemoteSignalDelivery="true" />
+
+</component>

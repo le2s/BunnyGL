@@ -1,0 +1,6 @@
+<component name="BrowserWindowComponent">
+
+    <object name="controller" />
+    <widget name="browserWindow" title="Simple Browser" visible="false" />
+
+</component>

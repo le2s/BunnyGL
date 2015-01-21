@@ -1,0 +1,572 @@
+/**
+\page gcfwithqtcreator Creating GCF Applications with Qt Creator
+
+Qt Creator is a very good IDE for Qt/C++ application development. Since GCF is based on Qt, it should be possible to use
+GCF with Qt Creator for improved productivity. This page explains how you can install GCF specific project wizards for
+Qt Creator and how you can get started with a new GCF application using Qt Creator.
+
+\section gcfwithqtcreator_installation Installing GCF Wizards for Qt Creator
+
+Qt Creator 2.0 and later provides support for creating custom project and/or class  templates.
+Visit this link for more information: http://doc.qt.nokia.com/qtcreator-snapshot/creator-project-wizards.html
+
+For GCF developers, we have bundled two project templates along with GCF source code.
+
+\li GCF Application project template
+\li GCF Component project template
+
+These templates quickly generate projects for you to get started. However, a few  minor modifications may 
+be necessary based on your actual project.
+
+To install these project templates you can copy/paste the \c gcfcomponent and \c gcfapplication directories 
+from \c $GCFDIR/tools/QtCreatorWizards to any of the following folders
+
+\li \c $QT_CREATOR_INSTALL_DIRECTORY/share/qtcreator/templates/wizards
+\li \c $HOME/.config/Nokia/qtcreator/templates/wizards
+\li \c %APPDATA%\\Nokia\\qtcreator\\templates\\wizards (On Windows Only)
+
+After copy/pasting the folders; restart Qt Creator. When you select File -> New you will be able to see a 
+new project category called "GCF Projects", within which you can find "GCF Component" and "GCF Application" project 
+types.
+
+\image html qtcreator1.png
+
+\section gcfwithqtcreator_creatingapps Starting on a new GCF Application with Qt Creator
+
+Lets suppose that you wanted to create a new GCF Application called "Photo Browser" and the main purpose of this 
+program is to offer a way for the user to browse through the directories on his/her disk and view photos. Here
+is how you could proceed with the development of the application.
+
+At the outset, you would perhaps require atleast two custom components.
+
+\li A file/directory explorer component
+\li A photo viewer component
+
+We could perhaps also make use of the \c PropertyEditorComponent to show the properties of the currently shown
+image. And then we would need a GCF Application that would load all the required components.
+
+\subsection gcfwithqtcreator_creatingapps_directorystructure Getting the directory structure right
+
+We will need to get the directory structure right in order to make building and deployment easy. Towards this we
+setup the following directory structure.
+
+- \c PhotoBrowserProject
+	- \c Binary (This directory would contain GUIXML files and binaries)
+	- \c Interfaces (This directory would contain common interfaces for the entire project)
+	- \c Application (This directory contains the source code for the actual application)
+	- \c DirectoryExplorer 
+	- \c PhotoViewer 
+
+Next, we begin by creating the actual application in \c PhotoBrowserProject/Application directory.
+
+\subsection gcfwithqtcreator_creatingapps_application Creating the Application for PhotoBrowserProject
+
+Start Qt Creator and select File -> New to launch the "New" class/project dialog box. Select "GCF Projects" -> "GCF Application"
+from the dialog box. Set \b Name of the project to Application and \b Create-in to the complete path of the PhotoBrowserProject
+directory.
+
+\image html qtcreator2.png
+
+Click on Next and then on Finish to create the project and see it open in Qt Creator. By default the generated GCF Application
+project is configured to build the executables into the same directoy as the source code. We will need to change this because,
+we want the binaries to be created in \c PhotoBrowserProject/Binary. Towards this, 
+
+\li Create a directory called \c GUIXML in \c PhotoBrowserProject/Binary.
+\li Move \c Application.xml and \c MainWindowComponent.xml from \c PhotoBrowserProject/Application to \c PhotoBrowserProject/Binary/GUIXML.
+\li Modify the Application.pro file as follows
+\verbatim
+TEMPLATE = app
+TARGET = PhotoBrowser
+DESTDIR = $$PWD/../Binary
+CONFIG += gcf_app gcf_mainwindow
+SOURCES = Main.cpp
+OTHER_FILES = $$PWD/../Binary/GUIXML/Application.xml \
+              $$PWD/../Binary/GUIXML/MainWindowComponent.xml
+\endverbatim
+\li Modify Line number 7 in Main.cpp as follows
+\code
+a.setGuiXmlFileDirectory(a.applicationDirPath() + "/GUIXML");
+\endcode
+\li Save the changes and wait for Qt Creator to refresh its "Projects" tree on the left-panel.
+
+\image html qtcreator3.png
+
+Once Qt Creator refreshes its "Project" tree, build the \c Application project. You can now take a look 
+at the \c PhotoBrowserProject/Binary folder, you will notice that the PhotoBrowser executable is now 
+available. The executable will show up as \c PhotoBrowserd.exe on Windows and \c PhotoBrowserd on Linux.
+The \c d suffix is added to all targets by GCF if they are compiled in debug mode.
+
+Execute the PhotoBrowser application and see the resulting main-window for yourself. You will be able 
+to notice an empty but standard, main window.
+
+\section gcfwithqtcreator_creatingcomponents Creating Componnets for the PhotoBrowserProject
+
+As mentioned before, we will require \c DirectoryExplorer and \c PhotoViewer components for the \c PhotoBrowserProject. 
+Lets begin creating these components.
+
+\subsection gcfwithqtcreator_creatingcomponents_direxp Creating the DirectoryExplorer component
+
+\subsubsection gcfwithqtcreator_creatingcomponents_direxp1 Step 1: Generating the code
+
+In Qt Creator, Select File -> New and choose GCF Projects -> GCF Component project type. For project \b Name enter 
+\c DirectoryExplorer and for \b Create-in enter the complete path of the PhotoBrowserProject directory. 
+
+\image html qtcreator4.png
+
+Click on Next and then on Finish to create the project and see it open in Qt Creator. By default the generated GCF Component
+project is configured to build the executables into the same directoy as the source code, and to compile the GUIXML file into 
+the component DLL/SO file itself. We will need to change this because, we want the binaries to be created in 
+\c PhotoBrowserProject/Binary and GUIXML file for the component to be saved in \c PhotoBrowserProject/Binary/GUIXML. Towards this
+we make the following changes.
+
+\li Move \c DirectoryExplorer.xml from \c PhotoBrowserProject/DirectoryExplorer to \c PhotoBrowserProject/Binary/GUIXML.
+\li Delete DirectoryExplorer.qrc from \c PhotoBrowserProject/DirectoryExplorer
+\li Modify DirectoryExplorer.pro as follows
+\verbatim
+TEMPLATE = lib
+DESTDIR = $$PWD/../Binary
+CONFIG += gcf_component
+HEADERS = DirectoryExplorer.h
+SOURCES = DirectoryExplorer.cpp
+OTHER_FILES = $$PWD/../Binary/GUIXML/DirectoryExplorer.xml
+\endverbatim
+\li Delete the following from Line number 28 of \c DirectoryExplorer.cpp
+\code
+this->setGuiXmlFileName(":/DirectoryExplorer_GUIXML/DirectoryExplorer.xml");
+\endcode
+\li Save the changes and wait for Qt Creator to refresh its "Projects" tree on the left-panel.
+
+Once Qt Creator refreshes its "Project" tree, build the \c DirectoryExplorer project. You can now take a look 
+at the \c PhotoBrowserProject/Binary folder, you will notice that the DirectoryExplorer DLL or SO is now 
+available. The shared library will show up as \c DirectoryExplorerd.dll on Windows and \c libDirectoryExplorerd.so on Linux.
+As mentioned before, the \c d suffix is added to all targets by GCF if they are compiled in debug mode.
+
+\subsubsection gcfwithqtcreator_creatingcomponents_direxp2 Step 2: Registering the component with PhotoBrowser application
+
+In order to have the PhotoBrowser application load the newly developed component, you will have to modify the 
+\c Application.xml file as follows
+\verbatim
+<Application>
+
+    <Components>
+        <!-- Load components here -->
+        <Component Name="DirectoryExplorer" Library="DirectoryExplorer" />
+    </Components>
+
+</Application>
+\endverbatim
+
+\subsubsection gcfwithqtcreator_creatingcomponents_direxp3 Step 3: Implementing functionality of the component
+
+The \c DirectoryExplorer class description is modified as follows in \c DirectoryExplorer.h
+
+\code
+#ifndef DIRECTORYEXPLORER_H
+#define DIRECTORYEXPLORER_H
+
+#include <GCF/AbstractComponent>
+
+class QModelIndex;
+
+struct DirectoryExplorerData;
+class DirectoryExplorer : public GCF::AbstractComponent
+{
+    Q_OBJECT
+    GCF_DECLARE_COMPONENT(DirectoryExplorer)
+
+public:
+    static DirectoryExplorer& instance();
+    ~DirectoryExplorer();
+
+signals:
+    void fileDoubleClicked(const QString& fileName);
+
+protected slots:
+    void slotDoubleClicked(const QModelIndex& index);
+
+protected:
+    DirectoryExplorer();
+    void initializeComponent();
+    void finalizeComponent();
+    void creationAnnounced();
+    QObject* fetchObject(const QString &completeName) const;
+    QWidget* fetchWidget(const QString &completeName) const;
+
+private:
+    DirectoryExplorerData* d;
+};
+
+#endif // DIRECTORYEXPLORER_H
+\endcode
+
+The \c DirectoryExplorer implementation is modified as follows in \c DirectoryExplorer.cpp
+
+\code
+#include "DirectoryExplorer.h"
+
+#include <QDirModel>
+#include <QTreeView>
+
+GCF_DEFINE_COMPONENT(DirectoryExplorer)
+
+struct DirectoryExplorerData
+{
+    QDirModel* dirModel;
+    QTreeView* dirView;
+};
+
+DirectoryExplorer& DirectoryExplorer::instance()
+{
+    return *(GCF_CREATE_COMPONENT(DirectoryExplorer));
+}
+
+DirectoryExplorer::DirectoryExplorer()
+{
+    d = new DirectoryExplorerData;
+
+    d->dirModel = new QDirModel(this);
+    d->dirView = new QTreeView;
+    d->dirView->setModel(d->dirModel);
+    for(int i=1; i<d->dirModel->columnCount(); i++)
+        d->dirView->setColumnHidden(i, true);
+}
+
+DirectoryExplorer::~DirectoryExplorer()
+{
+    delete d;
+}
+
+void DirectoryExplorer::slotDoubleClicked(const QModelIndex& index)
+{
+    QString fileName = d->dirModel->fileInfo(index).absoluteFilePath();
+    if(!fileName.isEmpty())
+        emit fileDoubleClicked(fileName);
+}
+
+void DirectoryExplorer::initializeComponent() { }
+void DirectoryExplorer::finalizeComponent() { }
+void DirectoryExplorer::creationAnnounced() { }
+
+QObject* DirectoryExplorer::fetchObject(const QString &completeName) const
+{
+    if(completeName == "DirectoryExplorer.Core")
+        return const_cast<DirectoryExplorer*>(this);
+
+    if(completeName == "DirectoryExplorer.DirModel")
+        return d->dirModel;
+
+    return 0;
+}
+
+QWidget* DirectoryExplorer::fetchWidget(const QString &completeName) const
+{
+    if(completeName == "DirectoryExplorer.DirView")
+        return d->dirView;
+
+    return 0;
+}
+
+GCF_EXPORT_COMPONENT_PLUGIN(DirectoryExplorer)
+\endcode
+
+The GUIXML file for \c DirectoryExplorer is modified as follows in \c DirectoryExplorer.xml
+
+\verbatim
+<component name="DirectoryExplorer" >
+
+    <object name="Core" />
+    <object name="DirModel" />
+    <widget name="DirView" title="Directory Explorer" parentWidget="MainWindowComponent.leftDockArea" />
+
+</component>
+\endverbatim
+
+Save the modifications and recompile/rebuild DirectoryExplorer component. After recompile/rebuild; restart 
+the \c PhotoBrowser application. You will be able to notice the newly developed DirectoryExplorer component 
+showing up in the main-window of the application.
+
+\image html qtcreator5.png
+
+\subsection gcfwithqtcreator_creatingcomponents_imageviewer Creating the ImageViewer Component 
+
+Using a method similar to \ref gcfwithqtcreator_creatingcomponents_direxp1 and \ref gcfwithqtcreator_creatingcomponents_direxp2 
+we create a ImageViewer component using Qt Creator wizards for GCF.
+
+\subsubsection gcfwithqtcreator_creatingcomponents_imageviewer3 Step 3: Implementing functionality of the component 
+
+The \c ImageViewer class description is modified as follows in \c ImageViewer.h
+
+\code
+#ifndef IMAGEVIEWER_H
+#define IMAGEVIEWER_H
+
+#include <GCF/AbstractComponent>
+#include <QImage>
+
+struct ImageViewerData;
+class ImageViewer : public GCF::AbstractComponent
+{
+    Q_OBJECT
+    GCF_DECLARE_COMPONENT(ImageViewer)
+
+public:
+    static ImageViewer& instance();
+    ~ImageViewer();
+
+    Q_PROPERTY(QImage image READ image WRITE setImage)
+    void setImage(const QImage& img);
+    QImage image() const;
+
+    Q_PROPERTY(int imageWidth READ imageWidth)
+    int imageWidth() const { return this->image().width(); }
+
+    Q_PROPERTY(int imageHeight READ imageHeight)
+    int imageHeight() const { return this->image().height(); }
+
+    Q_PROPERTY(int imageDepth READ imageDepth)
+    int imageDepth() const { return this->image().depth(); }
+
+public slots:
+    void clear();
+    void loadImage(const QString& fileName);
+
+signals:
+    void propertyChanged(const QString& propName);
+
+protected:
+    ImageViewer();
+    void initializeComponent();
+    void finalizeComponent();
+    void creationAnnounced();
+    QObject* fetchObject(const QString &completeName) const;
+    QWidget* fetchWidget(const QString &completeName) const;
+
+private:
+    ImageViewerData* d;
+};
+
+#endif // IMAGEVIEWER_H
+\endcode
+
+The \c ImageViewer implementation is modified as follows in \c ImageViewer.cpp
+
+\code
+#include "ImageViewer.h"
+
+#include <QWheelEvent>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+
+class ImageView : public QGraphicsView
+{
+public:
+    ImageView(QWidget* parent=0) : QGraphicsView(parent) {
+        this->setScene(new QGraphicsScene(this));
+
+        m_pixmapItem = new QGraphicsPixmapItem;
+        this->scene()->addItem(m_pixmapItem);
+        m_pixmapItem->show();
+
+        this->setRenderHint(QPainter::SmoothPixmapTransform, true);
+    }
+    ~ImageView() { }
+
+    void setImage(const QImage& image) {
+        m_image = image;
+
+        QPixmap pm = QPixmap::fromImage(m_image);
+        m_pixmapItem->setPixmap(pm);
+        m_pixmapItem->setPos(0, 0);
+        this->setSceneRect(m_pixmapItem->boundingRect());
+        this->setTransform(QTransform());
+    }
+
+    QImage image() const {
+        return m_image;
+    }
+
+protected:
+    void wheelEvent(QWheelEvent *event) {
+        if(event->delta() > 0)
+            this->scale(1.1, 1.1);
+        else
+            this->scale(0.9, 0.9);
+    }
+
+    void zoomFit() {
+        QRectF rect = m_pixmapItem->boundingRect();
+        rect = rect.adjusted(-10, -10, 10, 10);
+        this->fitInView(rect, Qt::KeepAspectRatio);
+    }
+
+private:
+    QImage m_image;
+    QGraphicsPixmapItem* m_pixmapItem;
+};
+
+GCF_DEFINE_COMPONENT(ImageViewer)
+
+struct ImageViewerData
+{
+    ImageView* imageView;
+};
+
+ImageViewer& ImageViewer::instance()
+{
+    return *(GCF_CREATE_COMPONENT(ImageViewer));
+}
+
+ImageViewer::ImageViewer()
+{
+    d = new ImageViewerData;
+
+    d->imageView = new ImageView;
+}
+
+ImageViewer::~ImageViewer()
+{
+    delete d;
+}
+
+void ImageViewer::setImage(const QImage& img)
+{
+    d->imageView->setImage(img);
+
+    // Emit these properties so that the property editor can update
+    // itself, if needed.
+    emit propertyChanged("image");
+    emit propertyChanged("imageWidth");
+    emit propertyChanged("imageHeight");
+    emit propertyChanged("imageDepth");
+}
+
+QImage ImageViewer::image() const
+{
+    return d->imageView->image();
+}
+
+void ImageViewer::clear()
+{
+    this->setImage(QImage());
+}
+
+void ImageViewer::loadImage(const QString& fileName)
+{
+    this->setImage(QImage(fileName));
+}
+
+void ImageViewer::initializeComponent() { }
+void ImageViewer::finalizeComponent() { }
+void ImageViewer::creationAnnounced() { }
+
+QObject* ImageViewer::fetchObject(const QString &completeName) const
+{
+    if(completeName == "ImageViewer.Core")
+        return const_cast<ImageViewer*>(this);
+
+    return 0;
+}
+
+QWidget* ImageViewer::fetchWidget(const QString &completeName) const
+{
+    if(completeName == "ImageViewer.ImageView")
+        return d->imageView;
+
+    return 0;
+}
+
+GCF_EXPORT_COMPONENT_PLUGIN(ImageViewer)
+\endcode
+
+The GUIXML file for ImageViewer is modified as follows in \c ImageViewer.xml 
+
+\verbatim
+<component name="ImageViewer" >
+
+    <object name="Core" />
+    <widget name="ImageView"
+            title="Image Viewer"
+            parentWidget="MainWindowComponent.workspace" />
+
+    <connection sender="DirectoryExplorer.Core::fileDoubleClicked(QString)"
+            receiver="ImageViewer.Core::loadImage(QString)" />
+
+</component>
+\endverbatim
+
+Notice how we are doing a signal/slot connection between \c DirectoryExplorer.Core
+and \c ImageViewer.Core. After saving the modified files, compiling the \c ImageViewer
+component and launching the application; we can now notice that double clicking on an
+image file actually shows the image!
+
+\image html qtcreator6.png
+
+\section gcfwithqtcreator_usingbuiltincomps Using built-in GCF components
+
+Suppose that you wanted to use the \c PropertyEditorComponent (that comes bundled with GCF) to show the 
+properties of the currently loaded image; you could 
+
+\li Modify the \c Application.xml file as follows to load the PropertyEditorComponent
+\verbatim
+<Application>
+
+    <Components>
+        <!-- Load the inbuilt PropertyEditorComponent here! -->
+        <Component Name="PropertyEditorComponent" Library="PropertyEditor" />
+		
+		<!-- Load components here -->
+        <Component Name="DirectoryExplorer" Library="DirectoryExplorer" />
+        <Component Name="ImageViewer" Library="ImageViewer" />
+    </Components>
+
+</Application>
+\endverbatim
+\li Create a file called \c PropertyEditorComponent.xml in \c PhotoBrowserProject/Binary/GUIXML with the following contents
+\verbatim
+<component name="PropertyEditorComponent">
+
+    <widget name="propertyEditor" title="Property Editor"
+            parentWidget="MainWindowComponent.rightDockArea" />
+
+</component>
+\endverbatim
+Notice how we are merging the \c propertyEditor widget of the \c PropertyEditorComponent on to the right-dock-widget-area
+of the main-window.
+\li Update the \c ImageViewer::creationAnnounced() function as follows in \c ImageViewer.cpp
+\code
+#include <IPropertyEditor>
+
+void ImageViewer::creationAnnounced()
+{
+    IPropertyEditor* propEditor = GCF::findObject<IPropertyEditor*>();
+    if(propEditor)
+        propEditor->setObject(this);
+}
+\endcode
+Over here, we look for an object that implements the \c IPropertyEditor interface and then use the interface to set 
+the object for which the properties should be shown.
+
+Upon saving the above modifications, rebuilding and restarting the application; we can now notice a property-editor 
+panel on the right dock area; showing properties of the loaded image.
+
+\image html qtcreator7.png
+
+\section gcfwithqtcreator_buildeasy Making the entire application build-friendly
+
+At this point the PhotoBrowserProject consists of one application and two components, each of which have to be build separately.
+To make it easy for building the whole project, together with application and the components, at one shot; we can create 
+a \c PhotoBrowserProject.pro file in \c PhotoBrowserProject directory as follows
+
+\verbatim
+TEMPLATE = subdirs
+CONFIG += ordered
+SUBDIRS = Application DirectoryExplorer ImageViewer
+\endverbatim
+
+Now you can launch a fresh instance of Qt Creator and load the \c PhotoBrowserProject/PhotoBrowserProject.pro project file in it;
+to see all the sub-projects in one window. You can build the application and the two components at one shot and mange all of 
+them as one single application!
+
+\image html qtcreator8.png
+*/

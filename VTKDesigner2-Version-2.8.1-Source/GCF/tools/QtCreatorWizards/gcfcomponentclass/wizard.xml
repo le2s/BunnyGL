@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="class"
+        class="qt4project" firstpage="10"
+        id="A.GCFComponentClass" category="B.GCFClasses">
+    <icon>vcl-gcf.png</icon>
+    <description>Creates a GCF Component Class in your project</description>
+    <displayname>GCF Component Class</displayname>
+    <displaycategory>GCF Classes</displaycategory>
+    <files>
+        <file source="Component.h" target="%ProjectName%.h" />
+        <file source="Component.cpp" target="%ProjectName%.cpp" openeditor="true"/>
+    </files>
+</wizard>

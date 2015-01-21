@@ -1,0 +1,18 @@
+<component name="BookmarkComponent">
+
+ <object name="controller" />
+
+ <action name="bookmarkThisPage" title="Bookmark this page" shortcut="Ctrl+D"
+ 		 triggerSlot="BookmarkComponent.controller::bookmarkCurrentPage()" />
+ <action name="showBookmarksPanel" title="Show bookmarks panel" shortcut="Ctrl+B"
+ 		 triggerSlot="BookmarkComponent.controller::showBookmarksPanel()" />
+ <action name="bookmarks" title="Bookmarks" />
+
+ <menu name="bookmarksMenu" title="Bookmarks">
+  <menuitem actionName="BookmarkComponent.bookmarkThisPage" />
+  <menuitem actionName="BookmarkComponent.showBookmarksPanel" />
+  <menutitem separator="true" />
+  <menuitem actionName="BookmarkComponent.bookmarks" />
+ </menu>
+
+</component>

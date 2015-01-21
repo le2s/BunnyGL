@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/VTKDesigner2">
+    <file alias="vtkdesigner.png">icons/vtkdesigner.png</file>
+    <file alias="camera.png">icons/camera.png</file>
+    <file alias="splash.png">icons/splash.png</file>
+</qresource>
+</RCC>

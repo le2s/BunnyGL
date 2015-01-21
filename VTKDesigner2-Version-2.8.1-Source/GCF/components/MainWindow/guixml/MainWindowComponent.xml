@@ -1,0 +1,50 @@
+<component title="Main Window Component" version="1.0" name="MainWindowComponent" >
+    
+    <widget scriptName="MainWindow" name="window" autoDelete="false" visible="false" />
+    <widget scriptName="StatusBar" title="" name="statusBar" autoDelete="false" />
+    <widget title="Message Area" name="bottomDockArea" autoDelete="false" />
+    <widget title="" name="workspace" autoDelete="false" />
+    <widget title="Tool Box" name="leftDockArea" />
+    <widget title="Configuration Panel" name="rightDockArea" />
+    <object title="" name="application" autoDelete="false" />
+    <object title="" name="controller" autoDelete="false" />
+    
+    <action title="Preferences" 
+            triggerSlot="MainWindowComponent.window::showConfigurationDialog()" 
+            icon=":/MainWindow/configure.png" 
+            name="configure" />
+    <action title="Exit" 
+            triggerSlot="MainWindowComponent.window::close()" 
+            icon=":/MainWindow/exit.png" 
+            name="fileQuit" 
+            shortcut="Ctrl+Q"/>
+    <action title="About" 
+            triggerSlot="MainWindowComponent.window::about()" 
+            icon=":/MainWindow/appIcon.png" 
+            name="helpAbout" />
+    <action title="Panels Menu" 
+            triggerSlot="MainWindowComponent.window::togglePanelAction()" 
+            name="togglePanelAction" />
+
+    <menu title="&amp;File" name="fileMenu">
+        <menuitem actionName="MainWindowComponent.fileQuit" />
+    </menu>
+    
+    <menu title="&amp;Edit" name="editMenu" >
+        <menuitem actionName="MainWindowComponent.configure" />"
+    </menu>
+
+    <menu title="&amp;View" name="viewMenu" >
+        <menuitem actionName="MainWindowComponent.togglePanelAction" />
+    </menu>
+
+    <menu title="&amp;Help" name="helpMenu" >
+        <menuitem actionName="MainWindowComponent.helpAbout" />
+    </menu>
+
+    <property key="MainWindowComponent.leftDockArea::minimumWidth" value="250" />
+    <property key="MainWindowComponent.rightDockArea::minimumHeight" value="200" />
+    <property key="MainWindowComponent.rightDockArea::minimumWidth" value="250" />
+    <property key="MainWindowComponent.bottomDockArea::minimumWidth" value="100" />
+
+</component>

@@ -1,0 +1,90 @@
+<html>
+
+<head><title>Web-Application for FractalService component</title></head>
+
+<body>
+
+<h1>Web-Application for FractalService component</h1>
+
+<p><i>Note: Please ensure that GCFApplicationServer is running and that the <b>FractalService.MengerSquareFractal</b>
+and <b>FractalService.SierpinskiTriangleFractal</b> objects are listed as available objects in the application server.</i></p>
+
+<p>The FractalService component hosted on GCFApplicationServer contains two fractal generator objects. One of them
+generates a Menger-Square fractal (also known as Sierpinski Carpet); the other generates a Sierpinski-Triangle fractal.
+To generate a fractal you will need to specify the number of iterations and click on "Generate" to view the fractal.
+Please use input boxes in the table below to generate the fractals</p>
+
+<table border="1" cellpadding="5" width="100%">
+
+<tr>
+<td align="center">
+<h2>Sierpinski-Triangle Fractal</h2>
+<input type="text" id="stIterations" value="3"></input>
+<button onclick="stGenerate()">Generate</button>
+<div id="stFractal" style="width: 375px; height: 375px"></div>
+</td>
+
+<td align="center">
+<h2>Menger-Square Fractal</h2>
+<input type="text" id="msIterations" value="3"></input>
+<button onclick="msGenerate()">Generate</button>
+<div id="msFractal" style="width: 375px; height: 375px"></div>
+</tr>
+</tr>
+
+</table>
+
+</body>
+
+<script language="Javascript" src="scripts/GCFMessage.js"></script>
+
+<script>
+GCFServerSideScript = "scripts/GCFApplicationServer.php";
+
+function msGenerate() {
+	var nrIterations = parseInt( document.getElementById("msIterations").value );
+	var size = 375;
+
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("FractalService.MengerSquareFractal");
+	msg.setMethodName("generateFractal");
+	msg.addIntegerArg( nrIterations );
+	msg.addIntegerArg( size );
+	msg.onReply = function(reply) {
+		if(!reply.isValid() || !reply.hasResult()) {
+			document.getElementById('msFractal').innerHTML = "Could not generate fractal";
+			return;
+		}
+
+		// Returned value is a image
+		document.getElementById('msFractal').innerHTML = '';
+		document.getElementById('msFractal').appendChild( reply.getResult() );
+	}
+	msg.send();
+}
+
+function stGenerate() {
+	var nrIterations = parseInt( document.getElementById("stIterations").value );
+	var size = 375;
+
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("FractalService.SierpinskiTriangleFractal");
+	msg.setMethodName("generateFractal");
+	msg.addIntegerArg( nrIterations );
+	msg.addIntegerArg( size );
+	msg.onReply = function(reply) {
+		if(!reply.isValid() || !reply.hasResult()) {
+			document.getElementById('stFractal').innerHTML = "Could not generate fractal";
+			return;
+		}
+
+		// Returned value is a image
+		document.getElementById('stFractal').innerHTML = '';
+		document.getElementById('stFractal').appendChild( reply.getResult() );
+	}
+	msg.send();
+}
+</script>
+
+</html>
+

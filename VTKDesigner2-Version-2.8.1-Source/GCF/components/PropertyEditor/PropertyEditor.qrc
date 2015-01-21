@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/PropertyEditor">
+        <file alias="revert.png">icons/revert.png</file>
+    </qresource>
+</RCC>

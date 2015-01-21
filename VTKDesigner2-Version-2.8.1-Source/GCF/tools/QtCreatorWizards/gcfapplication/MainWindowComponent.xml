@@ -1,0 +1,27 @@
+<component name="MainWindowComponent" >
+
+    <!-- MainWindowComponent.controller maps to an instance of the component
+         class itself -->
+    <object name="controller" />
+
+    <!-- MainWindowComponent.window maps to an instance of
+         GCF::Components::MainWindow class, which is a subclass of QMainWindow -->
+    <widget name="window" scriptName="MainWindow" visible="false" />
+
+    <!-- MainWindowComponent.statusBar maps to the QStatusBar of the main-window -->
+    <widget name="statusBar" scriptName="StatusBar" />
+
+    <!-- MainWindowComponent.workspace maps to the QTabWidget contained by default
+         in the workspace area of the main-window. Widgets added to this
+         area show up in separate tabs -->
+    <widget name="workspace" />
+
+    <!-- Each of the following areas map to a predefined QDockWidget along
+         the corresponding edge of the main-window. Widgets added to these
+         areas show up in separate tabs along on the tab-widget -->
+    <widget name="leftDockArea" title="Left Dock Area" />
+    <widget name="topDockArea" title="Top Dock Area" />
+    <widget name="rightDockArea" title="Right Dock Area" />
+    <widget name="bottomDockArea" title="Bottom Dock Area" />
+
+</component>

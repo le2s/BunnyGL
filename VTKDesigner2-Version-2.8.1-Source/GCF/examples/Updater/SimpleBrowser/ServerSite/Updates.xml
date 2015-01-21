@@ -1,0 +1,48 @@
+<Updates Baseline="1.0.0"> <!-- The base line specified here applies to all updates
+                                listed in this XML file -->
+                                
+    <Source>Primary Update Server</Source>
+                                
+    <Update>
+
+        <Name>SnapshotCapturerComponent</Name>
+        <Title>Snapshot Capturer</Title>
+        <Type>Critical</Type>
+        <Icon>update.png</Icon>
+        <ForceInstall>true</ForceInstall>
+        <Description>
+            <![CDATA[
+            This update enables you to capture snapshots of webpages into JPG
+            files
+            ]]>
+        </Description>
+        <Release>16 April 2009 12:56:09</Release>
+        <Version>1.0.0</Version>
+
+        <UpdateFile Arch="x86" OS="Win32">Update1-Win32.gvz</UpdateFile>
+        <UpdateFile Arch="x86" OS="Linux">Update1-Lin32.gvz</UpdateFile>
+
+    </Update>
+
+    <Update>
+
+        <Name>BookmarkComponent</Name>
+        <Title>Bookmark Manager</Title>
+        <Type>Critical</Type>
+        <Icon>update.png</Icon>
+        <ForceInstall>true</ForceInstall>
+        <Description>
+            <![CDATA[
+            Provides facility to bookmark pages that you visit
+            ]]>
+        </Description>
+        <Release>21 April 2009 17:13:00</Release>
+        <Version>1.0.0</Version>
+
+        <UpdateFile Arch="x86" OS="Win32">Update2-Win32.gvz</UpdateFile>
+        <UpdateFile Arch="x86" OS="Linux">Update2-Lin32.gvz</UpdateFile>
+
+    </Update>
+
+</Updates>
+

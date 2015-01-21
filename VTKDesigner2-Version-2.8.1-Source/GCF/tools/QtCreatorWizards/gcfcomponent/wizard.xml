@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard version="1" kind="project"
+        class="qt4project" firstpage="10"
+        id="A.GCFComponent" category="B.GCFProjects">
+    <icon>vcl-gcf.png</icon>
+    <description>Creates a GCF Component</description>
+    <displayname>GCF Component</displayname>;
+    <displaycategory>GCF Projects</displaycategory>
+    <files>
+        <file source="Component.h" target="%ProjectName%.h" />
+        <file source="Component.cpp" target="%ProjectName%.cpp" openeditor="true"/>
+        <file source="Component.pro" target="%ProjectName%.pro" openproject="true"/>
+        <file source="Component.xml" target="%ProjectName%.xml" />
+        <file source="Component.qrc" target="%ProjectName%.qrc" />
+    </files>
+</wizard>

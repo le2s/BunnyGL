@@ -1,0 +1,195 @@
+/**
+\ingroup propertyeditorcomp
+\interface IEditableProperties IEditableProperties
+\brief Through this interface additional properties of your QObject can be served
+
+
+Qt provides an excellent dynamic property model in its QObject and subclasses. The
+only problem with this model is that the number of properties that a QObject can have
+is fixed at compile time. An object cannot add __and__ remove properties at runtime
+depending on the context. In many applications it would be useful to have an different
+instances of the same class offer different properties.
+
+For such cases, you can implement this interface.
+
+The property editor (accessible via IPropertyEditor) shows both properties from the
+object's meta data (returned via QMetaObject) and from its IEditableProperties interface;
+if it provides any.
+
+Example:
+\code
+struct CircuitElementData;
+class CircuitElement : public QObject,
+                        virtual public IEditableProperties
+{
+    Q_OBJECT
+    Q_ENUMS(EFlip ERotation)
+    Q_INTERFACES(IEditableProperties)
+    Q_PROPERTY(QString Caption READ elementCaption WRITE setElementCaption);
+    Q_PROPERTY(ERotation Rotation READ getRotation WRITE setRotation)
+    Q_PROPERTY(EFlip Flip READ getFlip WRITE setFlip)
+    Q_CLASSINFO("SectionName", "Element");
+
+public:
+    enum EFlip
+    {
+        None,
+        Vertical,
+        Horizontal
+    };
+
+    enum ERotation
+    {
+        Zero,
+        Ninety,
+        OneEighty,
+        TwoSeventy
+    };
+
+    CircuitElement();
+    ~CircuitElement();
+
+    void setElementCaption(const QString& string);
+    QString elementCaption() const;
+    
+    void setRotation(ERotation rot);
+    ERotation rotation() const;
+    
+    void setFlip(EFlip flip);
+    EFlip flip() const;
+    
+    // IContainer implementation
+    QObject* containerObject();
+
+    // IEditableProperties implementation
+    int propertyCount();
+    QString propertyName(int index);
+    QString propertyGroup(int index);
+    QVariant propertyValue(int index);
+    void setPropertyValue(int index, QVariant value);
+    bool hasEditor(int index);
+    QWidget* createEditor(int index);
+    void setEditorValue(int index, QWidget* widget, QVariant value);
+    QVariant editorValue(int index, QWidget* widget);
+    void connectEditor(int index, QWidget* widget, QObject* receiver, const char* member);
+    QString propertyValueString(int index);
+    QVariant propertyValueFromString(int index, QString valueStr);
+
+signals:
+    void propertyConfigurationChanged();
+    
+private:
+    CircuitElementData* d;  
+};
+
+#endif
+\endcode
+
+When the properties of an instance of CircuitElement is shown in a property editor, then
+\li Qt properties like Caption, Rotation and Flip (declared using Q_PROPERTY macro) are shown along with
+\li Properties whose names, groups and values are returned via IEditableProperties interface
+are also shown
+*/
+
+/**
+\fn virtual int IEditableProperties::propertyCount() = 0
+
+Must be implemented to return the number of editable properties in the object.
+*/
+
+/**
+\fn virtual QString IEditableProperties::propertyName(int index) = 0
+
+Must be implemented to return the name of the editable property at \c index
+*/
+
+/**
+\fn virtual QString IEditableProperties::propertyGroup(int index) = 0
+
+Must be implemented to return the group-name of the editable property at \c index
+*/
+
+/**
+\fn virtual QVariant IEditableProperties::propertyValue(int index) = 0
+
+Must be implemented to return the property-value of the editable property at \c index
+*/
+
+/**
+\fn virtual void IEditableProperties::setPropertyValue(int index, QVariant value) = 0
+
+Must be implemented to set the property-value of the editable property at \c index
+*/
+
+/**
+\fn virtual bool IEditableProperties::hasEditor(int index) = 0
+
+Must be implemented to return the true if a custom editor is available for property at \c index. 
+If the function returns false the the IValueEditorFactory interface will be used to create an 
+editor.
+*/
+
+/**
+\fn virtual QWidget* IEditableProperties::createEditor(int index) = 0
+
+If hasEditor() for \c index returns true, then this function is called to create and return
+an editor widget.
+*/
+
+/**
+\fn virtual void IEditableProperties::setEditorValue(int index, QWidget* widget, QVariant value) = 0
+
+This function must be implemented to show \c value as editable value in \c widget. The editable
+property that is currently being dealt with is passed via \c index. This function gets called
+only if hasEditor() for \c index had returned true; and if createEditor() for \c index had 
+returned a valid widget pointer.
+*/
+
+/**
+\fn virtual QVariant IEditableProperties::editorValue(int index, QWidget* widget) = 0
+
+This function must be implemented to return the value contained in \c widget. The editable
+property that is currently being dealt with is passed via \c index. This function gets called
+only if hasEditor() for \c index had returned true; and if createEditor() for \c index had 
+returned a valid widget pointer.
+*/
+
+/**
+\fn virtual void IEditableProperties::connectEditor(int index, QWidget* widget, QObject* receiver, const char* member) = 0
+
+This function must be implemented to connect edit-notification signals in \c widget (that was returned by
+createEditor() for \c index) to \c receiver 's \c slot/
+*/
+
+/**
+\fn virtual QString IEditableProperties::propertyValueString(int index) = 0
+
+This function must be implemented to return the property-value for editable-property at \c index
+as a string.
+*/
+
+/**
+\fn virtual QVariant IEditableProperties::propertyValueFromString(int index, QString strValue) = 0
+
+This function must be implemented to return the property-value for editable-property at \c index
+from the string \c strValue
+*/
+
+/**
+\fn virtual void IEditableProperties::propertyConfigurationChanged() = 0
+
+This signal must be implemented if the number of editable-values have been changed.
+*/
+
+/**
+\ingroup propertyeditorcomp
+\interface IEditablePropertiesExt IEditablePropertiesExt.h
+\brief Extended IEditableProperties interface
+*/
+
+/**
+\fn virtual bool IEditablePropertiesExt::canLoadSaveProperty(int index) = 0
+
+This function must return true of the editable property at \c index can be loaded and saved.
+*/
+

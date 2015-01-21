@@ -1,0 +1,222 @@
+/**
+\page simplewebservice Simple Web Service/Application Example
+
+This example is the best way to get started with writing web-service components for hosting on
+GCFApplicationServer. For this example to work you will need to first ensure that GCFApplicationServer
+is running and that your Apache web-server's DocumentRoot is set to $GCF_SDK/examples/ApplicationServer/HTML.
+
+Once that is done, launch your web-browser and visit http://localhost/simple.html
+
+\image html simplewebservice.png
+
+\section simplewebservice_intro Introduction
+
+In this example we will see how a simple function, as shown below, can be made available as a 
+web-service. 
+
+\code
+QString toUpper(const QString& string)
+{
+	return string.toUpper();
+}
+\endcode
+
+The whole purpose of this example is to understand the basics of writing a web-service component and making it 
+available via GCFApplicationServer. We will also be looking into how a web-application can be written to access
+the service-method exposed by the web-service component. 
+
+\section simplewebservice_impl SimpleWebService class Implementation
+
+First lets look at the class definition of the web-service component that will be hosting the service method.
+
+\c ApplicationServer/Simple/SimpleWebService.h
+\include ApplicationServer/Simple/SimpleWebService.h
+
+Notice how the \c SimpleWebService class is just like any other component class, with a toUpper() method declared
+as public \c Q_INVOKABLE. Also notice the tag \c GCF_ATOMIC_WS next to \c Q_INVOKABLE in the class declaration. GCFApplicationServer
+identifies a limited set of tags with each function. These tags provide hints to GCFApplicationServer as to how it 
+should process web-service-calls made to the corresponding methods.
+
+In order to understand these tags, we must first understand the request handling architecture of GCFApplicationServer.
+The diagram below shows how GCF handles requests.
+
+\image html request_handling.jpg
+
+At first GCFApplicationServer launches itself in "request-broker" mode and starts listening for incoming messages.
+As and when messages arrive, it creates one or more child-processes (up to a configurable max) and despatches the
+request to the child process. Once the child process sends a response, the "request-broker" ships the response back
+to the calling application; which could be a browser or another Qt/GCF desktop application. The key thing to take note
+here is that every child process is infact a copy of GCFApplicationServer, just that they run in "request-handling" mode!
+
+Tags specified next to \c Q_INVOKABLE in web-services offer hints to GCFApplicationServer running in "broker-mode" as to how
+it should process calls made to that function.
+
+\li If no tag is specified, then GCF assumes that the tag is \c GCF_NORMAL_WS
+\li \c GCF_NORMAL_WS: Calls made to such functions are redirected to a child-process for handling. When a call from 
+a remote application (which could be a web-browser or Qt/GCF desktop application) is received for the first time; 
+it is redirected to a new or available child-process for handling. Subsequent calls from the same remote application
+are redirected to the same child-process.
+\li \c GCF_ATOMIC_WS: Calls made to such functions are handled by the request-broker itself. They will \b not be 
+redirected to a child process. Developers have to keep in mind that \c GCF_ATOMIC_WS web-service methods must 
+be implemented to be quick and easy. This is because while an \c GCF_ATOMIC_WS web-service method is running; no
+other incoming requests are handled by GCFApplicationServer. Long and heavy \c GCF_ATOMIC_WS web-service methods 
+might cause GCFApplicationServer to appear slow to clients.
+\li \c GCF_CLIENT_INDEPENDENT_WS: Calls made to such functions are redirected to a child-process for handling.
+GCFApplicationServer makes no effort to ensure that calls from the sample remote application are redirected to
+the same child-process.
+
+Moving on, lets look at the implementation of SimpleWebService. 
+
+\c ApplicationServer/Simple/SimpleWebService.cpp
+\include ApplicationServer/Simple/SimpleWebService.cpp
+
+The class implementation is very easy to follow. Apart from explicitly specifying the GUIXML file name in 
+\c initializeComponent() and implementing the \c toUpper() method - the rest of the code is standard.
+
+\section simplewebservice_xml GUIXML for the SimpleWebService class
+
+The GUIXML file for SimpleWebService is as follows
+
+\verbinclude ApplicationServer/Simple/SimpleWebService.xml
+
+Notice how we make use of the \c allowRemoteAccess and \c allowRemoteMethodInvocation attributes to mark
+objects for remote access. If \c SimpleWebService.Core is not marked for remote access and remote method
+invocation; then its service-methods cannot be invoked from web-application(s).
+
+Since we want to bundle the GUIXML file into a resource, so that it is available within the DLL/SO itself;
+we include a Qt resource file into the project as follows
+
+\verbinclude ApplicationServer/Simple/SimpleWebService.qrc
+
+The project file looks like this
+
+\verbinclude ApplicationServer/Simple/Simple.pro
+
+Note, if you are using the GCF SDK, you can replace the \c include() line in the project file with 
+
+\code
+CONFIG += gcf_component
+\endcode
+
+\section simplewebservice_hosting Hosting the SimpleWebService component
+
+In order to host the SimpleWebService component you will need to ensure that the SimpleWebService.dll 
+(libSimpleWebService.so on Linux) are available in PATH (or LD_LIBRARY_PATH on Linux). Next, go to
+the GCFApplicationServer-GUIXML folder in the directory where GCFApplicationServer executable is located.
+Open the GCFApplicationServer.xml file and ensure that the SimpleWebService is marked for loading.
+
+\code
+<Application>
+
+	<Components>
+		<!-- Any other server component you want to load before SimpleWebService -->
+		
+		<Component Name="SimpleWebService" Library="SimpleWebService" />
+		
+		<!-- Any other server component you want to load after SimpleWebService -->
+	</Components>
+
+</Application>
+\endcode
+
+\section simplewebservice_html HTML WebApplication to access SimpleWebService
+
+The HTML WebApplication basically provides a text-box, button and result area
+
+\code
+<html>
+
+<head><title>Web-Application for SimpleWebService component</title></head>
+
+<body>
+<!-- commented code -->
+	
+<!-- Input Area -->
+Enter some text here: 
+<input type="text" id="inputString"></input> 
+<button onclick="callToUpper()">To Upper</button>
+
+<!-- Output Area -->
+<div id="result"></div>
+
+</body>
+
+<!-- Include GCFMessage.js script. This library is used to communicate with
+the application server -->
+<script language="Javascript" src="scripts/GCFMessage.js"></script>
+
+<script>
+GCFServerSideScript = "scripts/GCFApplicationServer.php";
+
+// This function is called when the "To Upper" button on the HTML page is clicked on.
+function callToUpper() {
+	// Fetch the text in the text box
+	var text = document.getElementById("inputString").value;
+
+	// Construct a request method to call
+	// SimpleWebService.Core::toUpper()
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("SimpleWebService.Core");
+	msg.setMethodName("toUpper");
+	msg.addStringArg( text );
+	
+	// Establish a response handler
+	msg.onReply = function(reply) {
+		if(!reply.isValid() || !reply.hasResult()) {
+			document.getElementById("result").innerHTML = "Could not fetch result!";
+			return;
+		}
+
+		// Returned value is a QString
+		document.getElementById('result').innerHTML = reply.getResult();
+	}
+	
+	// Send the request.
+	msg.send();
+}
+</script>
+
+</html>
+\endcode
+
+When the above HTML file is made available via Apache web-server and loaded in a browser;
+you will be able to notice a text box. When some text is entered into the text box and the
+"To Upper" button is clicked, a upper-case-converted string is shown in the result box.
+
+\image html simplewebservice.png
+
+\section simplewebservice_desktop Qt/GCF Desktop Application to access SimpleWebService
+
+If you wanted to call the toUpper() method from a desktop application, you can use the following
+code snippet
+
+\code
+
+#include <GCF/RemoteObject>
+#include <GCF/WSMacros>
+
+class ToUpperListener : public QObject
+{
+	Q_OBJECT
+	
+public slots:
+	void toUpperResult(const QVariant& result, bool success) {
+		if(success) {
+			QString resultStr = result.toString();
+			// Use the result string somewhere.
+		}
+	}
+};
+
+QString lowerCaseString = "hi there. this is a lower case string..";
+
+GCF::RemoteObject::asyncCall(new ToUpperListener, SLOT(toUpperResult(QVariant,bool)),
+							 QHostAddress::LocalHost, 
+							 4232, /* the default port number of GCF Application Server */
+							 "SimpleWebService.Core", "toUpper", 
+							 lowerCaseString);
+
+// When the result from invocation of toUpper becomes available, the 
+// ToUpperListener::toUpperResult() slot is called.
+\endcode
+*/

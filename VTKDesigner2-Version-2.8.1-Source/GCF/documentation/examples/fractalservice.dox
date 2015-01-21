@@ -1,0 +1,131 @@
+/**
+\page fractalservice FractalService - Web Service/Application Example 
+
+This example showcases how you can write slightly "process heavy" web-services and host it on GCFApplicationServer.
+The other thing that this example showcases is how one can host multiple web-service objects in a single GCF component.
+For this example to work you will need to first ensure that GCFApplicationServer is running and that your 
+Apache web-server's DocumentRoot is set to $GCF_SDK/examples/ApplicationServer/HTML.
+
+Once that is done, launch your web-browser and visit http://localhost/fractal.html
+
+\image html fractalservice.png
+
+\section fractalservice_intro Introduction
+
+A fractal is a fragmented geometric shape that can divided into parts such that each part is a reduced-size copy
+of the whole. In this example we implement two fractals (<a href="http://en.wikipedia.org/wiki/Sierpinski_carpet">Menger Square</a>
+and <a href="http://en.wikipedia.org/wiki/Sierpinski_triangle">Sierpinski Triangle</a>) and make them available for 
+access on GCFApplicationServer. In this example we can observe
+
+\li How one can write a single component to host several "server" objects. 
+\li How one can write "server" objects to return image(s).
+
+\section fractalservice_impl Implementation
+
+Lets first look at the class declaration of fractal generator "server" classes.
+
+\include ApplicationServer/Fractal/MengerSquareFractal.h
+\include ApplicationServer/Fractal/SierpinskiTriangleFractal.h
+
+Notice how both the "server" classes are subclasses from \c QObject. They offer a method called \c generateFractal()
+that take as parameter the number of iterations and image size. Also notice how the \c generateFractal() method 
+simply returns a \c QImage. Internally GCFApplicationServer takes care of encoding the \c QImage into XML and/or binary
+form depending on whether the request came from a HTML web-application or Qt/GCF desktop application.
+
+<i>Note: In this page we will not be looking into the implementation of the fractal generators. If you are interested
+we encourage you to take a look at the example source code in $GCF_SDK/examples/ApplicationServer/Fractal</i>
+
+Next, lets look at the class declaration of the FractalService class.
+
+\include ApplicationServer/Fractal/FractalService.h
+
+The \c FractalService class definition looks very standard. Now lets look at its implementation.
+
+\include ApplicationServer/Fractal/FractalService.cpp
+
+Notice how we are returning QObject pointers for \c FractalService.MengerSquareFractal and 
+\c FractalService.SierpinskiTriangleFractal from the \c fetchObject() implementation.
+
+Next, lets take a look at the GUIXML file corresponding to the FractalService component.
+
+\verbinclude ApplicationServer/Fractal/FractalService.xml
+
+Notice how we are marking MengerSquareFractal and SierpinskiTriangleFractal objects for remote
+access and remote method invocation.
+
+\section fractal_hosting Hosting the FractalService component
+
+In order to host the FractalService component you will need to ensure that the FractalService.dll 
+(libFractalService.so on Linux) are available in PATH (or LD_LIBRARY_PATH on Linux). Next, go to
+the GCFApplicationServer-GUIXML folder in the directory where GCFApplicationServer executable is located.
+Open the GCFApplicationServer.xml file and ensure that the FractalService is marked for loading.
+
+\code
+<Application>
+
+	<Components>
+		<!-- Any other server component you want to load before FractalService -->
+		
+		<Component Name="FractalService" Library="FractalService" />
+		
+		<!-- Any other server component you want to load after FractalService -->
+	</Components>
+
+</Application>
+\endcode
+
+\section fractalservice_html HTML Web Application
+
+The HTML Web Application basically shows a input box where the user can enter the number of iterations
+and click a button. Upon clicking the button; the web-application issues call to the FractalService 
+component hosted on GCFApplicationServer, retrieves the fractal image and shows it on the browser.
+
+<i>Note: Code for the entire HTML web-application can be seen by opening fractal.html 
+(from $GCF_SDK/examples/ApplicationServer/HTML) in a text editor. In this page we only look at
+relavent parts of the code.</i>
+
+First we create a form in HTML as follows
+
+\code
+<h2>Sierpinski-Triangle Fractal</h2>
+<input type="text" id="stIterations" value="3"></input>
+<button onclick="stGenerate()">Generate</button>
+<div id="stFractal" style="width: 375px; height: 375px"></div>
+\endcode
+
+Then we define the \c stGenerate() method as follows.
+
+\code
+<script language="Javascript" src="scripts/GCFMessage.js"></script>
+
+<script>
+GCFServerSideScript = "scripts/GCFApplicationServer.php";
+
+function stGenerate() {
+	var nrIterations = parseInt( document.getElementById("stIterations").value );
+	var size = 375;
+
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("FractalService.SierpinskiTriangleFractal");
+	msg.setMethodName("generateFractal");
+	msg.addIntegerArg( nrIterations );
+	msg.addIntegerArg( size );
+	msg.onReply = function(reply) {
+		if(!reply.isValid() || !reply.hasResult()) {
+			document.getElementById('stFractal').innerHTML = "Could not generate fractal";
+			return;
+		}
+
+		// Returned value is a image
+		document.getElementById('stFractal').innerHTML = '';
+		document.getElementById('stFractal').appendChild( reply.getResult() );
+	}
+	msg.send();
+}
+</script>
+\endcode
+
+Notice how easy it is to issue a call to the \c FractalService.SierpinskiTriangleFractal::generateFractal() 
+web-service!
+
+*/

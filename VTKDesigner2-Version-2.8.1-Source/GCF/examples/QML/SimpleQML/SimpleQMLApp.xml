@@ -1,0 +1,7 @@
+<Application>
+
+    <Components>
+        <QMLComponent Name="HelloQML" />
+    </Components>
+
+</Application>

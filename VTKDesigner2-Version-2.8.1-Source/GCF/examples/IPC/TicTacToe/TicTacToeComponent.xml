@@ -1,0 +1,18 @@
+<!-- Notice how we make use of allowRemoteAccess,
+    allowRemoteMethodInvocation, allowRemoteSignalConnect
+    and allowRemoteSignalDelivery attributes to explicitly
+    enable IPC access to the component and its objects -->
+<component name="TicTacToeComponent"
+           allowRemoteAccess="true" >
+
+    <object name="core"
+            allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true" />
+
+    <widget name="gameBoard"
+            allowRemoteAccess="true"
+            allowRemoteMethodInvocation="true"
+            allowRemoteSignalConnect="true"
+            allowRemoteSignalDelivery="true" />
+
+</component>

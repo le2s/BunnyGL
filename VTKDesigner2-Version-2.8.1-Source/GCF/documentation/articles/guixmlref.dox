@@ -1,0 +1,483 @@
+/**
+\page guixmlref GUIXML Format
+
+GUIXML files list out the objects, widgets, menus, toolbars and actionitems for merging into the 
+"application-container-widget" of the GCF application. In addition to this, GUIXML can also 
+contain configuration options, signal/slot connection information and method invocation commands.
+This page explains the format of the GUIXML file.
+
+- \ref guixmlref_component "component"
+	- \ref guixmlref_requires "requires"
+    - \ref guixmlref_object "object"
+    - \ref guixmlref_widget "widget" 
+	- \ref guixmlref_stylesheet "stylesheet"
+    - \ref guixmlref_action "action"
+    - \ref guixmlref_menu "menu"
+        - menuitem
+    - \ref guixmlref_toolbar "toolbar"
+        - toolbaritem
+    - \ref guixmlref_connection "connection"
+    - \ref guixmlref_property "property"
+    - \ref guixmlref_method "method"
+    - \ref guixmlref_activex "activex"
+    - \ref guixmlref_kparts "kparts"
+	- \ref guixmlref_qml "qml"
+
+In the following subsections, each of the above XML elements and their standard attributes are described. In
+addition to the standard attributes, you can add as many custom attributes as you want. Such custom
+attributes are read and stored in the component framework and can be used by your custom components. GCF
+will not try to make sense of those attributes, but will store them anyway.
+
+\section guixmlref_component component XML element
+
+The component XML element is the root element of the XML GUI document. The attributes of component
+describes some key information fields about the component. The attributes that can be associated with
+component are
+
+- className
+- title
+- allowRemoteAccess [boolean | optional]
+
+The meanings of the above attributes are obvious from their names. All other XML elements are child
+elements of component. Example
+
+\code
+<component className="MessageLog" title="Message Log Area">
+</component>
+\endcode
+
+\section guixmlref_requires requires XML element
+The <requires> XML element enables specification of component dependencies. All required components are loaded
+first before the rest of the GUIXML file is processed. 
+
+Valid attributes are
+- component [string]: Name of the component that is required to be loaded before the rest of the GUIXML file is
+processed
+- library [string]: Name of the library file from which the component must be loaded
+
+GCF also internally establishes a dependency between the current component and the component's listed using 
+<requires> XML element. 
+
+Suppose that we have a component \c A that depends on \c B and \c C. In the GUIXML file of A; we can specify the
+dependency as follows
+
+\code
+<component name="A">
+	<requires component="B" library="B" />
+	<requires component="C" library="C" />
+	<!-- other guixml elements follow here -->
+</component>
+\endcode
+
+GCF processes the \c <requires> XML elements first before processing any <object>, <widget>, <action> or any other XML element
+in the GUIXML file. This means required components of A are loaded first and then its GUI (basically object, widget, action 
+XML) elements are loaded. The <requires> XML element also establishes a formal dependency between components. In the above
+example A is registered as a "depending" component of B and C. Therefore, during application shutdown - component A is destroyed
+first before B and C.
+
+\section guixmlref_object object XML element
+The object XML element describes a single object in the component. The XML element only declares the
+existence of the object. The object is actually created by the component itself. For every object XML element in
+the GUI XML file, the \ref GCF::AbstractComponent::fetchObject() method of GCF::AbstractComponent is called to actually create an instance of that
+object.
+
+Valid attributes for object XML element are
+
+- name
+- title [optional]
+- parentObject [completeName3 | optional]
+- parentObjectHint [string | optional]
+- allowRemoteAccess [boolean | optional]
+- allowRemoteMethodInvocation [boolean | optional]
+- allowRemoteSignalConnect [boolean | optional]
+- allowRemoteSignalDelivery [boolean | optional]
+
+\b parentObject is the complete name of the parent object of the object being described in the object XML
+element. The parentObjectHint is passed to the hint parameter of the \ref GCF::AbstractComponent::fetchObject() "addChildObject()" method of the
+\ref GCF::AbstractComponent that owns the parentObject.
+
+\section guixmlref_widget widget XML element
+
+The widget XML element describes a single widget in the component. The XML element only declares the
+existence of the widget. The widget is actually created by the component itself. For every widget XML element
+in the GUI XML file, the \c GCF::AbstractComponent::fetchWidget()  method of GCF::AbstractComponent is called to actually create an instance of that
+widget.
+
+Valid attributes for widget XML element are
+- name
+- title [optional]
+- parentWidget [completeName | optional]
+- parentWidgetHint [string | optional]
+- hideWhenInactive [boolean | optional (default=true)]
+- allowRemoteAccess [boolean | optional]
+- allowRemoteMethodInvocation [boolean | optional]
+- allowRemoteSignalConnect [boolean | optional]
+- allowRemoteSignalDelivery [boolean | optional]
+
+\b parentWidget is the complete name of the parent Widget of the Widget being described in the Widget XML
+element. The \b parentWidgetHint is passed to the hint parameter of the \ref GCF::AbstractComponent::addChildWidget() "addChildWidget()" 
+method of the \ref GCF::AbstractComponent that owns the \b parentWidget.
+
+The \b hideWhenInactive attribute specifies whether the widget should be hidden when this component is
+made inactive. How the widget gets "hidden" is decided by the component that owns the parent widget. In
+any case the widget is hidden by GCF using QWidget::hide() method if there is no parent widget.
+
+\section guixmlref_stylesheet stylesheet XML element
+This XML element allows you to specify a stylehseet for use with widgets provided by the component. GCF will apply
+the stylesheet provided in the GUIXML file for all widgets originating from the component. Stylesheets can either be
+provided inline (ie within the XML file itself) or can be loaded from an external source.
+
+Valid Attributes 
+- src [optional|string]: name of a file that contains the stylesheet for use with the component. The filename can 
+refer to a file in the Qt Resource set or to a file on the disk. Relative file names are accepted provided they are
+relative to the executable file of the application.
+
+\note Only one <stylesheet> XML element can be present in a GUIXML file. If several <stylesheet> elements are found;
+then the first one is processed (remaining are ignored).
+
+Example:
+
+\code
+<component name="A">
+	<stylesheet>
+	background-color: rgb(255,0,0);
+	</stylesheet>
+
+	<widget name="W1" />
+	<widget name="W2" />
+</component> 
+\endcode
+
+--OR--
+
+\code
+<component name="A">
+	<stylesheet src=":/A/style.css" />
+	<widget name="W1" />
+	<widget name="W2" />
+</component> 
+\endcode
+
+\section guixmlref_action action XML element
+
+The action XML element declares a single action in the component. Actions must be declared before they
+can be inserted into menus or toolbars. For every action XML element in the GUI XML file, the \c GCF::AbstractComponent::fetchAction() 
+method of GCF::AbstractComponent is called to actually create an instance of that action.
+
+Valid attributes of action XML element are
+
+- name
+- title
+- icon [resourceName | optional]
+- shortcut [optional]
+- checkState [optional]
+- triggerSlot [completeSlotName | optional]
+- toggleSlot [completeSlotName | optional]
+- mergeWith [completeName | optional]
+- hideWhenInactive [boolean | optional (default=true)]
+
+If \b checkState is specified then the action is assumed to be a checkable action and the check state for that
+action is read from the vaue of \b checkState. For checkable actions the \b toggleSlot attrribute value is considered
+for making connections, for others \b triggerSlot attribute is considered for making connections. The meaning of
+\ref guixmlref_10 "completeSlotName" is explained later on in this document.
+
+If \b mergeWith is specified then this action shares the same QAction object as that of the action whose
+complete name is specified in \b mergeWith. \b triggerSlot and \b toggleSlot are added to the set of connections the
+action already has. The slots are only called when your component is active.
+
+The \b hideWhenInactive attribute specifies whether the action should be disabled when this component is
+made inactive. If multiple components share an action, then action's triggered and toggled signals are multiplexed to only
+receivers from active components.
+
+\section guixmlref_menu menu XML Element
+
+The <menu> XML element declares a pull down menu. Menus can be added to the menu bar of the main window
+owned by the GCF or to other menus that already exist in the main window. The menu XML element supports
+the following attributes.
+
+- name
+- title
+- parentMenu [completeName | optional]
+- mergeWith [completeName | optional]
+- icon [resourceName | optional]
+- hideWhenInactive [boolean | optional (default=true)]
+
+If a valid \b parentMenu is specified, then this menu is inserted as a child menu in the parent menu other wise
+the menu is added to the menu bar of the main window owned by GCF.
+
+If a valid \b mergeWith menu is specified then this menu is merged with the menu referred to by the
+\b mergeWith menu.
+
+The \b hideWhenInactive attribute specifies whether the menu should be hidden when this component is
+made inactive. If multiple components share the menu, then the menu is not hidden unless all components
+that share it are made inactive.
+
+Child XML elements for menu may be one or more of the following types
+- menuitem
+
+A <menuitem> XML element specifies the name of the action item that should be added to this menu. Valid
+attributes for <menuitem> XML element are
+
+- actionName [completeName of the action]
+- separator [boolean value]
+- before [completeName].
+
+If \b before is specified then this menu item is inserted before the action whose complete name is specified as
+value to this attribute.
+
+\section guixmlref_toolbar toolbar XML element
+
+The <toolbar> XML element is similar to the menu XML element. It supports similar set of attributes as that of
+menu and they behave in the same way as they do in the menu XML element. Valid attributes for toolbar are
+
+- name
+- title
+- mergeWith [completeName | optional]
+- hideWhenInactive [boolean | optional (default=true)]
+
+The \b hideWhenInactive attribute specifies whether the toolbar should be hidden when this component is
+made inactive. If multiple components share the toolbar, then the toolbar is not hidden unless all components
+that share it are made inactive.
+
+The toolbar XML element supports the following child XML elements
+
+- toolbaritem
+
+The <toolbaritem> XML element specifies the name of the action item that should be added to this menu. Valid
+attributes for menuitem XML element are
+
+- actionName [completeName of the action]
+- separator [boolean value]
+- before [completeName].
+
+If \b before is specified then this toolbar item is inserted before the action whose complete name is specified as
+value to this attribute.
+
+\section guixmlref_connection connection XML element
+
+The <connection> XML element establishes a signal/slot connection between any two objects in the system.
+The sender of the signal may belong to this component or to some other component. The receiver of the signal
+can belong to this component or some other component. But it is important to note that either the sender or the
+receiver must belong to this component.
+
+attributes for the connection element are
+
+- sender [completeSignalName]
+- receiver [completeSlotName]
+
+\note When a component refers to a object, widget, action, menu or toolbar that belongs to another component in its
+GUIXML file an appropriate dependency is established between the components.
+
+\section guixmlref_property property XML Element
+
+The <property> XML element configures the property of any exposed object. It has the following attributes
+
+- key [completePropertyName (similar to completeSlotName)]
+- value
+
+\note: The object whose property is being set must belong to this component.
+   
+Example
+\code
+<property key="CMainWindow.windowTitle" value="GCF Example" />
+<!--
+	 // As good as calling
+	 CMainWindowObject->setProperty("windowTitle", "GCF Example");
+-->
+\endcode
+
+If a property value cannot be expressed as a string, then this XML element is not useful.
+
+\section guixmlref_method method XML Element
+
+The <method> XML element calls an invokable method in any exposed object (of this component). Valid
+attributes are
+
+- methodName [completeMethodName (similar to completeSlotName, but without brackets)]
+- param1, param2..... [string parameter values]
+
+Example
+
+\code
+<method methodName="CMainWindow.statusBar::message" param1="Status" param2="10000" />
+<!--
+	 // As good as calling
+	 QStatusBar* statusBar = CmainWindowObject->statusBar();
+	 statusBar->message("Status", 10000);
+-->
+\endcode
+
+If all method parameters cannot be expressed a string, then this XML element is not useful.
+
+\section guixmlref_activex activex XML Element
+
+GCF 1.6.4 introduced support for ActiveX in GCF. It is now possible to introduce an ActiveX 
+component in your GCF applications without having to write a single line of code. To embed 
+an ActiveX control in your GCF application, you can simply use the <activex> XML element.
+It accepts the following attributes
+
+- name - Name of the ActiveX object in the application
+- control - UUID of the ActiveX control
+- title - Title to give the QAxWidget on which the ActiveX widget is shown
+- parentWidget - The widget into which the ActiveX control is to be embedded
+
+Example
+
+\code
+<activex control="{22D6F312-B0F6-11D0-94AB-0080C74C7E95}"
+	   name="windowsMediaPlayer"
+	   title="Windows Media Player" 
+	   parentWidget="MainWindowComponent.workspace" />
+\endcode
+
+\section guixmlref_kparts kparts XML Element
+
+KParts is a component technology from KDE. Part in KDE is a subclass of KParts::Part that provides
+
+ - A widget which shows the document viewed/edited by the part
+ - An action collection which provides QActions for accessing functionality in the part from the user interface.
+ - An XMLGUI document that describes how the part's UI can be merged into the part container, usually a KParts::MainWindow. 
+ 
+Several applications in KDE provide their core-functionality as a part. For example
+ - KHTMLPart - Provides the HTML rendering part used by the Konqueror browser
+ - KateDocument - Provides the document part used by Kate
+
+Since KParts and GCF are written in Qt, it would be of great value if we can use KDE's components 
+with Qt/GCF programs. With GCF 1.6.4 and later this is possible.
+
+To use KParts components in your GCF applications, just make use of the <kpart> XML element in a GUIXML 
+file. You can load parts based on
+ - mime-type OR 
+ - service-type 
+
+The kpart XML element accepts the following parameters
+
+ - name - Name of the KPart object in your GCF application
+ - mimeType or serviceType - Use any of of these parameters to specify the type of Part you want to load.
+ - url - URL of the file that the part should show when created and embedded into your application
+ - parentWidget - The widget into which the part's widget has to be embedded
+ - title - Title of the part's widget
+ - readOnly - A boolean true/false attribute that helps decide whether the part is loaded as read-only or
+   read-write.
+ - before or mergeWith - Complete name of a Menu/Group. Helps GCF decide how the part's menu actions
+   are merged with the application.
+ 
+Example
+
+\code
+<kpart mimeType="text/plain"
+	 parentWidget="MainWindowComponent.workspace"
+	 url="file:///home/prashanth/SampleApplication/Main/Main.cpp"
+	 name="katePart" title="Kate" readOnly="true" 
+	 before="MainWindowComponent.helpMenu" />
+
+<kpart mimeType="text/html"
+	 parentWidget="MainWindowComponent.rightDockArea"
+	 url="http://www.vcreatelogic.com"
+	 name="htmlPart" title="Browser" readOnly="true" 
+	 before="MainWindowComponent.helpMenu" />  
+\endcode
+
+\section guixmlref_qml qml
+
+With the \c <qml> XML element you can now create an instance of QDeclarativeView, set its source as a QML document 
+and embed it into a GCF application. Basically \c <qml> XML element behaves like the \c <widget> element, in that 
+it creates a QDeclarativeView widget and embeds it into a parent-widget. So all attributes of \ref guixmlref_widget 
+are valid for \c <qml> XML element also. In addition to that the following attributes are available for \c <qml> 
+XML element.
+
+- src [A qml filename]
+- transparentBackground  [boolean | optional] (default = false)
+- minimumWidth [integer | optional] (default = 0)
+- maximumWidth [integer | optional] (default = INT_MAX)
+- minimumHeight [integer | optional] (default = 0)
+- maximumHeight [integer | optional] (default = INT_MAX)
+
+The \c src attribute can be a filename relative to the directory in which the GUIXML file is found. It can also be
+relative to any directory in PATH environment variable. If no \c src attribute is given, then GCF will try to look
+for QML source in the \c <qml> XML element itself. For example, to embed a simple QML view into the MainWindow; we can
+
+\code
+<component name="MainWindowComponent">
+
+	<!-- ... -->
+
+	<qml title="Hello QML" parentWidget="MainWindowComponent.workspace">
+	import QtQuick 1.0
+
+	Rectangle {
+		width: 100
+		height: 62
+
+		Text {
+			anchors.centerIn: parent
+			font.pointSize: 30
+			text: "Hello World"
+		}
+	}
+	</qml>
+	
+</component>
+\endcode
+
+Notice how the QML source is provided within the \c qml XML element itself. It is also possible to provide the QML source
+using the \c src XML element. For example:
+
+\code
+<component name="MainWindowComponent">
+
+	<!-- ... -->
+
+	<qml src="HelloQML.qml" title="Hello QML" parentWidget="MainWindowComponent.workspace" />
+	
+</component
+\endcode
+
+In the above case, the \c HelloQML.qml file is looked up first within the same directory as the GUIXML, then the application
+directory, current working directory and in every directory in PATH. Which ever directory the file is found first will be
+used for creating the QML View.
+
+Any QML view created using the \c qml XML element will have its source set after all the components in the GCF application
+are fully loaded. This is done so because a the QML source (used by the view) can refer to objects exposed by the one or more
+components in the application.
+
+\section guixmlref_9 Complete Name
+
+A complete name is a series of names separated by '.' (dots) that accurately specifies the path of any exposed object in
+the XML file. The complete name concept is best explained with the help of an example. Consider the following GUI XML file.
+
+\code
+<component name="LogWindow" title="Log Window">
+	<object name="controller" title="Controller Object for ClogWindow" />
+	<widget name="logWindowTabWidget" title="Log Window" />
+	<widget name="messageLog" title="Message Log"
+		   parentWidget="LogWindow.logWindowTabWidget" />
+	<widget name="debugLog" title="Debug Log"
+		   parentWidget="LogWindow.logWindowTabWidget" />
+	<widget name="errorLog" title="Error Log"
+		   parentWidget="LogWindow.logWindowTabWidget" />
+	<action name="clearLogs" title="Clear All Logs"
+		   triggerSlot="LogWindow.controller::clearAllLogs()" />
+	<action name="hideLogs" title="Hide Logs"
+		   triggerSlot="LogWindow.logWindowTabWidget::hide()" />
+	<menu name="log" title="Clear Log">
+		   <menuitem name="LogWindow.clearLogs" />
+		   <menuitem name="LogWindow.hideLogs" />
+	</menu>
+	<property propertyName="LogWindow.messageLog::maximumHeight" value="200" />
+</component>
+\endcode
+
+The complete name of any item declared in the XML element would be a dot separated list of names
+starting from the component name all the way down to the item name itself. For example the complete name
+of the clearLogs action would be "LogWindow.clearLogs"
+
+\section guixmlref_10 Complete Slot Name
+
+A complete slot name is completeName followed by '::' and the slot name. For example the hideLogs action
+item in the GUI XML example shown above connects to the hide() slot of the logWindowTabWidget. For this
+to work, the slot should be declared and implemented in the corresponding object.
+
+*/
+
+

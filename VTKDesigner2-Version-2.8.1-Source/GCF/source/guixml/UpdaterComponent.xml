@@ -1,0 +1,3 @@
+<component title="Updater Component" version="1.0" name="UpdaterComponent" >
+  <object name="controller" />
+</component>

@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<title>Projet app web</title>
+		<link href="css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/themes.css" type="text/css" />
+   <!-- <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
+    <script type="text/javascript" src="js/ColorPicker/jquery.js"></script>
+    <script type="text/javascript" src="js/ColorPicker/colorpicker.js"></script>
+    <script type="text/javascript" src="js/ColorPicker/eye.js"></script>
+    <script type="text/javascript" src="js/ColorPicker/utils.js"></script>
+    <script type="text/javascript" src="js/ColorPicker/layout.js?ver=1.0.2"></script> -->    
+		<script  src="js/colorpicker.js"></script>
+    
+	</head>
+	<body>
+		<div id="options">
+			<input type="checkbox" name="rotation" id="checkbox1" onclick="animate()"> Rotation 
+			<input type="checkbox" name="perspective" id="checkbox2" onclick="perspective()"> Perspective 
+      <input type="file" id="files" name="files" multiple />
+      <output id="list"></output>
+      <div id="color-picker" class="cp cp-default"></div>
+      
+      <script type="text/javascript">
+            //------------------ COLORPICKER ------------------//
+       ColorPicker(
+            document.getElementById('color-picker'),
+            function(hex, hsv, rgb,mouseSlide, mousePicker) {
+              ColorPicker.positionIndicators(
+              document.getElementById('slide-indicator'),
+              document.getElementById('picker-indicator'),
+              mouseSlide, mousePicker
+                    );
+                   renderer.setClearColor(hex, 1) 
+                    });
+      
+      //------------------ END COLORPICKER ------------------//
+      </script>
+                
+     
+		</div>
+		<div id="container"></div>
+    <script  src="js/ThreeJs/three.min.js"></script>
+		<script  src="js/ThreeJs/OrbitControls.js"></script>
+    <script  src="js/ThreeJs/VTKLoader.js"></script>
+    <script src="js/FileLoader/FileLoader.js"></script>
+		<script type="text/javascript">   
+    
+    //------------------ THREEJS ------------------//
+    
+    
+    //document.getElementById('files').addEventListener('change',init(),false);
+    
+    
+			var renderer, scene, camera, mesh, controls, stats;
+			var geometry ;//= new THREE.CubeGeometry( 200, 200, 200 );
+      var myWidth = window.innerWidth;
+      var myHeight = window.innerHeight;
+      var count = false ;
+      //var __C0LOR__ = '#FFFFFF';
+			//init();
+			render();
+			function init(count){
+      
+      if(count == false){
+				renderer = new THREE.WebGLRenderer();
+        }
+       /* */
+				//renderer.setSize( window.innerWidth, window.innerHeight );
+				//renderer.setSize( myWidth, myHeight );
+        //renderer.setClearColor( __COLOR__, 1);
+        renderer.setSize( 500, 250 );
+				document.getElementById('container').appendChild(renderer.domElement);
+				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e10 );
+				//camera.position.set(0, 0, 1000);
+        camera.position.z = 0.2 ;
+				scene.add(camera);
+				
+				var material = new THREE.MeshNormalMaterial( { color:0xffffff, side: THREE.DoubleSide } );
+        material.shading = THREE.NoShading;
+				var loader = new THREE.VTKLoader();
+        
+        loader.load (__FILE__, function(geometry) {
+        geometry.computeVertexNormals();
+        mesh = new THREE.Mesh( geometry, material );
+        mesh.position.setY( - 0.09);
+				scene.add( mesh );
+        });
+                
+				renderer.render( scene, camera );                
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
+				controls.addEventListener( 'change', render );
+				animate_controls();
+        
+			}
+			function animate(){
+				if (document.getElementById('checkbox1').checked) {
+					requestAnimationFrame( animate );
+					mesh.rotation.x += 0.01;
+					mesh.rotation.y += 0.01;
+					renderer.render( scene, camera );
+				}
+			}
+			function animate_controls() {
+				requestAnimationFrame(animate_controls);
+				controls.update();
+			}
+			function perspective() {
+				if (document.getElementById('checkbox2').checked) {
+					mesh.material.wireframe = true;
+					renderer.render( scene, camera );
+				} else {
+					mesh.material.wireframe = false;
+					renderer.render( scene, camera );
+				}
+			}
+			function render() {
+				renderer.render( scene, camera );
+				stats.update();
+			}
+      
+      //------------------ END THREEJS ------------------//
+      
+      
+     
+      
+		</script>
+    
+    
+	</body>
+</html>

@@ -1,0 +1,94 @@
+/**
+\page installation GCF Installation 
+
+The best way to install GCF is from its source code. You can either download the source code of GCF from its 
+website (http://www.vcreatelogic.com/products/gcf) or by checking out a copy of the code from its SVN server
+(https:/svn2.hosted-projects.com/vcreatelogic/GCF2/tags/GCF/2.6.0/)
+
+Once you have a copy of GCF source code on your computer, you can compile it just like any other Qt library
+and/or application. In the following sections we explain how GCF can be compiled on Windows and Linux platforms.
+
+\section installation_windows Setting up GCF on Windows 
+
+To compile GCF on Windows, you will need to ensure that you have either of the following configurations
+
+\li Qt 4.7.4+ with Visual Studio 2008 (or 2010)
+\li Qt 4.7.4+ with MinGW
+
+\subsection installation_windows_msvc Compiling GCF on Windows using Visual Studio 2008
+
+Launch the Visual Studio command prompt and execute the following commands after changing into the
+GCF source code directory.
+
+\htmlonly
+<pre>
+C:\VCreateLogic\GCF-2.6.0-Source> qmake -recursive "CONFIG += debug_and_release build_all"
+C:\VCreateLogic\GCF-2.6.0-Source> nmake
+</pre>
+\endhtmlonly
+
+\subsection installation_windows_mingw Compiling GCF on Windows using MinGW
+
+Launch the Qt Command Prompt that was installed while setting up Qt for MinGW on your computer. 
+Execute the following commands after changing into the GCF source code directory.
+
+\htmlonly
+<pre>
+C:\VCreateLogic\GCF-2.6.0-Source> qmake -recursive "CONFIG += debug_and_release build_all"
+C:\VCreateLogic\GCF-2.6.0-Source> ming32-make
+</pre>
+\endhtmlonly
+
+\subsection installation_windows_postcompile Post Compile Setup for Windows
+
+In order to use GCF as an SDK (just as you would use Qt), we recommend that you set up the following
+environment variables. 
+
+\note We assume that you have compiled GCF in C:\VCreateLogic\GCF-2.6.0-Source folder.
+
+\htmlonly
+<pre>
+GCFDIR = C:\VCreateLogic\GCF-2.6.0-Source\
+QMAKEFEATURES += %GCFDIR%\qmake_prf
+PATH += %GCFDIR%\bin
+</pre>
+\endhtmlonly
+
+\note By '+=' we mean, create the environment variable if it did not already exist or append the value to the 
+existing environment variable.
+
+Once the environment variables are setup, we recommend that you log out and log back in. Once the above is done,
+you can now make use of Qt Creator and/or any other IDE to begin programming with GCF. You can now proceed with 
+\ref gettingstarted.
+
+\section installation_linux Setting up GCF on Linux
+
+To compile GCF on Linux, start terminal and change into the GCF directory. Then execute the following commands
+
+\htmlonly
+<pre>
+~/GCF-2.6.0-Source# qmake -recursive "CONFIG += debug_and_release build_all"
+~/GCF-2.6.0-Source# make -j2
+</pre>
+\endhtmlonly
+
+\subsection installation_linux_postcompile Post Compile Setup for Linux
+
+After the compiliation is done, we recommend that you set a few environment variables in order to be able to use GCF 
+as an SDK. To set the environment variables, you will need to edit the \c ~/.bashrc file and append the following 
+lines at the end of that file.
+
+\htmlonly
+<pre>
+export GCFDIR=~/GCF-2.6.0-Source
+export PATH=$GCFDIR/bin:$PATH
+export LD_LIBRARY_PATH=$GCFDIR/bin:$GCFDIR/lib:$LD_LIBRARY_PATH
+export QMAKEFEATURES=$GCFDIR/qmake_prf
+</pre>
+\endhtmlonly
+
+After appending the above lines, save the file. It is recommended that you log out and log in once in order to ensure
+that the settings are committed and used by the Linux system. You can now make use of Qt Creator and/or any other 
+IDE to begin programming with GCF. You can now proceed with \ref gettingstarted.
+*/
+

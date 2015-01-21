@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IRCWindow</class>
+ <widget class="QWidget" name="IRCWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>907</width>
+    <height>589</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QTextEdit" name="txtMessages">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" rowspan="2">
+    <widget class="ContactList" name="contactList">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLineEdit" name="txtMyMessage"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="cmdSend">
+     <property name="text">
+      <string>&amp;Send</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ContactList</class>
+   <extends>QListWidget</extends>
+   <header>ContactList.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>txtMyMessage</tabstop>
+  <tabstop>cmdSend</tabstop>
+  <tabstop>contactList</tabstop>
+  <tabstop>txtMessages</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>txtMyMessage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>cmdSend</receiver>
+   <slot>animateClick()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>567</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>608</x>
+     <y>565</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

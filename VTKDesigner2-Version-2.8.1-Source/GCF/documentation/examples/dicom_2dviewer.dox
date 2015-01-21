@@ -1,0 +1,6 @@
+/**
+\page dicom_2dviewer 2D Viewer module in DICOM HTML Web Application
+
+\include ApplicationServer/HTML/dicom/modules/2DViewer/index.html
+
+*/

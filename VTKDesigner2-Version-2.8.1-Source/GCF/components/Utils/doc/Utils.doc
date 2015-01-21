@@ -1,0 +1,30 @@
+/**
+\ingroup gcfcomponents
+\defgroup utilscomponent Utils Component
+\brief This component provides utility functions for use in your application.
+
+The idea behind utils component is to provide simple and easy to use utility functions that may not be 
+currently available in Qt. <i>We could have provided these utility functions as a library. However we 
+chose to offer them via a component - because GCF is a component framework ;-)</i>
+
+To use the Utils component, you will simply have to include the following line in your 
+\ref componentarch_applicationxml "Application XML" file.
+
+\code
+<Component Name="UtilsComponent" Library="UtilsComponent" />
+\endcode
+
+Once the Utils component is loaded in your application, you can search for any of the interfaces 
+offered by this component using the \ref GCF::findObject() method. For example, to look for the 
+\ref IFileSystemUtils interface; you can
+
+\code
+#include <GCF/Utils/IFileSystemUtils>
+
+IFileSystemUtils* fsUtils = GCF::findObject<IFileSystemUtils*>();
+if(fsUtils)
+{
+	// use the interface here..
+}
+\endcode
+*/

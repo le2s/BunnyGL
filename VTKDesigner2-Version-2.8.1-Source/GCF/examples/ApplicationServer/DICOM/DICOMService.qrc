@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/DICOMService">
+        <file>DICOMService.xml</file>
+    </qresource>
+</RCC>

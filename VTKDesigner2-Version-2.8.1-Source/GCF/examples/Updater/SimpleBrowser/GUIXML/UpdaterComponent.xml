@@ -1,0 +1,162 @@
+<!-- 
+    There are several ways in which the UpdaterComponent can be 
+    used within applications. Consequently there are several ways
+    in which you can write the GUIXML file for the UpdaterComponent.
+
+    This file enumerates four such ways
+    
+    There are three main stages in a software update
+    
+    1. Finding of updates
+    2. Downloading of updates
+    3. Installing of updates
+   
+    The above happens in the order specified above. If a user input is expected
+    at any of the stages (above), subsequent stages wait until the user input is
+    provided.
+    
+    Method #1: Manual update 
+    Method #2: Automatic update
+    Method #3: Semi-automatic update (intruding)
+    Method #4: Semi-automatic update (non-intruding)
+-->
+
+<component name="UpdaterComponent">
+
+    <object name="controller" />
+    <!--property key="UpdaterComponent.controller::Enabled" value="false" /-->
+
+    <!--
+        Method #1: Manual update
+        
+        What does this mean? 
+            The user is expected to make a decision as to when he/she wants to update
+            the application. The application will perform no update unless and other
+            wise the user asks for it.
+            
+            This means: user input is needed for finding of updates
+                        user input is needed for selection of found updates that need to
+                            be installed
+                        once selected, installation is automatic.
+        
+        The following block can be used if you have the configured the 
+        updater component as follows in main()
+        
+        GCF::UpdaterComponent::instance().setCheckUpdateFrequency(GCF::UpdaterComponent::UponUserRequest);
+        GCF::UpdaterComponent::instance().setUpdateSelectionStrategy(GCF::UpdaterComponent::SelectByAskingUser);
+    -->
+    
+    <action name="checkForUpdates" title="Check for Updates"
+            triggerSlot="UpdaterComponent.controller::checkForUpdates()" />
+    <action name="downloadUpdates" title="Download Updates"
+            triggerSlot="UpdaterComponent.controller::downloadUpdates()" />
+    <action name="showConfigDialog" title="Preferences"
+            triggerSlot="UpdaterComponent.controller::showConfigurationDialog()" />
+
+    <menu name="updatesMenu" title="&amp;Updates">
+        <menuitem actionName="UpdaterComponent.checkForUpdates" />
+        <menuitem actionName="UpdaterComponent.downloadUpdates" />
+        <menuitem />
+        <menuitem actionName="UpdaterComponent.showConfigDialog" />
+    </menu>
+    
+    <!--
+        Method #2: Fully Automatic Update
+        
+        What does this mean? 
+            The application automatically looks for updates; downloads and installs them.
+            
+            This means: __NO__ user input is needed for finding of updates
+                        __NO__ user input is needed for selection of found updates that need to
+                            be installed. 
+                        once selected, installation is automatic.
+        
+        The following block can be used if you have configured the updater component
+        as follows in main()
+        
+        GCF::UpdaterComponent::instance().setCheckUpdateFrequency(GCF::UpdaterComponent::ApplicationStartupButOnceADay);
+        // You can use ApplicationStartup, OnceInAnHour, OnceInTwoHours or OnceInFiveHours above
+        
+        GCF::UpdaterComponent::instance().setUpdateSelectionStrategy(GCF::UpdaterComponent::SelectAllUpdates);        
+        // You can use SelectCriticalUpdates above
+    -->
+
+    <!--
+    <action name="showConfigDialog" title="Preferences"
+            triggerSlot="UpdaterComponent.controller::showConfigurationDialog()" />
+
+    <menu name="updatesMenu" title="&amp;Updates">
+        <menuitem actionName="UpdaterComponent.showConfigDialog" />
+    </menu>
+    -->
+    
+    <!--
+        Method #3: Semi-Automatic Update (intruding)
+       
+        What does this mean? 
+            The application automatically looks for updates. But the selection and download
+            of updates happen based on user input.
+            
+            This means: __NO__ user input is needed for finding of updates
+                        user input is needed for selection of found updates that need to
+                            be installed. 
+                        once selected, installation is automatic.
+                        
+            The catch here is: once updates are found, the user is immediately disturbed
+            with a dialog box that lists out all the updates found. He has to select
+            the updates that need to be installed.
+                        
+        The following block can be used if you have configured the updater component
+        as follows in main()
+        
+        GCF::UpdaterComponent::instance().setCheckUpdateFrequency(GCF::UpdaterComponent::ApplicationStartupButOnceADay);
+        // You can use ApplicationStartup, OnceInAnHour, OnceInTwoHours or OnceInFiveHours above
+        
+        GCF::UpdaterComponent::instance().setUpdateSelectionStrategy(GCF::UpdaterComponent::SelectByAskingUser);        
+        // You can use SelectCriticalUpdates above
+    -->
+
+    <!--
+    <action name="showConfigDialog" title="Preferences"
+            triggerSlot="UpdaterComponent.controller::showConfigurationDialog()" />
+
+    <menu name="updatesMenu" title="&amp;Updates">
+        <menuitem actionName="UpdaterComponent.showConfigDialog" />
+    </menu>
+    -->    
+    
+    <!--
+        Method #4: Semi-Automatic Update (non-intruding)
+        
+        What does this mean?
+            Same as method 3. The difference here is 
+            
+                __NO__ user input is required for finding of updates. 
+                Once updates are found, a download updates button needs to be clicked
+                    by the user. Only then a dialog box is presented to the user for
+                    selecting found updates and installting them.
+                Ideally a notification is given to the user by means of a tooltip
+                    so that he knows that updates are available.
+    
+        The following block can be used if you have configured the updater component
+        as follows in main()
+        
+        GCF::UpdaterComponent::instance().setCheckUpdateFrequency(GCF::UpdaterComponent::ApplicationStartupButOnceADay);
+        // You can use ApplicationStartup, OnceInAnHour, OnceInTwoHours or OnceInFiveHours above
+        
+        GCF::UpdaterComponent::instance().setUpdateSelectionStrategy(GCF::UpdaterComponent::SelectByNotifyingUser);
+    -->
+
+    <!--
+    <action name="downloadUpdates" title="Download Updates"
+            triggerSlot="UpdaterComponent.controller::downloadUpdates()" />
+    <action name="showConfigDialog" title="Preferences"
+            triggerSlot="UpdaterComponent.controller::showConfigurationDialog()" />
+
+    <menu name="updatesMenu" title="&amp;Updates">
+        <menuitem actionName="UpdaterComponent.downloadUpdates" />
+        <menuitem actionName="UpdaterComponent.showConfigDialog" />
+    </menu>
+    -->
+
+</component>

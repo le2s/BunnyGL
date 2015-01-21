@@ -1,0 +1,220 @@
+/****************************************************************************
+**
+** Copyright (C) ((ORGANIZATION))
+**
+** Use of this file is limited according to the terms specified by
+** ((ORGANIZATION)).
+**
+** Details of those terms are listed in licence.txt included as
+** part of the distribution package of this file. This file may not
+** be distributed without including the licence.txt file.
+**
+** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+**
+****************************************************************************/
+
+#include "((CLASS_NAME)).h"
+#include "((COMPONENT_CLASS_NAME)).h"
+((VTK_CLASS_INCLUDE))
+
+DEFINE_VIS_NODE(((CLASS_NAME)), ((BASE_CLASS)))
+{
+    pDesc->setNodeClassCategory("((COMPONENT_NAME))");
+    pDesc->setNodeClassName("((NODE_NAME))");
+    pDesc->setNodeClassDescription("((NODE_NAME))");
+    pDesc->setNodeIcon( ((COMPONENT_CLASS_NAME))::instance().nodeIcon() );
+
+    // Uncomment and use the following code template to add input/output paths
+    /*
+    pDesc->addConnectionPath(
+        new CGenericVisNodeConnectionPath(
+                "PathName",                                 // Name of the path
+                IVisSystemNodeConnectionPath::OutputPath,   // Path type can be OutputPath or InputPath
+                "PathType",                                 // Data type of the path
+                0,                                          // Path index (don't change)
+                false                                       // Allow Multiple Inputs Flag
+            )
+        );
+    */
+}
+
+struct ((CLASS_NAME))Data
+{
+    ((VTK_OBJECT_POINTER))
+};
+
+((CLASS_NAME))::((CLASS_NAME))()
+{
+    ((CLASS_NAME))::InitializeNodeDesc();
+    d = new ((CLASS_NAME))Data;
+
+    ((CREATE_VTK_OBJECT))
+}
+
+((CLASS_NAME))::~((CLASS_NAME))()
+{
+    // This would be a good time to delete the backend object. If the backend object is a vtkObject
+    // subclass, then you have to delete it now.
+    // d->VtkObjectPointer->Delete();
+
+    ((DELETE_VTK_OBJECT))
+    delete d;
+}
+
+bool ((CLASS_NAME))::hasInput(IVisSystemNodeConnectionPath* path)
+{
+    if(!path)
+        return false;
+
+    /*
+    If you have added input paths in the description block at the header of this file,
+    then you will have to handle inputs here
+    */
+
+    return ((BASE_CLASS))::hasInput(path);
+}
+
+bool ((CLASS_NAME))::setInput(IVisSystemNodeConnectionPath* path, IVisSystemNodeIOData* inputData)
+{
+    if(!path || !inputData)
+        return false;
+
+    /*
+    If you have added input paths in the description block at the header of this file,
+    then you will have to handle inputs here
+    */
+
+    return ((BASE_CLASS))::setInput(path, inputData);
+}
+
+bool ((CLASS_NAME))::removeInput(IVisSystemNodeConnectionPath* path, IVisSystemNodeIOData* inputData)
+{
+    if(!path || !inputData)
+        return false;
+
+    /*
+    If you have added input paths in the description block at the header of this file,
+    then you will have to handle inputs here
+    */
+
+    return ((BASE_CLASS))::removeInput(path, inputData);
+}
+
+bool ((CLASS_NAME))::fetchOutput(IVisSystemNodeConnectionPath* path, IVisSystemNodeIOData** outputData)
+{
+    if(!path || !outputData)
+        return false;
+
+    /*
+    If you have added output paths in the description block at the header of this file,
+    then you will have to handle outputs here
+    */
+
+    return ((BASE_CLASS))::fetchOutput(path, outputData);
+}
+
+bool ((CLASS_NAME))::outputDerefed(IVisSystemNodeConnectionPath* path, IVisSystemNodeIOData* outputData)
+{
+    if(!path || !outputData)
+        return false;
+
+    /*
+    If you have added output paths in the description block at the header of this file,
+    then you will have to handle outputs here
+    */
+
+    return ((BASE_CLASS))::outputDerefed(path, outputData);
+}
+
+#ifdef ENABLE_ADVANCED_PROPERTIES
+
+int ((CLASS_NAME))::propertyCount()
+{
+    return 0;
+}
+
+QString ((CLASS_NAME))::propertyName(int index)
+{
+    Q_UNUSED(index);
+    return QString();
+}
+
+QString ((CLASS_NAME))::propertyGroup(int index)
+{
+    Q_UNUSED(index);
+    return QString();
+}
+
+QVariant ((CLASS_NAME))::propertyValue(int index)
+{
+    Q_UNUSED(index);
+    return QVariant();
+}
+
+void ((CLASS_NAME))::setPropertyValue(int index, QVariant value)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(value);
+}
+
+bool ((CLASS_NAME))::hasEditor(int index)
+{
+    Q_UNUSED(index);
+    return false;
+}
+
+QWidget* ((CLASS_NAME))::createEditor(int index)
+{
+    Q_UNUSED(index);
+    return 0;
+}
+
+void ((CLASS_NAME))::setEditorValue(int index, QWidget* widget, QVariant value)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(widget);
+    Q_UNUSED(value);
+}
+
+QVariant ((CLASS_NAME))::editorValue(int index, QWidget* widget)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(widget);
+}
+
+void ((CLASS_NAME))::connectEditor(int index, QWidget* widget, QObject* receiver, const char* member)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(widget);
+    Q_UNUSED(receiver);
+    Q_UNUSED(member);
+}
+
+QString ((CLASS_NAME))::propertyValueString(int index)
+{
+    Q_UNUSED(index);
+    return QString();
+}
+
+QVariant ((CLASS_NAME))::propertyValueFromString(int index, QString valueStr)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(valueStr);
+
+    return QVariant();
+}
+
+bool ((CLASS_NAME))::canLoadSaveProperty(int index)
+{
+    Q_UNUSED(index);
+
+    return false;
+}
+
+#endif
+
+((SET_VTK_OBJECT_IMPL))
+
+
+

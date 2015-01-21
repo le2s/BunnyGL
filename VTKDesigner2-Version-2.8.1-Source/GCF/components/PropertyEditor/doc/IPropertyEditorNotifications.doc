@@ -1,0 +1,79 @@
+/**
+\ingroup propertyeditorcomp
+\interface IPropertyEditorNotifications IPropertyEditorNotifications 
+\brief Provides access to notification signals in IPropertyEditor
+
+Sometimes you may want to respond to property-editor events like
+- Editor for a property was created
+- User edited text within the editor widget of a property
+- Editor for a property is about to be destroyed
+
+For such usecases this interface will prove to be very useful. This
+interface must be implemented in the object whose properties are
+shown by the property editor.
+
+The following example shows how the interface can be used.
+
+\code
+class NodeObject : public QObject, public IPropertyEditorNotifications
+{
+    Q_OBJECT
+    Q_INTERFACES(IPropertyEditorNotifications)
+    
+public:
+    NodeObject(QObject* parent=0) : QObject(parent) { }
+    ~NodeObject() { }
+    
+    // IContainer implementation
+    QObject* containerObject();
+    
+    // IPropertyEditorNotifications implementation
+    void editorCreatedNotification(IProperty* property, QWidget* editor) {
+        // ...
+    }
+    
+    void editorEditedNotification(IProperty* property, QWidget* editor) {
+        // ...
+    }
+    
+    void editorAboutToDestroyNotification(IProperty* property, QWidget* editor) {
+        // ...
+    }
+    
+private:
+    IPropertyEditorNotifications* m_notifications;
+};
+\endcode
+
+When an instance of the \c NodeObject class is created and given to property
+editor (via IPropertyEditor::setObject()) for editing, its IPropertyEditorNotifications
+implementation is used to notify the object about editor events.
+*/
+
+/** 
+\fn void IPropertyEditorNotifications::editorCreatedNotification(IProperty* property, QWidget* editor) = 0;
+
+This function is called when an editor for a property is just created! The \c property parameter 
+points to the property for which the editor was created and the \c editor parameter points to 
+the editor widget.
+*/
+
+/** 
+\fn void IPropertyEditorNotifications::editorEditedNotification(IProperty* property, QWidget* editor) = 0;
+
+This function is called when the user changed (as in edited) the value in a editor! The \c property parameter 
+points to the property for which the editor was created and the \c editor parameter points to 
+the editor widget.
+*/
+
+/** 
+\fn void IPropertyEditorNotifications::editorAboutToDestroyNotification(IProperty* property, QWidget* editor) = 0;
+
+This function is called when an editor that was created for a property is about to be deleted! The \c property parameter 
+points to the property for which the editor was created and the \c editor parameter points to 
+the editor widget.
+*/
+
+
+
+

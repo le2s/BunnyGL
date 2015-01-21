@@ -1,0 +1,32 @@
+GCF_SDK = $$PWD/../
+INCLUDEPATH += $$GCF_SDK/tools/GCFConnect/Include
+DEPENDPATH += $$GCF_SDK/tools/GCFConnect/Include
+QT += network script
+
+win32-msvc* {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/GCFConnectd.lib
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/GCFConnect.lib
+    }
+}
+
+win32-g++ {
+    CONFIG(debug, debug|release) {
+        LIBS += $$GCF_SDK_LIBS/lib/libGCFConnectd.a
+    } else {
+        LIBS += $$GCF_SDK_LIBS/lib/libGCFConnect.a
+    }
+}
+
+unix {
+    CONFIG(debug, debug|release) {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lGCFConnectd
+    } else {
+        LIBS += -L$$GCF_SDK_LIBS/bin -L$$GCF_SDK_LIBS/lib -lGCFConnect
+    }
+}
+
+CONFIG(debug, debug|release) {
+    TARGET = $$join(TARGET,,,d)
+}

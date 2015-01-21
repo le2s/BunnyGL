@@ -1,0 +1,186 @@
+<html>
+
+<body>
+
+<center><table width="95%" height="95%"><tr><td>
+<div id="volumeImageDiv" style="background: #000000; height: 100%"></div>
+</td></tr></table></center>
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+<script type="text/javascript" language="Javascript" src="../ImageWidget.js"></script>
+
+<script type="text/javascript" language="Javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+var imageWidget = new ImageWidget();
+var mouseIsPressed = false;
+var moveEventTimer = false;
+
+function volumeViewerInitFunction() {
+	imageWidget.installOn( document.getElementById('volumeImageDiv') )
+	
+    var msg = new GCFRequestMessage();
+    msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("prepareVolume");
+    msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+        } else
+            imageWidget.clearImage();
+    }
+    msg.send();
+}
+window.top.setInitFunction(3, volumeViewerInitFunction);
+
+function volumeViewerClearFunction() {
+	imageWidget.clearImage()
+}
+window.top.setClearFunction(3, volumeViewerInitFunction);
+
+var fullResulutionImageTimer = false;
+function fetchFullResolutionImage2() {
+    var msg = new GCFRequestMessage(); 
+    msg.setObjectName('DICOMService.Core'); 
+    msg.setMethodName('currentVolumeImage');  
+    msg.onReply = function(reply) { 
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+        } else
+            imageWidget.clearImage();
+    } 
+    msg.send();
+}
+
+function fetchFullResolutionImage() {
+	window.clearTimeout(fullResulutionImageTimer);
+	fullResulutionImageTimer = window.setTimeout("fetchFullResolutionImage2()", 200);
+}
+
+imageWidget.onMouseDown = function(e, pos) {
+	mouseIsPressed = true;	
+	var x = (pos.x - imageWidget.imageRect.x) / (imageWidget.imageRect.width);
+	var y = (pos.y - imageWidget.imageRect.y) / (imageWidget.imageRect.height);
+	
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("mousePressOnVolume");
+	msg.addDoubleArg(x)
+	msg.addDoubleArg(y)
+	msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+			fetchFullResolutionImage();
+		}
+	}
+	msg.send();
+}
+
+function sendMouseMove(x, y) {	
+	if(mouseIsPressed === false)
+		return;
+
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("mouseMoveOnVolume");
+	msg.addDoubleArg(x)
+	msg.addDoubleArg(y)
+	msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult())
+            imageWidget.setImage( reply.getResult() );
+	}
+	msg.send();
+}
+
+imageWidget.onMouseMove = function(e, pos) { 
+	if(mouseIsPressed === false)
+		return
+		
+	var x = (pos.x - imageWidget.imageRect.x) / (imageWidget.imageRect.width);
+	var y = (pos.y - imageWidget.imageRect.y) / (imageWidget.imageRect.height);
+	var code = "sendMouseMove(" + x + "," + y + ");"
+	
+	window.clearTimeout(moveEventTimer)
+	moveEventTimer = window.setTimeout( code, 10 );
+}
+	
+imageWidget.onMouseUp = function(e, pos) { 
+	mouseIsPressed = false;
+	window.clearTimeout(moveEventTimer)
+	
+	var x = (pos.x - imageWidget.imageRect.x) / (imageWidget.imageRect.width);
+	var y = (pos.y - imageWidget.imageRect.y) / (imageWidget.imageRect.height);
+	
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("mouseReleaseOnVolume");
+	msg.addDoubleArg(x)
+	msg.addDoubleArg(y)
+	msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+			fetchFullResolutionImage();
+		}
+	}
+	msg.send();
+}
+
+imageWidget.onMouseDblClick = function(e, pos) {
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("resetCameraOnVolume");
+	msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+			fetchFullResolutionImage();
+		}
+	}
+	msg.send();
+}
+
+/*
+var scrollEventTimer = false;
+var scrollEventDelta = 0;
+
+function sendScroll(x, y, delta) {
+	var msg = new GCFRequestMessage();
+	msg.setObjectName("DICOMService.Core");
+	msg.setMethodName("mouseWheelOnVolume");
+	msg.addDoubleArg(x)
+	msg.addDoubleArg(y)
+	msg.addIntegerArg(delta)
+	msg.onReply = function(reply) {
+        if(reply.isValid() && reply.hasResult()) {
+            imageWidget.setImage( reply.getResult() );
+			fetchFullResolutionImage();
+		}
+	}
+	msg.send();
+}
+
+imageWidget.onScrollWheelDown = function(e, pos) {
+	window.clearTimeout(scrollEventTimer); 
+	
+	var x = (pos.x - imageWidget.imageRect.x) / (imageWidget.imageRect.width);
+	var y = (pos.y - imageWidget.imageRect.y) / (imageWidget.imageRect.height);
+	scrollEventDelta = scrollEventDelta-1;
+
+	var code = "sendScroll(" + x + "," + y + "," + scrollEventDelta + ");";
+	scrollEventTimer = window.setTimeout( code, 10 );
+}
+
+imageWidget.onScrollWheelUp = function(e, pos) {
+	window.clearTimeout(scrollEventTimer);
+	
+	var x = (pos.x - imageWidget.imageRect.x) / (imageWidget.imageRect.width);
+	var y = (pos.y - imageWidget.imageRect.y) / (imageWidget.imageRect.height);
+	scrollEventDelta = scrollEventDelta+1;
+
+	var code = "sendScroll(" + x + "," + y + "," + scrollEventDelta + ");"
+	scrollEventTimer = window.setTimeout( code, 10 );
+}
+*/
+</script>
+
+</html>
+

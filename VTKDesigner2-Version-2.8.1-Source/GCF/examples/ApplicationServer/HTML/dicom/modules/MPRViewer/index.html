@@ -1,0 +1,610 @@
+<html>
+
+<body>
+
+<table width="100%" height="100%" style="table-layout: fixed">
+
+<tr><td height="40px" align="center">
+
+<span>WL: </span><input id="windowLevelInput" type="text" value="400" size="4" style="text-align: center"/>
+&nbsp;&nbsp;
+<span>WW: </span><input id="windowWidthInput" type="text" value="60" size="4" style="text-align: center"/>
+<button onclick="changeWindowLevelAndWidth()" style="height: 100%">Apply</button>
+
+</td></tr>
+
+<tr><td align="center" valign="center">
+
+<table cellpadding="5" border="0" width="100%" height="100%" style="table-layout: fixed">
+
+<tr>
+    <td width="50%" height="50%" style="background-color: #000000"><div id="axialImageDiv" style="width: 100%; height: 100%; background-color: #000000" title="Axial View"></td>
+    <td width="50%" height="50%" style="background-color: #000000"><div id="sagittalImageDiv" style="width: 100%; height: 100%; background-color: #000000" title="Sagittal View"></td>
+</tr>
+
+<tr>
+    <td width="50%" height="50%" style="background-color: #000000"><div id="coronalImageDiv" style="width: 100%; height: 100%; background-color: #000000" title="Coronal View"></td>
+    <td width="50%" height="50%" style="background-color: #000000" valign="center"><div id="obliqueImageDiv" style="width: 100%; background-color: #000000; color: #ffffff; text-align: center" title="Oblique View (Not implemented)">Oblique View (Not implemented)</td>
+</tr>
+
+</table>
+
+</td></tr>
+
+<tr><td height="40px" align="center" valign="center">
+
+<span id="sliceInfoDiv"></span>
+
+</td></tr>
+
+</table>
+
+</body>
+
+<script type="text/javascript" language="Javascript" src="../../../scripts/GCFMessage.js"></script>
+<script type="text/javascript" language="Javascript" src="../ImageWidget.js"></script>
+
+<script type="text/javascript" language="Javascript">
+GCFServerSideScript = '../../../scripts/GCFApplicationServer.php';
+
+var mprViewerInitFlag = false;
+var fetchingSliceImage = false;
+var mprFetchFullResImageTimer = false;
+var axialImageWidget = new ImageWidget();
+var coronalImageWidget = new ImageWidget();
+var sagittalImageWidget = new ImageWidget();
+
+var sliceCount = new Object();
+sliceCount.axial = 0;
+sliceCount.coronal = 0;
+sliceCount.sagittal = 0;
+
+var sliceIndex = new Object();
+sliceIndex.axial = 0;
+sliceIndex.coronal = 0;
+sliceIndex.sagittal = 0;
+
+function scrollSlice(count, imageWidget) {
+    if(imageWidget.isScrolling)
+        return;
+
+    imageWidget.isScrolling = true;
+
+    var count2 = count;
+    if(count2 < 0)
+        count2 = -count;
+        
+    var scrollFnName = '';
+    var indexFnName = '';
+    if(imageWidget == axialImageWidget) {
+        if(count < 0)
+            scrollFnName = 'previousAxialSliceImage';
+        else
+            scrollFnName = 'nextAxialSliceImage';
+        indexFnName = 'currentAxialSliceIndex';
+    }
+    if(imageWidget == coronalImageWidget) {
+        if(count < 0)
+            scrollFnName = 'previousCoronalSliceImage';
+        else
+            scrollFnName = 'nextCoronalSliceImage';
+        indexFnName = 'currentCoronalSliceIndex';
+    }
+    if(imageWidget == sagittalImageWidget) {
+        if(count < 0)
+            scrollFnName = 'previousSagittalSliceImage';
+        else
+            scrollFnName = 'nextSagittalSliceImage';
+        indexFnName = 'currentSagittalSliceIndex';
+    }
+
+    var args = new GCFList();
+    args.addInteger(count2);
+
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", scrollFnName, args);
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+    msg.add("DICOMService.Core", indexFnName);
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        updateInfo(reply);
+            
+        var img = reply.getResult("DICOMService.Core", scrollFnName);            
+        imageWidget.setImage( img );
+        imageWidget.isScrolling = false;
+        
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+        
+        fetchFullResImage( imageWidget==axialImageWidget,
+                           imageWidget==coronalImageWidget,
+                           imageWidget==sagittalImageWidget );
+    }
+    msg.send();
+}
+
+function reslice(axial, sagittal, coronal) {
+    var msg = new GCFMultiRequestMessage();
+    
+    if(axial >= 0) {
+        var args = new GCFList();
+        args.addInteger(parseInt(''+axial));
+        
+        msg.add("DICOMService.Core", "axialSliceImage", args);
+    }
+
+    if(sagittal >= 0) {
+        var args = new GCFList();
+        args.addInteger(parseInt(''+sagittal));
+        
+        msg.add("DICOMService.Core", "sagittalSliceImage", args);
+    }
+
+    if(coronal >= 0) {
+        var args = new GCFList();
+        args.addInteger(parseInt(''+coronal));
+        
+        msg.add("DICOMService.Core", "coronalSliceImage", args);
+    }
+
+    msg.add("DICOMService.Core", "currentAxialSliceIndex");
+    msg.add("DICOMService.Core", "currentSagittalSliceIndex");
+    msg.add("DICOMService.Core", "currentCoronalSliceIndex");
+    
+    
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+
+        updateInfo(reply);
+            
+        if(axial >= 0)
+            axialImageWidget.setImage( reply.getResult("DICOMService.Core", "axialSliceImage") );
+        if(sagittal >= 0)
+            sagittalImageWidget.setImage( reply.getResult("DICOMService.Core", "sagittalSliceImage") );
+        if(coronal >= 0)
+            coronalImageWidget.setImage( reply.getResult("DICOMService.Core", "coronalSliceImage") );
+
+        fetchFullResImage( (axial>=0), (coronal>=0), (sagittal>=0) );
+    }
+    
+    msg.send();
+}
+
+var widgetsInitialized = false;
+function initializeWidgets() {
+    if(widgetsInitialized)
+        return;
+
+    axialImageWidget.isCursorMove = false;
+    sagittalImageWidget.isCursorMove = false;
+    coronalImageWidget.isCursorMove = false;
+        
+    axialImageWidget.installOn( document.getElementById('axialImageDiv') );
+    sagittalImageWidget.installOn( document.getElementById('sagittalImageDiv') );
+    coronalImageWidget.installOn( document.getElementById('coronalImageDiv') );
+    
+    axialImageWidget.onScrollWheelUp = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(count, axialImageWidget);
+    }
+    axialImageWidget.onScrollWheelDown = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(-count, axialImageWidget);
+    }
+    axialImageWidget.onDrawForeground = function(context, rect) {
+        var x = rect.left() + sliceIndex.sagittal * (rect.width / sliceCount.sagittal);
+        var y = rect.bottom() - sliceIndex.coronal * (rect.height / sliceCount.coronal);
+    
+        context.strokeStyle = "yellow";
+        context.lineWidth = 1;
+        context.globalAlpha = 0.75;
+        
+        context.beginPath();
+        context.moveTo(x, rect.y);
+        context.lineTo(x, rect.y+rect.height);
+        context.closePath();
+        context.stroke();
+        
+        context.beginPath();
+        context.moveTo(rect.x, y);
+        context.lineTo(rect.x+rect.width, y);
+        context.closePath();
+        context.stroke();
+        
+        axialImageWidget.cursorRect = new Object();
+        axialImageWidget.cursorRect.left = x-5;
+        axialImageWidget.cursorRect.top = y-5;
+        axialImageWidget.cursorRect.right = x+5;
+        axialImageWidget.cursorRect.bottom = y+5;
+        axialImageWidget.cursorRect.contains = function(pos) {
+            return (pos.x >= this.left) && (pos.x <= this.right) &&
+                   (pos.y >= this.top)  && (pos.y <= this.bottom);
+        }
+    }
+    axialImageWidget.moveMPRCursorUnderMouse = function(event, pos) {
+        sliceIndex.sagittal = (pos.x - axialImageWidget.imageRect.left()) * 
+                              (sliceCount.sagittal / axialImageWidget.imageRect.width);
+        sliceIndex.coronal =  -(pos.y - axialImageWidget.imageRect.bottom()) * 
+                              (sliceCount.sagittal / axialImageWidget.imageRect.width);
+        updateWidgets();
+    }
+    axialImageWidget.onMouseDown = function(event, pos) {
+        axialImageWidget.isCursorMove = axialImageWidget.cursorRect.contains(pos);
+        if(!axialImageWidget.isCursorMove)
+            return;
+        axialImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    axialImageWidget.onMouseMove = function(event, pos) {
+        if(!axialImageWidget.isCursorMove)
+            return false;
+        axialImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    axialImageWidget.onMouseUp = function(event, pos) {
+        if(!axialImageWidget.isCursorMove)
+            return false;
+        axialImageWidget.moveMPRCursorUnderMouse(event, pos);
+        axialImageWidget.isCursorMove = false;
+        reslice(-1, sliceIndex.sagittal, sliceIndex.coronal);
+    }
+    
+    sagittalImageWidget.onScrollWheelUp = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(count, sagittalImageWidget);
+    }
+    sagittalImageWidget.onScrollWheelDown = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(-count, sagittalImageWidget);
+    }
+    sagittalImageWidget.onDrawForeground = function(context, rect) {
+        var x = rect.x + sliceIndex.axial * (rect.width / sliceCount.axial);
+        var y = (rect.y+rect.height) - sliceIndex.coronal * (rect.height / sliceCount.coronal);
+    
+        context.strokeStyle = "yellow";
+        context.lineWidth = 1;
+        context.globalAlpha = 0.75;
+        
+        context.beginPath();
+        context.moveTo(x, rect.y);
+        context.lineTo(x, rect.y+rect.height);
+        context.closePath();
+        context.stroke();
+        
+        context.beginPath();
+        context.moveTo(rect.x, y);
+        context.lineTo(rect.x+rect.width, y);
+        context.closePath();
+        context.stroke();
+        
+        sagittalImageWidget.cursorRect = new Object();
+        sagittalImageWidget.cursorRect.left = x-5;
+        sagittalImageWidget.cursorRect.top = y-5;
+        sagittalImageWidget.cursorRect.right = x+5;
+        sagittalImageWidget.cursorRect.bottom = y+5;
+        sagittalImageWidget.cursorRect.contains = function(pos) {
+            return (pos.x >= this.left) && (pos.x <= this.right) &&
+                   (pos.y >= this.top)  && (pos.y <= this.bottom);
+        }
+    }
+    sagittalImageWidget.moveMPRCursorUnderMouse = function(event, pos) {
+        sliceIndex.axial = (pos.x - sagittalImageWidget.imageRect.left()) * 
+                              (sliceCount.axial / sagittalImageWidget.imageRect.width);
+        sliceIndex.coronal =  -(pos.y - sagittalImageWidget.imageRect.bottom()) * 
+                              (sliceCount.coronal / sagittalImageWidget.imageRect.width);
+        updateWidgets();
+    }
+    sagittalImageWidget.onMouseDown = function(event, pos) {
+        sagittalImageWidget.isCursorMove = sagittalImageWidget.cursorRect.contains(pos);
+        if(!sagittalImageWidget.isCursorMove)
+            return;
+        sagittalImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    sagittalImageWidget.onMouseMove = function(event, pos) {
+        if(!sagittalImageWidget.isCursorMove)
+            return false;
+        sagittalImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    sagittalImageWidget.onMouseUp = function(event, pos) {
+        if(!sagittalImageWidget.isCursorMove)
+            return false;
+        sagittalImageWidget.moveMPRCursorUnderMouse(event, pos);
+        sagittalImageWidget.isCursorMove = false;
+        reslice(sliceIndex.axial, -1, sliceIndex.coronal);
+    }
+    
+    coronalImageWidget.onScrollWheelUp = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(count, coronalImageWidget);
+    }
+    coronalImageWidget.onScrollWheelDown = function(e) {
+        var count = 1;
+        if(e.altKey)
+            count = 5;
+        scrollSlice(-count, coronalImageWidget);
+    }
+    coronalImageWidget.onDrawForeground = function(context, rect) {
+        var x = rect.x + sliceIndex.sagittal * (rect.width / sliceCount.sagittal);
+        var y = (rect.y+rect.height) - sliceIndex.axial * (rect.height / sliceCount.axial);
+    
+        context.strokeStyle = "yellow";
+        context.lineWidth = 1;
+        context.globalAlpha = 0.75;
+        
+        context.beginPath();
+        context.moveTo(x, rect.y);
+        context.lineTo(x, rect.y+rect.height);
+        context.closePath();
+        context.stroke();
+        
+        context.beginPath();
+        context.moveTo(rect.x, y);
+        context.lineTo(rect.x+rect.width, y);
+        context.closePath();
+        context.stroke();
+        
+        coronalImageWidget.cursorRect = new Object();
+        coronalImageWidget.cursorRect.left = x-5;
+        coronalImageWidget.cursorRect.top = y-5;
+        coronalImageWidget.cursorRect.right = x+5;
+        coronalImageWidget.cursorRect.bottom = y+5;
+        coronalImageWidget.cursorRect.contains = function(pos) {
+            return (pos.x >= this.left) && (pos.x <= this.right) &&
+                   (pos.y >= this.top)  && (pos.y <= this.bottom);
+        }
+    }
+    coronalImageWidget.moveMPRCursorUnderMouse = function(event, pos) {
+        sliceIndex.sagittal = (pos.x - coronalImageWidget.imageRect.left()) * 
+                              (sliceCount.sagittal / coronalImageWidget.imageRect.width);
+        sliceIndex.axial =  -(pos.y - coronalImageWidget.imageRect.bottom()) * 
+                              (sliceCount.axial / coronalImageWidget.imageRect.width);
+        updateWidgets();
+    }
+    coronalImageWidget.onMouseDown = function(event, pos) {
+        coronalImageWidget.isCursorMove = coronalImageWidget.cursorRect.contains(pos);
+        if(!coronalImageWidget.isCursorMove)
+            return;
+        coronalImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    coronalImageWidget.onMouseMove = function(event, pos) {
+        if(!coronalImageWidget.isCursorMove)
+            return false;
+        coronalImageWidget.moveMPRCursorUnderMouse(event, pos);
+    }
+    coronalImageWidget.onMouseUp = function(event, pos) {
+        if(!coronalImageWidget.isCursorMove)
+            return false;
+        coronalImageWidget.moveMPRCursorUnderMouse(event, pos);
+        coronalImageWidget.isCursorMove = false;
+        reslice(sliceIndex.axial, sliceIndex.sagittal, -1);
+    }
+    
+    widgetsInitialized = true;
+}
+
+function updateWidgets() {
+    axialImageWidget.update();
+    sagittalImageWidget.update();
+    coronalImageWidget.update();
+}
+
+function fetchFullResImage2(axial, coronal, sagittal) { 
+    if(fetchingSliceImage)
+        return;
+
+    var msg = new GCFMultiRequestMessage();
+    if(axial)
+        msg.add("DICOMService.Core", "currentAxialSliceImageFullRes");
+    if(coronal)
+        msg.add("DICOMService.Core", "currentCoronalSliceImageFullRes");
+    if(sagittal)
+        msg.add("DICOMService.Core", "currentSagittalSliceImageFullRes");
+    msg.onReply = function(reply) { 
+        if(!reply.isValid())
+            return;
+
+        if(axial)
+            axialImageWidget.setImage( reply.getResult("DICOMService.Core", "currentAxialSliceImageFullRes") );
+        if(coronal)
+            coronalImageWidget.setImage( reply.getResult("DICOMService.Core", "currentCoronalSliceImageFullRes") );
+        if(sagittal)
+            sagittalImageWidget.setImage( reply.getResult("DICOMService.Core", "currentSagittalSliceImageFullRes") );
+
+        if(!axial)
+            axialImageWidget.update();
+        if(!coronal)
+            coronalImageWidget.update();
+        if(!sagittal)
+            sagittalImageWidget.update();
+    } 
+    msg.send();
+};
+                
+function fetchFullResImage(axial, coronal, sagittal) {
+    if(mprFetchFullResImageTimer)
+        window.clearTimeout(mprFetchFullResImageTimer);
+    
+    updateWidgets();
+    
+    if(!mprViewerInitFlag || fetchingSliceImage)
+        return;
+
+    var fn = 'fetchFullResImage2(';
+    if(axial)
+        fn += 'true,';
+    else
+        fn += 'false,';
+    if(coronal)
+        fn += 'true,';
+    else
+        fn += 'false,';
+    if(sagittal)
+        fn += 'true';
+    else
+        fn += 'false';
+    fn += ');';
+        
+    mprFetchFullResImageTimer = window.setTimeout(fn, 500);
+}
+
+function mprViewerClearFunction() {
+    document.getElementById("windowLevelInput").value = 400;
+    document.getElementById("windowWidthInput").value = 60;
+    document.getElementById("sliceInfoDiv").innerHTML = '';
+    
+    sliceCount.axial = 0;
+    sliceCount.coronal = 0;
+    sliceCount.sagittal = 0;
+
+    sliceIndex.axial = 0;
+    sliceIndex.coronal = 0;
+    sliceIndex.sagittal = 0;
+    
+    axialImageWidget.clearImage();
+    coronalImageWidget.clearImage();
+    sagittalImageWidget.clearImage();
+    
+    mprViewerInitFlag = false;
+}
+window.top.setClearFunction(2, mprViewerClearFunction);
+
+function updateInfo(reply) {
+    var infoHtml = '';
+    
+    if(reply.hasResult("DICOMService.Core", "currentAxialSliceIndex")) 
+        sliceIndex.axial = reply.getResult("DICOMService.Core", "currentAxialSliceIndex");
+    if(reply.hasResult("DICOMService.Core", "currentSagittalSliceIndex")) 
+        sliceIndex.sagittal = reply.getResult("DICOMService.Core", "currentSagittalSliceIndex");
+    if(reply.hasResult("DICOMService.Core", "currentCoronalSliceIndex")) 
+        sliceIndex.coronal = reply.getResult("DICOMService.Core", "currentCoronalSliceIndex");
+
+    if(reply.hasResult("DICOMService.Core", "axialSliceCount")) 
+        sliceCount.axial = reply.getResult("DICOMService.Core", "axialSliceCount");
+    if(reply.hasResult("DICOMService.Core", "sagittalSliceCount")) 
+        sliceCount.sagittal = reply.getResult("DICOMService.Core", "sagittalSliceCount");
+    if(reply.hasResult("DICOMService.Core", "coronalSliceCount")) 
+        sliceCount.coronal = reply.getResult("DICOMService.Core", "coronalSliceCount");
+    
+    infoHtml += '<span style="border: 1px; border-style: solid; border-color: #000000; padding: 5px;">';
+    infoHtml += 'Axial: ' + (sliceIndex.axial+1) + '/' + sliceCount.axial + '</span>';
+    
+    infoHtml += '<span style="width: 10px">&nbsp;</span>';
+
+    infoHtml += '<span style="border: 1px; border-style: solid; border-color: #000000; padding: 5px;">';
+    infoHtml += 'Sagittal: ' + (sliceIndex.sagittal+1) + '/' + sliceCount.sagittal + '</span>';
+    
+    infoHtml += '<span style="width: 10px">&nbsp;</span>';
+                
+    infoHtml += '<span style="border: 1px; border-style: solid; border-color: #000000; padding: 5px;">';
+    infoHtml += 'Coronal: ' + (sliceIndex.coronal+1) + '/' + sliceCount.coronal + '</span>';
+                
+    document.getElementById('sliceInfoDiv').innerHTML = infoHtml;
+}
+
+function mprViewerInitFunction() {
+    if(mprViewerInitFlag)
+        return;
+        
+    initializeWidgets();
+    
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "currentAxialSliceImage");
+    msg.add("DICOMService.Core", "currentSagittalSliceImage");
+    msg.add("DICOMService.Core", "currentCoronalSliceImage");
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+    msg.add("DICOMService.Core", "currentAxialSliceIndex");
+    msg.add("DICOMService.Core", "currentSagittalSliceIndex");
+    msg.add("DICOMService.Core", "currentCoronalSliceIndex");
+    msg.add("DICOMService.Core", "axialSliceCount");
+    msg.add("DICOMService.Core", "coronalSliceCount");
+    msg.add("DICOMService.Core", "sagittalSliceCount");
+    msg.onReply = function(reply) {
+        if(!reply.isValid()) {
+            document.getElementById("sliceInfoDiv").innerHTML = 'Cannot load MPR of DICOM series';
+            return;
+        }
+        
+        mprViewerInitFlag = true;
+        fetchingSliceImage = false;
+        
+        updateInfo(reply);
+        
+        var axialImg = reply.getResult("DICOMService.Core", "currentAxialSliceImage");
+        var sagittalImg = reply.getResult("DICOMService.Core", "currentSagittalSliceImage");
+        var coronalImg = reply.getResult("DICOMService.Core", "currentCoronalSliceImage");
+        
+        axialImageWidget.setImage( axialImg );
+        coronalImageWidget.setImage( coronalImg );
+        sagittalImageWidget.setImage( sagittalImg );
+        
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+        
+        fetchFullResImage(true, true, true);
+    }
+    msg.send();
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Loading...';
+    fetchingSliceImage = true;
+}
+window.top.setInitFunction(2, mprViewerInitFunction);
+
+function changeWindowLevelAndWidth() {
+	var args = new GCFList();
+    args.addDouble( document.getElementById("windowLevelInput").value );
+	args.addDouble( document.getElementById("windowWidthInput").value );
+		
+    var msg = new GCFMultiRequestMessage();
+    msg.add("DICOMService.Core", "setWindowLevelAndWidth", args);
+    msg.add("DICOMService.Core", "windowLevel");
+    msg.add("DICOMService.Core", "windowWidth");
+    msg.add("DICOMService.Core", "currentAxialSliceImage");
+    msg.add("DICOMService.Core", "currentSagittalSliceImage");
+    msg.add("DICOMService.Core", "currentCoronalSliceImage");
+    msg.onReply = function(reply) {
+        if(!reply.isValid())
+            return;
+            
+        updateInfo(reply);
+
+        var axialImg = reply.getResult("DICOMService.Core", "currentAxialSliceImage");
+        var sagittalImg = reply.getResult("DICOMService.Core", "currentSagittalSliceImage");
+        var coronalImg = reply.getResult("DICOMService.Core", "currentCoronalSliceImage");
+        
+        axialImageWidget.setImage( axialImg );
+        coronalImageWidget.setImage( coronalImg );
+        sagittalImageWidget.setImage( sagittalImg );
+            
+        document.getElementById("windowLevelInput").value = 
+                reply.getResult("DICOMService.Core", "windowLevel");
+        document.getElementById("windowWidthInput").value = 
+                reply.getResult("DICOMService.Core", "windowWidth");
+            
+        fetchFullResImage(true, true, true);
+    }
+    msg.send();
+    
+    document.getElementById("sliceInfoDiv").innerHTML = 'Applying WL/WW ...';
+}
+
+</script>
+
+</html>
+

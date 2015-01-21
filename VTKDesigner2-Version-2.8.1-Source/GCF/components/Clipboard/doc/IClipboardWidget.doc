@@ -1,0 +1,44 @@
+/**
+\interface IClipboardWidget IClipboardWidget
+\ingroup clipboardcomponent
+\brief Provides access to the widget that shows clipboard data
+
+The \ref clipboardcomponent provides a widget that always shows data
+from the active clipboard context. This interface provides access to
+certain methods from that widget.
+
+You can use this interface to customize interaction with the clipboard
+widget.
+*/
+
+/**
+\fn IClipboard* IClipboardWidget::clipboard() const = 0;
+
+This function returns pointer to the clipboard interface, whose data is shown by
+this widget.
+*/
+
+
+/**
+\fn void IClipboardWidget::dataClicked(const QString& context, const ClipboardData& data, int dataIndex) = 0;
+
+This signal is emitted when a data element in the clipboard is clicked.
+*/
+
+
+/**
+\fn void IClipboardWidget::dataDoubleClicked(const QString& context, const ClipboardData& data, int dataIndex) = 0;
+
+This signal is emitted when a data element in the clipboard is double-clicked.
+*/
+
+
+/**
+\fn void IClipboardWidget::dataRightClicked(const QString& context, const ClipboardData& data, int dataIndex, QMenu* menu) = 0;
+
+This signal is emitted when a data element in the clipboard is right-clicked. 
+You can capture this signal in a slot and insert your own menu items to the
+\c menu parameter.
+*/
+
+

@@ -1,0 +1,273 @@
+h3.fn,span.fn
+{
+  margin-left: 1cm;
+  text-indent: -1cm;
+}
+
+a:link
+{
+  color: #004faf;
+  text-decoration: none
+}
+
+a:visited
+{
+  color: #672967;
+  text-decoration: none
+}
+.img_link:visited
+{
+color: white;
+}
+
+
+a.obsolete
+{
+  color: #661100;
+  text-decoration: none
+}
+
+a.compat
+{
+  color: #661100;
+  text-decoration: none
+}
+
+a.obsolete:visited
+{
+  color: #995500;
+  text-decoration: none
+}
+
+a.compat:visited
+{
+  color: #995500;
+  text-decoration: none
+}
+
+td.postheader
+{
+  font-family: sans-serif
+}
+
+tr.address
+{
+  font-family: sans-serif
+}
+
+body
+{margin:0;
+padding:0;
+}
+
+table tr.odd {
+  background: #f0f0f0;
+  color: black;
+}
+
+table tr.even {
+  background: #e4e4e4;
+  color: black;
+}
+
+table.annotated th {
+  padding: 3px;
+  text-align: left
+}
+
+table.annotated td {
+  padding: 3px;
+}
+
+table tr pre
+{
+  padding-top: none;
+  padding-bottom: none;
+  padding-left: none;
+  padding-right: none;
+  border: none;
+  background: none
+}
+
+tr.qt-style
+{
+  background: #a2c511;
+  color: black
+}
+
+body pre
+{
+  padding: 0.2em;
+  border: #e7e7e7 1px solid;
+  background: #f1f1f1;
+  color: black
+}
+
+span.preprocessor, span.preprocessor a
+{
+  color: darkblue;
+}
+
+span.comment
+{
+  color: darkred;
+  font-style: italic
+}
+
+span.string,span.char
+{
+  color: darkgreen;
+}
+
+.title
+{
+    text-align: center
+}
+
+.subtitle
+{
+    font-size: 0.8em
+}
+
+.small-subtitle
+{
+    font-size: 0.65em
+}
+
+.memproto 
+{
+    font-weight: bold
+}
+
+.memname 
+{
+    font-weight: bold
+}
+
+.paramname 
+{
+    font-weight: bold 
+    font-style: italic
+}
+body
+{margin:0;
+padding:0;
+}
+#wrapper
+{
+text-align:center;
+}
+#main-content
+{margin:10px auto 35px ;
+width: 90%;
+text-align:left;
+border:8px solid transparent;
+-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.8);
+-moz-box-shadow: 0 0 8px rgba(0,0,0,0.8);
+box-shadow: 0 0 8px rgba(0,0,0,0.8)
+-webkit-background-clip: padding-box;
+-moz-background-clip: padding-box;
+background-clip: padding-box;
+border-image: initial;
+}
+html{background:lightgrey}
+.inside {
+padding 5px;
+position: relative;
+background: white;
+border:8px solid transparent;
+-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.3);
+-moz-box-shadow: 0 0 8px rgba(0,0,0,0.3);
+box-shadow: 0 0 8px rgba(0,0,0,0.3)
+}
+a{text-decoration:none;}
+.nav {
+background: #444;
+overflow: hidden;
+position: relative;
+width: 100%;
+text-align:center;
+/* Fallback for web browsers that doesn't support RGBa */
+background: rgb(0, 0, 0);
+/* RGBa with 0.6 opacity */
+background: rgba(0, 0, 0, 0.5);
+/* For IE 5.5 - 7*/
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+/* For IE 8*/
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+
+}
+.nav ul {
+background: -moz-linear-gradient(left,
+inherit 0%,
+inherit 50%,
+inherit 50%);
+background: -webkit-gradient(linear, left top, right top,
+color-stop(0%,inherit),
+color-stop(50%,inherit),
+color-stop(50%,inherit),
+
+);
+
+list-style: none;
+overflow: hidden;
+padding: 0 0 0 20px;
+ width: 810px;
+margin:0 auto;
+}
+.nav li {
+display: inline;
+}
+.nav a {
+ color: white;
+display: block;
+float: left;
+font-family: "myriad-pro-1","myriad-pro-2", HelveticaNeue, Helvetica, Arial, Sans-Serif;
+font-size: 12px;
+padding: 5px 0;
+text-decoration: none;
+text-align: center;
+ width: 24%;
+-webkit-transition: width 0.12s ease;
+-moz-transition: width 0.12s ease;
+-o-transition: width 0.12s ease;
+transition: width 0.12s ease;
+}
+
+
+
+
+.nav .active {
+background: #49a7f3;
+z-index: 100;
+position: relative;
+}    
+
+
+
+#logo_box {
+margin:10px auto 20px ;
+width: 90%;
+text-align:center;
+background: white;
+overflow: hidden;
+position: relative;
+-moz-border-radius: 5px;
+border-radius: 5px;
+-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.8);
+-moz-box-shadow: 0 0 8px rgba(0,0,0,0.8);
+box-shadow: 0 0 8px rgba(0,0,0,0.8);
+}
+.version
+{width:250px;
+color:#333333;
+font-size:18pt;
+
+margin:0 auto;}
+
+.memproto {
+background: #efefef;
+border: 1px solid black;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}

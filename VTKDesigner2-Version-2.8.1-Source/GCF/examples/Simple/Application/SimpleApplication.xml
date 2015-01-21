@@ -1,0 +1,9 @@
+<Application>
+
+    <Components>
+        <!-- Load components here.. -->
+        <Component Name="Component1" Library="Component1" />
+        <Component Name="Component2" Library="Component2" />
+    </Components>
+
+</Application>

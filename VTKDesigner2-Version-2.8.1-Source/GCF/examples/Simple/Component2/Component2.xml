@@ -1,0 +1,7 @@
+<component name="Component2">
+
+    <!-- Here we "expose" a widget by name "Dial" to be placed on the
+         GCF application's Container widget. This is how GUI merging is done -->
+    <widget name="Dial" title="Dial" parentWidget="ApplicationContainer.Container" />
+
+</component>

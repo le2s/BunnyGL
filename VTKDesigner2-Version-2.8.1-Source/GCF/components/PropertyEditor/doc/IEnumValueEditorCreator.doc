@@ -1,0 +1,30 @@
+/**
+/**
+\ingroup propertyeditorcomp
+\interface IEnumValueEditorCreator IEnumValueEditorCreator
+\brief Interface to a value editor creator for enum types
+
+Interface to a value editor creator that deals with enumerations. A single instance
+of this interface is used for all enumerated types. The \ref setCurrentEnum()
+method is called to establish the enum context.
+
+\note Classes that implement this interface must also implement the IValueEditorCreator
+interface.
+*/
+
+/**
+\fn virtual void IEnumValueEditorCreator::setCurrentEnum(QMetaEnum enumStruct) = 0
+
+Sets the enumeration to use. The IValueEditorCreator interface implemented by the 
+class that implements this IEnumValueEditorCreator must use this QMetaEnum to 
+construct editor-widgets.
+*/
+
+/**
+\fn virtual void IEnumValueEditorCreator::initialize(QWidget* editor, QMetaEnum enumStruct) = 0
+
+Initializes the editor widget \c editor for use with the enumeration \c enumStruct. 
+The IValueEditorCreator interface implemented by the class that implements this 
+IEnumValueEditorCreator must use this QMetaEnum to construct editor-widgets.
+*/
+

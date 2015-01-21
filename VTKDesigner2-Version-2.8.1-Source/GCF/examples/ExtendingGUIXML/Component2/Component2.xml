@@ -1,0 +1,17 @@
+<component name="Component2">
+
+    <widget name="Dial" title="Dial"
+            parentWidget="ApplicationContainer.MainWindow"
+            parentWidgetHint="BottomDockArea" />
+
+    <action name="action1" title="Action 1 (Component2)" />
+    <action name="action2" title="Action 2 (Component2)" />
+    <action name="action3" title="Action 3 (Component2)" />
+
+    <menutab name="tab1" title="Tab 1  (Component2)">
+        <menutabitem actionName="Component2.action1" />
+        <menutabitem actionName="Component2.action2" />
+        <menutabitem actionName="Component2.action3" />
+    </menutab>
+
+</component>

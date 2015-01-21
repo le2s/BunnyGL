@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/FractalService">
+        <file>FractalService.xml</file>
+    </qresource>
+</RCC>

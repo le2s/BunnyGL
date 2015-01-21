@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ApplicationServerWindow</class>
+ <widget class="QMainWindow" name="ApplicationServerWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1103</width>
+    <height>789</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GCF Application Server</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="margin">
+     <number>2</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="objectExplorerTab">
+       <attribute name="title">
+        <string>&amp;Object Explorer Tab</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="margin">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QWebView" name="wvObjectInfo">
+          <property name="url">
+           <url>
+            <string>about:blank</string>
+           </url>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="callExplorerTab">
+       <attribute name="title">
+        <string>&amp;Call Explorer Tab</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="margin">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QWebView" name="wvCallInfo">
+          <property name="url">
+           <url>
+            <string>about:blank</string>
+           </url>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1103</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_System">
+    <property name="title">
+     <string>&amp;System</string>
+    </property>
+    <addaction name="showServerInfoAction"/>
+    <addaction name="configureProcessPoolSizeAction"/>
+    <addaction name="quitAction"/>
+   </widget>
+   <addaction name="menu_System"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QDockWidget" name="leftDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>117</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>Object Tree</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="margin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QTreeWidget" name="lstServerObjects">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="quitAction">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="showServerInfoAction">
+   <property name="text">
+    <string>Show Server Load Info</string>
+   </property>
+  </action>
+  <action name="configureProcessPoolSizeAction">
+   <property name="text">
+    <string>Configure Process Pool Size</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

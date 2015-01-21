@@ -1,0 +1,145 @@
+/**
+\page extending_guixml Extending GUIXML File Format
+
+\section extending_guixml1 Introduction
+
+GUIXML file is central to GCF. It describes the objects, widgets, actions, menus and toolbars exposed by a component
+to GCF - for merging into the application container. We recommend that you read \ref gettingstarted and \ref guixmlref
+before continuing (if you have not already read them). In this page we explain how to extend the format of GUIXML
+file by adding support for custom XML elements. 
+
+\section extending_guixml2 How are GUIXML files processed?
+
+When a component (GCF::AbstractComponent) is loaded; GCF calls its \ref GCF::AbstractComponent::initialize() method. 
+This method first calls the \ref GCF::AbstractComponent::initializeComponent() method and then loads the GUIXML file
+of the component by calling the \ref GCF::AbstractComponent::setGuiXmlFileName() method. By the time this function
+returns, the GUIXML file would have been processed.
+
+GUIXML files are processed by making use of an internal class called GCF::ComponentGuiXmlParser. This class identifies
+all inbuilt XML elements like (widget, object, menu, toolbar, property, method etc..). Whenever it finds unknown XML
+elements it looks up for an implemnetation of the \ref GCF::AbstractGuiXmlExtender interface that can handle
+the XML element and asks it to handle the XML element. If no implementation of \ref GCF::AbstractGuiXmlExtender was found,
+then the XML element is ignored.
+
+The result of processing a GUIXML file is a \ref GCF::ComponentGui object. \ref GCF::ComponentGui is mostly an internal 
+class; you will need to know something about it only if you are writing GUIXML extenders. \ref GCF::ComponentGui is basically
+a tree of \ref GCF::ComponentGuiNode objects (hereafter called as gui-node). Each gui-node represents one type of GUI
+resources from the component. For example we will have one gui-node for every widget, object, action, menu, toolbar etc 
+exposed by the component. The concept can be best understood by looking at an actual example.
+
+Consider the following GUIXML file
+
+\code
+<component name="A">
+
+	<object name="Core" />
+
+	<widget name="Widget1" title="Title 1" />
+	<widget name="Widget2" title="Title 2" />
+	
+	<action name="Action1" title="Action 1" />
+	<action name="Action2" title="Action 2" />
+	<action name="Action3" title="Action 3" />
+	
+	<menu name="Menu1" title="Menu 1">
+		<menuitem actionName="A.Action1" />
+		<menuitem actionName="A.Action2" />
+	</menu>
+	
+	<menu name="Menu2" title="Menu 2">
+		<menuitem actionName="A.Action3" />
+	</menu>	
+	
+	<toolbar name="ToolBar1">
+		<toolbaritem actionName="A.Action1" />
+		<toolbaritem actionName="A.Action2" />
+		<toolbaritem actionName="A.Action3" />
+	</toolbar>
+	
+</component>
+\endcode
+
+When the above GUIXML file is processed, a \ref GCF::ComponentGui object (which is basically a gui-node treee) of the following
+form is constructed in memory.
+
+\image html guinodetree.png
+
+For every XML element in the GUIXML file - a corresponding GCF::ComponentGuiNode is created in memory and added to the 
+\ref GCF::ComponentGui object created and owned by the component. We can therefore say, gui-node tree provides access to all 
+resources offered by the component. Further, \ref GCF::findObject() and \ref GCF::findObjects() methods traverse gui-node trees
+of each and every component in the application to look for objects.
+
+Each XML element in the GUIXML file is supposed to have an integer type associated with it. Custom types must always be 
+greater than GCF::ComponentGuiNode::Other (which is 1000). Against every type there should be a registered implementation
+of \ref GCF::AbstractNodeInitializer interface. Through this interface a \ref GCF::ComponentGuiNode is initialized, cleaned up,
+shown and hidden. GCF offers readymade implementations for all known types (object, widget, action etc..). For every custom
+XML element supported (via GCF::AbstractGuiXmlExtender), an implementation of \ref GCF::AbstractNodeInitializer must be made
+available.
+
+\sa \ref extending_guixml_example
+
+*/
+
+/**
+\class GCF::AbstractGuiXmlExtender GCF/ComponentGui
+\brief This interface allows you to extend the GUIXML file format
+
+You can implement this interface to support one new type of XML element in the GUIXML file. <i>The tagname of the new XML
+element must not be same as any of the inbuilt tags.</i> Implementations of this interface can be registered with GCF
+using the \ref GCF::registerGuiXmlExtender() method. They can be unregistered using the \ref GCF::unregisterGuiXmlExtender()
+method. 
+
+\sa \ref extending_guixml
+*/
+
+/**
+\fn virtual int GCF::AbstractGuiXmlExtender::type() const = 0
+
+This function must be implemented to return an integer ID of the XML element that it processes. The ID must be
+unique in the entire application and must be creater than \ref GCF::ComponentGuiNode::Other
+*/
+
+/**
+\fn virtual int GCF::AbstractGuiXmlExtender::tagName() const = 0
+
+This function must be implemented to return the tagname of the XML element that the extender handles
+*/
+
+/**
+\fn virtual int GCF::AbstractGuiXmlExtender::parseElement(QDomElement e, GCF::ComponentGui gui) = 0
+
+This function must be implemented to parse the XML element \c e (whose tagname is \ref tagName()) and populate
+the \ref GCF::ComponentGui object with GUI resources from the XML element.
+
+\sa \ref extending_guixml3
+*/
+
+/**
+\fn virtual GCF::AbstractNodeInitializer* GCF::AbstractGuiXmlExtender::guiNodeInitializer() = 0
+
+This function must be implemented to return a Node initializer for \ref GCF::ComponentGuiNode s of type
+\ref type().
+
+\sa \ref extending_guixml_example
+*/
+
+/**
+\fn void GCF::AbstractGuiXmlExtender::storeAttributes(QDomElement e, DataStore dataStore)
+
+This function can be called to store all attributes from DOM element \c into \c dataStore
+*/
+
+/**
+\fn bool GCF::registerGuiXmlExtender(GCF::AbstractGuiXmlExtender* extender)
+
+Registered a GUIXML extender with GCF. GCF will take ownership of the extender and will delete the extender
+when the application is being closed.
+*/
+
+/**
+\fn bool GCF::unregisterGuiXmlExtender(GCF::AbstractGuiXmlExtender* extender)
+
+Unregisters a GUIXML extender with GCF. GCF will no longer assume ownership of the extender once it is 
+unregistered. The caller must explicitly delete the extender.
+*/
+

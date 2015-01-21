@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/SimpleIRC">
+        <file alias="GUIXML">SimpleIRC.xml</file>
+    </qresource>
+</RCC>

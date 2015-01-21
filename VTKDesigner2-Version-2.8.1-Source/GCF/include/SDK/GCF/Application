@@ -1,0 +1,2 @@
+#include "../../GCF/VariantComparisonHelper.h"
+#include "../../GCF/Application.h"

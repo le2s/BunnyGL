@@ -1,0 +1,18 @@
+<component title="Open Haptics VTK Classes" name="COpenHapticsVTKComponent" >
+  <object title="" name="controller" />
+  <widget name="shapeRenderModeSelector" title="Shape Render Mode" visible="false" />
+  
+  <action title="Haptic Poll Interval" name="hapticPollIntervalW" />
+  <action title="Enable Haptics" name="enableHapticsW" />
+  
+  <menu title="Haptic Speed" name="hapticPollIntervalMenu" >
+    <menuitem actionName="COpenHapticsVTKComponent.hapticPollIntervalW" />
+  </menu>
+  
+  <group name="hapticGroup" title="Haptics" icon=":/OpenHapticsVTK/haptics.png" before="MainWindowComponent.systemMenu" >
+    <groupitem colSpan="3" menuName="COpenHapticsVTKComponent.hapticPollIntervalMenu" rowSpan="1" />
+    <groupitem colSpan="3" actionName="COpenHapticsVTKComponent.enableHapticsW" rowSpan="1" />
+    <draweritem widgetName="COpenHapticsVTKComponent.shapeRenderModeSelector" />
+  </group>
+  <property key="COpenHapticsVTKComponent.controller::HapticPollInterval" value="100" />
+</component>

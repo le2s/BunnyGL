@@ -1,0 +1,14 @@
+<component name="CVTKFullscreenComponent">
+  <object title="" name="controller"/>
+  <action title="Fullscreen" triggerSlot="CVTKFullscreenComponent.controller::showCurrentRenderWindowFullScreen()" shortcut="F11" icon=":/VTKFullscreen/fullscreen.png" name="viewFullscreen"/>
+  <menu mergeWith="MainWindowComponent.viewMenu">
+    <menuitem/>
+    <menuitem actionName="CVTKFullscreenComponent.viewFullscreen" hideWhenInactive="false" colSpan="2" rowSpan="2"/>
+    <menuitem/>
+  </menu>
+  <toolbar mergeWith="MainWindowComponent.viewTools">
+    <toolbaritem/>
+    <toolbaritem actionName="CVTKFullscreenComponent.viewFullscreen" hideWhenInactive="false" colSpan="2" rowSpan="2"/>
+    <toolbaritem/>
+  </toolbar>
+</component>

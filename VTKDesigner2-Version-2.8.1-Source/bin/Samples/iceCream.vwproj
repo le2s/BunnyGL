@@ -1,0 +1,243 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-81.8891" Y="-368.829" Name="Cone" ClassName="vtkCone" ID="0" >
+      <Property Type="double" Name="Angle" Value="20" />
+      <Property Type="QString" Name="NodeName" Value="Cone" />
+      <Property Type="QString" Name="objectName" Value="Cone" />
+    </Node>
+    <Node X="-64.576" Y="171.561" Name="coneActor" ClassName="vtkActor" ID="1" >
+      <Property Type="QColor" Name="Color" Value="#ffd2b0" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="coneActor" />
+      <Property Type="QString" Name="objectName" Value="coneActor" />
+    </Node>
+    <Node X="-256.889" Y="-367.678" Name="vertPlane" ClassName="vtkPlane" ID="2" >
+      <Property Type="Vector3D" Name="Normal" Value="-1, 0, 0" />
+      <Property Type="Point3D" Name="Origin" Value="0.1, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vertPlane" />
+      <Property Type="QString" Name="objectName" Value="vertPlane" />
+    </Node>
+    <Node X="-436.738" Y="-365.253" Name="basePlane" ClassName="vtkPlane" ID="3" >
+      <Property Type="Vector3D" Name="Normal" Value="1, 0, 0" />
+      <Property Type="Point3D" Name="Origin" Value="1.2, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="basePlane" />
+      <Property Type="QString" Name="objectName" Value="basePlane" />
+    </Node>
+    <Node X="324.315" Y="-374.951" Name="iceCream" ClassName="vtkSphere" ID="4" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="1.333, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="iceCream" />
+      <Property Type="QString" Name="objectName" Value="iceCream" />
+    </Node>
+    <Node X="125.071" Y="-374.951" Name="bite" ClassName="vtkSphere" ID="5" >
+      <Property Type="double" Name="Radius" Value="0.25" />
+      <Property Type="Point3D" Name="Center" Value="1.5, 0, 0.5" />
+      <Property Type="QString" Name="NodeName" Value="bite" />
+      <Property Type="QString" Name="objectName" Value="bite" />
+    </Node>
+    <Node X="-175.93" Y="-239.038" Name="theCone" ClassName="vtkImplicitBoolean" ID="6" >
+      <Property Type="Operation" Name="Operation" Value="1" />
+      <Property Type="QString" Name="NodeName" Value="theCone" />
+      <Property Type="QString" Name="objectName" Value="theCone" />
+    </Node>
+    <Node X="251.437" Y="-280.253" Name="theCream" ClassName="vtkImplicitBoolean" ID="7" >
+      <Property Type="Operation" Name="Operation" Value="2" />
+      <Property Type="QString" Name="NodeName" Value="theCream" />
+      <Property Type="QString" Name="objectName" Value="theCream" />
+    </Node>
+    <Node X="-167.035" Y="-144.341" Name="theConeSample" ClassName="vtkSampleFunction" ID="8" >
+      <Property Type="OutputScalarType" Name="OutputScalarType" Value="11" />
+      <Property Type="QList&lt;QVariant>" Name="ModelBounds" Value="-1, 1.5, -1.25, 1.25, -1.25, 1.25" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="double" Name="CapValue" Value="1e+38" />
+      <Property Type="bool" Name="ComputeNormals" Value="false" />
+      <Property Type="QList&lt;QVariant>" Name="SampleDimensions" Value="60, 60, 60" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="theConeSample" />
+      <Property Type="QString" Name="objectName" Value="theConeSample" />
+    </Node>
+    <Node X="-162.11" Y="-52.0674" Name="theConeSurface" ClassName="vtkContourFilter" ID="9" >
+      <Property Type="int" Name="NumberOfContours" Value="1" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="bool" Name="ComputeGradients" Value="false" />
+      <Property Type="bool" Name="ComputeScalars" Value="true" />
+      <Property Type="int" Name="ScalarArrayComponent" Value="0" />
+      <Property Type="ValueRange" Name="ValueRange" Value="0, 0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="theConeSurface" />
+      <Property Type="QString" Name="objectName" Value="theConeSurface" />
+    </Node>
+    <Node X="-145.064" Y="35.357" Name="coneMapper" ClassName="vtkPolyDataMapper" ID="10" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="coneMapper" />
+      <Property Type="QString" Name="objectName" Value="coneMapper" />
+    </Node>
+    <Node X="239.39" Y="-185.556" Name="theCreamSample" ClassName="vtkSampleFunction" ID="11" >
+      <Property Type="OutputScalarType" Name="OutputScalarType" Value="11" />
+      <Property Type="QList&lt;QVariant>" Name="ModelBounds" Value="0, 2.5, -1.25, 1.25, -1.25, 1.25" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="double" Name="CapValue" Value="1e+38" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="QList&lt;QVariant>" Name="SampleDimensions" Value="50, 50, 50" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="theCreamSample" />
+      <Property Type="QString" Name="objectName" Value="theCreamSample" />
+    </Node>
+    <Node X="232.193" Y="-100.556" Name="theCreamSurface" ClassName="vtkContourFilter" ID="12" >
+      <Property Type="int" Name="NumberOfContours" Value="1" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="bool" Name="ComputeGradients" Value="false" />
+      <Property Type="bool" Name="ComputeScalars" Value="true" />
+      <Property Type="int" Name="ScalarArrayComponent" Value="0" />
+      <Property Type="ValueRange" Name="ValueRange" Value="0, 0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="theCreamSurface" />
+      <Property Type="QString" Name="objectName" Value="theCreamSurface" />
+    </Node>
+    <Node X="234.693" Y="-15.5557" Name="creamMapper" ClassName="vtkPolyDataMapper" ID="13" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="creamMapper" />
+      <Property Type="QString" Name="objectName" Value="creamMapper" />
+    </Node>
+    <Node X="232.861" Y="69.7354" Name="creamActor" ClassName="vtkActor" ID="14" >
+      <Property Type="QColor" Name="Color" Value="#ddffde" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="creamActor" />
+      <Property Type="QString" Name="objectName" Value="creamActor" />
+    </Node>
+    <Node X="38.3107" Y="287.375" Name="renderer" ClassName="vtkRenderer" ID="15" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="57.7816" Y="369.951" Name="renderWindow" ClassName="vtkRenderWindow" ID="16" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="209.259" Y="183.033" Name="camera" ClassName="vtkCamera" ID="17" >
+      <Property Type="Point3D" Name="Position" Value="1.943, -2.089, 2.702" />
+      <Property Type="Point3D" Name="FocalPoint" Value="0.9664, -0.0001381, -0.005661" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.9577, 0.09637, -0.2711" />
+      <Property Type="double" Name="Distance" Value="3.556" />
+      <Property Type="double" Name="Roll" Value="83.16" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1.114" />
+      <Property Type="double" Name="Thickness" Value="4.161" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.2746, -0.5874, 0.7613" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Node X="431.738" Y="-17.3238" Name="creamProperty" ClassName="vtkProperty" ID="18" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ddffde" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#3aff5d" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ddffde" />
+      <Property Type="QColor" Name="SpecularColor" Value="#3aff5d" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#fffbf5" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="creamProperty" />
+      <Property Type="QString" Name="objectName" Value="creamProperty" />
+    </Node>
+    <Node X="33.7076" Y="6.65185" Name="coneProperty" ClassName="vtkProperty" ID="19" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffd2b0" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffd2b0" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffd2b0" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffd2b0" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="coneProperty" />
+      <Property Type="QString" Name="objectName" Value="coneProperty" />
+    </Node>
+    <Connection Sender="Cone" SPathIndex="1" Receiver="theCone" RPathIndex="2" />
+    <Connection Sender="iceCream" SPathIndex="1" Receiver="theCream" RPathIndex="2" />
+    <Connection Sender="bite" SPathIndex="1" Receiver="theCream" RPathIndex="2" />
+    <Connection Sender="theCone" SPathIndex="1" Receiver="theConeSample" RPathIndex="3" />
+    <Connection Sender="theConeSample" SPathIndex="2" Receiver="theConeSurface" RPathIndex="3" />
+    <Connection Sender="theConeSurface" SPathIndex="2" Receiver="coneMapper" RPathIndex="2" />
+    <Connection Sender="coneMapper" SPathIndex="3" Receiver="coneActor" RPathIndex="3" />
+    <Connection Sender="theCream" SPathIndex="1" Receiver="theCreamSample" RPathIndex="3" />
+    <Connection Sender="theCreamSample" SPathIndex="2" Receiver="theCreamSurface" RPathIndex="3" />
+    <Connection Sender="theCreamSurface" SPathIndex="2" Receiver="creamMapper" RPathIndex="2" />
+    <Connection Sender="creamMapper" SPathIndex="3" Receiver="creamActor" RPathIndex="3" />
+    <Connection Sender="creamActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="coneActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Connection Sender="creamProperty" SPathIndex="1" Receiver="creamActor" RPathIndex="5" />
+    <Connection Sender="coneProperty" SPathIndex="1" Receiver="coneActor" RPathIndex="5" />
+    <Connection Sender="vertPlane" SPathIndex="1" Receiver="theCone" RPathIndex="2" />
+    <Connection Sender="basePlane" SPathIndex="1" Receiver="theCone" RPathIndex="2" />
+    <Note Width="426" X="-743" Y="-309" Height="371" >See the 'iceCream' :) first and then view this pipeline
+
+This entire pipeline exhibits implicit boolean modeling and is divided into two major pipelines i.e. the cone and the cream (with bite)
+
+The basePlane / vertPlane clips the cone portion whose intersection (vtkImplicitBoolean) is passed to the vtkContourFilter
+
+The similar operation is performed in the second pipeline 'cream' using a 'bite' operation
+
+if two functions f (x, y, z) = k and g (x, y, z) = l
+Union         => f u g = k &lt; l ? k : l
+Intersection => f n g = k > l ? k : l</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[theConeSurface.NumberOfContours = 1;
+theConeSurface.setValue(0, 0.0);
+theCreamSurface.NumberOfContours = 1;
+theCreamSurface.setValue(0, 0.0);
+renderWindow.render();]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

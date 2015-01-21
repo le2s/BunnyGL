@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/VTKFullscreen">
+    <file alias="fullscreen.png">icons/fullscreen.png</file>
+</qresource>
+</RCC>

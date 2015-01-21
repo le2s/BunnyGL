@@ -1,0 +1,147 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork">
+    <Node X="98.75" Y="-257.5" Name="customGrid" ClassName="vtkCustomGridPolyDataSource" ID="0">
+      <Property Type="int" Name="GridCountX" Value="50"/>
+      <Property Type="int" Name="GridCountY" Value="50"/>
+      <Property Type="double" Name="GridDistanceX" Value="0.1"/>
+      <Property Type="double" Name="GridDistanceY" Value="0.1"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="customGrid"/>
+      <Property Type="QString" Name="objectName" Value="customGrid"/>
+    </Node>
+    <Node X="106.25" Y="-2.5" Name="vtkDataSetMapper1" ClassName="vtkDataSetMapper" ID="1">
+      <Property Type="bool" Name="ShowScalars" Value="true"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper1"/>
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper1"/>
+    </Node>
+    <Node X="109.774" Y="82.5" Name="vtkActor2" ClassName="vtkActor" ID="2">
+      <Property Type="QColor" Name="Color" Value="#ffffff,255"/>
+      <Property Type="double" Name="Opacity" Value="1"/>
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0"/>
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1"/>
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0"/>
+      <Property Type="bool" Name="Visible" Value="true"/>
+      <Property Type="bool" Name="Pickable" Value="true"/>
+      <Property Type="bool" Name="Dragable" Value="true"/>
+      <Property Type="QString" Name="NodeName" Value="vtkActor2"/>
+      <Property Type="QString" Name="objectName" Value="vtkActor2"/>
+    </Node>
+    <Node X="111.25" Y="167.5" Name="vtkRenderer3" ClassName="vtkRenderer" ID="3">
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff,255"/>
+      <Property Type="bool" Name="ShowGrid" Value="false"/>
+      <Property Type="bool" Name="LightsFollowCamera" Value="true"/>
+      <Property Type="bool" Name="TwoSidedLighting" Value="true"/>
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer3"/>
+      <Property Type="QString" Name="objectName" Value="vtkRenderer3"/>
+    </Node>
+    <Node X="113.75" Y="252.5" Name="renderWindow" ClassName="vtkRenderWindow" ID="4">
+      <Property Type="QString" Name="NodeName" Value="renderWindow"/>
+      <Property Type="QString" Name="objectName" Value="renderWindow"/>
+    </Node>
+    <Node X="101.25" Y="-172.5" Name="vtkPolyDataNormals5" ClassName="vtkPolyDataNormals" ID="5">
+      <Property Type="double" Name="FeatureAngle" Value="30"/>
+      <Property Type="bool" Name="Splitting" Value="true"/>
+      <Property Type="bool" Name="Consistency" Value="true"/>
+      <Property Type="bool" Name="AutoOrientNormals" Value="false"/>
+      <Property Type="bool" Name="ComputePointNormals" Value="true"/>
+      <Property Type="bool" Name="ComputeCellNormals" Value="true"/>
+      <Property Type="bool" Name="FlipNormals" Value="true"/>
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataNormals5"/>
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataNormals5"/>
+    </Node>
+    <Node X="103.75" Y="-87.5" Name="elevationFilter" ClassName="vtkElevationFilter" ID="6">
+      <Property Type="Point3D" Name="LowPoint" Value="0, 0, -0.6141"/>
+      <Property Type="Point3D" Name="HighPoint" Value="0, 0, 1.01"/>
+      <Property Type="ValueRange" Name="ScalarRange" Value="0, 1"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="elevationFilter"/>
+      <Property Type="QString" Name="objectName" Value="elevationFilter"/>
+    </Node>
+    <Node X="300.554" Y="75.2003" Name="vtkCamera8" ClassName="vtkCamera" ID="7">
+      <Property Type="Point3D" Name="Position" Value="-5.999, -8.019, 4.961"/>
+      <Property Type="Point3D" Name="FocalPoint" Value="0.1199, -0.06775, -0.08416"/>
+      <Property Type="Vector3D" Name="ViewUp" Value="0.2616, 0.3655, 0.8933"/>
+      <Property Type="double" Name="Distance" Value="11.23"/>
+      <Property Type="double" Name="Roll" Value="58.8295305059985"/>
+      <Property Type="bool" Name="ParallelProjection" Value="false"/>
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false"/>
+      <Property Type="double" Name="ViewAngle" Value="30"/>
+      <Property Type="double" Name="ParallelScale" Value="1"/>
+      <Property Type="double" Name="Thickness" Value="15.7144582184361"/>
+      <Property Type="double" Name="EyeAngle" Value="2"/>
+      <Property Type="double" Name="FocalDisk" Value="1"/>
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.5449, -0.708, 0.4493"/>
+      <Property Type="QString" Name="NodeName" Value="vtkCamera8"/>
+      <Property Type="QString" Name="objectName" Value="vtkCamera8"/>
+    </Node>
+    <Connection Sender="vtkDataSetMapper1" SPathIndex="3" Receiver="vtkActor2" RPathIndex="3"/>
+    <Connection Sender="vtkActor2" SPathIndex="2" Receiver="vtkRenderer3" RPathIndex="1"/>
+    <Connection Sender="vtkRenderer3" SPathIndex="3" Receiver="renderWindow" RPathIndex="1"/>
+    <Connection Sender="customGrid" SPathIndex="2" Receiver="vtkPolyDataNormals5" RPathIndex="3"/>
+    <Connection Sender="vtkPolyDataNormals5" SPathIndex="2" Receiver="elevationFilter" RPathIndex="3"/>
+    <Connection Sender="elevationFilter" SPathIndex="2" Receiver="vtkDataSetMapper1" RPathIndex="2"/>
+    <Connection Sender="vtkCamera8" SPathIndex="1" Receiver="vtkRenderer3" RPathIndex="2"/>
+    <Note Width="287.7663605051665" X="-287.8301886792454" Y="-226.3280116110305" Height="299.7289929164048">A sinc function is of the form
+
+sinc(x, y) = sin(Pi*r) / (Pi*r)
+
+In this pipeline we basically evaluate sinc(x, y) for every point on the grid and set the result as its Z value. That way we can visualize a sinc surface.....</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment"/>
+  <ProjectPart ID="Script"><![CDATA[var lastPiVal = 2.6;
+
+// Event handler for OnRequestData event of customGrid
+function customGrid_OnRequestData()
+{
+   MessageLog.debugMessage("lastPiVal = " + lastPiVal);
+	var count = customGrid.pointCount();
+	var piVal = lastPiVal+0.2;
+   var minZ, maxZ;
+	for(i=0; i<count; i++)
+	{
+		var pt = customGrid.point(i);
+		var r = Math.sqrt( pt.x*pt.x + pt.y*pt.y );
+		pt.z = Math.sin( piVal*r ) / piVal*r; 
+		customGrid.setPoint(i, pt);
+		if(i == 0)
+		{
+			minZ = pt.z;
+			maxZ = pt.z;
+		}
+		else
+		{
+			if(minZ > pt.z)
+				minZ = pt.z;
+			else if(maxZ < pt.z)
+				maxZ = pt.z;
+		}
+	}
+
+	elevationFilter.LowPoint = NewPoint3D(0, 0, minZ);
+	elevationFilter.HighPoint = NewPoint3D(0, 0, maxZ);
+
+	lastPiVal = piVal;
+	if(lastPiVal > Math.PI)
+	{
+		lastPiVal = 0;
+		timer0.Active = false;
+	}
+}
+customGrid.OnRequestData.connect(customGrid_OnRequestData);
+customGrid.markModified();
+renderWindow.render();
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem"/>
+</VWVisProject>

@@ -1,0 +1,107 @@
+VTK Designer 2 (VTKD2) - 3D Visualization Prototyping platform
+
+Copyright VCreate Logic (P) Ltd, Bangalore, India
+
+EMail: info@vcreatelogic.com
+URL  : http://www.vcreatelogic.com/products/vtkd
+SVN  : http://code.vcreatelogic.com:8045/VTKDesigner2/
+==========================================================
+
+======================================
+What license is it distributed under?
+======================================
+
+VTK Designer 2 comprises of the following
+
+* Core Application
+      The main program
+* Visualizaiton components
+      VTK Visualization Node Factory
+      The pipeline canvas
+      The Visualization System Node explorer
+      Template manager
+      Data File Loader, etc...
+* System Interfaces
+      All the interface header files contained in Interfaces directory
+* Common Libraries
+      All the code contained in Common directory
+* GCF - Generic Component Framework
+      The component technology from VCreate Logic, on which VTK Designer is based.
+* Tools
+      ComponentGen - For generating new component code template
+      VNFComponentGen - For generating new visualization node factory component template
+      VisNodeGen - For generating new visualization node template
+      VTKDViewer and others...
+
+The following table summarizes the licenses under which different parts are released
+
+----------------------------------------------------------------------------
+| Part       | License        | Open-Source usage       | Commercial Usage |
+----------------------------------------------------------------------------
+| CORE APP   | BSD            | FREE                    | FREE             |
+----------------------------------------------------------------------------
+| COMPONENTS | LGPL           | FREE                    | FREE             |
+----------------------------------------------------------------------------
+| INTERFACES | LGPL           | FREE                    | FREE             |
+----------------------------------------------------------------------------
+| COMMON LIBS| LGPL           | FREE                    | FREE             |
+----------------------------------------------------------------------------
+| TOOLS      | BSD            | FREE                    | FREE             |
+----------------------------------------------------------------------------
+| GCF        | GPL            | FREE                    | NOT-FREE         |
+----------------------------------------------------------------------------
+
+======================================
+What does all this mean?
+======================================
+
+The following table summarizes what this means for different categories of users
+
+|----------------------------------------------------------------------------|
+|I want to use VTK Designer 2 for learning visualization     |   FREE        |
+|----------------------------------------------------------------------------|
+|I want to use VTK Designer 2 for teaching visualization     |   FREE        |
+|----------------------------------------------------------------------------|
+|I want to use VTK Designer 2 for writing articles           |   FREE        |
+|----------------------------------------------------------------------------|
+|I want to modify VTK Designer 2 code to suit my needs.      |   FREE        |
+|I will release the modifications under GPL/LGPL.            |               |
+|----------------------------------------------------------------------------|
+|I want to add new components/algorithms to VTK Designer 2   |   FREE        |
+|and extend its capabilities. I will release the new         |               |
+|components/algorithms under GPL/LGPL                        |               |
+|----------------------------------------------------------------------------|
+|I want to modify VTK Designer 2 to suit my needs but I      |   NOT FREE    |
+|will not release the modifications under GPL/LGPL           |               |
+|----------------------------------------------------------------------------|
+|I want to add new components/algorithms to VTK Designer 2   |   NOT FREE    |
+|but will not release the code under GNU/GPL                 |               |
+|----------------------------------------------------------------------------|
+|I want to create a new product based on VTK Designer 2      |   NOT FREE    |
+|codebase, but I will not give away the code of the new      |               |
+|product.                                                    |               |
+|----------------------------------------------------------------------------|
+|I just want to use VTK Designer 2 for some internal (maybe  |   FREE        |
+|commercial) use; but I am not modifying it or adding new    |               |
+|components, algorithms, tools or features to it.            |               |
+|----------------------------------------------------------------------------|
+|I conduct training on VTK and/or visualziation. I would     |   FREE        |
+|like to use VTK Designer 2 in the training sessions and     |               |
+|give copies of the software to the participants in exchange |               |
+|for a fee.                                                  |               |
+|----------------------------------------------------------------------------|
+
+For all the "Not-Free" cases, you can write to us at info@vcreatelogic.com and 
+purchases VTK Designer 2 SDK and go ahead with your development. Note that
+VTK Designer 2 SDK contains GCF, which you can use only for developing components
+for VTK Designer 2. If you want to use GCF in other Qt applications, then you
+will need to buy GCF licenses from VCreate Logic. Write to sales@vcreatelogic.com
+for information on GCF licenses.
+
+Once you have your new components and addons ready, you can sell them to other 
+VTK Designer users.
+
+If you have any questions about the licensing policy, please write to us at 
+info@vcreatelogic.com. 
+
+

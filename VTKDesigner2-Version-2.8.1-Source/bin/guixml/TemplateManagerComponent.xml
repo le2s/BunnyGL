@@ -1,0 +1,12 @@
+<component title="TemplateManagerComponent" name="TemplateManagerComponent">
+  <object title="" name="controller"/>
+  <action title="Load Template" triggerSlot="TemplateManagerComponent.controller::slotLoadFromTemplate()" icon=":/ProjectManager/open.png" name="loadTemplate"/>
+  <action title="Save Template" triggerSlot="TemplateManagerComponent.controller::slotSaveAsTemplate()" icon=":/ProjectManager/save.png" name="saveAsTemplate"/>
+  <menu mergeWith="MainWindowComponent.fileMenu">
+    <menuitem before="MainWindowComponent.fileQuit"/>
+    <menuItem actionName="TemplateManagerComponent.loadTemplate" before="MainWindowComponent.fileQuit"/>
+    <menuItem actionName="TemplateManagerComponent.saveAsTemplate" before="MainWindowComponent.fileQuit"/>
+    <menuitem before="MainWindowComponent.fileQuit"/>
+  </menu>
+  <property key="TemplateManagerComponent.controller::TemplatesDirectory" value="/Users/prashanthudupa/VTKDesigner2/bin/Templates"/>
+</component>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="ImageContrast" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="ImageContrastVert" location="Inline" language="GLSL" entry="main">
+void main()
+ {
+   gl_TexCoord[0] = gl_MultiTexCoord0;
+   gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+ }
+</Shader>
+
+<Shader scope="Fragment" name="ImageContrastFrag" location="Inline" language="GLSL" entry="main">
+
+<ApplicationUniform type="int" name="Texture" value="Texture" number_of_elements="1" defaultValue ="1"/>
+<ApplicationUniform type="float" name="Alpha" value="Alpha" number_of_elements="1" defaultValue ="1.0"/>
+<ApplicationUniform type="float" name="Lm" value="Lm" number_of_elements="1" defaultValue ="1.0"/>
+
+uniform sampler2D Texture;
+uniform float Alpha;
+uniform float Lm;
+void main()
+{
+   vec4 color = texture2D(Texture,gl_TexCoord[0].st);
+   gl_FragColor = Lm * (1.0 - Alpha) + color;
+}
+</Shader>
+</Material>

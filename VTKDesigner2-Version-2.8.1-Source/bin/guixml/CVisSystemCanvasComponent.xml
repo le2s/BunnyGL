@@ -1,0 +1,31 @@
+<component title="Visualization System Canvas" version="1.0" name="CVisSystemCanvasComponent">
+  <widget title="Visualization System Canvas" scriptName="VisNetwork" name="visSystemCanvas" parentWidget="MainWindowComponent.workspace"/>
+  <widget title="Canvas Thumbnail" hideWhenInactive="false" name="canvasThumbView" parentWidget="MainWindowComponent.window" parentWidgetHint="RightDockWidgetArea"/>
+  <action title="Zoom In" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::zoomIn()" icon=":/VisSystemCanvas/zoomin.png" name="zoomIn"/>
+  <action title="Zoom Out" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::zoomOut()" icon=":/VisSystemCanvas/zoomout.png" name="zoomOut"/>
+  <action title="Zoom One" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::zoomOne()" icon=":/VisSystemCanvas/zoomone.png" name="zoomOne"/>
+  <action title="Zoom Fit" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::zoomFit()" icon=":/VisSystemCanvas/zoomfit.png" name="zoomFit"/>
+  <action title="Layout Nodes" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::layoutNodes()" shortcut="Ctrl+L" icon=":/VisSystemCanvas/layoutnodes.png" name="layoutNodes"/>
+  <action title="Bring To Center" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::bringToCenter()" shortcut="F4" icon=":/VisSystemCanvas/bringtocenter.png" name="bringToCenter"/>
+  <action title="Copy" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::copy()" name="editCopy" mergeWith="MainWindowComponent.copy"/>
+  <action title="Cut" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::cut()" name="editCut" mergeWith="MainWindowComponent.cut"/>
+  <action title="Paste" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::paste()" name="editPaste" mergeWith="MainWindowComponent.paste"/>
+  <action title="Undo" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::undo()" name="editUndo" mergeWith="MainWindowComponent.undo"/>
+  <action title="Redo" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::redo()" name="editRedo" mergeWith="MainWindowComponent.redo"/>
+  <action title="Add Note" triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::addNote()" shortcut="F3" icon=":/VisSystemCanvas/note.png" name="addNote"/>
+  <action triggerSlot="CVisSystemCanvasComponent.visSystemCanvas::captureSnapshotToClipboard()" name="captureSnapshot" mergeWith="MainWindowComponent.captureSnapshot"/>
+  <toolbar title="Canvas Tools" name="canvasTools" before="MainWindowComponent.viewTools">
+    <toolbaritem actionName="CVisSystemCanvasComponent.zoomIn"/>
+    <toolbaritem actionName="CVisSystemCanvasComponent.zoomOut"/>
+    <toolbaritem actionName="CVisSystemCanvasComponent.zoomOne"/>
+    <toolbaritem actionName="CVisSystemCanvasComponent.zoomFit"/>
+  </toolbar>
+  <menu mergeWith="MainWindowComponent.editMenu">
+    <menuitem before="MainWindowComponent.configure"/>
+    <menuitem actionName="CVisSystemCanvasComponent.addNote" before="MainWindowComponent.configure"/>
+    <menuitem actionName="CVisSystemCanvasComponent.bringToCenter" before="MainWindowComponent.configure"/>
+    <menuitem actionName="CVisSystemCanvasComponent.layoutNodes" before="MainWindowComponent.configure"/>
+    <menuitem before="MainWindowComponent.configure"/>
+  </menu>
+  <method param1=":/VisSystemCanvas/notes.svg.qz" param2="yellow-notes" methodName="CVisSystemCanvasComponent.visSystemCanvas::setNoteSvgFile" param3="true"/>
+</component>

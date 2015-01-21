@@ -1,0 +1,674 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-344" Y="-338" Name="customUGrid" ClassName="vtkCustomUnstructuredGridSource" ID="0" >
+      <Property Type="bool" Name="StoreData" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="customUGrid" />
+      <Property Type="QString" Name="objectName" Value="customUGrid" />
+    </Node>
+    <Node X="-346" Y="-258.106" Name="popSplatter" ClassName="vtkGaussianSplatter" ID="1" >
+      <Property Type="QList&lt;double>" Name="ModelBounds" Value="" />
+      <Property Type="double" Name="Radius" Value="0.05" />
+      <Property Type="double" Name="ScaleFactor" Value="1" />
+      <Property Type="double" Name="ExponentFactor" Value="-5" />
+      <Property Type="bool" Name="NormalWarping" Value="true" />
+      <Property Type="double" Name="Eccentricity" Value="2.5" />
+      <Property Type="bool" Name="ScalarWarping" Value="false" />
+      <Property Type="int" Name="Capping" Value="1" />
+      <Property Type="QList&lt;int>" Name="SampleDimensions" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="popSplatter" />
+      <Property Type="QString" Name="objectName" Value="popSplatter" />
+    </Node>
+    <Node X="-343" Y="-11" Name="popActor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#fffcf0" />
+      <Property Type="double" Name="Opacity" Value="0.3" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="popActor" />
+      <Property Type="QString" Name="objectName" Value="popActor" />
+    </Node>
+    <Node X="-339" Y="91" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-335" Y="181" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-348.231" Y="-183.413" Name="popSurface" ClassName="vtkContourFilter" ID="5" >
+      <Property Type="int" Name="NumberOfContours" Value="3" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="bool" Name="ComputeGradients" Value="false" />
+      <Property Type="bool" Name="ComputeScalars" Value="true" />
+      <Property Type="int" Name="ScalarArrayComponent" Value="0" />
+      <Property Type="ValueRange" Name="ValueRange" Value="0.01, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="popSurface" />
+      <Property Type="QString" Name="objectName" Value="popSurface" />
+    </Node>
+    <Node X="202" Y="-275" Name="axes" ClassName="vtkAxes" ID="6" >
+      <Property Type="Point3D" Name="Origin" Value="0, 0, 0" />
+      <Property Type="double" Name="ScaleFactor" Value="33.94" />
+      <Property Type="bool" Name="Symmetric" Value="false" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="axes" />
+      <Property Type="QString" Name="objectName" Value="axes" />
+    </Node>
+    <Node X="-128" Y="-258" Name="lateSplatter" ClassName="vtkGaussianSplatter" ID="7" >
+      <Property Type="QList&lt;double>" Name="ModelBounds" Value="" />
+      <Property Type="double" Name="Radius" Value="0.05" />
+      <Property Type="double" Name="ScaleFactor" Value="0.01" />
+      <Property Type="double" Name="ExponentFactor" Value="-5" />
+      <Property Type="bool" Name="NormalWarping" Value="true" />
+      <Property Type="double" Name="Eccentricity" Value="2.5" />
+      <Property Type="bool" Name="ScalarWarping" Value="true" />
+      <Property Type="int" Name="Capping" Value="1" />
+      <Property Type="QList&lt;int>" Name="SampleDimensions" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="lateSplatter" />
+      <Property Type="QString" Name="objectName" Value="lateSplatter" />
+    </Node>
+    <Node X="-132" Y="-187" Name="lateSurface" ClassName="vtkContourFilter" ID="8" >
+      <Property Type="int" Name="NumberOfContours" Value="3" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="bool" Name="ComputeGradients" Value="false" />
+      <Property Type="bool" Name="ComputeScalars" Value="true" />
+      <Property Type="int" Name="ScalarArrayComponent" Value="0" />
+      <Property Type="ValueRange" Name="ValueRange" Value="0.01, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="lateSurface" />
+      <Property Type="QString" Name="objectName" Value="lateSurface" />
+    </Node>
+    <Node X="-342" Y="-97" Name="popMapper" ClassName="vtkPolyDataMapper" ID="9" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="popMapper" />
+      <Property Type="QString" Name="objectName" Value="popMapper" />
+    </Node>
+    <Node X="-547" Y="-17" Name="popProperty" ClassName="vtkProperty" ID="10" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#fffcf0" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="0.3" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#fffcf0" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="popProperty" />
+      <Property Type="QString" Name="objectName" Value="popProperty" />
+    </Node>
+    <Node X="-126" Y="-96" Name="lateMapper" ClassName="vtkPolyDataMapper" ID="11" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="lateMapper" />
+      <Property Type="QString" Name="objectName" Value="lateMapper" />
+    </Node>
+    <Node X="-127" Y="-11" Name="lateActor" ClassName="vtkActor" ID="12" >
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="lateActor" />
+      <Property Type="QString" Name="objectName" Value="lateActor" />
+    </Node>
+    <Node X="31" Y="-12" Name="lateProperty" ClassName="vtkProperty" ID="13" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2424" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2424" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2424" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="lateProperty" />
+      <Property Type="QString" Name="objectName" Value="lateProperty" />
+    </Node>
+    <Node X="209" Y="-194" Name="axesTubes" ClassName="vtkTubeFilter" ID="14" >
+      <Property Type="double" Name="Radius" Value="1.358" />
+      <Property Type="VaryRadius" Name="VaryRadius" Value="0" />
+      <Property Type="int" Name="NumberOfSides" Value="6" />
+      <Property Type="double" Name="RadiusFactor" Value="10" />
+      <Property Type="Point3D" Name="DefaultNormal" Value="0, 0, 1" />
+      <Property Type="bool" Name="UseDefaultNormal" Value="false" />
+      <Property Type="bool" Name="SidesShareVertices" Value="true" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="int" Name="OnRatio" Value="1" />
+      <Property Type="int" Name="Offset" Value="0" />
+      <Property Type="TCoords" Name="GenerateTCoords" Value="0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="axesTubes" />
+      <Property Type="QString" Name="objectName" Value="axesTubes" />
+    </Node>
+    <Node X="213" Y="-94" Name="axesMapper" ClassName="vtkPolyDataMapper" ID="15" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="axesMapper" />
+      <Property Type="QString" Name="objectName" Value="axesMapper" />
+    </Node>
+    <Node X="218" Y="-12" Name="axesActor" ClassName="vtkActor" ID="16" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="axesActor" />
+      <Property Type="QString" Name="objectName" Value="axesActor" />
+    </Node>
+    <Node X="-580" Y="87" Name="camera" ClassName="vtkCamera" ID="17" >
+      <Property Type="Point3D" Name="Position" Value="-55.41, 65.93, 225.7" />
+      <Property Type="Point3D" Name="FocalPoint" Value="33.36, 6.078, -2.056" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.1058, 0.9711, -0.214" />
+      <Property Type="double" Name="Distance" Value="251.6" />
+      <Property Type="double" Name="Roll" Value="1.197" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="370.8" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.3528, 0.2379, 0.905" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Connection Sender="customUGrid" SPathIndex="2" Receiver="popSplatter" RPathIndex="3" />
+    <Connection Sender="popActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="popSplatter" SPathIndex="2" Receiver="popSurface" RPathIndex="3" />
+    <Connection Sender="customUGrid" SPathIndex="2" Receiver="lateSplatter" RPathIndex="3" />
+    <Connection Sender="lateSplatter" SPathIndex="2" Receiver="lateSurface" RPathIndex="3" />
+    <Connection Sender="popSurface" SPathIndex="2" Receiver="popMapper" RPathIndex="2" />
+    <Connection Sender="popMapper" SPathIndex="3" Receiver="popActor" RPathIndex="3" />
+    <Connection Sender="popProperty" SPathIndex="1" Receiver="popActor" RPathIndex="5" />
+    <Connection Sender="lateSurface" SPathIndex="2" Receiver="lateMapper" RPathIndex="2" />
+    <Connection Sender="lateMapper" SPathIndex="3" Receiver="lateActor" RPathIndex="3" />
+    <Connection Sender="lateActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="lateProperty" SPathIndex="1" Receiver="lateActor" RPathIndex="5" />
+    <Connection Sender="axes" SPathIndex="2" Receiver="axesTubes" RPathIndex="3" />
+    <Connection Sender="axesTubes" SPathIndex="2" Receiver="axesMapper" RPathIndex="2" />
+    <Connection Sender="axesMapper" SPathIndex="3" Receiver="axesActor" RPathIndex="3" />
+    <Connection Sender="axesActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="223.5262449528937" X="-675.7738896366082" Y="-267.1601615074025" Height="200" >See how VTKDesigner2 used to visualize financial data
+
+vtkGaussianSplatter creates 'splats' of input points</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[
+popSurface.setValue(0,0.01);
+lateSurface.setValue(0,0.01);
+
+var bnds = popSplatter.ModelBounds;
+
+axes.Origin = bnds;
+var obj = popSplatter.getOutputDataObject(0);
+axes.ScaleFactor = obj.length() / 5;
+axesTubes.Radius = axes.ScaleFactor / 25.0;
+
+// Event handler for OnRequestData event of customUGrid
+function customUGrid_OnRequestData()
+{
+	var data = new Array(7.26,5.27,8.01,16.84,8.21,15.75,10.62,15.47
+ ,5.63,9.50,15.29,15.65,11.51,11.21,10.33,10.78
+,15.11,7.09,6.58,16.84,8.70,13.23,23.85,9.65
+,15.49,16.83,26.57,9.12,9.36,22.01,7.50,9.23
+,12.35,6.75,10.56,9.55,16.85,13.19,18.96,10.36
+,8.50,8.17,14.78,11.87,12.08,8.45,12.41,10.63
+,25.57,17.18,8.74,14.40,9.75,8.48,10.73,5.97
+,18.38,12.91,8.98,14.39,6.96,23.19,6.43,6.28
+,11.21,6.21,5.73,10.87,5.71,8.04,20.27,7.30
+,16.16,15.77,15.68,10.18,15.48,23.23,12.86,12.51
+,12.59,7.54,9.33,26.63,21.69,7.30,7.61,8.31
+,9.87,23.48,10.08,23.92,10.56,11.46,17.64,16.46
+,5.24,18.04,18.04,11.99,16.87,15.52,14.69,11.30
+,12.35,11.05,7.75,15.58,36.70,14.88,17.73,12.35
+,26.19,10.23,9.80,11.98,12.25,11.95,10.06,11.11
+,26.08,9.99,9.96,31.70,14.76,20.97,8.89,11.04
+,10.52,8.21,12.38,11.52,12.76,22.67,9.61,8.26
+,8.07,14.03,6.38,14.48,12.61,18.39,11.77,9.96
+,14.91,13.15,9.75,7.80,11.88,14.07,8.12,10.28
+,16.73,13.94,12.17,13.61,13.68,9.10,16.32,11.28
+,35.35,20.70,16.09,6.62,17.48,11.74,13.20,19.21
+,12.43,52.52,46.22,14.59,15.72,19.32,14.21,12.44
+,15.92,6.58,18.51,15.73,16.77,12.58,14.66,29.72
+,10.81,6.15,9.39,5.76,14.21,7.55,52.15,5.21
+,8.53,11.46,11.50,13.59,16.24,8.82,12.20,9.41
+,6.45,19.43,19.85,8.04,19.14,9.11,12.52,9.43
+,17.77,35.95,22.76,11.49,11.29,10.18,9.45,9.90
+,7.26,11.11,8.00,13.11,6.12,5.53,7.94,7.45
+,8.29,4.82,8.64,7.51,12.42,9.49,7.74,12.50
+,10.96,11.42,11.79,12.42,11.69,10.57,9.73,13.03
+,7.52,5.90,7.41,15.36,6.81,5.75,9.68,9.33
+,8.80,12.15,10.88,7.34,13.01,5.41,36.35,12.19
+,9.09,11.52,13.86,10.10,17.11,13.93,8.98,28.18
+,17.04,27.36,13.74,11.45,28.69,13.47,10.15,12.09
+,15.06,10.41,16.99,12.10,9.50,21.83,12.42,14.08
+,12.53,11.87,11.16,15.14,12.40,11.30,12.03,10.58
+,6.16,9.14,7.49,19.45,24.48,27.97,10.37,20.76
+,13.27,10.83,14.64,21.18,13.62,10.80,6.10,14.05
+,14.09,8.11,10.17,14.17,14.59,11.15,9.70,8.96
+,14.13,13.23,7.23,14.61,11.40,12.57,17.97,13.50
+,5.59,6.20,13.46,11.07,8.74,16.76,21.71,13.74
+,11.36,9.17,15.63,46.59,12.83,11.92,19.17,12.50
+,9.91,11.61,10.21,10.79,9.79,10.16,12.84,13.18
+,14.83,9.69,14.67,6.53,10.42,16.96,11.58,13.38
+,12.34,11.61,8.14,14.08,13.38,8.28,13.30,15.31
+,13.67,10.38,8.66,15.17,10.03,8.79,13.82,14.52
+,9.63,12.35,12.26,10.16,10.97,12.96,10.97,10.70
+,9.24,15.08,10.33,11.80,8.09,15.24,17.78,22.42
+,12.56,10.60,9.79,10.12,15.14,5.80,4.76,8.07
+,12.37,14.25,11.40,13.51,6.97,14.29,11.15,18.25
+,7.02,14.94,11.67,10.61,8.35,14.08,9.73,25.88
+,11.84,11.60,8.82,11.00,11.26,14.13,19.51,16.88
+,16.73,11.55,13.47,14.46,16.37,11.30,9.65,12.69
+,6.57,9.67,13.77,13.80,24.44,9.90,6.50,17.17
+,12.36,14.74,15.21,10.73,12.37,14.88,17.38,16.84
+,12.32,26.61,21.06,8.28,14.30,31.96,12.01,14.73
+,16.92,9.66,11.67,21.08,12.43,18.08,11.04,9.91
+,25.84,6.41,16.02,17.56,8.35,10.64,16.90,28.45
+,16.25,11.27,9.92,16.46,15.46,37.26,18.57,8.58
+,9.93,20.94,7.05,15.59,17.10,5.74,11.06,7.83
+,20.47,18.03,13.66,9.16,6.60,12.33,23.40,7.02
+,14.25,10.47,26.11,14.17,19.93,13.17,13.83,10.46
+,14.87,11.64,28.56,12.02,22.43,21.00,31.69,23.29
+,20.19,26.10,14.20,23.55,11.20,14.98,14.09,21.46
+,9.01,31.79,14.96,13.65,15.03,14.49,26.93,12.97
+,13.99,16.09,8.49,31.23,12.43,5.79,30.27,17.52
+,20.19,11.20,11.20,4.88,9.33,21.39,15.65,14.32
+,11.78,9.49,28.09,19.86,15.39,23.07,15.49,12.34
+,6.76,10.86,15.38,9.59,12.35,65.58,10.91,10.03
+,11.19,7.00,37.19,12.33,17.26,7.79,11.14,24.63
+,16.29,7.83,15.87,25.18,18.16,14.08,10.34,16.03
+,12.59,12.10,9.53,10.71,42.78,11.25,4.98,15.07
+,9.10,23.24,5.91,4.28,10.80,14.89,19.18,12.64
+,11.78,14.11,27.87,16.80,14.89,12.36,12.61,18.51
+,25.30,5.84,9.01,16.96,18.00,25.02,23.85,14.06
+,6.93,23.98,7.48,19.62,5.16,12.78,7.97,17.78
+,12.12,21.29,10.90,9.72,7.35,11.61,81.21,15.64
+,17.85,6.25,21.74,13.90,12.53,31.17,10.37,5.65
+,21.24,7.30,14.65,35.05,12.91,15.53,9.79,11.70
+,13.35,19.52,7.74,8.32,17.03,15.11,11.26,34.74
+,6.75,14.61,14.97,14.16,17.68,11.54,28.68,21.00
+,11.89,11.98,15.62,11.80,12.20,13.48,10.98,16.48
+,15.10,15.17,25.89,16.23,12.56,11.24,59.66,9.39
+,14.74,13.15,17.36,13.40,13.18,24.70,17.87,11.69
+,6.98,13.91,4.49,15.54,12.67,36.89,9.58,10.57
+,16.19,13.99,7.52,14.40,9.30,29.96,15.34,15.95
+,13.98,20.68,12.58,13.88,12.52,25.31,12.85,16.68
+,16.58,8.80,13.75,12.56,10.91,4.95,9.51,9.77
+,14.19,10.10,6.65,19.06,12.79,13.21,12.71,11.84
+,11.49,10.57,13.32,8.24,5.40,14.66,13.64,22.48
+,4.18,39.52,19.85,7.57,25.86,9.30,15.65,5.82
+,11.65,12.35,13.38,9.64,7.54,10.90,15.51,19.07
+,14.37,12.42,14.20,5.98,12.99,15.76,17.33,15.23
+,10.88,13.94,18.08,14.75,14.21,11.60,9.18,14.17
+,28.29,23.33,17.97,9.98,10.27,11.43,13.47,14.51
+,12.19,15.74,11.71,12.70,18.51,13.53,12.82,13.15
+,24.66,12.19,10.96,18.74,12.61,27.71,8.99,14.70
+,11.39,11.01,23.75,22.82,12.96,12.21,15.63,12.40
+,20.77,12.63,6.86,11.01,18.22,16.37,8.32,4.21
+,16.54,14.95,16.17,11.89,22.40,32.02,11.89,15.26
+,12.53,14.90,16.21,11.60,29.30,25.17,10.72,15.45
+,19.40,13.99,8.44,14.78,29.41,12.44,12.20,12.47
+,12.22,7.15,7.93,16.64,13.60,7.71,13.88,26.75
+,6.01,11.24,12.55,14.37,15.28,18.64,17.14,15.48
+,10.22,11.92,8.71,10.95,15.91,9.99,16.81,11.46
+,14.25,7.81,9.10,12.52,20.59,30.95,23.46,11.78
+,10.94,13.81,16.83,13.51,12.58,12.06,15.71,12.88
+,17.45,12.29,14.48,7.58,21.03,12.81,8.33,12.98
+,9.00,13.86,19.53,21.13,25.24,14.61,12.72,14.65
+,9.36,15.67,4.28,15.45,13.89,13.32,11.72,10.86
+,14.86,37.40,10.01,9.34,14.10,12.23,24.80,5.49
+,14.56,12.69,15.16,9.69,24.25,15.18,8.48,16.72
+,21.98,15.94,10.30,11.57,10.46,15.53,14.88,7.98
+,10.65,11.97,10.83,14.45,13.47,9.73,14.56,24.60
+,13.94,7.07,16.39,6.56,13.27,12.99,12.13,8.50
+,10.69,6.41,10.04,9.61,36.74,34.24,13.10,19.66
+,7.45,16.71,13.32,18.92,29.92,11.68,15.07,12.80
+,11.70,13.98,9.68,8.39,25.66,15.88,27.56,9.69
+,16.35,20.52,9.00,25.02,10.65,10.69,9.20,10.99
+,20.21,14.60,16.97,7.15,7.77,10.52,13.39,20.69
+,17.18,10.66,32.91,15.60,12.52,9.71,23.40,14.73
+,8.66,28.35,11.37,13.02,28.68,10.84,13.09,16.68
+,12.55,8.75,14.11,12.86,26.12,12.02,22.91,31.63
+,9.85,5.40,14.01,14.10,9.66,9.49,5.36,13.02
+,11.26,13.87,13.44,13.50,12.31,9.18,9.56,12.24
+,12.78,22.01,9.49,13.54,20.28,16.74,12.97,27.87
+,7.45,11.83,25.72,48.69,11.94,11.67,25.87,37.02
+,14.10,13.85,11.54,15.80,12.48,15.10,12.36,16.98
+,24.15,22.46,14.59,6.58,13.14,7.98,17.93,47.28
+,10.75,10.39,34.34,16.33,14.55,10.55,12.39,18.16
+,11.30,11.23,17.47,12.27,7.54,28.41,9.52,14.66
+,12.77,10.28,17.66,8.99,13.58,18.07,18.73,11.91
+,14.11,53.74,17.72,15.14,25.97,41.78,18.36,12.40
+,15.82,14.23,11.35,7.15,24.02,17.53,15.12,14.16
+,21.89,9.96,12.43,16.66,19.15,22.07,14.20,16.40
+,11.60,24.55,11.63,19.97,12.32,11.49,12.47,39.19
+,12.27,14.45,19.08,13.61,9.71,20.43,12.63,15.64
+,15.48,26.02,7.28,9.98,11.17,12.37,17.96,26.54
+,11.59,28.17,9.39,16.90,10.11,12.65,11.08,13.18
+,10.31,19.36,26.59,26.31,18.19,18.52,7.86,6.53
+,10.34,47.13,26.30,10.64,11.90,53.21,14.92,8.11
+,11.13,18.04,10.59,13.39,12.58,25.81,21.12,18.78
+,10.65,16.07,18.29,10.37,13.21,31.80,10.05,13.79
+,9.09,9.84,31.53,16.09,33.21,47.09,46.16,7.57
+,42.33,20.86,31.72,3.67,23.45,9.99,8.75,15.90
+,10.98,8.90,14.06,12.42,26.29,11.95,8.20,14.64
+,11.45,44.02,9.28,41.00,10.89,8.84,9.27,17.78
+,11.84,8.13,8.34,17.09,11.49,13.49,13.11,14.98
+,11.76,25.75,12.04,17.07,11.11,13.03,7.84,28.13
+,12.70,13.01,29.15,19.22,13.25,12.65,13.36,10.73
+,11.09,16.29,7.90,15.90,28.39,15.17,14.56,24.13
+,9.03,21.31,35.58,18.09,18.04,13.39,18.73,10.22
+,33.63,10.76,15.11,64.92,44.69,11.94,16.46,8.52
+,10.14,6.77,14.87,6.54,8.51,26.35,10.43,28.37
+,6.83,22.96,18.09,10.43,19.07,12.34,9.69,40.66
+,7.07,20.48,27.99,5.07,10.80,6.10,7.52,11.36
+,14.30,10.92,11.32,8.68,15.40,13.12,9.46,21.57
+,11.11,42.69,20.75,10.91,21.46,22.12,13.09,30.41
+,19.89,21.08,21.24,10.73,12.73,9.05,20.83,36.06
+,47.40,11.29,14.20,24.72,51.41,16.40,34.10,15.87
+,15.17,8.37,23.48,18.28,12.86,33.45,27.83,11.90
+,41.23,16.15,45.48,16.54,15.27,14.41,13.18,9.61
+,10.87,6.60,6.99,16.53,11.53,5.28,19.26,10.99
+,18.93,10.49,13.64,19.44,11.27,7.26,10.96,13.70
+,12.59,13.12,10.59,9.66,13.02,14.37,13.72,14.43
+,10.71,24.00,8.45,13.71,24.65,15.91,11.77,9.74
+,8.95,8.65,28.22,15.91,12.63,14.08,24.86,10.96
+,9.61,12.45,10.13,16.05,8.69,9.76,11.64,9.51
+,8.96,9.05,20.30,12.15,11.51,26.47,13.63,12.24
+,10.15,21.69,22.88,19.18,12.18,23.39,56.79,13.04
+,9.97,13.91,11.97,18.98,26.01,15.74,24.33,48.14
+,10.79,21.03,15.30,63.79,20.45,35.77,13.38,7.85
+,16.99,17.41,43.42,13.98,16.77,16.88,15.10,10.34
+,14.44,19.54,14.97,17.01,8.84,19.04,23.23,8.29
+,17.51,10.87,10.08,12.75,7.87,11.31,31.78,12.56
+,44.53,13.30,9.39,28.83,5.01,9.62,8.88,6.51
+,6.92,61.06,9.73,29.25,21.36,7.02,8.93,9.48
+,8.39,45.85,12.75,8.16,12.10,11.23,10.82,13.34
+,11.39,12.80,11.26,14.36,15.49,14.70,9.93,10.86
+,15.77,30.68,18.11,27.32,33.08,12.93,24.45,8.34
+,13.37,8.49,11.47,24.73,11.97,18.67,13.35,10.03
+,9.31,18.01,32.80,13.86,32.57,6.67,8.38,5.92
+,18.29,7.73,10.74,28.86,25.14,9.72,11.36,15.21
+,31.54,23.69,33.82,24.33,14.58,13.43,18.93,25.74
+,13.16,6.90,15.20,28.44,14.56,10.59,32.36,13.29
+,12.93,10.74,15.52,8.24,10.98,8.00,20.70,9.64
+,9.36,11.15,10.95,14.09,14.73,18.51,9.57,8.19
+,18.76,14.89,17.43,20.95,19.24,12.00,13.43,8.19
+,11.72,18.57,13.45,37.69,17.00,30.92,6.65,17.41
+,11.88,18.85,26.62,11.67,39.08,6.95,15.54,5.86
+,17.20,9.83,12.72,27.34,27.44,6.69,10.45,8.91
+,11.88,29.91,33.65,7.87,8.68,14.23,23.34,11.31
+,9.25,19.18,11.24,9.14,11.17,13.80,11.77,11.26
+,10.69,17.53,14.03,23.49,34.98,15.79,14.17,15.78
+,8.73,9.53,13.42,9.25,16.64,11.35,12.32,24.24
+,15.59,17.08,33.84,12.03,16.24,13.30,11.32,10.88
+,9.49,6.49,16.39,11.73,36.37,21.19,11.32,20.71
+,11.77,6.91,10.48,20.46,33.98,20.40,26.31,10.32
+,5.89,26.82,22.53,29.75,14.53,10.62,36.18,11.27
+,11.60,9.11,12.42,4.54,11.44,30.27,7.45,15.95
+,24.63,19.77,31.47,12.89,36.70,15.57,29.01,16.51
+,8.58,13.25,13.47,13.17,53.87,8.07,9.11,8.59
+,27.41,36.41,10.29,24.82,28.25,26.17,32.67,14.56
+,13.65,13.16,13.38,24.14,9.32,9.68,21.44,11.10
+,12.22,12.74,38.40,11.13,17.75,14.09,18.00,8.82
+,17.93,17.15,30.88,26.55,23.68,16.93,20.79,12.31
+,12.74,12.74,18.29,7.81,22.44,5.85,26.10,16.11
+,5.72,46.08,8.26,11.83,14.74,17.15,27.79,8.86
+,17.48,9.01,11.32,10.43,21.20,22.66,6.78,10.26
+,6.24,32.17,11.94,25.20,17.00,14.15,11.87,7.16
+,55.35,44.16,25.94,4.64,19.11,27.47,10.73,6.66
+,9.93,16.41,10.35,12.36,43.69,15.66,11.92,7.69
+,17.36,10.41,39.93,11.99,36.14,11.18,17.16,12.98
+,14.22,13.28,5.28,21.18,15.48,10.34,6.86,16.97
+,26.48,16.53,11.51,9.66,15.95,34.92,8.56,8.90
+,7.68,30.38,21.26,35.95,27.00,25.02,10.29,6.65
+,28.21,17.50,9.80,12.47,26.75,8.17,11.75,10.85
+,10.23,29.84,5.81,9.02,31.22,12.03,14.88,23.42
+,12.26,13.40,13.63,6.97,10.96,16.60,26.47,10.01
+,10.04,15.78,17.50,8.19,8.00,8.66,7.40,29.22
+,37.09,17.16,27.83,15.15,38.62,13.10,26.24,12.97
+,12.17,48.14,7.93,12.77,13.24,13.64,39.67,54.95
+,9.47,31.36,18.14,24.24,10.43,9.43,18.84,49.48
+,22.25,16.48,53.79,20.77,24.09,11.53,12.67,9.11
+,17.06,31.63,4.14,7.56,18.11,50.84,11.65,22.93
+,11.08,13.46,25.82,51.89,17.85,7.68,17.05,25.72
+,11.72,13.05,25.41,12.50,6.12,11.32,9.70,6.34
+,16.26,15.78,6.83,17.81,11.19,24.71,8.09,21.43
+,42.43,25.86,10.58,17.44,14.41,10.89,9.32,15.53
+,10.37,13.21,14.51,17.95,22.13,6.76,6.65,11.28
+,6.40,13.68,50.22,14.58,19.11,20.65,12.40,16.95
+,8.84,40.46,19.72,19.10,8.82,8.28,33.23,15.67
+,51.85,13.45,7.99,12.06,10.62,10.73,18.99,11.65
+,24.44,32.61,6.67,17.61,14.47,12.23,12.79,13.01
+,22.47,17.82,18.72,14.39,18.12,9.59,12.73,7.42
+,13.41,8.14,27.85,17.71,15.61,13.52,9.45,14.96
+,52.77,17.23,13.84,15.70,18.78,14.22,16.16,11.73
+,14.05,13.25,10.76,20.74,13.85,24.69,10.21,32.95
+,11.76,16.69,20.10,13.47,14.33,14.18,8.17,20.30
+,14.01,14.63,18.88,25.09,12.76,25.58,54.31,21.77
+,53.04,10.57,20.23,13.67,14.73,10.69,12.05,10.69
+,7.46,20.17,28.62,24.22,23.04,11.23,7.47,25.06
+,40.19,30.25,25.92,10.18,9.87,11.87,15.49,38.31
+,8.68,11.72,12.06,6.57,11.70,9.10,15.16,16.73
+,8.54,13.62,11.89,18.55,13.04,15.06,22.90,24.83
+,8.60,7.58,12.89,11.76,12.23,16.71,16.30,13.57
+,67.30,8.91,12.96,15.66,12.65,19.00,37.41,16.33
+,19.47,11.71,12.60,18.21,24.04,59.74,17.78,28.54
+,27.07,24.45,14.23,20.09,12.65,14.92,25.55,19.14
+,22.63,12.47,33.73,10.72,18.75,24.03,10.44,8.85
+,12.04,27.31,15.85,5.20,16.87,19.65,14.51,45.04
+,8.68,37.69,42.67,31.38,19.56,19.21,7.18,21.25
+,11.49,43.88,7.93,13.25,10.28,7.46,9.33,12.42
+,35.70,15.67,14.01,12.13,15.21,7.83,59.93,36.02
+,23.29,11.10,9.56,20.14,15.45,17.61,7.12,36.27
+,14.38,19.35,23.47,13.81,16.11,13.96,13.84,32.88
+,12.59,17.03,6.79,16.34,19.57,17.32,13.86,12.74
+,12.21,52.50,13.54,41.69,7.26,7.97,16.31,12.55
+,17.92,12.70,15.48,12.93,15.98,22.08,27.02,16.84
+,19.38,14.36,13.78,9.37,17.07,19.05,17.69,18.54
+,10.63,9.39,13.07,10.64,5.74,9.26,9.95,22.57
+,23.60,13.19,11.58,4.93,9.98,8.41,7.71,10.93
+,20.13,9.97,17.84,25.17,12.22,13.04,11.30,21.66
+,19.20,6.99,11.16,14.46,11.81,22.38,15.76,6.85
+,15.07,8.63,12.30,20.13,17.47,14.51,7.17,3.93
+,40.10,29.79,16.48,15.27,10.87,13.22,52.35,14.24
+,27.59,16.85,28.41,8.54,10.89,8.08,12.78,10.85
+,9.68,19.01,11.02,8.80,10.64,121.91,11.74,8.43
+,43.84,33.10,35.10,7.95,11.73,9.82,7.73,15.19
+,8.08,12.06,8.15,11.59,11.01,16.22,7.74,7.48
+,12.32,13.58,32.18,8.37,12.26,20.25,11.27,16.73
+,16.35,14.04,21.07,7.06,13.04,68.77,16.58,29.50
+,29.23,5.12,6.78,18.86,19.31,9.14,48.02,8.57
+,20.89,9.23,36.83,14.56,11.52,10.37,7.45,14.25
+,8.92,14.21,7.50,14.05,8.89,10.78,11.82,17.53
+,10.36,9.61,11.94,6.45,10.82,20.57,5.39,13.93
+,11.48,19.26,13.78,9.81,25.84,13.17,9.32,6.31
+,30.74,16.74,10.60,21.46,6.90,15.60,12.84,7.29
+,10.03,16.89,13.69,58.99,29.30,24.19,11.30,18.60
+,10.26,44.30,29.72,14.49,15.32,34.83,16.35,12.22
+,9.81,4.95,17.17,11.74,27.71,13.63,13.82,12.19
+,7.84,41.42,10.47,27.60,26.48,24.88,17.91,13.80
+,10.66,24.89,14.32,23.40,32.32,18.83,16.71,12.07
+,18.72,14.70,11.34,15.82,11.70,28.01,30.72,24.45
+,12.18,12.74,8.70,19.60,12.28,26.24,33.90,13.96
+,9.39,11.07,14.23,7.14,20.49,9.02,17.42,14.97
+,16.06,10.99,27.76,14.76,19.30,9.25,31.85,18.77
+,39.92,21.18,11.17,13.76,17.89,15.48,22.06,9.14
+,24.14,34.92,20.71,13.03,16.77,8.91,11.63,29.78
+,19.47,16.75,6.49,26.55,13.43,67.63,19.02,9.79
+,14.07,9.65,37.03,23.60,17.30,10.64,17.92,9.16
+,38.37,25.47,37.25,33.35,9.31,25.05,11.41,7.12
+,10.59,27.75,31.95,24.69,12.02,9.78,42.53,27.21
+,19.70,28.72,10.65,25.53,8.53,9.83,25.74,22.37
+,24.46,10.80,8.36,14.32,22.61,27.10,25.61,6.29
+,20.02,18.91,12.19,10.80,27.08,11.09,27.27,38.30
+,15.17,14.71,17.99,17.44,16.76,8.06,8.98,9.31
+,13.03,8.69,10.40,16.44,14.68,13.95,12.74,18.70
+,6.37,12.32,17.98,11.71,12.99,21.57,20.23,11.12
+,17.29,10.52,16.07,9.72,14.62,15.81,10.26,7.91
+,16.93,11.77,18.25,11.19,17.98,11.72,16.09,7.13
+,16.82,15.82,7.98,8.85,13.24,16.55,14.41,17.43
+,18.05,18.12,16.57,14.74,9.20,6.50,6.27,8.30
+,6.26,17.04,13.18,8.20,9.59,8.60,9.02,7.54
+,14.56,11.98,7.54,8.48,11.17,9.23,11.43,7.56
+,14.40,7.65,10.37,9.14,7.08,5.59,10.95,9.30
+,9.88,10.05,8.52,16.62,5.98,8.57,9.75,10.51
+,10.56,9.79,14.16,13.16,6.31,7.99,13.84,8.22
+,15.63,7.29,7.83,10.81,6.13,11.53,7.15,13.01
+,9.19,11.73,10.88,7.48,10.41,9.28,12.96,7.48
+,7.19,7.12,12.20,12.27,14.45,6.90,8.05,8.30
+,9.94,9.86,5.83,12.32,8.78,9.33,9.40,9.80
+,8.82,11.18,12.00,12.82,7.79,12.46,7.17,11.60
+,9.34,8.80,8.10,8.42,7.48,8.24,16.57,12.84
+,12.78,8.40,9.90,10.27,7.08,9.29,11.10,11.61
+,10.07,13.11,9.67,14.26,11.51,7.33,13.05,10.19
+,10.70,7.46,9.40,9.22,8.19,7.58,14.07,6.80
+,15.45,14.23,11.51,9.56,15.08,18.68,7.71,16.81
+,8.45,19.51,7.03,10.64,11.25,6.58,10.44,5.88
+,9.83,13.30,11.19,15.00,16.36,12.30,10.15,11.44
+,15.64,7.96,4.50,10.91,14.05,15.03,10.63,13.13
+,8.54,11.02,14.90,7.32,9.96,9.03,16.63,7.28
+,8.93,11.89,6.59,11.30,15.51,10.75,10.16,10.27
+,7.64,13.09,8.46,11.03,8.71,11.23,5.08,14.59
+,10.98,9.43,11.32,10.04,12.42,12.83,14.59,13.84
+,13.33,4.73,2.91,6.98,11.81,17.89,6.36,7.98
+,11.37,8.97,7.18,8.74,10.83,14.09,10.54,13.24
+,12.75,9.09,6.14,3.44,12.67,11.39,13.26,11.44
+,10.10,11.92,10.18,9.30,7.67,15.48,15.05,11.89
+,10.96,17.42,11.43,12.35,9.45,14.26,14.35,10.20
+,5.45,8.20,14.32,6.41,6.96,8.68,12.43,12.29
+,9.47,11.85,13.11,6.60,12.41,9.22,6.34,7.06
+,18.42,15.30,12.15,11.69,11.50,13.85,9.31,11.40
+,11.50,11.65,13.85,10.99,9.70,10.89,10.35,11.53
+,11.58,9.87,7.90,9.51,12.33,14.62,5.51,7.27
+,15.94,6.45,13.59,12.85,6.23,12.62,8.39,11.68
+,5.83,9.29,5.58,8.14,9.74,8.96,12.63,12.34
+,12.70,21.37,7.46,6.92,6.08,14.08,6.64,10.78
+,3.44,11.47,21.21,4.72,9.22,8.75,14.06,11.71
+,17.15,12.83,10.55,7.66,9.17,3.30,6.45,12.81
+,11.79,17.52,10.54,13.41,13.18,12.65,8.43,10.27
+,7.75,9.55,10.27,9.95,12.32,13.11,8.21,12.33
+,11.13,9.45,13.13,14.98,21.22,12.33,16.33,13.41
+,9.22,18.77,3.95,8.56,14.76,6.86,5.52,8.25
+,12.20,10.54,12.42,8.22,10.09,11.89,11.27,9.00
+,14.79,7.75,10.61,12.61,14.39,10.98,7.57,8.85
+,20.01,14.89,9.82,12.61,13.47,13.96,9.42,11.06
+,13.62,6.91,10.09,12.73,8.64,11.24,10.86,14.28
+,11.47,6.86,13.92,14.60,12.50,6.24,7.35,12.66
+,14.27,9.92,4.83,11.21,9.14,12.35,10.30,14.79
+,9.63,10.61,16.01,15.32,16.24,12.00,19.52,13.12
+,14.03,10.27,5.96,10.74,12.45,13.88,12.91,15.10
+,15.40,8.22,9.68,9.78,19.11,10.02,10.47,11.96
+,7.56,19.29,19.70,8.36,12.01,9.45,13.45,10.50
+,6.99,7.99,12.51,16.93,16.35,9.67,11.76,11.84
+,7.38,13.85,8.92,9.33,13.59,8.16,15.81,14.24
+,9.36,11.16,13.82,19.67,10.83,19.19,8.59,13.89
+,5.24,12.14,14.37,13.26,9.15,15.97,11.39,12.80
+,4.34,14.78,9.45,19.40,6.66,15.80,12.47,9.98
+,14.89,9.08,15.34,17.97,8.76,10.70,11.79,16.09
+,14.23,7.57,11.92,11.51,16.48,19.42,16.70,7.22
+,11.95,8.54,12.00,16.00,6.88,8.54,9.86,7.57
+,11.32,10.64,10.63,12.36,11.20,10.86,13.88,16.60
+,15.13,4.99,15.09,11.89,12.26,13.30,11.93,7.03
+,9.25,10.79,13.52,8.54,6.99,8.09,10.06,9.98
+,8.13,16.31,10.84,17.65,12.12,15.35,20.20,16.26
+,11.33,11.35,9.33,10.38,14.24,19.97,7.35,9.93
+,12.47,11.77,7.61,19.31,5.76,9.28,7.65,10.46
+,16.97,12.12,8.34,5.80,19.27,10.79,14.94,8.45
+,7.15,17.70,10.62,6.44,15.45,15.99,12.13,18.12
+,15.63,14.50,11.83,13.10,8.13,10.02,11.37,12.26
+,8.65,6.72,15.05,11.77,8.90,11.07,6.14,15.36
+,11.34,8.34,8.77,12.52,10.68,13.29,8.02,11.44
+,14.79,17.93,9.56,9.44,11.78,8.46,6.52,7.39
+,16.90,18.81,11.41,8.80,10.38,9.34,15.45,14.62
+,7.00,13.69,16.21,13.74,11.37,14.34,10.03,4.63
+,9.96,8.89,12.08,11.48,12.71,10.82,15.80,18.80
+,14.57,9.76,12.66,13.44,9.83,7.73,8.30,13.20
+,7.81,6.01,10.09,10.12,9.67,14.91,11.27,15.08
+,10.88,11.91,14.32,7.32,12.44,10.81,11.88,11.03
+,19.37,15.01,17.16,16.87,10.54,6.29,7.73,17.55
+,8.18,9.78,10.80,18.11,18.24,10.85,7.51,11.57
+,17.00,15.62,15.30,13.37,18.23,7.45,20.48,7.28
+,12.18,8.96,10.69,16.59,16.41,14.24,9.16,7.07
+,11.41,11.21,10.64,9.86,16.22,13.37,6.55,12.82
+,12.03,13.39,14.82,10.95,10.35,10.09,14.53,8.65
+,15.04,9.95,10.18,7.70,4.30,15.08,7.66,5.57
+,13.54,14.96,13.11,12.31,11.66,10.06,8.54,14.90
+,11.74,16.40,4.74,8.87,14.08,18.07,6.32,14.05
+,9.53,11.96,11.02,8.20,11.50,7.78,8.58,15.47
+,8.83,14.08,16.00,7.46,10.20,11.76,16.52,13.12
+,6.52,15.18,14.12,13.11,10.15,16.97,9.98,8.39
+,8.41,10.20,8.60,7.22,16.70,10.70,15.35,6.34
+,16.28,7.18,5.25,9.16,17.19,4.20,8.34,18.85
+,15.25,15.35,7.12,13.90,7.78,14.00,9.68,8.00
+,10.22,16.95,5.41,11.98,11.89,5.52,9.23,12.62
+,7.57,12.40,11.94,11.36,13.17,12.21,10.42,18.03
+,4.02,6.61,14.31,5.58,8.30,12.55,8.81,12.01
+,13.20,4.88,11.16,17.21
+);
+
+
+customUGrid.setPoints(data);
+
+}
+customUGrid.OnRequestData.connect(customUGrid_OnRequestData);
+customUGrid.markModified();
+renderWindow.render();
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+  <ProjectPart ID="customUGrid" />
+</VWVisProject>

@@ -1,0 +1,16 @@
+<component name="UpdaterComponent">
+
+    <object name="controller" />
+
+    <action name="checkForUpdates" title="Check for Updates"
+            triggerSlot="UpdaterComponent.controller::checkForUpdates()" 
+            icon=":/GCF/checkForUpdates.png" />
+
+    <menu mergeWith="MainWindowComponent.helpMenu">
+        <menuitem before="MainWindowComponent.vclWeb"/>
+        <menuitem actionName="UpdaterComponent.checkForUpdates"
+                  before="MainWindowComponent.vclWeb"/>
+        <menuitem before="MainWindowComponent.vclWeb"/>
+    </menu>
+
+</component>

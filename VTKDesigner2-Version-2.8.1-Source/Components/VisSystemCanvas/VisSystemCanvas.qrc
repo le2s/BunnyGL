@@ -1,0 +1,24 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/VisSystemCanvas">
+    <file alias="open.png">icons/open.png</file>
+    <file alias="new.png">icons/new.png</file>
+    <file alias="save.png">icons/save.png</file>
+    <file alias="cut.png">icons/cut.png</file>
+    <file alias="saveas.png">icons/saveas.png</file>
+    <file alias="zoomfit.png">icons/zoomfit.png</file>
+    <file alias="zoomin.png">icons/zoomin.png</file>
+    <file alias="zoomone.png">icons/zoomone.png</file>
+    <file alias="zoomout.png">icons/zoomout.png</file>
+    <file alias="find.png">icons/find.png</file>
+    <file alias="paste.png">icons/paste.png</file>
+    <file alias="redo.png">icons/redo.png</file>
+    <file alias="undo.png">icons/undo.png</file>
+    <file alias="copy.png">icons/cut.png</file>
+    <file alias="bringtocenter.png">icons/bringtocenter.png</file>
+    <file alias="layoutnodes.png">icons/layoutnodes.png</file>
+    <file alias="canvas.png">icons/canvas.png</file>
+    <file alias="notes.svg.qz">icons/notes.svg.qz</file>
+    <file alias="note.png">icons/note.png</file>
+    <file alias="deleteNote.png">icons/deleteNote.png</file>
+</qresource>
+</RCC>

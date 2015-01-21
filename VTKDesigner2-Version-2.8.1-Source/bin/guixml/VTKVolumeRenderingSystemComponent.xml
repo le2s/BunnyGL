@@ -1,0 +1,3 @@
+<component title="VTKVolumeRenderingSystemComponent" name="VTKVolumeRenderingSystemComponent" >
+    <object name="controller" />
+</component>

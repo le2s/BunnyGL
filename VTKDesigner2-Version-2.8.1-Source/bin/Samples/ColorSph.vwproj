@@ -1,0 +1,101 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-3.28528" Y="-89.2147" Name="colorIt" ClassName="vtkElevationFilter" ID="0" >
+      <Property Type="Point3D" Name="LowPoint" Value="0, 0, -1" />
+      <Property Type="Point3D" Name="HighPoint" Value="0, 0, 1" />
+      <Property Type="ValueRange" Name="ScalarRange" Value="0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="colorIt" />
+      <Property Type="QString" Name="objectName" Value="colorIt" />
+    </Node>
+    <Node X="-2.5" Y="-2.5" Name="mapper" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="mapper" />
+      <Property Type="QString" Name="objectName" Value="mapper" />
+    </Node>
+    <Node X="0" Y="82.5" Name="actor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1.5, 2" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="actor" />
+      <Property Type="QString" Name="objectName" Value="actor" />
+    </Node>
+    <Node X="2.5" Y="167.5" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="5" Y="252.5" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-10" Y="-257.5" Name="sphere" ClassName="vtkSphereSource" ID="5" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="ThetaResolution" Value="32" />
+      <Property Type="int" Name="PhiResolution" Value="32" />
+      <Property Type="double" Name="StartTheta" Value="0" />
+      <Property Type="double" Name="EndTheta" Value="360" />
+      <Property Type="double" Name="StartPhi" Value="0" />
+      <Property Type="double" Name="EndPhi" Value="180" />
+      <Property Type="bool" Name="LatLongTessellation" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere" />
+      <Property Type="QString" Name="objectName" Value="sphere" />
+    </Node>
+    <Node X="-7.5" Y="-172.5" Name="sphereTransform" ClassName="vtkTransformFilter" ID="6" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphereTransform" />
+      <Property Type="QString" Name="objectName" Value="sphereTransform" />
+    </Node>
+    <Node X="174.666" Y="78.7228" Name="vtkCamera7" ClassName="vtkCamera" ID="7" >
+      <Property Type="Point3D" Name="Position" Value="-4.132, -6.965, -0.8288" />
+      <Property Type="Point3D" Name="FocalPoint" Value="0.02164, -0.004974, -0.07312" />
+      <Property Type="Vector3D" Name="ViewUp" Value="-0.2832, 0.06509, 0.9569" />
+      <Property Type="double" Name="Distance" Value="8.14" />
+      <Property Type="double" Name="Roll" Value="82.79" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="6.502" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.5102, -0.855, -0.09284" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera7" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera7" />
+    </Node>
+    <Connection Sender="mapper" SPathIndex="3" Receiver="actor" RPathIndex="3" />
+    <Connection Sender="actor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="sphere" SPathIndex="2" Receiver="sphereTransform" RPathIndex="3" />
+    <Connection Sender="sphereTransform" SPathIndex="2" Receiver="colorIt" RPathIndex="3" />
+    <Connection Sender="colorIt" SPathIndex="2" Receiver="mapper" RPathIndex="2" />
+    <Connection Sender="vtkCamera7" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="239.2307688710252" X="-338.7056434544434" Y="-164.9733718598891" Height="307.692306704775" >This example demonstrates the use of filters in a VTK pipeline. 
+
+The transform filter modifies the input sphere dataset by a scale matrix
+
+The elevation filter generates scalars along the specified direction  </Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[sphereTransform.scale(1, 1.5, 2);
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

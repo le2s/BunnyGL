@@ -1,0 +1,296 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="10.3748" Y="-341.79" Name="terrainFileReader" ClassName="vtkJPEGReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="Terrain.jpg" />
+      <Property Type="DataScalarType" Name="DataScalarType" Value="3" />
+      <Property Type="int" Name="FileDimensionality" Value="2" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="terrainFileReader" />
+      <Property Type="QString" Name="objectName" Value="terrainFileReader" />
+    </Node>
+    <Node X="97.3102" Y="14.4877" Name="texture" ClassName="vtkTexture" ID="1" >
+      <Property Type="bool" Name="Repeat" Value="true" />
+      <Property Type="bool" Name="Interpolate" Value="true" />
+      <Property Type="TextureQuality" Name="TextureQuality" Value="0" />
+      <Property Type="bool" Name="MapScalarsThroughLookupTable" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="texture" />
+      <Property Type="QString" Name="objectName" Value="texture" />
+    </Node>
+    <Node X="-84.2969" Y="-233.676" Name="heightMapFilter" ClassName="vtkImageToTerrain" ID="2" >
+      <Property Type="int" Name="GridCountX" Value="200" />
+      <Property Type="int" Name="GridCountY" Value="200" />
+      <Property Type="double" Name="GridDistanceX" Value="0.1" />
+      <Property Type="double" Name="GridDistanceY" Value="0.1" />
+      <Property Type="double" Name="HeightScaleFactor" Value="0.07" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="heightMapFilter" />
+      <Property Type="QString" Name="objectName" Value="heightMapFilter" />
+    </Node>
+    <Node X="-86.75" Y="-71.0784" Name="normalsFilter" ClassName="vtkPolyDataNormals" ID="3" >
+      <Property Type="double" Name="FeatureAngle" Value="120" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="true" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="true" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="normalsFilter" />
+      <Property Type="QString" Name="objectName" Value="normalsFilter" />
+    </Node>
+    <Node X="-84.25" Y="13.9216" Name="mapper" ClassName="vtkDataSetMapper" ID="4" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="mapper" />
+      <Property Type="QString" Name="objectName" Value="mapper" />
+    </Node>
+    <Node X="-81.75" Y="98.9216" Name="terrainActor" ClassName="vtkActor" ID="5" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="terrainActor" />
+      <Property Type="QString" Name="objectName" Value="terrainActor" />
+    </Node>
+    <Node X="-79.25" Y="183.922" Name="renderer" ClassName="vtkRenderer" ID="6" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-76.75" Y="268.922" Name="renderWindow" ClassName="vtkRenderWindow" ID="7" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-85.7126" Y="-155.196" Name="elevationFilter" ClassName="vtkElevationFilter" ID="8" >
+      <Property Type="Point3D" Name="LowPoint" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="HighPoint" Value="0, 0, 1.98" />
+      <Property Type="ValueRange" Name="ScalarRange" Value="0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="elevationFilter" />
+      <Property Type="QString" Name="objectName" Value="elevationFilter" />
+    </Node>
+    <Node X="-277.299" Y="9.662" Name="vtkProperty17" ClassName="vtkProperty" ID="9" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="128" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffffff" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkProperty17" />
+      <Property Type="QString" Name="objectName" Value="vtkProperty17" />
+    </Node>
+    <Node X="104.35" Y="100.485" Name="vtkCamera18" ClassName="vtkCamera" ID="10" >
+      <Property Type="Point3D" Name="Position" Value="8.919, -18.64, 11.2" />
+      <Property Type="Point3D" Name="FocalPoint" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="ViewUp" Value="-0.2201, 0.4229, 0.8791" />
+      <Property Type="double" Name="Distance" Value="23.5" />
+      <Property Type="double" Name="Roll" Value="-46.04" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="53.7" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.3795, -0.793, 0.4765" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera18" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera18" />
+    </Node>
+    <Connection Sender="terrainFileReader" SPathIndex="2" Receiver="heightMapFilter" RPathIndex="3" />
+    <Connection Sender="terrainFileReader" SPathIndex="2" Receiver="texture" RPathIndex="3" />
+    <Connection Sender="normalsFilter" SPathIndex="2" Receiver="mapper" RPathIndex="2" />
+    <Connection Sender="mapper" SPathIndex="3" Receiver="terrainActor" RPathIndex="3" />
+    <Connection Sender="terrainActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkProperty17" SPathIndex="1" Receiver="terrainActor" RPathIndex="5" />
+    <Connection Sender="heightMapFilter" SPathIndex="2" Receiver="elevationFilter" RPathIndex="3" />
+    <Connection Sender="elevationFilter" SPathIndex="2" Receiver="normalsFilter" RPathIndex="3" />
+    <Connection Sender="vtkCamera18" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="265.6249990221113" X="-444.4230702257104" Y="-269.8557652051964" Height="250.6249992456287" >This pipeline demonstrates how you can make use of the vtkImageToTerrain filter to generate terrain meshes from gray scale images.
+
+Make use of the "Terrain Controls" form to elevation maps, terrain overlay etc...</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" >
+    <UiFile Hint="" ParentWidget="MainWindowComponent.rightDockArea" Name="TerrainControlsForm" HideWhenInactive="false" UiFile="C:/Users/Prashanth N Udupa/untitled.ui" ><![CDATA[<ui version="4.0" >
+ <class>TerrainControlsForm</class>
+ <widget class="QWidget" name="TerrainControlsForm" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>233</width>
+    <height>323</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Terrain Controls</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3" >
+   <item>
+    <widget class="QGroupBox" name="gbMeshControls" >
+     <property name="title" >
+      <string>Terrain Mesh Controls</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2" >
+      <item>
+       <widget class="QLabel" name="label" >
+        <property name="text" >
+         <string>Terrain Height </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="heightSlider" >
+        <property name="minimum" >
+         <number>1</number>
+        </property>
+        <property name="maximum" >
+         <number>50</number>
+        </property>
+        <property name="value" >
+         <number>10</number>
+        </property>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbTerrainAppearance" >
+     <property name="title" >
+      <string>Terrain Appearance</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <widget class="QCheckBox" name="chkOverlayTexture" >
+        <property name="text" >
+         <string>Overlay Terrain Texture</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkShowElevationMap" >
+        <property name="text" >
+         <string>Show Elevation Map</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>141</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+]]></UiFile>
+  </ProjectPart>
+  <ProjectPart ID="Script" ><![CDATA[terrainFileReader.forceUpdate();
+TerrainControlsForm.gbMeshControls.heightSlider.value = 10;
+heightMapFilter.forceUpdate();
+elevationFilter.HighPoint = NewPoint3D(0, 0, heightMapFilter.maxHeight());
+renderWindow.render();
+
+// Event handler for SliderReleased event of TerrainControlsForm_gbMeshControls_heightSlider
+function TerrainControlsForm_gbMeshControls_heightSlider_SliderReleased()
+{
+	var val = TerrainControlsForm.gbMeshControls.heightSlider.value;
+	val = val/100;
+	heightMapFilter.HeightScaleFactor = val;
+	heightMapFilter.forceUpdate();
+
+	// Update the minimum and maximum of the elevation filter
+	var minHeight = heightMapFilter.minHeight();
+	var maxHeight = heightMapFilter.maxHeight();
+	elevationFilter.LowPoint = NewPoint3D(0, 0, minHeight);
+	elevationFilter.HighPoint = NewPoint3D(0, 0, maxHeight);
+	elevationFilter.forceUpdate();
+
+	renderWindow.render();
+}
+TerrainControlsForm.gbMeshControls.heightSlider.sliderReleased.connect(TerrainControlsForm_gbMeshControls_heightSlider_SliderReleased);
+
+// Event handler for Toggled event of TerrainControlsForm_gbTerrainAppearance_chkShowElevationMap
+function TerrainControlsForm_gbTerrainAppearance_chkShowElevationMap_Toggled()
+{
+	var val = TerrainControlsForm.gbTerrainAppearance.chkShowElevationMap.checked;
+	if(val)
+	{
+		VisNetwork.disconnectNode(heightMapFilter, normalsFilter);
+		VisNetwork.connectNode(heightMapFilter, elevationFilter);
+		VisNetwork.connectNode(elevationFilter, normalsFilter);
+	}
+	else
+	{
+		VisNetwork.disconnectNode(elevationFilter);
+		VisNetwork.connectNode(heightMapFilter, normalsFilter);
+	}
+	renderWindow.render();
+}
+TerrainControlsForm.gbTerrainAppearance.chkShowElevationMap.toggled.connect(TerrainControlsForm_gbTerrainAppearance_chkShowElevationMap_Toggled);
+
+// Event handler for Toggled event of TerrainControlsForm_gbTerrainAppearance_chkOverlayTexture
+function TerrainControlsForm_gbTerrainAppearance_chkOverlayTexture_Toggled()
+{
+	var val = TerrainControlsForm.gbTerrainAppearance.chkOverlayTexture.checked;
+	if(val)
+		VisNetwork.connectNode(texture, terrainActor);
+	else
+		VisNetwork.disconnectNode(texture, terrainActor);
+	renderWindow.render();
+}
+TerrainControlsForm.gbTerrainAppearance.chkOverlayTexture.toggled.connect(TerrainControlsForm_gbTerrainAppearance_chkOverlayTexture_Toggled);
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

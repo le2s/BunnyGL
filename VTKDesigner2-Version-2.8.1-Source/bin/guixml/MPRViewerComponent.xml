@@ -1,0 +1,5 @@
+<component title="MPRViewerComponent" name="MPRViewerComponent">
+  <object title="" name="controller"/>
+  <widget name="MPRViewerWidget" title="MPRViewer"
+			parentWidget="MainWindowComponent.workspace" />
+</component>

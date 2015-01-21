@@ -1,0 +1,30 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-1111" Y="-330" Name="importer" ClassName="vtk3DSImporter" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/iflamigm.3ds" />
+      <Property Type="bool" Name="ComputeNormals" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="importer" />
+      <Property Type="QString" Name="objectName" Value="importer" />
+    </Node>
+    <Node X="-1106" Y="-132" Name="renderWindow" ClassName="vtkRenderWindow" ID="1" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-1108" Y="-224" Name="renderer" ClassName="vtkRenderer" ID="2" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="importer" SPathIndex="1" Receiver="renderer" RPathIndex="4" />
+    <Note Width="201.8749999720603" X="-1450.76839791108" Y="-374.0103415567635" Height="105.0000014156103" >VTKDesigner2 makes use of vtkImporter to render a .3ds image</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

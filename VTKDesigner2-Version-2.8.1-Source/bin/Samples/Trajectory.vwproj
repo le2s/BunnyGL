@@ -1,0 +1,392 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-472" Y="-380" Name="ball" ClassName="vtkSphereSource" ID="0" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="ThetaResolution" Value="32" />
+      <Property Type="int" Name="PhiResolution" Value="32" />
+      <Property Type="double" Name="StartTheta" Value="0" />
+      <Property Type="double" Name="EndTheta" Value="360" />
+      <Property Type="double" Name="StartPhi" Value="0" />
+      <Property Type="double" Name="EndPhi" Value="180" />
+      <Property Type="bool" Name="LatLongTessellation" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="ball" />
+      <Property Type="QString" Name="objectName" Value="ball" />
+    </Node>
+    <Node X="-464" Y="-251" Name="vtkDataSetMapper1" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper1" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper1" />
+    </Node>
+    <Node X="-458" Y="-126" Name="ballActor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="-25.24, -0.4311, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="ballActor" />
+      <Property Type="QString" Name="objectName" Value="ballActor" />
+    </Node>
+    <Node X="-249.97" Y="-2" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#272727" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-242" Y="130" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-258.28" Y="-454.896" Name="field" ClassName="vtkPlaneSource" ID="5" >
+      <Property Type="int" Name="XResolution" Value="1" />
+      <Property Type="int" Name="YResolution" Value="1" />
+      <Property Type="Point3D" Name="Origin" Value="-0.5, -0.5, 0" />
+      <Property Type="Point3D" Name="Point1" Value="0.5, -0.5, 0" />
+      <Property Type="Point3D" Name="Point2" Value="-0.5, 0.5, 0" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Normal" Value="0, 0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="field" />
+      <Property Type="QString" Name="objectName" Value="field" />
+    </Node>
+    <Node X="-252" Y="-249" Name="vtkDataSetMapper8" ClassName="vtkDataSetMapper" ID="6" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper8" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper8" />
+    </Node>
+    <Node X="-233" Y="-130" Name="fieldActor" ClassName="vtkActor" ID="7" >
+      <Property Type="QColor" Name="Color" Value="#ffe935" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="fieldActor" />
+      <Property Type="QString" Name="objectName" Value="fieldActor" />
+    </Node>
+    <Node X="-16.3599" Y="-375.18" Name="trajectory" ClassName="vtkCustomPolyDataSource" ID="8" >
+      <Property Type="bool" Name="StoreData" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="trajectory" />
+      <Property Type="QString" Name="objectName" Value="trajectory" />
+    </Node>
+    <Node X="-22.5602" Y="-246.36" Name="vtkDataSetMapper11" ClassName="vtkDataSetMapper" ID="9" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper11" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper11" />
+    </Node>
+    <Node X="-32" Y="-128" Name="trajectoryActor" ClassName="vtkActor" ID="10" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="trajectoryActor" />
+      <Property Type="QString" Name="objectName" Value="trajectoryActor" />
+    </Node>
+    <Node X="-496" Y="72" Name="timer" ClassName="Timer" ID="11" >
+      <Property Type="bool" Name="Active" Value="false" />
+      <Property Type="int" Name="Interval" Value="20" />
+      <Property Type="QString" Name="NodeName" Value="timer" />
+      <Property Type="QString" Name="objectName" Value="timer" />
+    </Node>
+    <Node X="176.306" Y="-248.469" Name="vtkProperty12" ClassName="vtkProperty" ID="12" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffffff" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="3" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkProperty12" />
+      <Property Type="QString" Name="objectName" Value="vtkProperty12" />
+    </Node>
+    <Node X="-241.909" Y="-338.672" Name="vtkPolyDataNormals14" ClassName="vtkPolyDataNormals" ID="13" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="false" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataNormals14" />
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataNormals14" />
+    </Node>
+    <Node X="171.408" Y="-122.373" Name="vtkCamera15" ClassName="vtkCamera" ID="14" >
+      <Property Type="Point3D" Name="Position" Value="-99.05, 14.38, 79.44" />
+      <Property Type="Point3D" Name="FocalPoint" Value="-28.25, -8.551, -11.36" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.1301, 0.9807, -0.1462" />
+      <Property Type="double" Name="Distance" Value="117.4" />
+      <Property Type="double" Name="Roll" Value="0.7301" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="460.2" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.603, 0.1953, 0.7734" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera15" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera15" />
+    </Node>
+    <Connection Sender="ball" SPathIndex="2" Receiver="vtkDataSetMapper1" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper1" SPathIndex="3" Receiver="ballActor" RPathIndex="3" />
+    <Connection Sender="ballActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper8" SPathIndex="3" Receiver="fieldActor" RPathIndex="3" />
+    <Connection Sender="fieldActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper11" SPathIndex="3" Receiver="trajectoryActor" RPathIndex="3" />
+    <Connection Sender="trajectoryActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="timer" SPathIndex="0" Receiver="renderWindow" RPathIndex="0" />
+    <Connection Sender="trajectory" SPathIndex="2" Receiver="vtkDataSetMapper11" RPathIndex="2" />
+    <Connection Sender="vtkProperty12" SPathIndex="1" Receiver="trajectoryActor" RPathIndex="5" />
+    <Connection Sender="vtkPolyDataNormals14" SPathIndex="2" Receiver="vtkDataSetMapper8" RPathIndex="2" />
+    <Connection Sender="vtkCamera15" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Connection Sender="field" SPathIndex="2" Receiver="vtkPolyDataNormals14" RPathIndex="3" />
+    <Note Width="390.6292089985485" X="-108.1949564586358" Y="-34.00412917271409" Height="185.5740058055155" >This example shows how you can animate simple Physics problems in VTK Designer.
+
+Here we plot the trajectory of an object when thrown with a certain initial velocity and at a certain angle!</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" >
+    <UiFile Hint="" ParentWidget="MainWindowComponent.rightDockArea" Name="TrajectoryParametersForm" HideWhenInactive="false" UiFile="C:/Users/Prashanth N Udupa/untitled.ui" ><![CDATA[<ui version="4.0" >
+ <class>TrajectoryParametersForm</class>
+ <widget class="QWidget" name="TrajectoryParametersForm" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>274</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Trajectory Parameters</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" colspan="3" >
+    <layout class="QFormLayout" name="formLayout" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="label1" >
+       <property name="text" >
+        <string>Initial Velocity</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QLineEdit" name="txtInitialVelocity" />
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="label2" >
+       <property name="text" >
+        <string>Initial Angle</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="QLineEdit" name="txtInitialAngle" />
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" >
+    <spacer name="horizontalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>145</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="cmdThrowBall" >
+     <property name="text" >
+      <string>Throw Ball!</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" >
+    <spacer name="horizontalSpacer_2" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>144</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1" >
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>107</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+]]></UiFile>
+  </ProjectPart>
+  <ProjectPart ID="Script" ><![CDATA[var trajectoryPoints = new Array;
+var trajectoryLines = new Array;
+var trajectoryPointCount = 0;
+var g = 9.81;
+
+TrajectoryParametersForm.txtInitialVelocity.text = 22;
+TrajectoryParametersForm.txtInitialAngle.text = 45;
+TrajectoryParametersForm.cmdThrowBall.enabled = true;
+
+function init()
+{
+	ballActor.Position = NewPoint3D(-75, 0, 0);
+	fieldActor.makeIdentity();
+	fieldActor.rotateX(-90);
+	fieldActor.scale(200, 200, 0);
+
+	trajectoryPoints = new Array;
+	trajectoryLines = new Array;
+	trajectoryPointCount = 0;
+	trajectory.markModified();
+	trajectory.forceUpdate();
+
+	timer.Active = false;
+
+	renderer.createAutomaticLights();
+	renderWindow.render();
+}
+init();
+
+// Event handler for OnRequestData event of trajectory
+function trajectory_OnRequestData()
+{
+	trajectory.setPoints(trajectoryPoints);
+	trajectory.setLines(trajectoryLines);
+}
+trajectory.OnRequestData.connect(trajectory_OnRequestData);
+
+////////////////////////////////////////////////////////////////
+// This part of the code actually computes the trajectory
+// based on inputs from the form
+////////////////////////////////////////////////////////////////
+
+var initialVelocity = 0;
+var initialAngle = 0; // degrees
+var initialPos = NewPoint3D();
+var range = 0;
+
+// Event handler for Clicked event of TrajectoryParametersForm_cmdThrowBall
+function TrajectoryParametersForm_cmdThrowBall_Clicked()
+{
+	// reinitialize the scene
+	init();
+
+	// Copy initial values from form
+	initialVelocity = TrajectoryParametersForm.txtInitialVelocity.text;
+	initialAngle = VtkMath.toRadians(TrajectoryParametersForm.txtInitialAngle.text);
+	initialPos = ballActor.Position;
+	range = (initialVelocity*initialVelocity * Math.sin(2*initialAngle)) / g;
+	MessageLog.debugMessage("Computing trajectory with u: " + initialVelocity + ", theta: " + initialAngle + ", having range: " + range);
+
+	// Add the first point to the trajectory
+	trajectoryPointCount = 1;
+	trajectoryPoints = new Array( ballActor.Position.x, ballActor.Position.y, ballActor.Position.z );
+	trajectoryLines = new Array(0, 0);
+
+	// Begin timer and compute trajectory
+	timer.Interval = 20;
+	timer.Active = true;
+	TrajectoryParametersForm.cmdThrowBall.enabled = false;
+}
+TrajectoryParametersForm.cmdThrowBall.clicked.connect(TrajectoryParametersForm_cmdThrowBall_Clicked);
+
+// Event handler for OnTimeout event of timer
+function timer_OnTimeout()
+{
+	// Compute x and y based on initial velocity, g, and instantaneous time.
+	var u = initialVelocity;
+	var t = timer.msecsSinceLastStart() / 1000;
+	var theta = initialAngle;
+
+	var x = initialPos.x + u * t * Math.cos(theta);
+	var y = initialPos.y + u * t * Math.sin(theta) - 0.5 * g * t*t;
+	var z = initialPos.z;
+
+	trajectoryPoints[trajectoryPointCount*3+0] = x;
+	trajectoryPoints[trajectoryPointCount*3+1] = y;
+	trajectoryPoints[trajectoryPointCount*3+2] = z;
+	
+	trajectoryLines[trajectoryPointCount*2+0] = trajectoryPointCount-1;
+	trajectoryLines[trajectoryPointCount*2+1] = trajectoryPointCount;
+
+	trajectoryPointCount = trajectoryPointCount + 1;
+
+	ballActor.Position = NewPoint3D(x, y, z);
+
+	trajectory.markModified();
+	trajectory.forceUpdate();
+	renderWindow.render();
+
+	if( Math.abs(x - initialPos.x) > range )
+	{
+		timer.Active = false;
+		TrajectoryParametersForm.cmdThrowBall.enabled = true;
+	}
+}
+timer.OnTimeout.connect(timer_OnTimeout);
+
+// Show the first trajectory
+TrajectoryParametersForm.cmdThrowBall.animateClick();
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+  <ProjectPart ID="trajectory" />
+</VWVisProject>

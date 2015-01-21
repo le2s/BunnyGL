@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="BlurEffect" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="BlurEffectVert" location="Inline" language="GLSL" entry="main">
+
+varying vec2 vTexCoord;
+ 
+// remember that you should draw a screen aligned quad
+void main(void)
+{
+   gl_Position = ftransform();;
+  
+   // Clean up inaccuracies
+   vec2 Pos;
+   Pos = sign(gl_Vertex.xy);
+ 
+   gl_Position = vec4(Pos, 0.0, 1.0);
+   // Image-space
+   vTexCoord = Pos * 0.5 + 0.5;
+}
+</Shader>
+
+<Shader scope="Fragment" name="BlurEffectFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="int" name="RTBlurH" value="RTBlurH" number_of_elements="1" defaultValue ="1"/>
+
+uniform sampler2D RTBlurH; // this should hold the texture rendered by the horizontal blur pass
+varying vec2 vTexCoord;
+ 
+const float blurSize = 10.0/512.0;
+ 
+void main(void)
+{
+   vec4 sum = vec4(0.0);
+ 
+   // blur in y (vertical)
+   // take nine samples, with the distance blurSize between them
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y - 4.0*blurSize)) * 0.05;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y - 3.0*blurSize)) * 0.09;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y - 2.0*blurSize)) * 0.12;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y - blurSize)) * 0.15;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y)) * 0.16;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y + blurSize)) * 0.15;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y + 2.0*blurSize)) * 0.12;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y + 3.0*blurSize)) * 0.09;
+   sum += texture2D(RTBlurH, vec2(vTexCoord.x, vTexCoord.y + 4.0*blurSize)) * 0.05;
+ 
+   gl_FragColor = sum;
+}
+</Shader>
+</Material>

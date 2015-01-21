@@ -1,0 +1,117 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-64.5774" Y="201.151" Name="renderer" ClassName="vtkRenderer" ID="0" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="110.788" Y="-9.24932" Name="volumeMapper" ClassName="vtkVolumeRayCastMapper" ID="1" >
+      <Property Type="double" Name="SampleDistance" Value="1" />
+      <Property Type="double" Name="ImageSampleDistance" Value="1" />
+      <Property Type="double" Name="MinimumImageSampleDistance" Value="1" />
+      <Property Type="double" Name="MaximumImageSampleDistance" Value="10" />
+      <Property Type="bool" Name="AutoAdjustSampleDistances" Value="true" />
+      <Property Type="int" Name="NumberOfThreads" Value="1" />
+      <Property Type="bool" Name="IntermixIntersectingGeometry" Value="true" />
+      <Property Type="BlendMode" Name="BlendMode" Value="0" />
+      <Property Type="bool" Name="Cropping" Value="false" />
+      <Property Type="QList&lt;QVariant>" Name="CroppingRegionPlanes" Value="0, 1, 0, 1, 0, 1" />
+      <Property Type="CroppingRegion" Name="CroppingRegion" Value="8192" />
+      <Property Type="QString" Name="NodeName" Value="volumeMapper" />
+      <Property Type="QString" Name="objectName" Value="volumeMapper" />
+    </Node>
+    <Node X="-65.8925" Y="293.763" Name="vtkRenderWindow16" ClassName="vtkRenderWindow" ID="2" >
+      <Property Type="QString" Name="NodeName" Value="vtkRenderWindow16" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderWindow16" />
+    </Node>
+    <Node X="27.1439" Y="-143.942" Name="reader" ClassName="vtkStructuredPointsReader" ID="3" >
+      <Property Type="QString" Name="FileName" Value="VTKData/ironProt.vtk" />
+      <Property Type="QString" Name="ScalarsName" Value="scalars" />
+      <Property Type="QString" Name="VectorsName" Value="" />
+      <Property Type="QString" Name="TensorsName" Value="" />
+      <Property Type="QString" Name="NormalsName" Value="" />
+      <Property Type="QString" Name="TCoordsName" Value="" />
+      <Property Type="QString" Name="LookupTableName" Value="" />
+      <Property Type="QString" Name="FieldDataName" Value="" />
+      <Property Type="bool" Name="ReadAllScalars" Value="true" />
+      <Property Type="bool" Name="ReadAllVectors" Value="false" />
+      <Property Type="bool" Name="ReadAllNormals" Value="false" />
+      <Property Type="bool" Name="ReadAllTensors" Value="false" />
+      <Property Type="bool" Name="ReadAllColorScalars" Value="true" />
+      <Property Type="bool" Name="ReadAllTCoords" Value="false" />
+      <Property Type="bool" Name="ReadAllFields" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="reader" />
+      <Property Type="QString" Name="objectName" Value="reader" />
+    </Node>
+    <Node X="-182.006" Y="-142.495" Name="opacityTransferFunction" ClassName="vtkPiecewiseFunction" ID="4" >
+      <Property Type="bool" Name="Clamping" Value="true" />
+      <Property Type="QString" Name="NodeName" Value="opacityTransferFunction" />
+      <Property Type="QString" Name="objectName" Value="opacityTransferFunction" />
+    </Node>
+    <Node X="-405.719" Y="-139.027" Name="colorTransferFunction" ClassName="vtkColorTransferFunction" ID="5" >
+      <Property Type="bool" Name="Clamping" Value="true" />
+      <Property Type="double" Name="RangeMin" Value="0" />
+      <Property Type="double" Name="RangeMax" Value="255" />
+      <Property Type="double" Name="Alpha" Value="1" />
+      <Property Type="VectorMode" Name="VectorMode" Value="0" />
+      <Property Type="int" Name="VectorComponent" Value="0" />
+      <Property Type="QString" Name="NodeName" Value="colorTransferFunction" />
+      <Property Type="QString" Name="objectName" Value="colorTransferFunction" />
+    </Node>
+    <Node X="-262.524" Y="-20.3136" Name="volumeProperty" ClassName="vtkVolumeProperty" ID="6" >
+      <Property Type="int" Name="IndependentComponents" Value="1" />
+      <Property Type="InterpolationType" Name="InterpolationType" Value="1" />
+      <Property Type="double" Name="scalarOpacityUnitDistance" Value="1" />
+      <Property Type="int" Name="DisableGradientOpacity" Value="0" />
+      <Property Type="int" Name="Shade" Value="1" />
+      <Property Type="double" Name="Ambient" Value="0.1" />
+      <Property Type="double" Name="Diffuse" Value="0.7" />
+      <Property Type="double" Name="Specular" Value="0.2" />
+      <Property Type="double" Name="SpecularPower" Value="10" />
+      <Property Type="QString" Name="NodeName" Value="volumeProperty" />
+      <Property Type="QString" Name="objectName" Value="volumeProperty" />
+    </Node>
+    <Node X="261.068" Y="-142.228" Name="compositeFunction" ClassName="vtkVolumeRayCastCompositeFunction" ID="7" >
+      <Property Type="CompositeMethod" Name="CompositeMethod" Value="1" />
+      <Property Type="QString" Name="NodeName" Value="compositeFunction" />
+      <Property Type="QString" Name="objectName" Value="compositeFunction" />
+    </Node>
+    <Node X="-68.2874" Y="108.955" Name="volume" ClassName="vtkVolume" ID="8" >
+      <Property Type="QString" Name="NodeName" Value="volume" />
+      <Property Type="QString" Name="objectName" Value="volume" />
+    </Node>
+    <Connection Sender="renderer" SPathIndex="3" Receiver="vtkRenderWindow16" RPathIndex="1" />
+    <Connection Sender="colorTransferFunction" SPathIndex="1" Receiver="volumeProperty" RPathIndex="0" />
+    <Connection Sender="opacityTransferFunction" SPathIndex="1" Receiver="volumeProperty" RPathIndex="1" />
+    <Connection Sender="compositeFunction" SPathIndex="0" Receiver="volumeMapper" RPathIndex="2" />
+    <Connection Sender="volumeProperty" SPathIndex="3" Receiver="volume" RPathIndex="1" />
+    <Connection Sender="volume" SPathIndex="0" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="volumeMapper" SPathIndex="1" Receiver="volume" RPathIndex="2" />
+    <Connection Sender="reader" SPathIndex="2" Receiver="volumeMapper" RPathIndex="0" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[// Opacity Transfer
+opacityTransferFunction.addPoint(20, 0.0);
+opacityTransferFunction.addPoint(255, 0.2);
+
+// Color Transfer
+colorTransferFunction.addPoint(0.0, 0.0, 0.0, 0.0);
+colorTransferFunction.addPoint(64.0, 1.0, 0.0, 0.0);
+colorTransferFunction.addPoint(128.0, 0.0, 0.0, 1.0);
+colorTransferFunction.addPoint(192.0, 0.0, 1.0, 0.0);
+colorTransferFunction.addPoint(255.0, 0.0, 0.2, 0.0);
+
+reader.forceUpdate();
+VisNetwork.connectNode(reader, volumeMapper);
+renderer.resetCamera();
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

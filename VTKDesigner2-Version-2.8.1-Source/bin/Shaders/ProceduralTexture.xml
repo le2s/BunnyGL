@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="SimpleProceduralTexture" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="ProceduralTextureVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type ="int" name="NumLights" value="NumberOfLights" number_of_elements="1" defaultValue ="1"/>
+	
+uniform int NumLights;    
+
+// Compute the contribution from a particular light source.  This basically
+// comes straight out of the OpenGL orange book. 
+void DirectionalLight(in int lightIndex,
+                      in vec3 normal,
+                      inout vec4 ambient,
+                      inout vec4 diffuse,
+                      inout vec4 specular)
+{
+  //-------Compute ambient term.----------------//
+  ambient += gl_LightSource[lightIndex].ambient;
+
+  //-------Compute diffuse term.----------------//
+  //---normal dot light direction.  Assume the light direction vector is already normalized.---*/
+  float nDotL = max(0.0, dot(normal,normalize(vec3(gl_LightSource[lightIndex].position))));
+  diffuse += gl_LightSource[lightIndex].diffuse * nDotL;
+  
+  //-------Compute specular term.---------------//
+  //normal dot halfway vector //
+  float nDotH = max(0.0, dot(normal,
+                             vec3(gl_LightSource[lightIndex].halfVector)));
+  float pf;     // Power factor.//
+  if (nDotH &lt;= 0.0)
+  {
+    pf = 0.0;
+  }
+  else
+  {
+    pf = pow(nDotH, gl_FrontMaterial.shininess);
+  }
+  specular += gl_LightSource[lightIndex].specular * pf;
+}
+
+void AllLights(in vec3 normal,
+               inout vec4 ambient,
+               inout vec4 diffuse,
+               inout vec4 specular)
+{
+  DirectionalLight(0, normal, ambient, diffuse, specular);
+  if (NumLights &gt; 1)
+    {
+    DirectionalLight(1, normal, ambient, diffuse, specular);
+    if (NumLights &gt; 2)
+      {
+      DirectionalLight(2, normal, ambient, diffuse, specular);
+      if (NumLights &gt; 3)
+        {
+        DirectionalLight(3, normal, ambient, diffuse, specular);
+        if (NumLights &gt; 4)
+          {
+          DirectionalLight(4, normal, ambient, diffuse, specular);
+          }
+        }
+      }
+    }
+}
+
+
+
+void main()
+{
+  // Transform the normal. 
+  vec3 normal = normalize(gl_NormalMatrix*gl_Normal);
+
+  // Compute light contributions. 
+  vec4 ambient = vec4(0.0);
+  vec4 diffuse = vec4(0.0);
+  vec4 specular = vec4(0.0);
+  AllLights(normal, ambient, diffuse, specular);
+  gl_FrontColor = gl_BackColor = (  ambient*gl_FrontMaterial.ambient
+                                  + diffuse*gl_FrontMaterial.diffuse);
+  gl_FrontSecondaryColor = gl_BackSecondaryColor = specular*gl_FrontMaterial.specular;
+  gl_TexCoord[0].stp = gl_Vertex.xyz;
+  gl_Position = ftransform();
+}
+</Shader>
+  
+<Shader scope="Fragment" name="ProceduralTextureVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="Frequency" value="Frequency" number_of_elements="1" defaultValue ="0.02"/>
+<ApplicationUniform type="float"  name="Color1" value="Color1" number_of_elements="3" defaultValue ="0.0,0.0,1.0"/>
+<ApplicationUniform type="float"  name="Color2" value="Color2" number_of_elements="3" defaultValue ="0.0,1.0,0.0"/>
+
+uniform float Frequency;  
+uniform vec3 Color1;      
+uniform vec3 Color2;      
+
+vec4 firstColor = vec4(Color1,1.0);
+vec4 secondColor =vec4(Color2,1.0);
+
+void main()
+{
+  float radius = length(gl_TexCoord[0].stp);
+
+  if (fract(radius/Frequency) &lt; 0.5)
+  {
+    gl_FragColor = gl_Color*firstColor + gl_SecondaryColor;
+  }
+  else
+  {
+    gl_FragColor = gl_Color*secondColor + gl_SecondaryColor;
+  }
+}
+</Shader>
+</Material>

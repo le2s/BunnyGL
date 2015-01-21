@@ -1,0 +1,176 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-211" Y="-462" Name="vtkConeSource1" ClassName="vtkConeSource" ID="0" >
+      <Property Type="double" Name="Height" Value="1" />
+      <Property Type="double" Name="Radius" Value="0.5001" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="Direction" Value="1, 0, 0" />
+      <Property Type="double" Name="Angle" Value="26.57" />
+      <Property Type="bool" Name="Capping" Value="true" />
+      <Property Type="int" Name="Resolution" Value="10" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkConeSource1" />
+      <Property Type="QString" Name="objectName" Value="vtkConeSource1" />
+    </Node>
+    <Node X="-208" Y="-382" Name="vtkPolyDataNormals2" ClassName="vtkPolyDataNormals" ID="1" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="true" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataNormals2" />
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataNormals2" />
+    </Node>
+    <Node X="-196" Y="-95" Name="vtkDataSetMapper3" ClassName="vtkDataSetMapper" ID="2" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper3" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper3" />
+    </Node>
+    <Node X="-197" Y="2" Name="vtkActor4" ClassName="vtkActor" ID="3" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor4" />
+      <Property Type="QString" Name="objectName" Value="vtkActor4" />
+    </Node>
+    <Node X="-188" Y="103" Name="vtkRenderer5" ClassName="vtkRenderer" ID="4" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer5" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderer5" />
+    </Node>
+    <Node X="-181" Y="191" Name="vtkRenderWindow6" ClassName="vtkRenderWindow" ID="5" >
+      <Property Type="QString" Name="NodeName" Value="vtkRenderWindow6" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderWindow6" />
+    </Node>
+    <Node X="-28" Y="-304" Name="vtkCellCenters7" ClassName="vtkCellCenters" ID="6" >
+      <Property Type="bool" Name="VertexCells" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkCellCenters7" />
+      <Property Type="QString" Name="objectName" Value="vtkCellCenters7" />
+    </Node>
+    <Node X="-7" Y="-185" Name="vtkGlyph3D8" ClassName="vtkGlyph3D" ID="7" >
+      <Property Type="bool" Name="Scaling" Value="true" />
+      <Property Type="ScaleMode" Name="ScaleMode" Value="0" />
+      <Property Type="ColorMode" Name="ColorMode" Value="0" />
+      <Property Type="double" Name="ScaleFactor" Value="0.25" />
+      <Property Type="ValueRange" Name="Range" Value="0, 1" />
+      <Property Type="bool" Name="Orient" Value="true" />
+      <Property Type="bool" Name="Clamping" Value="false" />
+      <Property Type="VectorMode" Name="VectorMode" Value="1" />
+      <Property Type="IndexMode" Name="IndexMode" Value="0" />
+      <Property Type="bool" Name="GeneratePointIds" Value="false" />
+      <Property Type="QString" Name="PointIdsName" Value="InputPointIds" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkGlyph3D8" />
+      <Property Type="QString" Name="objectName" Value="vtkGlyph3D8" />
+    </Node>
+    <Node X="-369" Y="-324" Name="vtkArrowSource9" ClassName="vtkArrowSource" ID="8" >
+      <Property Type="double" Name="TipLength" Value="0.35" />
+      <Property Type="double" Name="TipRadius" Value="0.1" />
+      <Property Type="int" Name="TipResolution" Value="10" />
+      <Property Type="double" Name="ShaftRadius" Value="0.03" />
+      <Property Type="double" Name="ShaftResolution" Value="10" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkArrowSource9" />
+      <Property Type="QString" Name="objectName" Value="vtkArrowSource9" />
+    </Node>
+    <Node X="3" Y="-90" Name="vtkDataSetMapper10" ClassName="vtkDataSetMapper" ID="9" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper10" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper10" />
+    </Node>
+    <Node X="7" Y="5" Name="vtkActor11" ClassName="vtkActor" ID="10" >
+      <Property Type="QColor" Name="Color" Value="#23ff1a" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor11" />
+      <Property Type="QString" Name="objectName" Value="vtkActor11" />
+    </Node>
+    <Node X="-382" Y="-199" Name="vtkGlyph3D12" ClassName="vtkGlyph3D" ID="11" >
+      <Property Type="bool" Name="Scaling" Value="true" />
+      <Property Type="ScaleMode" Name="ScaleMode" Value="0" />
+      <Property Type="ColorMode" Name="ColorMode" Value="0" />
+      <Property Type="double" Name="ScaleFactor" Value="0.25" />
+      <Property Type="ValueRange" Name="Range" Value="0, 1" />
+      <Property Type="bool" Name="Orient" Value="true" />
+      <Property Type="bool" Name="Clamping" Value="false" />
+      <Property Type="VectorMode" Name="VectorMode" Value="1" />
+      <Property Type="IndexMode" Name="IndexMode" Value="0" />
+      <Property Type="bool" Name="GeneratePointIds" Value="false" />
+      <Property Type="QString" Name="PointIdsName" Value="InputPointIds" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkGlyph3D12" />
+      <Property Type="QString" Name="objectName" Value="vtkGlyph3D12" />
+    </Node>
+    <Node X="-392" Y="-102" Name="vtkDataSetMapper13" ClassName="vtkDataSetMapper" ID="12" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper13" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper13" />
+    </Node>
+    <Node X="-386" Y="1" Name="vtkActor14" ClassName="vtkActor" ID="13" >
+      <Property Type="QColor" Name="Color" Value="#5f4cff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor14" />
+      <Property Type="QString" Name="objectName" Value="vtkActor14" />
+    </Node>
+    <Connection Sender="vtkConeSource1" SPathIndex="2" Receiver="vtkPolyDataNormals2" RPathIndex="3" />
+    <Connection Sender="vtkPolyDataNormals2" SPathIndex="2" Receiver="vtkDataSetMapper3" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper3" SPathIndex="3" Receiver="vtkActor4" RPathIndex="3" />
+    <Connection Sender="vtkActor4" SPathIndex="2" Receiver="vtkRenderer5" RPathIndex="1" />
+    <Connection Sender="vtkRenderer5" SPathIndex="3" Receiver="vtkRenderWindow6" RPathIndex="1" />
+    <Connection Sender="vtkCellCenters7" SPathIndex="2" Receiver="vtkGlyph3D8" RPathIndex="3" />
+    <Connection Sender="vtkArrowSource9" SPathIndex="2" Receiver="vtkGlyph3D8" RPathIndex="4" />
+    <Connection Sender="vtkGlyph3D8" SPathIndex="2" Receiver="vtkDataSetMapper10" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper10" SPathIndex="3" Receiver="vtkActor11" RPathIndex="3" />
+    <Connection Sender="vtkActor11" SPathIndex="2" Receiver="vtkRenderer5" RPathIndex="1" />
+    <Connection Sender="vtkArrowSource9" SPathIndex="2" Receiver="vtkGlyph3D12" RPathIndex="4" />
+    <Connection Sender="vtkPolyDataNormals2" SPathIndex="2" Receiver="vtkGlyph3D12" RPathIndex="3" />
+    <Connection Sender="vtkGlyph3D12" SPathIndex="2" Receiver="vtkDataSetMapper13" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper13" SPathIndex="3" Receiver="vtkActor14" RPathIndex="3" />
+    <Connection Sender="vtkActor14" SPathIndex="2" Receiver="vtkRenderer5" RPathIndex="1" />
+    <Connection Sender="vtkPolyDataNormals2" SPathIndex="2" Receiver="vtkCellCenters7" RPathIndex="3" />
+    <Note Width="333" X="-783" Y="-468" Height="233" >This example demonstrates how you can orient glyphs at the centre of every cell in an input data set. 
+
+In this pipeline, arrow source is oriented to show both cell and point normals. The cell normals are shown in green, the point normals are shown in blue.</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

@@ -1,0 +1,201 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-92.9091" Y="-385.565" Name="webSource" ClassName="vtkCustomPolyDataSource" ID="0" >
+      <Property Type="bool" Name="StoreData" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="webSource" />
+      <Property Type="QString" Name="objectName" Value="webSource" />
+    </Node>
+    <Node X="-65.4545" Y="-122.727" Name="vtkDataSetMapper110" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper110" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper110" />
+    </Node>
+    <Node X="-70.4545" Y="-52.2727" Name="vtkActor111" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor111" />
+      <Property Type="QString" Name="objectName" Value="vtkActor111" />
+    </Node>
+    <Node X="-59.8991" Y="14.5455" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-60" Y="101.818" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-90" Y="-311" Name="vtkGraphLayoutFilter129" ClassName="vtkGraphLayoutFilter" ID="5" >
+      <Property Type="bool" Name="ThreeDimensionalLayout" Value="true" />
+      <Property Type="BoundingBox3D" Name="GraphBounds" Value="-9.739, 9.83, -9.872, 8.884, -9.616, 9.519" />
+      <Property Type="bool" Name="AutomaticBoundsComputation" Value="true" />
+      <Property Type="int" Name="MaxNumberOfIterations" Value="50" />
+      <Property Type="double" Name="CoolDownRate" Value="10" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkGraphLayoutFilter129" />
+      <Property Type="QString" Name="objectName" Value="vtkGraphLayoutFilter129" />
+    </Node>
+    <Node X="-68" Y="-215" Name="vtkTubeFilter130" ClassName="vtkTubeFilter" ID="6" >
+      <Property Type="double" Name="Radius" Value="0.1" />
+      <Property Type="VaryRadius" Name="VaryRadius" Value="0" />
+      <Property Type="int" Name="NumberOfSides" Value="20" />
+      <Property Type="double" Name="RadiusFactor" Value="10" />
+      <Property Type="Point3D" Name="DefaultNormal" Value="0, 0, 1" />
+      <Property Type="bool" Name="UseDefaultNormal" Value="false" />
+      <Property Type="bool" Name="SidesShareVertices" Value="true" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="int" Name="OnRatio" Value="1" />
+      <Property Type="int" Name="Offset" Value="0" />
+      <Property Type="TCoords" Name="GenerateTCoords" Value="0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkTubeFilter130" />
+      <Property Type="QString" Name="objectName" Value="vtkTubeFilter130" />
+    </Node>
+    <Node X="-331" Y="-379" Name="vtkSphereSource131" ClassName="vtkSphereSource" ID="7" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="ThetaResolution" Value="32" />
+      <Property Type="int" Name="PhiResolution" Value="32" />
+      <Property Type="double" Name="StartTheta" Value="0" />
+      <Property Type="double" Name="EndTheta" Value="360" />
+      <Property Type="double" Name="StartPhi" Value="0" />
+      <Property Type="double" Name="EndPhi" Value="180" />
+      <Property Type="bool" Name="LatLongTessellation" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkSphereSource131" />
+      <Property Type="QString" Name="objectName" Value="vtkSphereSource131" />
+    </Node>
+    <Node X="-327" Y="-217" Name="vtkGlyph3D132" ClassName="vtkGlyph3D" ID="8" >
+      <Property Type="bool" Name="Scaling" Value="true" />
+      <Property Type="ScaleMode" Name="ScaleMode" Value="0" />
+      <Property Type="ColorMode" Name="ColorMode" Value="2" />
+      <Property Type="double" Name="ScaleFactor" Value="0.2" />
+      <Property Type="ValueRange" Name="Range" Value="0, 1" />
+      <Property Type="bool" Name="Orient" Value="true" />
+      <Property Type="bool" Name="Clamping" Value="false" />
+      <Property Type="VectorMode" Name="VectorMode" Value="0" />
+      <Property Type="IndexMode" Name="IndexMode" Value="0" />
+      <Property Type="bool" Name="GeneratePointIds" Value="false" />
+      <Property Type="QString" Name="PointIdsName" Value="InputPointIds" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkGlyph3D132" />
+      <Property Type="QString" Name="objectName" Value="vtkGlyph3D132" />
+    </Node>
+    <Node X="-322" Y="-135" Name="vtkDataSetMapper133" ClassName="vtkDataSetMapper" ID="9" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper133" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper133" />
+    </Node>
+    <Node X="-307" Y="-58" Name="vtkActor134" ClassName="vtkActor" ID="10" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor134" />
+      <Property Type="QString" Name="objectName" Value="vtkActor134" />
+    </Node>
+    <Node X="114.133" Y="-123.223" Name="vtkProperty11" ClassName="vtkProperty" ID="11" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="128" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffffff" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkProperty11" />
+      <Property Type="QString" Name="objectName" Value="vtkProperty11" />
+    </Node>
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkActor111" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper110" SPathIndex="3" Receiver="vtkActor111" RPathIndex="3" />
+    <Connection Sender="webSource" SPathIndex="2" Receiver="vtkGraphLayoutFilter129" RPathIndex="3" />
+    <Connection Sender="vtkGraphLayoutFilter129" SPathIndex="2" Receiver="vtkTubeFilter130" RPathIndex="3" />
+    <Connection Sender="vtkTubeFilter130" SPathIndex="2" Receiver="vtkDataSetMapper110" RPathIndex="2" />
+    <Connection Sender="vtkGraphLayoutFilter129" SPathIndex="2" Receiver="vtkGlyph3D132" RPathIndex="3" />
+    <Connection Sender="vtkSphereSource131" SPathIndex="2" Receiver="vtkGlyph3D132" RPathIndex="4" />
+    <Connection Sender="vtkGlyph3D132" SPathIndex="2" Receiver="vtkDataSetMapper133" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper133" SPathIndex="3" Receiver="vtkActor134" RPathIndex="3" />
+    <Connection Sender="vtkActor134" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="vtkProperty11" SPathIndex="1" Receiver="vtkActor134" RPathIndex="5" />
+    <Connection Sender="vtkProperty11" SPathIndex="1" Receiver="vtkActor111" RPathIndex="5" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[renderer.createAutomaticLights();
+
+// Event handler for OnRequestData event of webSource
+function webSource_OnRequestData()
+{
+	var nrPoints = 40;
+	var nrEdges = nrPoints*2;
+	var points = new Array;
+	var lines = new Array;
+	var scalars = new Array;
+	var min = -10;
+	var max = 10;
+
+	for(i=0; i<nrPoints; i++)
+	{
+		points[i*3+0] = VtkMath.randomNumber(min, max);
+		points[i*3+1] = VtkMath.randomNumber(min, max);
+		points[i*3+2] = VtkMath.randomNumber(min, max);
+		scalars[i] = VtkMath.randomNumber(0, max);
+	}
+
+	for(i=0; i<nrEdges; i++)
+	{
+		lines[i*2+0] = VtkMath.randomNumber(0, nrPoints);
+		lines[i*2+1] = VtkMath.randomNumber(0, nrPoints);
+	}
+
+	webSource.setPoints(points);
+	webSource.setLines(lines);
+	webSource.setPointScalars(scalars);
+}
+webSource.OnRequestData.connect(webSource_OnRequestData);
+webSource.markModified();
+webSource.forceUpdate();
+renderer.resetCamera();
+renderWindow.render();
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+  <ProjectPart ID="webSource" />
+</VWVisProject>

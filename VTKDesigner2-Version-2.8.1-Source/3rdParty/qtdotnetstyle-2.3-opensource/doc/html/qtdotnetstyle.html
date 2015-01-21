@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- qtdotnetstyle-2.3-opensource/src/qtdotnetstyle.cpp -->
+<head>
+  <title>QtDotNetStyle Class Reference</title>
+  <link href="classic.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="top" width="32"><img src="images/qt-logo.png" align="left" width="57" height="67" border="0" /></td>
+<td width="1">&nbsp;&nbsp;</td><td class="postheader" valign="center"><a href="index.html"><font color="#004faf">Home</font></a></td>
+</tr></table><h1 class="title">QtDotNetStyle Class Reference</h1>
+<p>The QtDotNetStyle class provides an alternative, modern look for Qt applications on Windows. <a href="#details">More...</a></p>
+<pre> #include &lt;QtDotNetStyle&gt;</pre><p>Inherits <a href="http://doc.trolltech.com/4.4/qwindowsvistastyle.html">QWindowsVistaStyle</a>.</p>
+<ul>
+<li><a href="qtdotnetstyle-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h3>Public Types</h3>
+<ul>
+<li><div class="fn"/>enum <b><a href="qtdotnetstyle.html#ColorTheme-enum">ColorTheme</a></b> { Standard, Office }</li>
+</ul>
+<a name="public-functions"></a>
+<h3>Public Functions</h3>
+<ul>
+<li><div class="fn"/><b><a href="qtdotnetstyle.html#QtDotNetStyle">QtDotNetStyle</a></b> ()</li>
+<li><div class="fn"/><b><a href="qtdotnetstyle.html#QtDotNetStyle-2">QtDotNetStyle</a></b> ( ColorTheme <i>colortheme</i> )</li>
+<li><div class="fn"/><b><a href="qtdotnetstyle.html#dtor.QtDotNetStyle">~QtDotNetStyle</a></b> ()</li>
+</ul>
+<ul>
+<li><div class="fn"/>23 public functions inherited from <a href="http://doc.trolltech.com/4.4/qstyle.html#public-functions">QStyle</a></li>
+<li><div class="fn"/>29 public functions inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#public-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li><div class="fn"/>1 property inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#properties">QObject</a></li>
+<li><div class="fn"/>1 public slot inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#public-slots">QObject</a></li>
+<li><div class="fn"/>1 signal inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#signals">QObject</a></li>
+<li><div class="fn"/>1 public type inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#public-variables">QObject</a></li>
+<li><div class="fn"/>6 static public members inherited from <a href="http://doc.trolltech.com/4.4/qstyle.html#static-public-members">QStyle</a></li>
+<li><div class="fn"/>4 static public members inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#static-public-members">QObject</a></li>
+<li><div class="fn"/>7 protected functions inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#protected-functions">QObject</a></li>
+<li><div class="fn"/>2 protected slots inherited from <a href="http://doc.trolltech.com/4.4/qstyle.html#protected-slots">QStyle</a></li>
+<li><div class="fn"/>2 protected variables inherited from <a href="http://doc.trolltech.com/4.4/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<hr />
+<h2>Detailed Description</h2>
+<p>The QtDotNetStyle class provides an alternative, modern look for Qt applications on Windows.</p>
+<p>The GUI look is very similar to the style introduced in Visual Studio 2005, Office 2003 as well as in .NET Windows Forms (when the RenderMode is set to &quot;Professional&quot; instead of &quot;System&quot;). It gives applications a modern gradient appearance for tool bars and menus while retaining the native look and feel for other widgets.</p>
+<p>The style supports different color themes, which may be specified in the constructor. The default is the <tt>Office</tt> color theme.</p>
+<p>This is the textedit example running with the Standard style:</p>
+<p align="center"><img src="images/dotnetstyle.png" /></p><p>This is the textedit example running with the Office style:</p>
+<p align="center"><img src="images/dotnetstyle2.png" /></p><p>See also <a href="http://doc.trolltech.com/4.4/qstyle.html">QStyle</a>, <a href="http://doc.trolltech.com/4.4/qwindowsvistastyle.html">QWindowsVistaStyle</a>, and <a href="http://doc.trolltech.com/4.4/qwindowsxpstyle.html">QWindowsXPStyle</a>.</p>
+<hr />
+<h2>Member Type Documentation</h2>
+<h3 class="fn"><a name="ColorTheme-enum"></a>enum QtDotNetStyle::ColorTheme</h3>
+<p>This enum describes the different color schemes supported by the style.</p>
+<p><table border="1" cellpadding="2" cellspacing="1" width="100%">
+<tr><th width="25%">Constant</th><th width="15%">Value</th><th width="60%">Description</th></tr>
+<tr><td valign="top"><tt>QtDotNetStyle::Standard</tt></td><td align="center" valign="top"><tt>0</tt></td><td valign="top">Use gradients based on the operating system palette.</td></tr>
+<tr><td valign="top"><tt>QtDotNetStyle::Office</tt></td><td align="center" valign="top"><tt>1</tt></td><td valign="top">Use Microsoft Office 2003 style gradients.</td></tr>
+</table></p>
+<hr />
+<h2>Member Function Documentation</h2>
+<h3 class="fn"><a name="QtDotNetStyle"></a>QtDotNetStyle::QtDotNetStyle ()</h3>
+<p>Constructs a <a href="qtdotnetstyle.html">QtDotNetStyle</a> object which uses the default color theme (<tt>Office</tt>).</p>
+<h3 class="fn"><a name="QtDotNetStyle-2"></a>QtDotNetStyle::QtDotNetStyle ( <a href="qtdotnetstyle.html#ColorTheme-enum">ColorTheme</a> <i>colortheme</i> )</h3>
+<p>Constructs a <a href="qtdotnetstyle.html">QtDotNetStyle</a> object which uses the color theme <i>colortheme</i>.</p>
+<h3 class="fn"><a name="dtor.QtDotNetStyle"></a>QtDotNetStyle::~QtDotNetStyle ()</h3>
+<p>Destroys the <a href="qtdotnetstyle.html">QtDotNetStyle</a> object.</p>
+<p /><address><hr /><div align="center">
+<table width="100%" cellspacing="0" border="0"><tr class="address">
+<td width="30%" align="left">Copyright &copy; 2009 Nokia</td>
+<td width="40%" align="center"><a href="http://doc.trolltech.com/trademarks.html">Trademarks</a></td>
+<td width="30%" align="right"><div align="right">Qt Solutions</div></td>
+</tr></table></div></address></body>
+</html>

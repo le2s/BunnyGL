@@ -1,0 +1,173 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="257.25" Y="-204.375" Name="wedgeSource" ClassName="vtkWedgeSource" ID="0" >
+      <Property Type="double" Name="Width" Value="1" />
+      <Property Type="double" Name="Height" Value="1.428" />
+      <Property Type="double" Name="Depth" Value="1" />
+      <Property Type="double" Name="BaseAngle" Value="55" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="wedgeSource" />
+      <Property Type="QString" Name="objectName" Value="wedgeSource" />
+    </Node>
+    <Node X="259.75" Y="-119.375" Name="vtkDataSetMapper1" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper1" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper1" />
+    </Node>
+    <Node X="262.25" Y="-34.375" Name="wedgeActor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#a879ff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="wedgeActor" />
+      <Property Type="QString" Name="objectName" Value="wedgeActor" />
+    </Node>
+    <Node X="46.125" Y="114.375" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#aaaaaa" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="48.625" Y="199.375" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="82.25" Y="-204.375" Name="cubeSource" ClassName="vtkCubeSource" ID="5" >
+      <Property Type="double" Name="XLength" Value="0.5" />
+      <Property Type="double" Name="YLength" Value="0.5" />
+      <Property Type="double" Name="ZLength" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cubeSource" />
+      <Property Type="QString" Name="objectName" Value="cubeSource" />
+    </Node>
+    <Node X="84.75" Y="-119.375" Name="vtkDataSetMapper6" ClassName="vtkDataSetMapper" ID="6" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper6" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper6" />
+    </Node>
+    <Node X="87.25" Y="-34.375" Name="cubeActor" ClassName="vtkActor" ID="7" >
+      <Property Type="QColor" Name="Color" Value="#ff8e45" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="cubeActor" />
+      <Property Type="QString" Name="objectName" Value="cubeActor" />
+    </Node>
+    <Node X="-92.75" Y="-204.375" Name="vtkAxes8" ClassName="vtkAxes" ID="8" >
+      <Property Type="Point3D" Name="Origin" Value="0, 0, 0" />
+      <Property Type="double" Name="ScaleFactor" Value="1.4" />
+      <Property Type="bool" Name="Symmetric" Value="false" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkAxes8" />
+      <Property Type="QString" Name="objectName" Value="vtkAxes8" />
+    </Node>
+    <Node X="-90.25" Y="-119.375" Name="vtkDataSetMapper9" ClassName="vtkDataSetMapper" ID="9" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper9" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper9" />
+    </Node>
+    <Node X="-175" Y="8.125" Name="vtkActor10" ClassName="vtkActor" ID="10" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor10" />
+      <Property Type="QString" Name="objectName" Value="vtkActor10" />
+    </Node>
+    <Node X="-267.75" Y="-204.375" Name="vtkProperty11" ClassName="vtkProperty" ID="11" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffffff" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="8" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkProperty11" />
+      <Property Type="QString" Name="objectName" Value="vtkProperty11" />
+    </Node>
+    <Node X="436" Y="-33" Name="vtkCamera16" ClassName="vtkCamera" ID="12" >
+      <Property Type="Point3D" Name="Position" Value="3.001, 0.893, 2.629" />
+      <Property Type="Point3D" Name="FocalPoint" Value="0.3907, 0.5892, 0.06331" />
+      <Property Type="Vector3D" Name="ViewUp" Value="-0.007789, 0.9939, -0.1098" />
+      <Property Type="double" Name="Distance" Value="3.673" />
+      <Property Type="double" Name="Roll" Value="4.177" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="5.579" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.7108, 0.08272, 0.6985" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera16" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera16" />
+    </Node>
+    <Connection Sender="wedgeSource" SPathIndex="2" Receiver="vtkDataSetMapper1" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper1" SPathIndex="3" Receiver="wedgeActor" RPathIndex="3" />
+    <Connection Sender="wedgeActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper6" SPathIndex="3" Receiver="cubeActor" RPathIndex="3" />
+    <Connection Sender="cubeActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="cubeSource" SPathIndex="2" Receiver="vtkDataSetMapper6" RPathIndex="2" />
+    <Connection Sender="vtkAxes8" SPathIndex="2" Receiver="vtkDataSetMapper9" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper9" SPathIndex="3" Receiver="vtkActor10" RPathIndex="3" />
+    <Connection Sender="vtkActor10" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="vtkProperty11" SPathIndex="1" Receiver="vtkActor10" RPathIndex="5" />
+    <Connection Sender="vtkCamera16" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[function placeActorOnWedge(actor)
+{
+	actor.makeIdentity();
+	var x = actor.getXLength();
+	var y = actor.getYLength();
+
+	actor.translate( wedgeSource.Width, 0, 0 );
+	actor.rotateZ( 90-wedgeSource.BaseAngle );
+	actor.translate( x/2, y/2, 0 );
+	renderWindow.render();
+}
+
+renderer.createAutomaticLights();
+placeActorOnWedge(cubeActor);
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

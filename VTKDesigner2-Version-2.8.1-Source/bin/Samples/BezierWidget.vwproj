@@ -1,0 +1,82 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-118.626" Y="-215" Name="vtkBezierSurfaceSource0" ClassName="vtkBezierSurfaceSource" ID="0" >
+      <Property Type="int" Name="ControlPointCountX" Value="4" />
+      <Property Type="int" Name="ControlPointCountY" Value="4" />
+      <Property Type="int" Name="GridCountX" Value="50" />
+      <Property Type="int" Name="GridCountY" Value="50" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkBezierSurfaceSource0" />
+      <Property Type="QString" Name="objectName" Value="vtkBezierSurfaceSource0" />
+    </Node>
+    <Node X="-119.126" Y="-45" Name="vtkDataSetMapper1" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper1" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper1" />
+    </Node>
+    <Node X="-116.626" Y="40" Name="vtkActor2" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ff8514" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor2" />
+      <Property Type="QString" Name="objectName" Value="vtkActor2" />
+    </Node>
+    <Node X="-114.126" Y="125" Name="vtkRenderer3" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#999999" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer3" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderer3" />
+    </Node>
+    <Node X="-111.626" Y="210" Name="vtkRenderWindow4" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="vtkRenderWindow4" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderWindow4" />
+    </Node>
+    <Node X="103.973" Y="-134.026" Name="vtkBezierSurfaceWidget7" ClassName="vtkBezierSurfaceWidget" ID="5" >
+      <Property Type="double" Name="PlaceFactor" Value="0.5" />
+      <Property Type="double" Name="HandleSize" Value="0.01" />
+      <Property Type="bool" Name="Enabled" Value="true" />
+      <Property Type="double" Name="Priority" Value="0.5" />
+      <Property Type="bool" Name="KeyPressActivation" Value="true" />
+      <Property Type="QChar" Name="KeyPressActivtionValue" Value="i" />
+      <Property Type="QString" Name="NodeName" Value="vtkBezierSurfaceWidget7" />
+      <Property Type="QString" Name="objectName" Value="vtkBezierSurfaceWidget7" />
+    </Node>
+    <Node X="-121.626" Y="-130" Name="vtkPolyDataNormals8" ClassName="vtkPolyDataNormals" ID="6" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="false" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataNormals8" />
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataNormals8" />
+    </Node>
+    <Connection Sender="vtkDataSetMapper1" SPathIndex="3" Receiver="vtkActor2" RPathIndex="3" />
+    <Connection Sender="vtkActor2" SPathIndex="2" Receiver="vtkRenderer3" RPathIndex="1" />
+    <Connection Sender="vtkRenderer3" SPathIndex="3" Receiver="vtkRenderWindow4" RPathIndex="1" />
+    <Connection Sender="vtkRenderWindow4" SPathIndex="3" Receiver="vtkBezierSurfaceWidget7" RPathIndex="1" />
+    <Connection Sender="vtkBezierSurfaceSource0" SPathIndex="1" Receiver="vtkBezierSurfaceWidget7" RPathIndex="5" />
+    <Connection Sender="vtkBezierSurfaceSource0" SPathIndex="2" Receiver="vtkPolyDataNormals8" RPathIndex="3" />
+    <Connection Sender="vtkPolyDataNormals8" SPathIndex="2" Receiver="vtkDataSetMapper1" RPathIndex="2" />
+    <Note Width="224.9999996274709" X="52.49999921768907" Y="-98.74999852851038" Height="200" >This example demonstrates how you can make use of vtkBezierSurfaceWidget to interact and manipulate bezier surfaces.</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

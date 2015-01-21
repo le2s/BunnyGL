@@ -1,0 +1,194 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-383" Y="-350" Name="pl3d" ClassName="vtkPLOT3DReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/combxyz.bin" />
+      <Property Type="QString" Name="XYZFileName" Value="VTKData/combxyz.bin" />
+      <Property Type="QString" Name="QFileName" Value="VTKData/combq.bin" />
+      <Property Type="bool" Name="BinaryFile" Value="true" />
+      <Property Type="bool" Name="MultiGrid" Value="false" />
+      <Property Type="bool" Name="HasByteCount" Value="false" />
+      <Property Type="bool" Name="IBlanking" Value="false" />
+      <Property Type="bool" Name="TwoDimensionalGeometry" Value="false" />
+      <Property Type="bool" Name="ForceRead" Value="false" />
+      <Property Type="bool" Name="DoNotReduceNumberOfOutputs" Value="true" />
+      <Property Type="ByteOrder" Name="ByteOrder" Value="0" />
+      <Property Type="double" Name="R" Value="1" />
+      <Property Type="double" Name="Gamma" Value="1.4" />
+      <Property Type="double" Name="Uvinf" Value="0" />
+      <Property Type="double" Name="Vvinf" Value="0" />
+      <Property Type="double" Name="Wvinf" Value="0" />
+      <Property Type="int" Name="ScalarFunctionNumber" Value="100" />
+      <Property Type="int" Name="VectorFunctionNumber" Value="202" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="pl3d" />
+      <Property Type="QString" Name="objectName" Value="pl3d" />
+    </Node>
+    <Node X="-382.334" Y="-218.1" Name="compPlane" ClassName="vtkStructuredGridGeometryFilter" ID="1" >
+      <Property Type="QList&lt;int>" Name="Extent" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="compPlane" />
+      <Property Type="QString" Name="objectName" Value="compPlane" />
+    </Node>
+    <Node X="-109" Y="-348" Name="plane" ClassName="vtkPlane" ID="2" >
+      <Property Type="Vector3D" Name="Normal" Value="1, 0, 0" />
+      <Property Type="Point3D" Name="Origin" Value="8.255, 0, 29.76" />
+      <Property Type="QString" Name="NodeName" Value="plane" />
+      <Property Type="QString" Name="objectName" Value="plane" />
+    </Node>
+    <Node X="-108.849" Y="-215.126" Name="planeCut" ClassName="vtkCutter" ID="3" >
+      <Property Type="int" Name="NumberOfContours" Value="1" />
+      <Property Type="bool" Name="GenerateCutScalars" Value="false" />
+      <Property Type="SortBy" Name="SortBy" Value="0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="planeCut" />
+      <Property Type="QString" Name="objectName" Value="planeCut" />
+    </Node>
+    <Node X="-112.712" Y="-137.921" Name="cutMapper" ClassName="vtkPolyDataMapper" ID="4" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cutMapper" />
+      <Property Type="QString" Name="objectName" Value="cutMapper" />
+    </Node>
+    <Node X="-108.493" Y="-59.0721" Name="cutActor" ClassName="vtkActor" ID="5" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="cutActor" />
+      <Property Type="QString" Name="objectName" Value="cutActor" />
+    </Node>
+    <Node X="-375.159" Y="93.6834" Name="renderer" ClassName="vtkRenderer" ID="6" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-375.446" Y="167.737" Name="renderWindow" ClassName="vtkRenderWindow" ID="7" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-380.033" Y="-142" Name="planeMapper" ClassName="vtkPolyDataMapper" ID="8" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="planeMapper" />
+      <Property Type="QString" Name="objectName" Value="planeMapper" />
+    </Node>
+    <Node X="-377.05" Y="-54.8498" Name="planeActor" ClassName="vtkActor" ID="9" >
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="planeActor" />
+      <Property Type="QString" Name="objectName" Value="planeActor" />
+    </Node>
+    <Node X="-538.256" Y="-143.199" Name="planeProperty" ClassName="vtkProperty" ID="10" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="1" />
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#000000" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#000000" />
+      <Property Type="QColor" Name="SpecularColor" Value="#000000" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="planeProperty" />
+      <Property Type="QString" Name="objectName" Value="planeProperty" />
+    </Node>
+    <Node X="-541.489" Y="-51.6188" Name="camera" ClassName="vtkCamera" ID="11" >
+      <Property Type="Point3D" Name="Position" Value="8.652, 33.38, 21.58" />
+      <Property Type="Point3D" Name="FocalPoint" Value="7.628, 0.5413, 30.11" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.4194, -0.2403, -0.8754" />
+      <Property Type="double" Name="Distance" Value="33.94" />
+      <Property Type="double" Name="Roll" Value="-161.8" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="11.9" />
+      <Property Type="double" Name="Thickness" Value="33.86" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.03019, 0.9675, -0.2511" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Node X="-724.728" Y="-143.054" Name="outlineMapper" ClassName="vtkPolyDataMapper" ID="12" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outlineMapper" />
+      <Property Type="QString" Name="objectName" Value="outlineMapper" />
+    </Node>
+    <Node X="-727.283" Y="-61.6697" Name="outlineActor" ClassName="vtkActor" ID="13" >
+      <Property Type="QColor" Name="Color" Value="#090909" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="outlineActor" />
+      <Property Type="QString" Name="objectName" Value="outlineActor" />
+    </Node>
+    <Node X="-731.993" Y="-210.82" Name="outline" ClassName="vtkStructuredGridOutlineFilter" ID="14" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outline" />
+      <Property Type="QString" Name="objectName" Value="outline" />
+    </Node>
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="planeCut" RPathIndex="3" />
+    <Connection Sender="plane" SPathIndex="1" Receiver="planeCut" RPathIndex="4" />
+    <Connection Sender="planeCut" SPathIndex="2" Receiver="cutMapper" RPathIndex="2" />
+    <Connection Sender="cutMapper" SPathIndex="3" Receiver="cutActor" RPathIndex="3" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="compPlane" RPathIndex="3" />
+    <Connection Sender="compPlane" SPathIndex="2" Receiver="planeMapper" RPathIndex="2" />
+    <Connection Sender="planeMapper" SPathIndex="3" Receiver="planeActor" RPathIndex="3" />
+    <Connection Sender="planeProperty" SPathIndex="1" Receiver="planeActor" RPathIndex="5" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Connection Sender="planeActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="cutActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="outlineMapper" SPathIndex="3" Receiver="outlineActor" RPathIndex="3" />
+    <Connection Sender="outlineActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="outline" SPathIndex="2" Receiver="outlineMapper" RPathIndex="2" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="outline" RPathIndex="3" />
+    <Note Width="325.1514670255718" X="-212.424199192463" Y="2.878748317631249" Height="272.121184387616" >Cut through structured grid with plane.
+
+The cut plane is rendered in solid shaded and a computational plane of constant k value is rendered in wireframe for comparison
+
+Other than plane 'cutters' others can be used such as spheres, cylinders and quadrics</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[renderWindow.render();
+
+var output = pl3d.getOutputDataObject(0);
+var center = output.center();
+plane.Origin = center;
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

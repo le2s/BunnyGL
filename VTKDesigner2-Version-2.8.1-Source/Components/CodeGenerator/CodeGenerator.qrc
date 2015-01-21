@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/CodeGenerator">
+    <file alias="gencode.png">icons/gencode.png</file>
+</qresource>
+</RCC> 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QDOCINDEX>
+<INDEX url="" title="Qt Solutions: QtDotNet Style Documentation" version="">
+    <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
+        <class access="public" threadsafety="unspecified" status="commendable" name="QtDotNetStyle" href="qtdotnetstyle.html" location="qtdotnetstyle.h" bases="QWindowsVistaStyle" module="">
+            <enum access="public" threadsafety="unspecified" status="commendable" name="ColorTheme" fullname="QtDotNetStyle::ColorTheme" href="qtdotnetstyle.html#ColorTheme-enum" location="qtdotnetstyle.h">
+                <value name="Standard" value="0"></value>
+                <value name="Office" value="1"></value>
+            </enum>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QtDotNetStyle" fullname="QtDotNetStyle::QtDotNetStyle" href="qtdotnetstyle.html#QtDotNetStyle" location="qtdotnetstyle.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="QtDotNetStyle()"></function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QtDotNetStyle" fullname="QtDotNetStyle::QtDotNetStyle" href="qtdotnetstyle.html#QtDotNetStyle-2" location="qtdotnetstyle.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" signature="QtDotNetStyle(ColorTheme colortheme)">
+                <parameter left="ColorTheme" right="" name="colortheme" default=""></parameter>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="~QtDotNetStyle" fullname="QtDotNetStyle::~QtDotNetStyle" href="qtdotnetstyle.html#dtor.QtDotNetStyle" location="qtdotnetstyle.h" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QtDotNetStyle()"></function>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="d" fullname="QtDotNetStyle::d" href="qtdotnetstyle.html#d-var" location="qtdotnetstyle.h" type="QtDotNetStylePrivate *" static="false"></variable>
+        </class>
+        <page access="public" status="commendable" name="index.html" href="index.html" subtype="page" title="QtDotNet Style" fulltitle="QtDotNet Style" subtitle="" location="index.qdoc">
+            <contents name="description" title="Description" level="1"></contents>
+            <contents name="guidelines" title="Guidelines" level="1"></contents>
+            <contents name="classes" title="Classes" level="1"></contents>
+            <contents name="tested-platforms" title="Tested platforms" level="1"></contents>
+            <contents name="unsupported-platforms" title="Unsupported platforms" level="1"></contents>
+            <contents name="screenshots" title="Screenshots" level="1"></contents>
+        </page>
+        <page access="public" status="commendable" name="dotnetstyle-usage.html" href="dotnetstyle-usage.html" subtype="page" title="QtDotNet Style Usage" fulltitle="QtDotNet Style Usage" subtitle="" location="dotnetstyle.qdoc">
+            <contents name="usage" title="Usage" level="1"></contents>
+            <contents name="plugin" title="Plugin" level="2"></contents>
+            <contents name="direct-linking" title="Direct Linking" level="2"></contents>
+            <contents name="examples" title="Examples" level="1"></contents>
+        </page>
+    </namespace>
+</INDEX>

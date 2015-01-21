@@ -1,0 +1,62 @@
+<component title="Main Window Component" version="1.0" name="MainWindowComponent">
+  <widget title="VTK Designer 2" scriptName="MainWindow" visible="false" name="window" autoDelete="false"/>
+  <widget scriptName="StatusBar" title="" name="statusBar" autoDelete="false"/>
+  <widget title="Message Area" name="bottomDockArea" autoDelete="false"/>
+  <widget title="" name="workspace" autoDelete="false"/>
+  <widget title="Tool Box" name="leftDockArea"/>
+  <widget title="Configuration Panel" name="rightDockArea"/>
+  <object title="" name="application" autoDelete="false"/>
+  <object title="" name="controller" autoDelete="false"/>
+  <action title="Preferences" triggerSlot="MainWindowComponent.window::showConfigurationDialog()" icon=":/MainWindow/configure.png" name="configure"/>
+  <action title="Exit" triggerSlot="MainWindowComponent.window::close()" shortcut="Ctrl+Q" icon=":/MainWindow/exit.png" name="fileQuit"/>
+  <action title="About" triggerSlot="MainWindowComponent.window::about()" icon=":/MainWindow/appIcon.png" name="helpAbout"/>
+  <action title="Panels Menu" triggerSlot="MainWindowComponent.window::togglePanelAction()" name="togglePanelAction"/>
+  <action title="Cut" shortcut="Ctrl+X" icon=":/MainWindow/cut.png" name="cut"/>
+  <action title="Copy" shortcut="Ctrl+C" icon=":/MainWindow/copy.png" name="copy"/>
+  <action title="Paste" shortcut="Ctrl+V" icon=":/MainWindow/paste.png" name="paste"/>
+  <action title="Undo" shortcut="Ctrl+Z" icon=":/MainWindow/undo.png" name="undo"/>
+  <action title="Redo" shortcut="Ctrl+Y" icon=":/MainWindow/redo.png" name="redo"/>
+  <action title="Snapshot" shortcut="F8" tooltip="Capture's snapshot of the current tab to the clipboard" icon=":/VTKDesigner2/camera.png" name="captureSnapshot"/>
+  <action title="Manual" tooltip="VTK Designer User Manual" url="file:///${APPDIR}/UserManual/Manual.pdf" icon=":/MainWindow/help.png" name="manual"/>
+  <action title="Website" tooltip="VTK Designer Website" url="http://www.vcreatelogic.com/oss/vtkdesigner" icon=":/MainWindow/appIcon.png" name="vclWeb"/>
+  <menu title="&amp;File" name="fileMenu">
+    <!-- This is a dummy place holder for file menu items -->
+    <menuitem actionName="MainWindowComponent.fileQuit"/>
+  </menu>
+  <menu title="&amp;Edit" name="editMenu">
+    <menuitem actionName="MainWindowComponent.copy"/>
+    <menuitem actionName="MainWindowComponent.cut"/>
+    <menuitem actionName="MainWindowComponent.paste"/>
+    <menuitem actionName="MainWindowComponent.undo"/>
+    <menuitem actionName="MainWindowComponent.redo"/>
+    <menuitem/>
+    <menuitem actionName="MainWindowComponent.configure"/>"
+    </menu>
+  <menu title="&amp;View" name="viewMenu">
+    <menuitem actionName="MainWindowComponent.togglePanelAction"/>
+    <menuitem actionName="MainWindowComponent.captureSnapshot"/>
+  </menu>
+  <menu title="&amp;Help" name="helpMenu">
+    <menuitem actionName="MainWindowComponent.manual"/>
+    <menuitem/>
+    <menuitem actionName="MainWindowComponent.vclWeb"/>
+    <menuitem actionName="MainWindowComponent.helpAbout"/>
+  </menu>
+  <toolbar title="File Tools" name="fileTools"/>
+  <toolbar title="Edit Tools" name="editTools">
+    <toolbaritem actionName="MainWindowComponent.copy"/>
+    <toolbaritem actionName="MainWindowComponent.cut"/>
+    <toolbaritem actionName="MainWindowComponent.paste"/>
+    <toolbaritem actionName="MainWindowComponent.undo"/>
+    <toolbaritem actionName="MainWindowComponent.redo"/>
+  </toolbar>
+  <toolbar title="View Tools" name="viewTools">
+    <toolbaritem actionName="MainWindowComponent.captureSnapshot"/>
+  </toolbar>
+  <property key="MainWindowComponent.leftDockArea::minimumWidth" value="250"/>
+  <property key="MainWindowComponent.rightDockArea::minimumHeight" value="200"/>
+  <property key="MainWindowComponent.rightDockArea::minimumWidth" value="250"/>
+  <property key="MainWindowComponent.bottomDockArea::minimumWidth" value="100"/>
+  <method methodName="MainWindowComponent.window::showMaximized"/>
+  <method methodName="MainWindowComponent.window::hide"/>
+</component>

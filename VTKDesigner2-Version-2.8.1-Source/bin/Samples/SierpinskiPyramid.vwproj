@@ -1,0 +1,475 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-74.8152" Y="59.0966" Name="vtkActor0" ClassName="vtkActor" ID="0" >
+      <Property Type="QColor" Name="Color" Value="#6ab5ff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="bool" Name="Visible" Value="true" />
+      <Property Type="bool" Name="Pickable" Value="true" />
+      <Property Type="bool" Name="Dragable" Value="true" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor0" />
+      <Property Type="QString" Name="objectName" Value="vtkActor0" />
+    </Node>
+    <Node X="-75.2042" Y="152.824" Name="vtkRenderer1" ClassName="vtkRenderer" ID="1" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer1" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderer1" />
+    </Node>
+    <Node X="-72.5698" Y="251.928" Name="renderWindow" ClassName="vtkRenderWindow" ID="2" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-77.3152" Y="-25.9034" Name="vtkDataSetMapper3" ClassName="vtkDataSetMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper3" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper3" />
+    </Node>
+    <Node X="-84.8152" Y="-280.903" Name="sPyramidSource" ClassName="vtkSierpinskiPyramidSource" ID="4" >
+      <Property Type="int" Name="NumberOfIterations" Value="6" />
+      <Property Type="QString" Name="NodeName" Value="sPyramidSource" />
+      <Property Type="QString" Name="objectName" Value="sPyramidSource" />
+    </Node>
+    <Node X="104.315" Y="55.6556" Name="vtkCamera4" ClassName="vtkCamera" ID="5" >
+      <Property Type="Point3D" Name="Position" Value="-1.269, 2.176, -0.3112" />
+      <Property Type="Point3D" Name="FocalPoint" Value="-0.0484, 0.5229, 0.03148" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.788, 0.6051, 0.1137" />
+      <Property Type="double" Name="Distance" Value="2.083" />
+      <Property Type="double" Name="Roll" Value="-5.942" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1.601" />
+      <Property Type="double" Name="Thickness" Value="5.32" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.5857, 0.7936, -0.1645" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera4" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera4" />
+    </Node>
+    <Node X="-82.3152" Y="-195.903" Name="vtkPolyDataNormals5" ClassName="vtkPolyDataNormals" ID="6" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="false" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataNormals5" />
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataNormals5" />
+    </Node>
+    <Node X="-79.8152" Y="-110.903" Name="vtkElevationFilter6" ClassName="vtkElevationFilter" ID="7" >
+      <Property Type="Point3D" Name="LowPoint" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="HighPoint" Value="0, 1.5, 0" />
+      <Property Type="ValueRange" Name="ScalarRange" Value="0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkElevationFilter6" />
+      <Property Type="QString" Name="objectName" Value="vtkElevationFilter6" />
+    </Node>
+    <Node X="-253.958" Y="-112.771" Name="vtkLookupTable8" ClassName="vtkLookupTable" ID="8" >
+      <Property Type="Ramp" Name="Ramp" Value="1" />
+      <Property Type="Scale" Name="Scale" Value="0" />
+      <Property Type="int" Name="NumberOfColors" Value="256" />
+      <Property Type="ValueRange" Name="ScalarRange" Value="0, 1" />
+      <Property Type="ValueRange" Name="HueRange" Value="0, 0.6667" />
+      <Property Type="ValueRange" Name="SaturationRange" Value="1, 1" />
+      <Property Type="ValueRange" Name="ValueRange" Value="1, 1" />
+      <Property Type="ValueRange" Name="AlphaRange" Value="1, 1" />
+      <Property Type="double" Name="RangeMin" Value="0" />
+      <Property Type="double" Name="RangeMax" Value="1" />
+      <Property Type="double" Name="Alpha" Value="1" />
+      <Property Type="VectorMode" Name="VectorMode" Value="0" />
+      <Property Type="int" Name="VectorComponent" Value="0" />
+      <Property Type="QString" Name="NodeName" Value="vtkLookupTable8" />
+      <Property Type="QString" Name="objectName" Value="vtkLookupTable8" />
+      <EProperty Type="QColor" Name="Color 1" Value="#ff0000" Index="0" />
+      <EProperty Type="QColor" Name="Color 2" Value="#ff0600" Index="1" />
+      <EProperty Type="QColor" Name="Color 3" Value="#ff0d01" Index="2" />
+      <EProperty Type="QColor" Name="Color 4" Value="#ff1402" Index="3" />
+      <EProperty Type="QColor" Name="Color 5" Value="#ff1b03" Index="4" />
+      <EProperty Type="QColor" Name="Color 6" Value="#ff2204" Index="5" />
+      <EProperty Type="QColor" Name="Color 7" Value="#ff2905" Index="6" />
+      <EProperty Type="QColor" Name="Color 8" Value="#ff2f06" Index="7" />
+      <EProperty Type="QColor" Name="Color 9" Value="#ff3607" Index="8" />
+      <EProperty Type="QColor" Name="Color 10" Value="#ff3d08" Index="9" />
+      <EProperty Type="QColor" Name="Color 11" Value="#ff4309" Index="10" />
+      <EProperty Type="QColor" Name="Color 12" Value="#ff4a0a" Index="11" />
+      <EProperty Type="QColor" Name="Color 13" Value="#ff500b" Index="12" />
+      <EProperty Type="QColor" Name="Color 14" Value="#ff570c" Index="13" />
+      <EProperty Type="QColor" Name="Color 15" Value="#ff5d0d" Index="14" />
+      <EProperty Type="QColor" Name="Color 16" Value="#ff630e" Index="15" />
+      <EProperty Type="QColor" Name="Color 17" Value="#ff690f" Index="16" />
+      <EProperty Type="QColor" Name="Color 18" Value="#ff7010" Index="17" />
+      <EProperty Type="QColor" Name="Color 19" Value="#ff7611" Index="18" />
+      <EProperty Type="QColor" Name="Color 20" Value="#ff7c12" Index="19" />
+      <EProperty Type="QColor" Name="Color 21" Value="#ff8213" Index="20" />
+      <EProperty Type="QColor" Name="Color 22" Value="#ff8814" Index="21" />
+      <EProperty Type="QColor" Name="Color 23" Value="#ff8e15" Index="22" />
+      <EProperty Type="QColor" Name="Color 24" Value="#ff9416" Index="23" />
+      <EProperty Type="QColor" Name="Color 25" Value="#ff9a17" Index="24" />
+      <EProperty Type="QColor" Name="Color 26" Value="#ffa018" Index="25" />
+      <EProperty Type="QColor" Name="Color 27" Value="#ffa619" Index="26" />
+      <EProperty Type="QColor" Name="Color 28" Value="#ffab1a" Index="27" />
+      <EProperty Type="QColor" Name="Color 29" Value="#ffb11b" Index="28" />
+      <EProperty Type="QColor" Name="Color 30" Value="#ffb71c" Index="29" />
+      <EProperty Type="QColor" Name="Color 31" Value="#ffbc1d" Index="30" />
+      <EProperty Type="QColor" Name="Color 32" Value="#ffc21e" Index="31" />
+      <EProperty Type="QColor" Name="Color 33" Value="#ffc71f" Index="32" />
+      <EProperty Type="QColor" Name="Color 34" Value="#ffcd20" Index="33" />
+      <EProperty Type="QColor" Name="Color 35" Value="#ffd221" Index="34" />
+      <EProperty Type="QColor" Name="Color 36" Value="#ffd822" Index="35" />
+      <EProperty Type="QColor" Name="Color 37" Value="#ffdd23" Index="36" />
+      <EProperty Type="QColor" Name="Color 38" Value="#ffe224" Index="37" />
+      <EProperty Type="QColor" Name="Color 39" Value="#ffe825" Index="38" />
+      <EProperty Type="QColor" Name="Color 40" Value="#ffed26" Index="39" />
+      <EProperty Type="QColor" Name="Color 41" Value="#fff227" Index="40" />
+      <EProperty Type="QColor" Name="Color 42" Value="#fff728" Index="41" />
+      <EProperty Type="QColor" Name="Color 43" Value="#fffc29" Index="42" />
+      <EProperty Type="QColor" Name="Color 44" Value="#fcff2a" Index="43" />
+      <EProperty Type="QColor" Name="Color 45" Value="#f7ff2b" Index="44" />
+      <EProperty Type="QColor" Name="Color 46" Value="#f2ff2c" Index="45" />
+      <EProperty Type="QColor" Name="Color 47" Value="#edff2d" Index="46" />
+      <EProperty Type="QColor" Name="Color 48" Value="#e8ff2e" Index="47" />
+      <EProperty Type="QColor" Name="Color 49" Value="#e4ff2f" Index="48" />
+      <EProperty Type="QColor" Name="Color 50" Value="#dfff30" Index="49" />
+      <EProperty Type="QColor" Name="Color 51" Value="#daff31" Index="50" />
+      <EProperty Type="QColor" Name="Color 52" Value="#d6ff32" Index="51" />
+      <EProperty Type="QColor" Name="Color 53" Value="#d1ff33" Index="52" />
+      <EProperty Type="QColor" Name="Color 54" Value="#cdff34" Index="53" />
+      <EProperty Type="QColor" Name="Color 55" Value="#c8ff35" Index="54" />
+      <EProperty Type="QColor" Name="Color 56" Value="#c4ff36" Index="55" />
+      <EProperty Type="QColor" Name="Color 57" Value="#bfff37" Index="56" />
+      <EProperty Type="QColor" Name="Color 58" Value="#bbff38" Index="57" />
+      <EProperty Type="QColor" Name="Color 59" Value="#b7ff39" Index="58" />
+      <EProperty Type="QColor" Name="Color 60" Value="#b2ff3a" Index="59" />
+      <EProperty Type="QColor" Name="Color 61" Value="#aeff3b" Index="60" />
+      <EProperty Type="QColor" Name="Color 62" Value="#aaff3c" Index="61" />
+      <EProperty Type="QColor" Name="Color 63" Value="#a6ff3d" Index="62" />
+      <EProperty Type="QColor" Name="Color 64" Value="#a2ff3e" Index="63" />
+      <EProperty Type="QColor" Name="Color 65" Value="#9eff3f" Index="64" />
+      <EProperty Type="QColor" Name="Color 66" Value="#9aff40" Index="65" />
+      <EProperty Type="QColor" Name="Color 67" Value="#96ff41" Index="66" />
+      <EProperty Type="QColor" Name="Color 68" Value="#92ff42" Index="67" />
+      <EProperty Type="QColor" Name="Color 69" Value="#8eff43" Index="68" />
+      <EProperty Type="QColor" Name="Color 70" Value="#8bff44" Index="69" />
+      <EProperty Type="QColor" Name="Color 71" Value="#87ff45" Index="70" />
+      <EProperty Type="QColor" Name="Color 72" Value="#83ff46" Index="71" />
+      <EProperty Type="QColor" Name="Color 73" Value="#7fff47" Index="72" />
+      <EProperty Type="QColor" Name="Color 74" Value="#7cff48" Index="73" />
+      <EProperty Type="QColor" Name="Color 75" Value="#78ff49" Index="74" />
+      <EProperty Type="QColor" Name="Color 76" Value="#75ff4a" Index="75" />
+      <EProperty Type="QColor" Name="Color 77" Value="#71ff4b" Index="76" />
+      <EProperty Type="QColor" Name="Color 78" Value="#6eff4c" Index="77" />
+      <EProperty Type="QColor" Name="Color 79" Value="#6bff4d" Index="78" />
+      <EProperty Type="QColor" Name="Color 80" Value="#67ff4e" Index="79" />
+      <EProperty Type="QColor" Name="Color 81" Value="#64ff4f" Index="80" />
+      <EProperty Type="QColor" Name="Color 82" Value="#61ff50" Index="81" />
+      <EProperty Type="QColor" Name="Color 83" Value="#5eff51" Index="82" />
+      <EProperty Type="QColor" Name="Color 84" Value="#5bff52" Index="83" />
+      <EProperty Type="QColor" Name="Color 85" Value="#58ff53" Index="84" />
+      <EProperty Type="QColor" Name="Color 86" Value="#55ff54" Index="85" />
+      <EProperty Type="QColor" Name="Color 87" Value="#55ff59" Index="86" />
+      <EProperty Type="QColor" Name="Color 88" Value="#56ff5e" Index="87" />
+      <EProperty Type="QColor" Name="Color 89" Value="#57ff63" Index="88" />
+      <EProperty Type="QColor" Name="Color 90" Value="#58ff68" Index="89" />
+      <EProperty Type="QColor" Name="Color 91" Value="#59ff6d" Index="90" />
+      <EProperty Type="QColor" Name="Color 92" Value="#5aff72" Index="91" />
+      <EProperty Type="QColor" Name="Color 93" Value="#5bff76" Index="92" />
+      <EProperty Type="QColor" Name="Color 94" Value="#5cff7b" Index="93" />
+      <EProperty Type="QColor" Name="Color 95" Value="#5dff80" Index="94" />
+      <EProperty Type="QColor" Name="Color 96" Value="#5eff84" Index="95" />
+      <EProperty Type="QColor" Name="Color 97" Value="#5fff89" Index="96" />
+      <EProperty Type="QColor" Name="Color 98" Value="#60ff8d" Index="97" />
+      <EProperty Type="QColor" Name="Color 99" Value="#61ff92" Index="98" />
+      <EProperty Type="QColor" Name="Color 100" Value="#62ff96" Index="99" />
+      <EProperty Type="QColor" Name="Color 101" Value="#63ff9a" Index="100" />
+      <EProperty Type="QColor" Name="Color 102" Value="#64ff9e" Index="101" />
+      <EProperty Type="QColor" Name="Color 103" Value="#65ffa3" Index="102" />
+      <EProperty Type="QColor" Name="Color 104" Value="#66ffa7" Index="103" />
+      <EProperty Type="QColor" Name="Color 105" Value="#67ffab" Index="104" />
+      <EProperty Type="QColor" Name="Color 106" Value="#68ffaf" Index="105" />
+      <EProperty Type="QColor" Name="Color 107" Value="#69ffb3" Index="106" />
+      <EProperty Type="QColor" Name="Color 108" Value="#6affb7" Index="107" />
+      <EProperty Type="QColor" Name="Color 109" Value="#6bffbb" Index="108" />
+      <EProperty Type="QColor" Name="Color 110" Value="#6cffbf" Index="109" />
+      <EProperty Type="QColor" Name="Color 111" Value="#6dffc3" Index="110" />
+      <EProperty Type="QColor" Name="Color 112" Value="#6effc7" Index="111" />
+      <EProperty Type="QColor" Name="Color 113" Value="#6fffca" Index="112" />
+      <EProperty Type="QColor" Name="Color 114" Value="#70ffce" Index="113" />
+      <EProperty Type="QColor" Name="Color 115" Value="#71ffd2" Index="114" />
+      <EProperty Type="QColor" Name="Color 116" Value="#72ffd5" Index="115" />
+      <EProperty Type="QColor" Name="Color 117" Value="#73ffd9" Index="116" />
+      <EProperty Type="QColor" Name="Color 118" Value="#74ffdc" Index="117" />
+      <EProperty Type="QColor" Name="Color 119" Value="#75ffe0" Index="118" />
+      <EProperty Type="QColor" Name="Color 120" Value="#76ffe3" Index="119" />
+      <EProperty Type="QColor" Name="Color 121" Value="#77ffe7" Index="120" />
+      <EProperty Type="QColor" Name="Color 122" Value="#78ffea" Index="121" />
+      <EProperty Type="QColor" Name="Color 123" Value="#79ffed" Index="122" />
+      <EProperty Type="QColor" Name="Color 124" Value="#7afff1" Index="123" />
+      <EProperty Type="QColor" Name="Color 125" Value="#7bfff4" Index="124" />
+      <EProperty Type="QColor" Name="Color 126" Value="#7cfff7" Index="125" />
+      <EProperty Type="QColor" Name="Color 127" Value="#7dfffa" Index="126" />
+      <EProperty Type="QColor" Name="Color 128" Value="#7efffd" Index="127" />
+      <EProperty Type="QColor" Name="Color 129" Value="#7ffdff" Index="128" />
+      <EProperty Type="QColor" Name="Color 130" Value="#80faff" Index="129" />
+      <EProperty Type="QColor" Name="Color 131" Value="#81f7ff" Index="130" />
+      <EProperty Type="QColor" Name="Color 132" Value="#82f4ff" Index="131" />
+      <EProperty Type="QColor" Name="Color 133" Value="#83f1ff" Index="132" />
+      <EProperty Type="QColor" Name="Color 134" Value="#84efff" Index="133" />
+      <EProperty Type="QColor" Name="Color 135" Value="#85ecff" Index="134" />
+      <EProperty Type="QColor" Name="Color 136" Value="#86e9ff" Index="135" />
+      <EProperty Type="QColor" Name="Color 137" Value="#87e7ff" Index="136" />
+      <EProperty Type="QColor" Name="Color 138" Value="#88e4ff" Index="137" />
+      <EProperty Type="QColor" Name="Color 139" Value="#89e2ff" Index="138" />
+      <EProperty Type="QColor" Name="Color 140" Value="#8adfff" Index="139" />
+      <EProperty Type="QColor" Name="Color 141" Value="#8bddff" Index="140" />
+      <EProperty Type="QColor" Name="Color 142" Value="#8cdaff" Index="141" />
+      <EProperty Type="QColor" Name="Color 143" Value="#8dd8ff" Index="142" />
+      <EProperty Type="QColor" Name="Color 144" Value="#8ed6ff" Index="143" />
+      <EProperty Type="QColor" Name="Color 145" Value="#8fd3ff" Index="144" />
+      <EProperty Type="QColor" Name="Color 146" Value="#90d1ff" Index="145" />
+      <EProperty Type="QColor" Name="Color 147" Value="#91cfff" Index="146" />
+      <EProperty Type="QColor" Name="Color 148" Value="#92cdff" Index="147" />
+      <EProperty Type="QColor" Name="Color 149" Value="#93cbff" Index="148" />
+      <EProperty Type="QColor" Name="Color 150" Value="#94c9ff" Index="149" />
+      <EProperty Type="QColor" Name="Color 151" Value="#95c7ff" Index="150" />
+      <EProperty Type="QColor" Name="Color 152" Value="#96c5ff" Index="151" />
+      <EProperty Type="QColor" Name="Color 153" Value="#97c3ff" Index="152" />
+      <EProperty Type="QColor" Name="Color 154" Value="#98c1ff" Index="153" />
+      <EProperty Type="QColor" Name="Color 155" Value="#99c0ff" Index="154" />
+      <EProperty Type="QColor" Name="Color 156" Value="#9abeff" Index="155" />
+      <EProperty Type="QColor" Name="Color 157" Value="#9bbcff" Index="156" />
+      <EProperty Type="QColor" Name="Color 158" Value="#9cbaff" Index="157" />
+      <EProperty Type="QColor" Name="Color 159" Value="#9db9ff" Index="158" />
+      <EProperty Type="QColor" Name="Color 160" Value="#9eb7ff" Index="159" />
+      <EProperty Type="QColor" Name="Color 161" Value="#9fb6ff" Index="160" />
+      <EProperty Type="QColor" Name="Color 162" Value="#a0b4ff" Index="161" />
+      <EProperty Type="QColor" Name="Color 163" Value="#a1b3ff" Index="162" />
+      <EProperty Type="QColor" Name="Color 164" Value="#a2b2ff" Index="163" />
+      <EProperty Type="QColor" Name="Color 165" Value="#a3b0ff" Index="164" />
+      <EProperty Type="QColor" Name="Color 166" Value="#a4afff" Index="165" />
+      <EProperty Type="QColor" Name="Color 167" Value="#a5aeff" Index="166" />
+      <EProperty Type="QColor" Name="Color 168" Value="#a6adff" Index="167" />
+      <EProperty Type="QColor" Name="Color 169" Value="#a7acff" Index="168" />
+      <EProperty Type="QColor" Name="Color 170" Value="#a8abff" Index="169" />
+      <EProperty Type="QColor" Name="Color 171" Value="#a9aaff" Index="170" />
+      <EProperty Type="QColor" Name="Color 172" Value="#acaaff" Index="171" />
+      <EProperty Type="QColor" Name="Color 173" Value="#afabff" Index="172" />
+      <EProperty Type="QColor" Name="Color 174" Value="#b2acff" Index="173" />
+      <EProperty Type="QColor" Name="Color 175" Value="#b5adff" Index="174" />
+      <EProperty Type="QColor" Name="Color 176" Value="#b8aeff" Index="175" />
+      <EProperty Type="QColor" Name="Color 177" Value="#bbafff" Index="176" />
+      <EProperty Type="QColor" Name="Color 178" Value="#bdb0ff" Index="177" />
+      <EProperty Type="QColor" Name="Color 179" Value="#c0b1ff" Index="178" />
+      <EProperty Type="QColor" Name="Color 180" Value="#c3b2ff" Index="179" />
+      <EProperty Type="QColor" Name="Color 181" Value="#c5b3ff" Index="180" />
+      <EProperty Type="QColor" Name="Color 182" Value="#c8b4ff" Index="181" />
+      <EProperty Type="QColor" Name="Color 183" Value="#cab5ff" Index="182" />
+      <EProperty Type="QColor" Name="Color 184" Value="#cdb6ff" Index="183" />
+      <EProperty Type="QColor" Name="Color 185" Value="#cfb7ff" Index="184" />
+      <EProperty Type="QColor" Name="Color 186" Value="#d1b8ff" Index="185" />
+      <EProperty Type="QColor" Name="Color 187" Value="#d3b9ff" Index="186" />
+      <EProperty Type="QColor" Name="Color 188" Value="#d6baff" Index="187" />
+      <EProperty Type="QColor" Name="Color 189" Value="#d8bbff" Index="188" />
+      <EProperty Type="QColor" Name="Color 190" Value="#dabcff" Index="189" />
+      <EProperty Type="QColor" Name="Color 191" Value="#dcbdff" Index="190" />
+      <EProperty Type="QColor" Name="Color 192" Value="#debeff" Index="191" />
+      <EProperty Type="QColor" Name="Color 193" Value="#e0bfff" Index="192" />
+      <EProperty Type="QColor" Name="Color 194" Value="#e2c0ff" Index="193" />
+      <EProperty Type="QColor" Name="Color 195" Value="#e4c1ff" Index="194" />
+      <EProperty Type="QColor" Name="Color 196" Value="#e6c2ff" Index="195" />
+      <EProperty Type="QColor" Name="Color 197" Value="#e8c3ff" Index="196" />
+      <EProperty Type="QColor" Name="Color 198" Value="#e9c4ff" Index="197" />
+      <EProperty Type="QColor" Name="Color 199" Value="#ebc5ff" Index="198" />
+      <EProperty Type="QColor" Name="Color 200" Value="#edc6ff" Index="199" />
+      <EProperty Type="QColor" Name="Color 201" Value="#eec7ff" Index="200" />
+      <EProperty Type="QColor" Name="Color 202" Value="#f0c8ff" Index="201" />
+      <EProperty Type="QColor" Name="Color 203" Value="#f1c9ff" Index="202" />
+      <EProperty Type="QColor" Name="Color 204" Value="#f3caff" Index="203" />
+      <EProperty Type="QColor" Name="Color 205" Value="#f4cbff" Index="204" />
+      <EProperty Type="QColor" Name="Color 206" Value="#f6ccff" Index="205" />
+      <EProperty Type="QColor" Name="Color 207" Value="#f7cdff" Index="206" />
+      <EProperty Type="QColor" Name="Color 208" Value="#f8ceff" Index="207" />
+      <EProperty Type="QColor" Name="Color 209" Value="#facfff" Index="208" />
+      <EProperty Type="QColor" Name="Color 210" Value="#fbd0ff" Index="209" />
+      <EProperty Type="QColor" Name="Color 211" Value="#fcd1ff" Index="210" />
+      <EProperty Type="QColor" Name="Color 212" Value="#fdd2ff" Index="211" />
+      <EProperty Type="QColor" Name="Color 213" Value="#fed3ff" Index="212" />
+      <EProperty Type="QColor" Name="Color 214" Value="#ffd4fe" Index="213" />
+      <EProperty Type="QColor" Name="Color 215" Value="#ffd5fd" Index="214" />
+      <EProperty Type="QColor" Name="Color 216" Value="#ffd6fc" Index="215" />
+      <EProperty Type="QColor" Name="Color 217" Value="#ffd7fb" Index="216" />
+      <EProperty Type="QColor" Name="Color 218" Value="#ffd8fa" Index="217" />
+      <EProperty Type="QColor" Name="Color 219" Value="#ffd9fa" Index="218" />
+      <EProperty Type="QColor" Name="Color 220" Value="#ffdaf9" Index="219" />
+      <EProperty Type="QColor" Name="Color 221" Value="#ffdbf8" Index="220" />
+      <EProperty Type="QColor" Name="Color 222" Value="#ffdcf8" Index="221" />
+      <EProperty Type="QColor" Name="Color 223" Value="#ffddf7" Index="222" />
+      <EProperty Type="QColor" Name="Color 224" Value="#ffdef7" Index="223" />
+      <EProperty Type="QColor" Name="Color 225" Value="#ffdff6" Index="224" />
+      <EProperty Type="QColor" Name="Color 226" Value="#ffe0f6" Index="225" />
+      <EProperty Type="QColor" Name="Color 227" Value="#ffe1f5" Index="226" />
+      <EProperty Type="QColor" Name="Color 228" Value="#ffe2f5" Index="227" />
+      <EProperty Type="QColor" Name="Color 229" Value="#ffe3f5" Index="228" />
+      <EProperty Type="QColor" Name="Color 230" Value="#ffe4f4" Index="229" />
+      <EProperty Type="QColor" Name="Color 231" Value="#ffe5f4" Index="230" />
+      <EProperty Type="QColor" Name="Color 232" Value="#ffe6f4" Index="231" />
+      <EProperty Type="QColor" Name="Color 233" Value="#ffe7f4" Index="232" />
+      <EProperty Type="QColor" Name="Color 234" Value="#ffe8f4" Index="233" />
+      <EProperty Type="QColor" Name="Color 235" Value="#ffe9f4" Index="234" />
+      <EProperty Type="QColor" Name="Color 236" Value="#ffeaf4" Index="235" />
+      <EProperty Type="QColor" Name="Color 237" Value="#ffebf4" Index="236" />
+      <EProperty Type="QColor" Name="Color 238" Value="#ffecf4" Index="237" />
+      <EProperty Type="QColor" Name="Color 239" Value="#ffedf4" Index="238" />
+      <EProperty Type="QColor" Name="Color 240" Value="#ffeef5" Index="239" />
+      <EProperty Type="QColor" Name="Color 241" Value="#ffeff5" Index="240" />
+      <EProperty Type="QColor" Name="Color 242" Value="#fff0f5" Index="241" />
+      <EProperty Type="QColor" Name="Color 243" Value="#fff1f5" Index="242" />
+      <EProperty Type="QColor" Name="Color 244" Value="#fff2f6" Index="243" />
+      <EProperty Type="QColor" Name="Color 245" Value="#fff3f6" Index="244" />
+      <EProperty Type="QColor" Name="Color 246" Value="#fff4f7" Index="245" />
+      <EProperty Type="QColor" Name="Color 247" Value="#fff5f7" Index="246" />
+      <EProperty Type="QColor" Name="Color 248" Value="#fff6f8" Index="247" />
+      <EProperty Type="QColor" Name="Color 249" Value="#fef7f8" Index="248" />
+      <EProperty Type="QColor" Name="Color 250" Value="#fff8f9" Index="249" />
+      <EProperty Type="QColor" Name="Color 251" Value="#fff9fa" Index="250" />
+      <EProperty Type="QColor" Name="Color 252" Value="#fffafb" Index="251" />
+      <EProperty Type="QColor" Name="Color 253" Value="#fffbfc" Index="252" />
+      <EProperty Type="QColor" Name="Color 254" Value="#fffcfd" Index="253" />
+      <EProperty Type="QColor" Name="Color 255" Value="#fffdfe" Index="254" />
+      <EProperty Type="QColor" Name="Color 256" Value="#fffefe" Index="255" />
+    </Node>
+    <Connection Sender="vtkActor0" SPathIndex="2" Receiver="vtkRenderer1" RPathIndex="1" />
+    <Connection Sender="vtkRenderer1" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper3" SPathIndex="3" Receiver="vtkActor0" RPathIndex="3" />
+    <Connection Sender="vtkCamera4" SPathIndex="1" Receiver="vtkRenderer1" RPathIndex="2" />
+    <Connection Sender="sPyramidSource" SPathIndex="0" Receiver="vtkPolyDataNormals5" RPathIndex="3" />
+    <Connection Sender="vtkPolyDataNormals5" SPathIndex="2" Receiver="vtkElevationFilter6" RPathIndex="3" />
+    <Connection Sender="vtkElevationFilter6" SPathIndex="2" Receiver="vtkDataSetMapper3" RPathIndex="2" />
+    <Connection Sender="vtkLookupTable8" SPathIndex="1" Receiver="vtkDataSetMapper3" RPathIndex="4" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" >
+    <UiFile Hint="" ParentWidget="MainWindowComponent.rightDockArea" Name="IterationControl" HideWhenInactive="false" UiFile="C:/Users/Prashanth N Udupa/untitled.ui" ><![CDATA[<ui version="4.0" >
+ <class>IterationControl</class>
+ <widget class="QWidget" name="IterationControl" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Sierpinski Iteration</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Iterations</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <layout class="QGridLayout" name="gridLayout" >
+     <item row="0" column="0" >
+      <widget class="QSpinBox" name="spinBox" >
+       <property name="maximum" >
+        <number>6</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>178</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0" colspan="2" >
+      <widget class="QSlider" name="horizontalSlider" >
+       <property name="maximum" >
+        <number>6</number>
+       </property>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>126</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>104</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>78</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>98</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
+]]></UiFile>
+  </ProjectPart>
+  <ProjectPart ID="Script" ><![CDATA[
+// Event handler for ValueChanged event of IterationControl_spinBox
+function IterationControl_spinBox_ValueChanged()
+{
+	sPyramidSource.NumberOfIterations = IterationControl.spinBox.value;
+	renderWindow.render();
+}
+IterationControl.spinBox.valueChanged.connect(IterationControl_spinBox_ValueChanged);
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

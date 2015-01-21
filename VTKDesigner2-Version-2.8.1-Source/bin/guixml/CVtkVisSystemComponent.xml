@@ -1,0 +1,11 @@
+<component title="VTK Visualization System" version="1.0" name="CVtkVisSystemComponent">
+  <object title="" name="controller"/>
+  <object title="" scriptName="VtkSystem" excludeChilren="false" name="vtkVisSystem"/>
+  <object title="" scriptName="VtkMath" name="vtkMath"/>
+  <object title="" scriptName="VtkTransformationMatrix" name="vtkTransformationMatrix"/>
+  <action triggerSlot="CVtkVisSystemComponent.controller::captureSnapshotToClipboard()" name="captureSnapshot" mergeWith="MainWindowComponent.captureSnapshot"/>
+  <widget title="VTK Output" name="vtkOutputDisplay" parentWidget="MainWindowComponent.workspace" parentWidgetHint="RightDockWidgetArea"/>
+  <widget title="Pipeline Progress" name="pipelineProgressMonitor" parentWidget="MainWindowComponent.window" parentWidgetHint="BottomDockWidgetArea"/>
+  <property key="CVtkVisSystemComponent.pipelineProgressMonitor::maximumHeight" value="110"/>
+  <property key="CVtkVisSystemComponent.renderWindow::title" value="renderWindow"/>
+</component>

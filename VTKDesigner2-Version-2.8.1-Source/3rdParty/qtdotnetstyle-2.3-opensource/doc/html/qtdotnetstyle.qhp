@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.trolltech.qtsolutions.qtdotnetstyle_2.3</namespace>
+    <virtualFolder>qdoc</virtualFolder>
+    <customFilter name="Qt Solutions: QtDotNet Style">
+        <filterAttribute>qtdotnetstyle</filterAttribute>
+        <filterAttribute>qt</filterAttribute>
+        <filterAttribute>solutions</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>qtdotnetstyle</filterAttribute>
+        <filterAttribute>qt</filterAttribute>
+        <filterAttribute>solutions</filterAttribute>
+        <toc>
+            <section ref="index.html" title="Qt Solutions: QtDotNet Style Documentation">
+                <section ref="index.html" title="QtDotNet Style"></section>
+                <section ref="dotnetstyle-usage.html" title="QtDotNet Style Usage"></section>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="QtDotNet Style" id="QtDotNet Style" ref="index.html"></keyword>
+            <keyword name="QtDotNet Style Usage" id="QtDotNet Style Usage" ref="dotnetstyle-usage.html"></keyword>
+            <keyword name="QtDotNetStyle" id="QtDotNetStyle" ref="qtdotnetstyle.html"></keyword>
+            <keyword name="QtDotNetStyle::ColorTheme" id="QtDotNetStyle::ColorTheme" ref="qtdotnetstyle.html#ColorTheme-enum"></keyword>
+            <keyword name="QtDotNetStyle::Standard" id="QtDotNetStyle::Standard" ref="qtdotnetstyle.html#ColorTheme-enum"></keyword>
+            <keyword name="QtDotNetStyle::Office" id="QtDotNetStyle::Office" ref="qtdotnetstyle.html#ColorTheme-enum"></keyword>
+            <keyword name="~QtDotNetStyle" id="QtDotNetStyle::~QtDotNetStyle" ref="qtdotnetstyle.html#dtor.QtDotNetStyle"></keyword>
+        </keywords>
+        <files>
+            <file>index.html</file>
+            <file>dotnetstyle-usage.html</file>
+            <file>qtdotnetstyle.html</file>
+            <file>images/dotnetstyle2.png</file>
+            <file>images/dotnetstyle.png</file>
+            <file>classic.css</file>
+            <file>images/qt-logo.png</file>
+            <file>images/dotnetstyle2.png</file>
+            <file>images/dotnetstyle.png</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="XRayShader" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="XRayShaderVert" location="Inline" language="GLSL" entry="main">
+varying vec3 N;
+varying vec3 I;
+varying vec4 Cs;
+
+void main()
+{
+	vec4 P = gl_ModelViewMatrix * gl_Vertex;
+	I  = P.xyz - vec3 (0);
+	N  = gl_NormalMatrix * gl_Normal;
+	Cs = gl_Color;
+	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;	
+} 
+</Shader>
+
+<Shader scope="Fragment" name="XRayShaderFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="EdgeFallOff" value="EdgeFallOff" number_of_elements="1" defaultValue ="5.0"/>
+varying vec3 N;
+varying vec3 I;
+varying vec4 Cs;
+
+uniform float EdgeFallOff;
+void main()
+{
+    float opac = dot(normalize(-N), normalize(-I));
+    opac = abs(opac);
+    opac = 1.0-pow(opac, EdgeFallOff);
+    //opac = 1.0 - opac;
+    gl_FragColor =  opac * Cs;
+    gl_FragColor.a = opac;
+}
+</Shader>
+</Material>

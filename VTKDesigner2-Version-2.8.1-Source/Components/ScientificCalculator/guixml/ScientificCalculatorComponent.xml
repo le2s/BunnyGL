@@ -1,0 +1,19 @@
+<component title="ScientificCalculatorComponent"
+           name="ScientificCalculatorComponent" >
+
+    <object name="controller" />
+
+    <widget name="calculatorWidget" title="Calculator"
+            parentWidget="MainWindowComponent.rightDockArea" />
+
+    <action name="clearHistory" title="Clear History"
+            triggerSlot="ScientificCalculatorComponent.calculatorWidget::clearHistory()"/>
+    <action name="clearExpression" title="Clear Expression"
+            triggerSlot="ScientificCalculatorComponent.calculatorWidget::clearHistory()"/>
+    
+    <menu name="calculatorMenu" title="Calculator" before="MainWindowComponent.helpMenu">
+        <menuitem actionName="ScientificCalculatorComponent.clearHistory" />
+        <menuitem actionName="ScientificCalculatorComponent.clearExpression" />
+    </menu>
+    
+</component>

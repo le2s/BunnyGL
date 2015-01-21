@@ -1,0 +1,348 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-369.286" Y="-304.071" Name="pl3d" ClassName="vtkPLOT3DReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/postxyz.bin" />
+      <Property Type="QString" Name="XYZFileName" Value="VTKData/postxyz.bin" />
+      <Property Type="QString" Name="QFileName" Value="VTKData/postq.bin" />
+      <Property Type="bool" Name="BinaryFile" Value="true" />
+      <Property Type="bool" Name="MultiGrid" Value="false" />
+      <Property Type="bool" Name="HasByteCount" Value="false" />
+      <Property Type="bool" Name="IBlanking" Value="true" />
+      <Property Type="bool" Name="TwoDimensionalGeometry" Value="false" />
+      <Property Type="bool" Name="ForceRead" Value="false" />
+      <Property Type="bool" Name="DoNotReduceNumberOfOutputs" Value="true" />
+      <Property Type="ByteOrder" Name="ByteOrder" Value="0" />
+      <Property Type="double" Name="R" Value="1" />
+      <Property Type="double" Name="Gamma" Value="1.4" />
+      <Property Type="double" Name="Uvinf" Value="0" />
+      <Property Type="double" Name="Vvinf" Value="0" />
+      <Property Type="double" Name="Wvinf" Value="0" />
+      <Property Type="int" Name="ScalarFunctionNumber" Value="100" />
+      <Property Type="int" Name="VectorFunctionNumber" Value="202" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="pl3d" />
+      <Property Type="QString" Name="objectName" Value="pl3d" />
+    </Node>
+    <Node X="-375" Y="-206" Name="floorComp" ClassName="vtkStructuredGridGeometryFilter" ID="1" >
+      <Property Type="QList&lt;int>" Name="Extent" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="floorComp" />
+      <Property Type="QString" Name="objectName" Value="floorComp" />
+    </Node>
+    <Node X="-370.336" Y="-125.328" Name="floorMapper" ClassName="vtkPolyDataMapper" ID="2" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="floorMapper" />
+      <Property Type="QString" Name="objectName" Value="floorMapper" />
+    </Node>
+    <Node X="-371" Y="-24" Name="floorActor" ClassName="vtkActor" ID="3" >
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="floorActor" />
+      <Property Type="QString" Name="objectName" Value="floorActor" />
+    </Node>
+    <Node X="-375" Y="78" Name="renderer" ClassName="vtkRenderer" ID="4" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#fff5f6" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-374" Y="167" Name="renderWindow" ClassName="vtkRenderWindow" ID="5" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-552" Y="-50" Name="floorProperty" ClassName="vtkProperty" ID="6" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="1" />
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#000000" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#000000" />
+      <Property Type="QColor" Name="SpecularColor" Value="#000000" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="floorProperty" />
+      <Property Type="QString" Name="objectName" Value="floorProperty" />
+    </Node>
+    <Node X="-12" Y="-193" Name="postComp" ClassName="vtkStructuredGridGeometryFilter" ID="7" >
+      <Property Type="QList&lt;int>" Name="Extent" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="postComp" />
+      <Property Type="QString" Name="objectName" Value="postComp" />
+    </Node>
+    <Node X="-10" Y="-129" Name="postMapper" ClassName="vtkPolyDataMapper" ID="8" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="postMapper" />
+      <Property Type="QString" Name="objectName" Value="postMapper" />
+    </Node>
+    <Node X="-2" Y="-34" Name="postActor" ClassName="vtkActor" ID="9" >
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="postActor" />
+      <Property Type="QString" Name="objectName" Value="postActor" />
+    </Node>
+    <Node X="-200" Y="-38" Name="postProperty" ClassName="vtkProperty" ID="10" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="1" />
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#000000" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#000000" />
+      <Property Type="QColor" Name="SpecularColor" Value="#000000" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="postProperty" />
+      <Property Type="QString" Name="objectName" Value="postProperty" />
+    </Node>
+    <Node X="538" Y="-192" Name="outline" ClassName="vtkStructuredGridOutlineFilter" ID="11" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outline" />
+      <Property Type="QString" Name="objectName" Value="outline" />
+    </Node>
+    <Node X="531" Y="-22" Name="outlineActor" ClassName="vtkActor" ID="12" >
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="outlineActor" />
+      <Property Type="QString" Name="objectName" Value="outlineActor" />
+    </Node>
+    <Node X="537" Y="-102" Name="outlineMapper" ClassName="vtkPolyDataMapper" ID="13" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outlineMapper" />
+      <Property Type="QString" Name="objectName" Value="outlineMapper" />
+    </Node>
+    <Node X="723" Y="-55" Name="oulineProperty" ClassName="vtkProperty" ID="14" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#000000" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#000000" />
+      <Property Type="QColor" Name="SpecularColor" Value="#000000" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="oulineProperty" />
+      <Property Type="QString" Name="objectName" Value="oulineProperty" />
+    </Node>
+    <Node X="-856.395" Y="-280.192" Name="rake" ClassName="vtkPointSource" ID="15" >
+      <Property Type="int" Name="PointCount" Value="10" />
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="-0.74, 0, 0.3" />
+      <Property Type="int" Name="Distribution" Value="1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="rake" />
+      <Property Type="QString" Name="objectName" Value="rake" />
+    </Node>
+    <Node X="-859.998" Y="-203.014" Name="streamers" ClassName="vtkStreamLine" ID="16" >
+      <Property Type="double" Name="StepLength" Value="0.25" />
+      <Property Type="int" Name="NumberOfThreads" Value="0" />
+      <Property Type="Point3D" Name="StartPosition" Value="0, 0, 0" />
+      <Property Type="double" Name="MaximumPropagationTime" Value="250" />
+      <Property Type="Direction" Name="IntegrationDirection" Value="0" />
+      <Property Type="double" Name="IntegrationStepLength" Value="0.2" />
+      <Property Type="bool" Name="SpeedScalars" Value="true" />
+      <Property Type="bool" Name="OrientationScalars" Value="false" />
+      <Property Type="double" Name="TerminalSpeed" Value="0" />
+      <Property Type="bool" Name="Vorticity" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="streamers" />
+      <Property Type="QString" Name="objectName" Value="streamers" />
+    </Node>
+    <Node X="-866" Y="-62" Name="mapTubes" ClassName="vtkPolyDataMapper" ID="17" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="mapTubes" />
+      <Property Type="QString" Name="objectName" Value="mapTubes" />
+    </Node>
+    <Node X="-864" Y="53" Name="tubesActor" ClassName="vtkActor" ID="18" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="tubesActor" />
+      <Property Type="QString" Name="objectName" Value="tubesActor" />
+    </Node>
+    <Node X="-861" Y="-134" Name="streamerTube" ClassName="vtkTubeFilter" ID="19" >
+      <Property Type="double" Name="Radius" Value="0.1" />
+      <Property Type="VaryRadius" Name="VaryRadius" Value="0" />
+      <Property Type="int" Name="NumberOfSides" Value="10" />
+      <Property Type="double" Name="RadiusFactor" Value="10" />
+      <Property Type="Point3D" Name="DefaultNormal" Value="0, 0, 1" />
+      <Property Type="bool" Name="UseDefaultNormal" Value="false" />
+      <Property Type="bool" Name="SidesShareVertices" Value="true" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="int" Name="OnRatio" Value="1" />
+      <Property Type="int" Name="Offset" Value="0" />
+      <Property Type="TCoords" Name="GenerateTCoords" Value="0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="streamerTube" />
+      <Property Type="QString" Name="objectName" Value="streamerTube" />
+    </Node>
+    <Node X="307.231" Y="-189" Name="fanComp" ClassName="vtkStructuredGridGeometryFilter" ID="20" >
+      <Property Type="QList&lt;int>" Name="Extent" Value="" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="fanComp" />
+      <Property Type="QString" Name="objectName" Value="fanComp" />
+    </Node>
+    <Node X="323" Y="-109" Name="fanMapper" ClassName="vtkPolyDataMapper" ID="21" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="fanMapper" />
+      <Property Type="QString" Name="objectName" Value="fanMapper" />
+    </Node>
+    <Node X="322.92" Y="-50.6723" Name="fanActor" ClassName="vtkActor" ID="22" >
+      <Property Type="QColor" Name="Color" Value="#030303" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="fanActor" />
+      <Property Type="QString" Name="objectName" Value="fanActor" />
+    </Node>
+    <Node X="153" Y="-43" Name="fanProperty" ClassName="vtkProperty" ID="23" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#030303" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#030303" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#030303" />
+      <Property Type="QColor" Name="SpecularColor" Value="#030303" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="fanProperty" />
+      <Property Type="QString" Name="objectName" Value="fanProperty" />
+    </Node>
+    <Node X="-548" Y="15" Name="camera" ClassName="vtkCamera" ID="24" >
+      <Property Type="Point3D" Name="Position" Value="-4.321, -10.87, 7.656" />
+      <Property Type="Point3D" Name="FocalPoint" Value="3.186, -1.828, 2.797" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.2185, 0.315, 0.9236" />
+      <Property Type="double" Name="Distance" Value="12.71" />
+      <Property Type="double" Name="Roll" Value="63.39" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="57.58" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.5905, -0.7109, 0.3822" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="floorComp" RPathIndex="3" />
+    <Connection Sender="floorComp" SPathIndex="2" Receiver="floorMapper" RPathIndex="2" />
+    <Connection Sender="floorMapper" SPathIndex="3" Receiver="floorActor" RPathIndex="3" />
+    <Connection Sender="floorActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="floorProperty" SPathIndex="1" Receiver="floorActor" RPathIndex="5" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="postComp" RPathIndex="3" />
+    <Connection Sender="postComp" SPathIndex="2" Receiver="postMapper" RPathIndex="2" />
+    <Connection Sender="postActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="postMapper" SPathIndex="3" Receiver="postActor" RPathIndex="3" />
+    <Connection Sender="postProperty" SPathIndex="1" Receiver="postActor" RPathIndex="5" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="outline" RPathIndex="3" />
+    <Connection Sender="outline" SPathIndex="2" Receiver="outlineMapper" RPathIndex="2" />
+    <Connection Sender="outlineMapper" SPathIndex="3" Receiver="outlineActor" RPathIndex="3" />
+    <Connection Sender="outlineActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="oulineProperty" SPathIndex="1" Receiver="outlineActor" RPathIndex="5" />
+    <Connection Sender="mapTubes" SPathIndex="3" Receiver="tubesActor" RPathIndex="3" />
+    <Connection Sender="tubesActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="rake" SPathIndex="2" Receiver="streamers" RPathIndex="4" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="streamers" RPathIndex="3" />
+    <Connection Sender="streamers" SPathIndex="2" Receiver="streamerTube" RPathIndex="3" />
+    <Connection Sender="streamerTube" SPathIndex="2" Receiver="mapTubes" RPathIndex="2" />
+    <Connection Sender="fanComp" SPathIndex="2" Receiver="fanMapper" RPathIndex="2" />
+    <Connection Sender="fanMapper" SPathIndex="3" Receiver="fanActor" RPathIndex="3" />
+    <Connection Sender="fanActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="fanComp" RPathIndex="3" />
+    <Connection Sender="fanProperty" SPathIndex="1" Receiver="fanActor" RPathIndex="5" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="298.2395216639653" X="-764.0844167288324" Y="98.23415424741262" Height="238.8816801879243" >This example shows the use of vtkStreamLines to calculate lines from the vector field of the input dataset
+
+stepLength parameter controls the time increment, to generate individual points along the stream line</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[streamers.StepLength = 0.25;]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

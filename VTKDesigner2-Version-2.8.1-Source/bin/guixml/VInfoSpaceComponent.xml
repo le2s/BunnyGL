@@ -1,0 +1,7 @@
+<component title="VInfoSpaceComponent" name="VInfoSpaceComponent" >
+
+    <object name="controller" />
+
+    <widget name="browser" title="VInfoSphere" parentWidget="MainWindowComponent.workspace" />
+
+</component>

@@ -1,0 +1,131 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="91.1798" Y="-237.043" Name="sphere" ClassName="vtkSphereSource" ID="0" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="ThetaResolution" Value="8" />
+      <Property Type="int" Name="PhiResolution" Value="8" />
+      <Property Type="double" Name="StartTheta" Value="0" />
+      <Property Type="double" Name="EndTheta" Value="360" />
+      <Property Type="double" Name="StartPhi" Value="0" />
+      <Property Type="double" Name="EndPhi" Value="180" />
+      <Property Type="bool" Name="LatLongTessellation" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere" />
+      <Property Type="QString" Name="objectName" Value="sphere" />
+    </Node>
+    <Node X="85" Y="-151.25" Name="sphereMapper" ClassName="vtkPolyDataMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphereMapper" />
+      <Property Type="QString" Name="objectName" Value="sphereMapper" />
+    </Node>
+    <Node X="87.5" Y="-66.25" Name="sphereActor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphereActor" />
+      <Property Type="QString" Name="objectName" Value="sphereActor" />
+    </Node>
+    <Node X="2.75" Y="146.25" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="5.25" Y="231.25" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-92" Y="-151.25" Name="glyph" ClassName="vtkGlyph3D" ID="5" >
+      <Property Type="bool" Name="Scaling" Value="true" />
+      <Property Type="ScaleMode" Name="ScaleMode" Value="1" />
+      <Property Type="ColorMode" Name="ColorMode" Value="0" />
+      <Property Type="double" Name="ScaleFactor" Value="0.25" />
+      <Property Type="ValueRange" Name="Range" Value="0, 1" />
+      <Property Type="bool" Name="Orient" Value="true" />
+      <Property Type="bool" Name="Clamping" Value="false" />
+      <Property Type="VectorMode" Name="VectorMode" Value="1" />
+      <Property Type="IndexMode" Name="IndexMode" Value="0" />
+      <Property Type="bool" Name="GeneratePointIds" Value="false" />
+      <Property Type="QString" Name="PointIdsName" Value="InputPointIds" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="glyph" />
+      <Property Type="QString" Name="objectName" Value="glyph" />
+    </Node>
+    <Node X="-92.5" Y="-316.33" Name="cone" ClassName="vtkConeSource" ID="6" >
+      <Property Type="double" Name="Height" Value="1" />
+      <Property Type="double" Name="Radius" Value="0.5001" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="Direction" Value="1, 0, 0" />
+      <Property Type="double" Name="Angle" Value="26.57" />
+      <Property Type="bool" Name="Capping" Value="true" />
+      <Property Type="int" Name="Resolution" Value="20" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cone" />
+      <Property Type="QString" Name="objectName" Value="cone" />
+    </Node>
+    <Node X="-89.5" Y="-66.25" Name="spikeMapper" ClassName="vtkPolyDataMapper" ID="7" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="spikeMapper" />
+      <Property Type="QString" Name="objectName" Value="spikeMapper" />
+    </Node>
+    <Node X="-87" Y="18.75" Name="spikeActor" ClassName="vtkActor" ID="8" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="spikeActor" />
+      <Property Type="QString" Name="objectName" Value="spikeActor" />
+    </Node>
+    <Node X="-89.5941" Y="-241.825" Name="coneNormals" ClassName="vtkPolyDataNormals" ID="9" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="true" />
+      <Property Type="bool" Name="FlipNormals" Value="false" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="coneNormals" />
+      <Property Type="QString" Name="objectName" Value="coneNormals" />
+    </Node>
+    <Connection Sender="sphere" SPathIndex="2" Receiver="sphereMapper" RPathIndex="2" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphereActor" RPathIndex="3" />
+    <Connection Sender="sphereActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="sphere" SPathIndex="2" Receiver="glyph" RPathIndex="3" />
+    <Connection Sender="glyph" SPathIndex="2" Receiver="spikeMapper" RPathIndex="2" />
+    <Connection Sender="spikeMapper" SPathIndex="3" Receiver="spikeActor" RPathIndex="3" />
+    <Connection Sender="spikeActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="cone" SPathIndex="2" Receiver="coneNormals" RPathIndex="3" />
+    <Connection Sender="coneNormals" SPathIndex="2" Receiver="glyph" RPathIndex="4" />
+    <Note Width="230.3633313526147" X="-416.8910470409712" Y="-181.4967830045523" Height="232.4824115581545" >vtkGlyph3D copies a geometric representation to every point of an input dataset
+
+In this example cone glyphs are projected along every point normal of the sphere dataset</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

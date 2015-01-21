@@ -1,0 +1,9 @@
+<component title="Visualization System Node Class Explorer" version="1.0" name="CVisSystemNodeClassExplorerComponent">
+  <widget title="Node Class Explorer" name="explorerContainer" parentWidget="MainWindowComponent.leftDockArea"/>
+  <widget title="" name="explorer"/>
+  <widget title="" name="searchForWidget"/>
+  <widget title="" name="explorerTree"/>
+  <object title="" name="controller"/>
+  <property key="CVisSystemNodeClassExplorerComponent.explorer::ItemSize" value="20"/>
+  <property key="CVisSystemNodeClassExplorerComponent.explorerTree::alternatingRowColors" value="false"/>
+</component>

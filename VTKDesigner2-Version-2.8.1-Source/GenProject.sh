@@ -1,0 +1,1 @@
+qmake -Wnone -recursive

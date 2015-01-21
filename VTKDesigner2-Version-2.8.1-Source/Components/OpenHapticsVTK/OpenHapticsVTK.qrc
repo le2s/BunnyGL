@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/OpenHapticsVTK">
+    <file alias="haptics.png">icons/haptics.png</file>
+</qresource>
+</RCC>

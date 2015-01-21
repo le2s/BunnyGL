@@ -1,0 +1,351 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-190.482" Y="-49.9704" Name="sphere" ClassName="vtkSphereSource" ID="0" >
+      <Property Type="double" Name="Radius" Value="0.5" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="ThetaResolution" Value="50" />
+      <Property Type="int" Name="PhiResolution" Value="25" />
+      <Property Type="double" Name="StartTheta" Value="0" />
+      <Property Type="double" Name="EndTheta" Value="360" />
+      <Property Type="double" Name="StartPhi" Value="0" />
+      <Property Type="double" Name="EndPhi" Value="180" />
+      <Property Type="bool" Name="LatLongTessellation" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere" />
+      <Property Type="QString" Name="objectName" Value="sphere" />
+    </Node>
+    <Node X="-188.813" Y="46.6494" Name="sphereMapper" ClassName="vtkPolyDataMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphereMapper" />
+      <Property Type="QString" Name="objectName" Value="sphereMapper" />
+    </Node>
+    <Node X="-880.703" Y="108.822" Name="sphere1" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere1" />
+      <Property Type="QString" Name="objectName" Value="sphere1" />
+    </Node>
+    <Node X="-875.893" Y="42.5379" Name="sphere1Property" ClassName="vtkProperty" ID="3" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="5" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2424" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2424" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2424" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere1Property" />
+      <Property Type="QString" Name="objectName" Value="sphere1Property" />
+    </Node>
+    <Node X="-709.965" Y="108.874" Name="sphere2" ClassName="vtkActor" ID="4" >
+      <Property Type="QColor" Name="Color" Value="#ff2f27" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="1.25, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere2" />
+      <Property Type="QString" Name="objectName" Value="sphere2" />
+    </Node>
+    <Node X="-704.278" Y="43.17" Name="sphere2Property" ClassName="vtkProperty" ID="5" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2f27" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="10" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2f27" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2f27" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2f27" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere2Property" />
+      <Property Type="QString" Name="objectName" Value="sphere2Property" />
+    </Node>
+    <Node X="-533.657" Y="109.459" Name="sphere3" ClassName="vtkActor" ID="6" >
+      <Property Type="QColor" Name="Color" Value="#ff2f27" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="2.5, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere3" />
+      <Property Type="QString" Name="objectName" Value="sphere3" />
+    </Node>
+    <Node X="-532.757" Y="43.1555" Name="sphere3Property" ClassName="vtkProperty" ID="7" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2f27" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="20" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2f27" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2f27" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2f27" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere3Property" />
+      <Property Type="QString" Name="objectName" Value="sphere3Property" />
+    </Node>
+    <Node X="-10.1504" Y="107.92" Name="sphere4" ClassName="vtkActor" ID="8" >
+      <Property Type="QColor" Name="Color" Value="#ff2a22" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="3.75, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere4" />
+      <Property Type="QString" Name="objectName" Value="sphere4" />
+    </Node>
+    <Node X="-8.69694" Y="45.8877" Name="sphere4Property" ClassName="vtkProperty" ID="9" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2a22" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="1" />
+      <Property Type="double" Name="SpecularPower" Value="40" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2a22" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2a22" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2a22" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere4Property" />
+      <Property Type="QString" Name="objectName" Value="sphere4Property" />
+    </Node>
+    <Node X="174.663" Y="111.083" Name="sphere5" ClassName="vtkActor" ID="10" >
+      <Property Type="QColor" Name="Color" Value="#ff2222" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 1.25, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere5" />
+      <Property Type="QString" Name="objectName" Value="sphere5" />
+    </Node>
+    <Node X="171.798" Y="45.8422" Name="sphere5Property" ClassName="vtkProperty" ID="11" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2222" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="0.5" />
+      <Property Type="double" Name="SpecularPower" Value="5" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2222" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2222" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2222" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere5Property" />
+      <Property Type="QString" Name="objectName" Value="sphere5Property" />
+    </Node>
+    <Node X="379.015" Y="111.917" Name="sphere6" ClassName="vtkActor" ID="12" >
+      <Property Type="QColor" Name="Color" Value="#ff2d24" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="1.25, 1.25, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere6" />
+      <Property Type="QString" Name="objectName" Value="sphere6" />
+    </Node>
+    <Node X="372.41" Y="43.3919" Name="sphere6Property" ClassName="vtkProperty" ID="13" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2d24" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="0.5" />
+      <Property Type="double" Name="SpecularPower" Value="10" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2d24" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2d24" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2d24" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere6Property" />
+      <Property Type="QString" Name="objectName" Value="sphere6Property" />
+    </Node>
+    <Node X="-365.308" Y="109.266" Name="sphere7" ClassName="vtkActor" ID="14" >
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="2.5, 1.25, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere7" />
+      <Property Type="QString" Name="objectName" Value="sphere7" />
+    </Node>
+    <Node X="-364.252" Y="44.7674" Name="sphere7Property" ClassName="vtkProperty" ID="15" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2424" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="0.5" />
+      <Property Type="double" Name="SpecularPower" Value="20" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2424" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2424" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2424" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere7Property" />
+      <Property Type="QString" Name="objectName" Value="sphere7Property" />
+    </Node>
+    <Node X="563.125" Y="112.961" Name="sphere8" ClassName="vtkActor" ID="16" >
+      <Property Type="QColor" Name="Color" Value="#ff2d24" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="3.75, 1.25, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="sphere8" />
+      <Property Type="QString" Name="objectName" Value="sphere8" />
+    </Node>
+    <Node X="559.04" Y="45.9433" Name="sphere8Property" ClassName="vtkProperty" ID="17" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff2d24" />
+      <Property Type="double" Name="Ambient" Value="0.3" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="0.5" />
+      <Property Type="double" Name="SpecularPower" Value="40" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff2d24" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff2d24" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff2d24" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sphere8Property" />
+      <Property Type="QString" Name="objectName" Value="sphere8Property" />
+    </Node>
+    <Node X="-183.029" Y="172.755" Name="renderer" ClassName="vtkRenderer" ID="18" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-184.959" Y="252.739" Name="renderWindow" ClassName="vtkRenderWindow" ID="19" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-189" Y="104" Name="vtkCamera121" ClassName="vtkCamera" ID="20" >
+      <Property Type="Point3D" Name="Position" Value="-0.9306, -2.529, 4.223" />
+      <Property Type="Point3D" Name="FocalPoint" Value="1.528, 0.5857, -0.3526" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.3442, 0.6798, 0.6476" />
+      <Property Type="double" Name="Distance" Value="6.057" />
+      <Property Type="double" Name="Roll" Value="37.57" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="2.675" />
+      <Property Type="double" Name="Thickness" Value="8.778" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.4059, -0.5142, 0.7555" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera121" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera121" />
+    </Node>
+    <Connection Sender="sphere" SPathIndex="2" Receiver="sphereMapper" RPathIndex="2" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere1" RPathIndex="3" />
+    <Connection Sender="sphere1Property" SPathIndex="1" Receiver="sphere1" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere2" RPathIndex="3" />
+    <Connection Sender="sphere2Property" SPathIndex="1" Receiver="sphere2" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere3" RPathIndex="3" />
+    <Connection Sender="sphere3Property" SPathIndex="1" Receiver="sphere3" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere4" RPathIndex="3" />
+    <Connection Sender="sphere4Property" SPathIndex="1" Receiver="sphere4" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere5" RPathIndex="3" />
+    <Connection Sender="sphere5Property" SPathIndex="1" Receiver="sphere5" RPathIndex="5" />
+    <Connection Sender="sphere6Property" SPathIndex="1" Receiver="sphere6" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere6" RPathIndex="3" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere7" RPathIndex="3" />
+    <Connection Sender="sphere7Property" SPathIndex="1" Receiver="sphere7" RPathIndex="5" />
+    <Connection Sender="sphereMapper" SPathIndex="3" Receiver="sphere8" RPathIndex="3" />
+    <Connection Sender="sphere8Property" SPathIndex="1" Receiver="sphere8" RPathIndex="5" />
+    <Connection Sender="sphere1" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere2" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere3" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere4" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere5" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere6" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere7" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="sphere8" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkCamera121" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="414.6153847564607" X="-81" Y="-183" Height="198.6153844813624" >This example shows how lighting effect can be applied on a 3D model
+
+To see the effect each sphere actor is set with different specular properties
+
+Sphere actors 1 - 4 (bottom row), 5 - 8 (top row)
+</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

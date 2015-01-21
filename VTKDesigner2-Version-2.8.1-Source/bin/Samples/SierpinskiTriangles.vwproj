@@ -1,0 +1,198 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="4.29964" Y="33.0683" Name="vtkActor0" ClassName="vtkActor" ID="0" >
+      <Property Type="QColor" Name="Color" Value="#1104d1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="bool" Name="Visible" Value="true" />
+      <Property Type="bool" Name="Pickable" Value="true" />
+      <Property Type="bool" Name="Dragable" Value="true" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor0" />
+      <Property Type="QString" Name="objectName" Value="vtkActor0" />
+    </Node>
+    <Node X="8.09627" Y="123.718" Name="vtkRenderer1" ClassName="vtkRenderer" ID="1" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer1" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderer1" />
+    </Node>
+    <Node X="13.0493" Y="220.983" Name="renderWindow" ClassName="vtkRenderWindow" ID="2" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="3.90674" Y="-55.9832" Name="vtkDataSetMapper3" ClassName="vtkDataSetMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper3" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper3" />
+    </Node>
+    <Node X="3.90674" Y="-154.983" Name="sTriangleSource" ClassName="vtkSierpinskiTriangleSource" ID="4" >
+      <Property Type="int" Name="NumberOfIterations" Value="0" />
+      <Property Type="QString" Name="NodeName" Value="sTriangleSource" />
+      <Property Type="QString" Name="objectName" Value="sTriangleSource" />
+    </Node>
+    <Node X="175.76" Y="-54.2743" Name="vtkProperty6" ClassName="vtkProperty" ID="5" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#1104d1" />
+      <Property Type="double" Name="Ambient" Value="1" />
+      <Property Type="double" Name="Diffuse" Value="0" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="0" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#1104d1" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#1104d1" />
+      <Property Type="QColor" Name="SpecularColor" Value="#1104d1" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkProperty6" />
+      <Property Type="QString" Name="objectName" Value="vtkProperty6" />
+    </Node>
+    <Node X="-180.76" Y="43.6186" Name="vtkCamera7" ClassName="vtkCamera" ID="6" >
+      <Property Type="Point3D" Name="Position" Value="-0.007733, 0.2397, 3.138" />
+      <Property Type="Point3D" Name="FocalPoint" Value="-0.007733, 0.2397, 0" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0, 1, 0" />
+      <Property Type="double" Name="Distance" Value="3.138" />
+      <Property Type="double" Name="Roll" Value="0" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="0.07846" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0, 0, 1" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera7" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera7" />
+    </Node>
+    <Connection Sender="vtkActor0" SPathIndex="2" Receiver="vtkRenderer1" RPathIndex="1" />
+    <Connection Sender="vtkRenderer1" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper3" SPathIndex="3" Receiver="vtkActor0" RPathIndex="3" />
+    <Connection Sender="vtkProperty6" SPathIndex="1" Receiver="vtkActor0" RPathIndex="5" />
+    <Connection Sender="vtkCamera7" SPathIndex="1" Receiver="vtkRenderer1" RPathIndex="2" />
+    <Connection Sender="sTriangleSource" SPathIndex="0" Receiver="vtkDataSetMapper3" RPathIndex="2" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" >
+    <UiFile Hint="" ParentWidget="MainWindowComponent.rightDockArea" Name="IterationControl" HideWhenInactive="false" UiFile="C:/Users/Prashanth N Udupa/untitled.ui" ><![CDATA[<ui version="4.0" >
+ <class>IterationControl</class>
+ <widget class="QWidget" name="IterationControl" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Sierpinski Iteration</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Iterations</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <layout class="QGridLayout" name="gridLayout" >
+     <item row="0" column="0" >
+      <widget class="QSpinBox" name="spinBox" >
+       <property name="maximum" >
+        <number>6</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>178</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0" colspan="2" >
+      <widget class="QSlider" name="horizontalSlider" >
+       <property name="maximum" >
+        <number>6</number>
+       </property>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>126</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>104</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>78</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>98</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
+]]></UiFile>
+  </ProjectPart>
+  <ProjectPart ID="Script" ><![CDATA[
+// Event handler for ValueChanged event of IterationControl_spinBox
+function IterationControl_spinBox_ValueChanged()
+{
+	sTriangleSource.NumberOfIterations = 	IterationControl.spinBox.value;
+	renderWindow.render();
+}
+IterationControl.spinBox.valueChanged.connect(IterationControl_spinBox_ValueChanged);
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

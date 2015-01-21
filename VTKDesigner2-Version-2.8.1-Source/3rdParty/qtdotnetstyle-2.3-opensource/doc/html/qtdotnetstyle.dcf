@@ -1,0 +1,21 @@
+<!DOCTYPE DCF>
+<DCF ref="index.html" icon="qtdotnetstyle.png" imagedir="../../gif" title="Qt Solutions: QtDotNet Style Documentation">
+<section ref="classes.html" title="Classes">
+    <section ref="qtdotnetstyle.html" title="QtDotNetStyle Class Reference">
+        <keyword ref="qtdotnetstyle.html">QtDotNetStyle</keyword>
+        <keyword ref="qtdotnetstyle.html#ColorTheme-enum">ColorTheme</keyword>
+        <keyword ref="qtdotnetstyle.html#ColorTheme-enum">QtDotNetStyle::Standard</keyword>
+        <keyword ref="qtdotnetstyle.html#ColorTheme-enum">QtDotNetStyle::Office</keyword>
+        <section ref="qtdotnetstyle-members.html" title="List of all members"/>
+    </section>
+</section>
+<section ref="overviews.html" title="Overviews">
+    <section ref="index.html" title="QtDotNet Style">
+        <keyword ref="index.html">QtDotNet Style</keyword>
+    </section>
+    <section ref="dotnetstyle-usage.html" title="QtDotNet Style Usage">
+        <keyword ref="dotnetstyle-usage.html">QtDotNet Style Usage</keyword>
+    </section>
+</section>
+<section ref="examples.html" title="Tutorial &amp; Examples"/>
+</DCF>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="GoochShading" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+
+<Shader scope="Vertex" name="GoochShadingVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="LightPosition" value="LightPosition" number_of_elements="3" defaultValue ="0.0,1.0,1.0"/>
+
+uniform vec3  LightPosition; 
+
+varying float NdotL;
+varying vec3  ReflectVec;
+varying vec3  ViewVec;
+
+void main()
+{
+    vec3 ecPos      = vec3(gl_ModelViewMatrix * gl_Vertex);
+    vec3 tnorm      = normalize(gl_NormalMatrix * gl_Normal);
+    vec3 lightVec   = normalize(LightPosition - ecPos);
+    ReflectVec      = normalize(reflect(-lightVec, tnorm));
+    ViewVec         = normalize(-ecPos);
+    NdotL           = (dot(lightVec, tnorm) + 1.0) * 0.5;
+    gl_Position     = ftransform();
+}
+</Shader>
+
+<Shader scope="Fragment" name="GoochShadingFrag" location="Inline" language="GLSL" entry="main">
+
+<ApplicationUniform type="float" name="SurfaceColor" value="SurfaceColor" number_of_elements="3" defaultValue ="0.75,0.75,0.75"/>
+<ApplicationUniform type="float" name="WarmColor" value="WarmColor" number_of_elements="3" defaultValue ="0.6,0.0,0.6"/>
+<ApplicationUniform type="float" name="CoolColor" value="CoolColor" number_of_elements="3" defaultValue ="0.0,0.0,1.6"/>
+<ApplicationUniform type="float" name="DiffuseWarm" value="DiffuseWarm" number_of_elements="1" defaultValue ="0.45"/>
+<ApplicationUniform type="float" name="DiffuseCool" value="DiffuseCool" number_of_elements="1" defaultValue ="0.45"/>
+
+uniform vec3  SurfaceColor; 
+uniform vec3  WarmColor;    
+uniform vec3  CoolColor;    
+uniform float DiffuseWarm;  
+uniform float DiffuseCool;  
+
+varying float NdotL;
+varying vec3  ReflectVec;
+varying vec3  ViewVec;
+
+void main()
+{
+    vec3 kcool    = min(CoolColor + DiffuseCool * SurfaceColor, 1.0);
+    vec3 kwarm    = min(WarmColor + DiffuseWarm * SurfaceColor, 1.0); 
+    vec3 kfinal   = mix(kcool, kwarm, NdotL);
+
+    vec3 nreflect = normalize(ReflectVec);
+    vec3 nview    = normalize(ViewVec);
+
+    float spec    = max(dot(nreflect, nview), 0.0);
+    spec          = pow(spec, 32.0);
+
+    gl_FragColor = vec4(min(kfinal + spec, 1.0), 1.0);
+}
+</Shader>
+</Material>

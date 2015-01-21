@@ -1,0 +1,49 @@
+VTK Designer 2 from VCreate Logic
+
+Starting with VTK Designer version 2.5, the source code structure of VTK Designer has changed.
+This is because, previously GCF was a project that was developed within VTK Designer; but now
+it is an independent project in itself. Non-VTK Designer specific components (like PropertyEditor, 
+ScriptEditor etc) are now an integral part of GCF. The VTK Designer code base has hence been 
+considerably changed to make use of the new GCF structure.
+
+----------
+    NOTE: PLEASE ENSURE THAT YOUR TEXT EDITOR'S TAB SIZE IS 4 SPACES. THE CODE WOULD LOOK
+    HORRIBLE OTHERWISE. I JUST DID NOT FIND ANOTHER PLACE TO PUT THIS NOTE ;-)
+----------
+
+To compile VTK Designer 2.5.x, you will need to do the following
+
+*) Ensure that you have 4.4.x, and VTK 5.0.3+ compiled and installed on your computer.
+
+a) Checkout a copy of VTK Designer 2 from the following SVN location
+https://svn2.hosted-projects.com/vcreatelogic/VTKDesigner2 into a directory say
+~/vtkdesigner2 on your computer. You must be able to find the following
+files now.
+    - ~/vtkdesigner2/License.txt
+    - ~/vtkdesigner2/CompileHOWTO.txt
+When you checkout VTKDesigner2, a copy of GCF is also automatically checked out.
+
+b) Create a directory called VTK5 at the same level as GCF, ie 
+~/vtkdesigner2/VTK5. In this directory ensure that there are three
+sub-directories. 
+    - ~/vtkdesigner2/VTK5/bin - Contains all .so/.dll files
+    - ~/vtkdesigner2/VTK5/include - Contains all vtk*.h files
+    - ~/vtkdesigner2/VTK5/lib - Contains all *.so/*.lib files
+On GNU/Linux you can create bin and lib as soft-links to the directory that 
+contains all *.so files.
+
+c) Run the following command 
+(On Windows assuming that you have checkout GCF and VTK Designer into C:\VTKDesigner2)
+    cd C:\VTKDesigner2
+    qmake -tp vc -recursive "GCF_BASE=C:/VTKDesigner2/GCF" "PROJECT_BASE=C:/VTKDesigner2"
+    Launch Visual Studio and Build All. 
+    
+(On Linux)
+    cd ~/vtkdesigner2
+    qmake -recursive "GCF_BASE=~/vtkdesigner2/GCF" "PROJECT_BASE=~/vtkdesigner2"
+    make
+    export LD_LIBRARY_PATH=$~/vtkdesigner2/bin:LD_LIBRARY_PATH
+    ./bin/VTKDesigner2
+    
+    
+

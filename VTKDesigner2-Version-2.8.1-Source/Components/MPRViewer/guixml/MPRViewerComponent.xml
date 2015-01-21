@@ -1,0 +1,3 @@
+<component title="MPRViewerComponent" name="MPRViewerComponent">
+ <object name="controller"/>
+</component>

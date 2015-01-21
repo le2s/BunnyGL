@@ -1,0 +1,50 @@
+/*!
+	\page index.html
+	\title QtDotNet Style
+
+    	\section1 Description
+	
+            QtDotNet Style provides an alternative GUI look for Qt applications on Windows.
+	
+
+	
+            The GUI look is very similar to the style introduced in
+            Visual Studio 2005, Office 2003 as well as in .NET Windows
+            Forms (when the RenderMode is set to "Professional"
+            instead of "System"). It gives applications a modern
+            gradient appearance for tool bars and menus while
+            retaining the native look and feel for other widgets.
+	
+
+    	
+        \section1 Guidelines
+	    \list
+	 \i  \link dotnetstyle-usage.html QtDotNet Style Usage \endlink \endlist
+	
+        \section1 Classes
+	    \list
+	 \i  QtDotNetStyle\endlist
+	
+    
+
+    	
+
+    	
+    		\section1 Tested platforms
+		\list
+		\i Qt 4.4, 4.5 / Windows XP / MSVC.NET 2005
+		    \endlist
+
+    	
+    		\section1 Unsupported platforms
+		\list
+		\i Linux/Unix
+		    \i Mac
+		    \endlist
+
+	
+		\section1 Screenshots
+
+    		\img dotnetstyle.png
+		    
+	*/

@@ -1,0 +1,207 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="79.6998" Y="-198.135" Name="coneSource1" ClassName="vtkConeSource" ID="0" >
+      <Property Type="double" Name="Height" Value="3" />
+      <Property Type="double" Name="Radius" Value="0.9997" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="Direction" Value="1, 0, 0" />
+      <Property Type="double" Name="Angle" Value="18.43" />
+      <Property Type="bool" Name="Capping" Value="true" />
+      <Property Type="int" Name="Resolution" Value="10" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="coneSource1" />
+      <Property Type="QString" Name="objectName" Value="coneSource1" />
+    </Node>
+    <Node X="78.6359" Y="-126.853" Name="dataSetMapper1" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="dataSetMapper1" />
+      <Property Type="QString" Name="objectName" Value="dataSetMapper1" />
+    </Node>
+    <Node X="-14.2341" Y="145.535" Name="RenderWindow1" ClassName="vtkRenderWindow" ID="2" >
+      <Property Type="QString" Name="NodeName" Value="RenderWindow1" />
+      <Property Type="QString" Name="objectName" Value="RenderWindow1" />
+    </Node>
+    <Node X="80.8391" Y="-53.2546" Name="coneActor1" ClassName="vtkActor" ID="3" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="-8.768e-13, -30, -90" />
+      <Property Type="QString" Name="NodeName" Value="coneActor1" />
+      <Property Type="QString" Name="objectName" Value="coneActor1" />
+    </Node>
+    <Node X="-201.485" Y="147.317" Name="timer0" ClassName="Timer" ID="4" >
+      <Property Type="bool" Name="Active" Value="true" />
+      <Property Type="int" Name="Interval" Value="100" />
+      <Property Type="QString" Name="NodeName" Value="timer0" />
+      <Property Type="QString" Name="objectName" Value="timer0" />
+    </Node>
+    <Node X="-117.823" Y="-194.414" Name="coneSource2" ClassName="vtkConeSource" ID="5" >
+      <Property Type="double" Name="Height" Value="3" />
+      <Property Type="double" Name="Radius" Value="0.9997" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="Direction" Value="1, 0, 0" />
+      <Property Type="double" Name="Angle" Value="18.43" />
+      <Property Type="bool" Name="Capping" Value="true" />
+      <Property Type="int" Name="Resolution" Value="200" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="coneSource2" />
+      <Property Type="QString" Name="objectName" Value="coneSource2" />
+    </Node>
+    <Node X="-120.628" Y="-126.655" Name="dataSetMapper2" ClassName="vtkDataSetMapper" ID="6" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="dataSetMapper2" />
+      <Property Type="QString" Name="objectName" Value="dataSetMapper2" />
+    </Node>
+    <Node X="-121.996" Y="-54.8591" Name="coneActor2" ClassName="vtkActor" ID="7" >
+      <Property Type="QColor" Name="Color" Value="#ff9474" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="coneActor2" />
+      <Property Type="QString" Name="objectName" Value="coneActor2" />
+    </Node>
+    <Node X="-294.682" Y="-54.9374" Name="cone2Property" ClassName="vtkProperty" ID="8" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ff9474" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="0.7" />
+      <Property Type="double" Name="Specular" Value="0.4" />
+      <Property Type="double" Name="SpecularPower" Value="20" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ff9474" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ff9474" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ff9474" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cone2Property" />
+      <Property Type="QString" Name="objectName" Value="cone2Property" />
+    </Node>
+    <Node X="-118.169" Y="28.8145" Name="renderer2" ClassName="vtkRenderer" ID="9" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#1b1f9c" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer2" />
+      <Property Type="QString" Name="objectName" Value="renderer2" />
+    </Node>
+    <Node X="83.4767" Y="30.4588" Name="renderer1" ClassName="vtkRenderer" ID="10" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer1" />
+      <Property Type="QString" Name="objectName" Value="renderer1" />
+    </Node>
+    <Node X="279.126" Y="135.926" Name="RenderWindow2" ClassName="vtkRenderWindow" ID="11" >
+      <Property Type="QString" Name="NodeName" Value="RenderWindow2" />
+      <Property Type="QString" Name="objectName" Value="RenderWindow2" />
+    </Node>
+    <Node X="277.56" Y="-201.026" Name="cube" ClassName="vtkCubeSource" ID="12" >
+      <Property Type="double" Name="XLength" Value="1" />
+      <Property Type="double" Name="YLength" Value="1" />
+      <Property Type="double" Name="ZLength" Value="1" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cube" />
+      <Property Type="QString" Name="objectName" Value="cube" />
+    </Node>
+    <Node X="278.713" Y="-123.032" Name="cubeMapper" ClassName="vtkDataSetMapper" ID="13" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cubeMapper" />
+      <Property Type="QString" Name="objectName" Value="cubeMapper" />
+    </Node>
+    <Node X="273.434" Y="-51.0176" Name="cubeActor" ClassName="vtkActor" ID="14" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="cubeActor" />
+      <Property Type="QString" Name="objectName" Value="cubeActor" />
+    </Node>
+    <Node X="277.3" Y="31.6267" Name="renderer3" ClassName="vtkRenderer" ID="15" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer3" />
+      <Property Type="QString" Name="objectName" Value="renderer3" />
+    </Node>
+    <Node X="-293.232" Y="25.8097" Name="camera" ClassName="vtkCamera" ID="16" >
+      <Property Type="Point3D" Name="Position" Value="7.211, 2.647, -2.101" />
+      <Property Type="Point3D" Name="FocalPoint" Value="-0.0003443, -0.0001029, 0.0001083" />
+      <Property Type="Vector3D" Name="ViewUp" Value="-0.3939, 0.8896, -0.2314" />
+      <Property Type="double" Name="Distance" Value="7.964" />
+      <Property Type="double" Name="Roll" Value="19.41" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="2.061" />
+      <Property Type="double" Name="Thickness" Value="8.983" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.9055, 0.3324, -0.2638" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Connection Sender="coneSource1" SPathIndex="2" Receiver="dataSetMapper1" RPathIndex="2" />
+    <Connection Sender="dataSetMapper1" SPathIndex="3" Receiver="coneActor1" RPathIndex="3" />
+    <Connection Sender="coneSource2" SPathIndex="2" Receiver="dataSetMapper2" RPathIndex="2" />
+    <Connection Sender="dataSetMapper2" SPathIndex="3" Receiver="coneActor2" RPathIndex="3" />
+    <Connection Sender="cone2Property" SPathIndex="1" Receiver="coneActor2" RPathIndex="5" />
+    <Connection Sender="coneActor2" SPathIndex="2" Receiver="renderer2" RPathIndex="1" />
+    <Connection Sender="renderer2" SPathIndex="3" Receiver="RenderWindow1" RPathIndex="1" />
+    <Connection Sender="coneActor1" SPathIndex="2" Receiver="renderer1" RPathIndex="1" />
+    <Connection Sender="renderer1" SPathIndex="3" Receiver="RenderWindow1" RPathIndex="1" />
+    <Connection Sender="cube" SPathIndex="2" Receiver="cubeMapper" RPathIndex="2" />
+    <Connection Sender="cubeMapper" SPathIndex="3" Receiver="cubeActor" RPathIndex="3" />
+    <Connection Sender="cubeActor" SPathIndex="2" Receiver="renderer3" RPathIndex="1" />
+    <Connection Sender="renderer3" SPathIndex="3" Receiver="RenderWindow2" RPathIndex="1" />
+    <Connection Sender="timer0" SPathIndex="0" Receiver="RenderWindow1" RPathIndex="0" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer2" RPathIndex="2" />
+    <Note Width="281" X="-511.8236148547384" Y="-266.6065458500715" Height="175" >The example shows the use of multiple renderers in a single window 
+
+Take a look at the cone features and animation...</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[
+// Event handler for OnTimeout event of timer0
+function timer0_OnTimeout()
+{
+  coneActor1.rotateX(90);
+}
+timer0.OnTimeout.connect(timer0_OnTimeout);
+RenderWindow1.render();
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

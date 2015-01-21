@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/VTKSystem">
+    <file alias="record.png">icons/record.png</file>
+    <file alias="stop.png">icons/stop.png</file>
+    <file alias="vtk.png">icons/vtk.png</file>
+    <file alias="ShaderKeywords.txt">ShaderSupport/Keywords.txt</file>
+</qresource>
+</RCC> 

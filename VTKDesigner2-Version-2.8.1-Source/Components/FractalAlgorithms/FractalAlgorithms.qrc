@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/{{COMPONENT_NAME}}">
+  <!--
+    <file alias="filename.ext">icons/filename.png</file>
+  -->
+</qresource>
+</RCC>

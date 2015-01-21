@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="ImageBrightness" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="ImageBrightnessVert" location="Inline" language="GLSL" entry="main">
+
+varying vec2 TexCoord;
+
+void main()
+{
+    gl_Position = ftransform();
+    TexCoord    = gl_MultiTexCoord0.st;
+}
+</Shader>
+
+<Shader scope="Fragment" name="ImageBrightnessFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="int" name="Image" value="Image" number_of_elements="1" defaultValue ="1"/>
+<ApplicationUniform type="float" name="Alpha" value="Alpha" number_of_elements="1" defaultValue ="1.0"/>
+
+varying vec2      TexCoord;
+
+uniform float     Alpha;
+uniform sampler2D Image;
+
+void main()
+{
+    gl_FragColor  = texture2D(Image, TexCoord) * Alpha;
+}
+</Shader>
+</Material>
+
+
+
+
+
+
+

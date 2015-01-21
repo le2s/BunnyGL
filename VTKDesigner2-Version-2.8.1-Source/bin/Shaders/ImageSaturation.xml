@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="ImageSaturation" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="ImageSaturationVert" location="Inline" language="GLSL" entry="main">
+varying vec2 TexCoord;
+void main (void)
+{
+    
+    TexCoord    = gl_MultiTexCoord0.st;
+	gl_Position = ftransform();
+}
+</Shader>
+
+<Shader scope="Fragment" name="ImageSaturationFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="int" name="Image" value="Image" number_of_elements="1" defaultValue ="1"/>
+<ApplicationUniform type="float" name="Alpha" value="Alpha" number_of_elements="1" defaultValue ="1.0"/>
+
+const vec3 LumCoeff = vec3 (0.2125, 0.7154, 0.0721);
+varying vec2      TexCoord;
+uniform float     Alpha;
+uniform sampler2D Image ;
+void main()
+{
+    vec3 texColor  = texture2D(Image, TexCoord).rgb;  
+    vec3 intensity = vec3(dot(texColor, LumCoeff));
+    vec3 color     = mix(intensity, texColor, Alpha);
+    gl_FragColor   = vec4(color, 1.0);
+}
+</Shader>
+</Material>
+
+

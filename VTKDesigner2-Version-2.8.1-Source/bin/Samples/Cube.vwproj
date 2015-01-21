@@ -1,0 +1,90 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-2.5" Y="-172.5" Name="customPolyDataSource" ClassName="vtkCustomPolyDataSource" ID="0" >
+      <Property Type="bool" Name="StoreData" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="customPolyDataSource" />
+      <Property Type="QString" Name="objectName" Value="customPolyDataSource" />
+    </Node>
+    <Node X="0" Y="-87.5" Name="vtkDataSetMapper1" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper1" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper1" />
+    </Node>
+    <Node X="2.5" Y="-2.5" Name="vtkActor2" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor2" />
+      <Property Type="QString" Name="objectName" Value="vtkActor2" />
+    </Node>
+    <Node X="5" Y="82.5" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="7.5" Y="167.5" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Connection Sender="customPolyDataSource" SPathIndex="2" Receiver="vtkDataSetMapper1" RPathIndex="2" />
+    <Connection Sender="vtkDataSetMapper1" SPathIndex="3" Receiver="vtkActor2" RPathIndex="3" />
+    <Connection Sender="vtkActor2" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Note Width="219.8749998975545" X="-326.8749953527005" Y="-200.3749978486449" Height="234.2499990873039" >This example demonstrates how you can create custom solid object models in VTK Designer. 
+
+See the script editor to notice the code behind the custom cube model</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[
+// Event handler for OnRequestData event of customPolyDataSource
+function customPolyDataSource_OnRequestData()
+{
+	var points = new Array(
+												1, 1, 1,
+												-1, 1, 1,
+												-1, -1, 1,
+												1, -1, 1,
+												1, 1, -1,
+												-1, 1, -1,
+												-1, -1, -1,
+												1, -1, -1
+											);
+	var faces = new Array(
+											0, 1, 2,
+											0, 2, 3,
+											0, 3, 4,
+											3, 7, 4,
+                        1, 2, 5,
+                        2, 6, 5,
+                        4, 5, 6,
+                        4, 6, 7,
+                        1, 4, 5,
+                        1, 0, 4,
+                        2, 7, 6, 
+                        2, 3, 7
+											);
+	customPolyDataSource.setPoints(points);
+	customPolyDataSource.setStrips(faces);
+}
+customPolyDataSource.OnRequestData.connect(customPolyDataSource_OnRequestData);
+customPolyDataSource.markModified();
+renderer.resetCamera();
+renderWindow.render();
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+  <ProjectPart ID="customPolyDataSource" />
+</VWVisProject>

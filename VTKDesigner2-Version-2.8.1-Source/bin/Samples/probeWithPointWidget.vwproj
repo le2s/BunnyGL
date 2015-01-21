@@ -1,0 +1,158 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-474.844" Y="-250.508" Name="pl3d" ClassName="vtkPLOT3DReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/combxyz.bin" />
+      <Property Type="QString" Name="XYZFileName" Value="VTKData/combxyz.bin" />
+      <Property Type="QString" Name="QFileName" Value="VTKData/combq.bin" />
+      <Property Type="bool" Name="BinaryFile" Value="true" />
+      <Property Type="bool" Name="MultiGrid" Value="false" />
+      <Property Type="bool" Name="HasByteCount" Value="false" />
+      <Property Type="bool" Name="IBlanking" Value="false" />
+      <Property Type="bool" Name="TwoDimensionalGeometry" Value="false" />
+      <Property Type="bool" Name="ForceRead" Value="false" />
+      <Property Type="bool" Name="DoNotReduceNumberOfOutputs" Value="true" />
+      <Property Type="ByteOrder" Name="ByteOrder" Value="0" />
+      <Property Type="double" Name="R" Value="1" />
+      <Property Type="double" Name="Gamma" Value="1.4" />
+      <Property Type="double" Name="Uvinf" Value="0" />
+      <Property Type="double" Name="Vvinf" Value="0" />
+      <Property Type="double" Name="Wvinf" Value="0" />
+      <Property Type="int" Name="ScalarFunctionNumber" Value="100" />
+      <Property Type="int" Name="VectorFunctionNumber" Value="202" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="pl3d" />
+      <Property Type="QString" Name="objectName" Value="pl3d" />
+    </Node>
+    <Node X="-199.692" Y="-44.8581" Name="cone" ClassName="vtkConeSource" ID="1" >
+      <Property Type="double" Name="Height" Value="1" />
+      <Property Type="double" Name="Radius" Value="0.5001" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="Direction" Value="1, 0, 0" />
+      <Property Type="double" Name="Angle" Value="26.57" />
+      <Property Type="bool" Name="Capping" Value="true" />
+      <Property Type="int" Name="Resolution" Value="6" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="cone" />
+      <Property Type="QString" Name="objectName" Value="cone" />
+    </Node>
+    <Node X="-272" Y="91" Name="glyphMapper" ClassName="vtkPolyDataMapper" ID="2" >
+      <Property Type="bool" Name="ShowScalars" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="glyphMapper" />
+      <Property Type="QString" Name="objectName" Value="glyphMapper" />
+    </Node>
+    <Node X="-268" Y="157" Name="glyphActor" ClassName="vtkActor" ID="3" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="glyphActor" />
+      <Property Type="QString" Name="objectName" Value="glyphActor" />
+    </Node>
+    <Node X="-646.86" Y="-50.6789" Name="outline" ClassName="vtkStructuredGridOutlineFilter" ID="4" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outline" />
+      <Property Type="QString" Name="objectName" Value="outline" />
+    </Node>
+    <Node X="-643.912" Y="9.834" Name="outlineMapper" ClassName="vtkPolyDataMapper" ID="5" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outlineMapper" />
+      <Property Type="QString" Name="objectName" Value="outlineMapper" />
+    </Node>
+    <Node X="-643.155" Y="71.834" Name="outlineActor" ClassName="vtkActor" ID="6" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="outlineActor" />
+      <Property Type="QString" Name="objectName" Value="outlineActor" />
+    </Node>
+    <Node X="-491.538" Y="373.231" Name="renderer" ClassName="vtkRenderer" ID="7" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-494.308" Y="451.231" Name="renderWindow" ClassName="vtkRenderWindow" ID="8" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-358.261" Y="-44.1295" Name="probe" ClassName="vtkProbeFilter" ID="9" >
+      <Property Type="bool" Name="SpatialMatch" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="probe" />
+      <Property Type="QString" Name="objectName" Value="probe" />
+    </Node>
+    <Node X="-482.923" Y="-123.79" Name="pointWidget" ClassName="vtkPointWidget" ID="10" >
+      <Property Type="bool" Name="Outline" Value="false" />
+      <Property Type="bool" Name="XShadows" Value="false" />
+      <Property Type="bool" Name="YShadows" Value="false" />
+      <Property Type="bool" Name="ZShadows" Value="false" />
+      <Property Type="bool" Name="TranslationMode" Value="false" />
+      <Property Type="bool" Name="AllOn" Value="false" />
+      <Property Type="double" Name="PlaceFactor" Value="1" />
+      <Property Type="double" Name="HandleSize" Value="0.01" />
+      <Property Type="bool" Name="Enabled" Value="true" />
+      <Property Type="double" Name="Priority" Value="0.5" />
+      <Property Type="bool" Name="KeyPressActivation" Value="true" />
+      <Property Type="QChar" Name="KeyPressActivtionValue" Value="i" />
+      <Property Type="QString" Name="NodeName" Value="pointWidget" />
+      <Property Type="QString" Name="objectName" Value="pointWidget" />
+    </Node>
+    <Node X="-274" Y="26" Name="vtkGlyph3D51" ClassName="vtkGlyph3D" ID="11" >
+      <Property Type="bool" Name="Scaling" Value="true" />
+      <Property Type="ScaleMode" Name="ScaleMode" Value="0" />
+      <Property Type="ColorMode" Name="ColorMode" Value="0" />
+      <Property Type="double" Name="ScaleFactor" Value="1" />
+      <Property Type="ValueRange" Name="Range" Value="0, 1" />
+      <Property Type="bool" Name="Orient" Value="true" />
+      <Property Type="bool" Name="Clamping" Value="false" />
+      <Property Type="VectorMode" Name="VectorMode" Value="0" />
+      <Property Type="IndexMode" Name="IndexMode" Value="0" />
+      <Property Type="bool" Name="GeneratePointIds" Value="false" />
+      <Property Type="QString" Name="PointIdsName" Value="InputPointIds" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkGlyph3D51" />
+      <Property Type="QString" Name="objectName" Value="vtkGlyph3D51" />
+    </Node>
+    <Connection Sender="glyphMapper" SPathIndex="3" Receiver="glyphActor" RPathIndex="3" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="outline" RPathIndex="3" />
+    <Connection Sender="outline" SPathIndex="2" Receiver="outlineMapper" RPathIndex="2" />
+    <Connection Sender="outlineMapper" SPathIndex="3" Receiver="outlineActor" RPathIndex="3" />
+    <Connection Sender="outlineActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="probe" RPathIndex="4" />
+    <Connection Sender="glyphActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="pointWidget" SPathIndex="5" Receiver="probe" RPathIndex="3" />
+    <Connection Sender="pl3d" SPathIndex="2" Receiver="pointWidget" RPathIndex="4" />
+    <Connection Sender="renderWindow" SPathIndex="3" Receiver="pointWidget" RPathIndex="1" />
+    <Connection Sender="probe" SPathIndex="2" Receiver="vtkGlyph3D51" RPathIndex="3" />
+    <Connection Sender="cone" SPathIndex="2" Receiver="vtkGlyph3D51" RPathIndex="4" />
+    <Connection Sender="vtkGlyph3D51" SPathIndex="2" Receiver="glyphMapper" RPathIndex="2" />
+    <Note Width="200" X="-978.4540117667302" Y="-127.1228560104475" Height="100.2304128701055" >Probe the plot3d dataset using a point widget (with glyph)</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

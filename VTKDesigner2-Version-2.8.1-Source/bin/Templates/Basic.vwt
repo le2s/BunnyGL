@@ -1,0 +1,44 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-3.25" Y="-45" Name="vtkActor0" ClassName="vtkActor" ID="0" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="bool" Name="Visible" Value="true" />
+      <Property Type="bool" Name="Pickable" Value="true" />
+      <Property Type="bool" Name="Dragable" Value="true" />
+      <Property Type="QString" Name="NodeName" Value="vtkActor0" />
+      <Property Type="QString" Name="objectName" Value="vtkActor0" />
+    </Node>
+    <Node X="-0.75" Y="40" Name="vtkRenderer1" ClassName="vtkRenderer" ID="1" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer1" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderer1" />
+    </Node>
+    <Node X="1.75" Y="125" Name="vtkRenderWindow2" ClassName="vtkRenderWindow" ID="2" >
+      <Property Type="QString" Name="NodeName" Value="vtkRenderWindow2" />
+      <Property Type="QString" Name="objectName" Value="vtkRenderWindow2" />
+    </Node>
+    <Node X="-5.75" Y="-130" Name="vtkDataSetMapper3" ClassName="vtkDataSetMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="vtkDataSetMapper3" />
+      <Property Type="QString" Name="objectName" Value="vtkDataSetMapper3" />
+    </Node>
+    <Connection Sender="vtkActor0" SPathIndex="2" Receiver="vtkRenderer1" RPathIndex="1" />
+    <Connection Sender="vtkRenderer1" SPathIndex="3" Receiver="vtkRenderWindow2" RPathIndex="1" />
+    <Connection Sender="vtkDataSetMapper3" SPathIndex="3" Receiver="vtkActor0" RPathIndex="3" />
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

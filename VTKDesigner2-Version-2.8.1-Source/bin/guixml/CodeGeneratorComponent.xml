@@ -1,0 +1,10 @@
+<component title="CodeGeneratorComponent" name="CodeGeneratorComponent">
+  <object title="" name="controller"/>
+  <object title="" name="cppCodeGen"/>
+  <menu title="Generate Code" icon=":/CodeGenerator/gencode.png" name="codeGenMenu"/>
+  <menu title="Generate Code" mergeWith="MainWindowComponent.fileMenu">
+    <menuitem before="MainWindowComponent.fileQuit"/>
+    <menuitem menuName="CodeGeneratorComponent.codeGenMenu" before="MainWindowComponent.fileQuit"/>
+    <menuitem before="MainWindowComponent.fileQuit"/>
+  </menu>
+</component>

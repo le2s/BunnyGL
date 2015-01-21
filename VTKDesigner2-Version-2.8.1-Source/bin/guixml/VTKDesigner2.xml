@@ -1,0 +1,26 @@
+<Application>
+
+    <Components>
+	
+        <Component Name="MessageLogComponent" Library="MessageLog" />
+        <Component Name="UtilsComponent" Library="Utils" />
+        <Component Name="ProjectManagerComponent" Library="ProjectManager" />
+        <Component Name="PropertyEditorComponent" Library="PropertyEditor" />
+		
+        <Component Name="CVisSystemNodeClassExplorerComponent" Library="VisSystemNodeClassExplorer" />
+        <Component Name="CVisSystemCanvasComponent" Library="VisSystemCanvas" />
+        <Component Name="ScriptEditorComponent" Library="ScriptEditor" />
+        <Component Name="CVtkVisSystemComponent" Library="VTKSystem" />
+        <Component Name="CVTKFullscreenComponent" Library="VTKFullscreen" />
+        <Component Name="CDataFileLoaderComponent" Library="DataFileLoader" />
+        <Component Name="TemplateManagerComponent" Library="TemplateManager" />
+        <Component Name="CodeGeneratorComponent" Library="CodeGenerator" />
+        <Component Name="VTKVolumeRenderingSystemComponent" Library="VTKVolumeRenderingSystem" />
+        <Component Name="CustomAlgorithmsComponent" Library="CustomAlgorithms" />
+        <Component Name="FractalAlgorithmsComponent" Library="FractalAlgorithms" />
+        <Component Name="QtNodesComponent" Library="QtNodes" />
+        <Component Name="ImagingAlgorithmsComponent" Library="ImagingAlgorithms" />
+
+    </Components>
+          
+</Application>

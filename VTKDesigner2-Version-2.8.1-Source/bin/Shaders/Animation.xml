@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="Animation" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+
+<Shader scope="Vertex" name="AnimationVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="Time" value="Time" number_of_elements="1" defaultValue ="1.0"/>
+
+uniform float Time;
+void main(void)
+{
+	vec4 v = vec4(gl_Vertex);
+	
+	v.y = sin(5.0*v.x+Time)*0.15;
+	
+	gl_Position = gl_ModelViewProjectionMatrix * v;
+}
+</Shader>
+
+<Shader scope="Fragment" name="AnimationFrag" location="Inline" language="GLSL" entry="main">
+void main(void)
+{
+	gl_FragColor = vec4(0.8,0.3,0.3,1);
+}
+</Shader>
+</Material>

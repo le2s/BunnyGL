@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="BrickShading" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+
+<Shader scope="Vertex" name="BrickShadingVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="LightPosition" value="LightPosition" number_of_elements="3" defaultValue ="0.0,0.0,4.0"/>
+
+uniform vec3 LightPosition;   
+
+const float SpecularContribution = 0.3;
+const float DiffuseContribution  = 1.0 - SpecularContribution;
+
+varying float LightIntensity;
+varying vec2  MCposition;
+
+void main()
+{
+    vec3 ecPosition = vec3(gl_ModelViewMatrix * gl_Vertex);
+    vec3 tnorm      = normalize(gl_NormalMatrix * gl_Normal);
+    vec3 lightVec   = normalize(LightPosition - ecPosition);
+    vec3 reflectVec = reflect(-lightVec, tnorm);
+    vec3 viewVec    = normalize(-ecPosition);
+    float diffuse   = max(dot(lightVec, tnorm), 0.0);
+    float spec      = 0.0;
+
+    if (diffuse > 0.0)
+    {
+        spec = max(dot(reflectVec, viewVec), 0.0);
+        spec = pow(spec, 16.0);
+    }
+
+    LightIntensity  = DiffuseContribution * diffuse +
+                      SpecularContribution * spec;
+
+    MCposition      = gl_Vertex.xy;
+    gl_Position     = ftransform();
+}
+</Shader>
+
+<Shader scope ="Fragment" name ="BrickShadingFrag" location="Inline" language ="GLSL" entry="main">
+
+<ApplicationUniform type="float" name="BrickColor" value="BrickColor" number_of_elements="3" defaultValue ="1.0,0.3,0.2"/> 
+<ApplicationUniform type="float" name="MortarColor" value="MortarColor" number_of_elements="3" defaultValue ="0.85,0.86,0.84"/>
+<ApplicationUniform type="float" name="BrickSize" value="BrickSize" number_of_elements="2" defaultValue ="0.30,0.15"/>
+<ApplicationUniform type="float" name="BrickPct" value="BrickPct" number_of_elements="2" defaultValue ="0.90,0.85"/>
+
+uniform vec3  BrickColor;   
+uniform vec3  MortarColor;  
+uniform vec2  BrickSize;    
+uniform vec2  BrickPct;     
+
+varying vec2  MCposition;
+varying float LightIntensity;
+
+void main()
+{
+    vec3  color;
+    vec2  position, useBrick;
+    
+    position = MCposition / BrickSize;
+
+    if (fract(position.y * 0.5) > 0.5)
+        position.x += 0.5;
+
+    position = fract(position);
+
+    useBrick = step(position, BrickPct);
+
+    color  = mix(MortarColor, BrickColor, useBrick.x * useBrick.y);
+    color *= LightIntensity;
+    gl_FragColor = vec4(color, 1.0);
+}
+</Shader>
+</Material>

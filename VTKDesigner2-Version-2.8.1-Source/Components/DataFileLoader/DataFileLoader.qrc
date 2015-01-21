@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/DataFileLoader" >
+        <file alias="opendataset.png" >icons/opendataset.png</file>
+    </qresource>
+    <qresource prefix="/Forms">
+        <file alias="DICOMASCConfigPage.ui" >icons/DICOMASCConfigPage.ui</file>
+    </qresource>
+</RCC>

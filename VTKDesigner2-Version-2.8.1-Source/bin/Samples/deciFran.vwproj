@@ -1,0 +1,130 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-116.311" Y="-265.03" Name="fran" ClassName="vtkPolyDataReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/fran_cut.vtk" />
+      <Property Type="QString" Name="ScalarsName" Value="" />
+      <Property Type="QString" Name="VectorsName" Value="" />
+      <Property Type="QString" Name="TensorsName" Value="" />
+      <Property Type="QString" Name="NormalsName" Value="" />
+      <Property Type="QString" Name="TCoordsName" Value="" />
+      <Property Type="QString" Name="LookupTableName" Value="" />
+      <Property Type="QString" Name="FieldDataName" Value="" />
+      <Property Type="bool" Name="ReadAllScalars" Value="false" />
+      <Property Type="bool" Name="ReadAllVectors" Value="false" />
+      <Property Type="bool" Name="ReadAllNormals" Value="false" />
+      <Property Type="bool" Name="ReadAllTensors" Value="false" />
+      <Property Type="bool" Name="ReadAllColorScalars" Value="false" />
+      <Property Type="bool" Name="ReadAllTCoords" Value="false" />
+      <Property Type="bool" Name="ReadAllFields" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="fran" />
+      <Property Type="QString" Name="objectName" Value="fran" />
+    </Node>
+    <Node X="-112.76" Y="-176.878" Name="deci" ClassName="vtkDecimatePro" ID="1" >
+      <Property Type="double" Name="TargetReduction" Value="0.9" />
+      <Property Type="bool" Name="PreserveTopology" Value="true" />
+      <Property Type="double" Name="FeatureAngle" Value="15" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="double" Name="SplitAngle" Value="75" />
+      <Property Type="bool" Name="PreSplitMesh" Value="false" />
+      <Property Type="double" Name="MaximumError" Value="1e+299" />
+      <Property Type="bool" Name="AccumulateError" Value="false" />
+      <Property Type="bool" Name="ErrorIsAbsolute" Value="false" />
+      <Property Type="double" Name="AbsoluteError" Value="1e+299" />
+      <Property Type="bool" Name="BoundaryVertexDeletion" Value="true" />
+      <Property Type="int" Name="Degree" Value="25" />
+      <Property Type="double" Name="InflectionPointRatio" Value="10" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="deci" />
+      <Property Type="QString" Name="objectName" Value="deci" />
+    </Node>
+    <Node X="-106.057" Y="-90.827" Name="normals" ClassName="vtkPolyDataNormals" ID="2" >
+      <Property Type="double" Name="FeatureAngle" Value="30" />
+      <Property Type="bool" Name="Splitting" Value="true" />
+      <Property Type="bool" Name="Consistency" Value="true" />
+      <Property Type="bool" Name="AutoOrientNormals" Value="false" />
+      <Property Type="bool" Name="ComputePointNormals" Value="true" />
+      <Property Type="bool" Name="ComputeCellNormals" Value="true" />
+      <Property Type="bool" Name="FlipNormals" Value="true" />
+      <Property Type="bool" Name="NonManifoldTraversal" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="normals" />
+      <Property Type="QString" Name="objectName" Value="normals" />
+    </Node>
+    <Node X="-107.76" Y="-6.87785" Name="franMapper" ClassName="vtkPolyDataMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="franMapper" />
+      <Property Type="QString" Name="objectName" Value="franMapper" />
+    </Node>
+    <Node X="-105.888" Y="92.132" Name="franActor" ClassName="vtkActor" ID="4" >
+      <Property Type="QColor" Name="Color" Value="#ffb764" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="franActor" />
+      <Property Type="QString" Name="objectName" Value="franActor" />
+    </Node>
+    <Node X="-103.388" Y="177.132" Name="renderer" ClassName="vtkRenderer" ID="5" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-100.888" Y="262.132" Name="renderWindow" ClassName="vtkRenderWindow" ID="6" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="125.421" Y="-49.6093" Name="deciProperty" ClassName="vtkProperty" ID="7" >
+      <Property Type="Interpolation" Name="Interpolation" Value="1" />
+      <Property Type="Representation" Name="Representation" Value="2" />
+      <Property Type="QColor" Name="Color" Value="#ffb764" />
+      <Property Type="double" Name="Ambient" Value="0" />
+      <Property Type="double" Name="Diffuse" Value="1" />
+      <Property Type="double" Name="Specular" Value="0" />
+      <Property Type="double" Name="SpecularPower" Value="1" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="QColor" Name="AmbientColor" Value="#ffb764" />
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffb764" />
+      <Property Type="QColor" Name="SpecularColor" Value="#ffb764" />
+      <Property Type="bool" Name="EdgeVisibility" Value="false" />
+      <Property Type="QColor" Name="EdgeColor" Value="#000000" />
+      <Property Type="double" Name="LineWidth" Value="1" />
+      <Property Type="int" Name="LineStipplePattern" Value="65535" />
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1" />
+      <Property Type="double" Name="PointSize" Value="1" />
+      <Property Type="bool" Name="BackfaceCulling" Value="false" />
+      <Property Type="bool" Name="FrontfaceCulling" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="deciProperty" />
+      <Property Type="QString" Name="objectName" Value="deciProperty" />
+    </Node>
+    <Connection Sender="fran" SPathIndex="2" Receiver="deci" RPathIndex="3" />
+    <Connection Sender="deci" SPathIndex="2" Receiver="normals" RPathIndex="3" />
+    <Connection Sender="normals" SPathIndex="2" Receiver="franMapper" RPathIndex="2" />
+    <Connection Sender="franMapper" SPathIndex="3" Receiver="franActor" RPathIndex="3" />
+    <Connection Sender="franActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="deciProperty" SPathIndex="1" Receiver="franActor" RPathIndex="5" />
+    <Note Width="334.0817323057694" X="-553.1852898330806" Y="-226.3265037936267" Height="341.6278332948696" >This pipeline demonstrates the use of a decimation algorithm for triangle generation of an arbitary dataset
+
+Try changing the "Target reduction" from the property editor and see the number of triangles increases as you decrease this value
+
+The effect is well appreciated if you try out a texture map (VTK Data folder\fran_cut.png) and visualize the corresponding smoothness</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

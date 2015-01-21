@@ -1,0 +1,109 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-2.5" Y="-215" Name="gridSource" ClassName="vtkCustomGridPolyDataSource" ID="0" >
+      <Property Type="int" Name="GridCountX" Value="10" />
+      <Property Type="int" Name="GridCountY" Value="10" />
+      <Property Type="double" Name="GridDistanceX" Value="0.1" />
+      <Property Type="double" Name="GridDistanceY" Value="0.1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="gridSource" />
+      <Property Type="QString" Name="objectName" Value="gridSource" />
+    </Node>
+    <Node X="2.5" Y="-45" Name="mapper" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="mapper" />
+      <Property Type="QString" Name="objectName" Value="mapper" />
+    </Node>
+    <Node X="5" Y="40" Name="actor" ClassName="vtkActor" ID="2" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="bool" Name="Visible" Value="true" />
+      <Property Type="bool" Name="Pickable" Value="true" />
+      <Property Type="bool" Name="Dragable" Value="true" />
+      <Property Type="QString" Name="NodeName" Value="actor" />
+      <Property Type="QString" Name="objectName" Value="actor" />
+    </Node>
+    <Node X="7.5" Y="125" Name="renderer" ClassName="vtkRenderer" ID="3" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="10" Y="210" Name="renderWindow" ClassName="vtkRenderWindow" ID="4" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="0" Y="-130" Name="filter" ClassName="vtkCustomPolyDataFilter" ID="5" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="filter" />
+      <Property Type="QString" Name="objectName" Value="filter" />
+    </Node>
+    <Node X="204" Y="34" Name="camera" ClassName="vtkCamera" ID="6" >
+      <Property Type="Point3D" Name="Position" Value="-0.02934, -1.139, 0.6112" />
+      <Property Type="Point3D" Name="FocalPoint" Value="8.926e-07, 3.465e-05, -1.86e-05" />
+      <Property Type="Vector3D" Name="ViewUp" Value="0.001737, 0.4728, 0.8812" />
+      <Property Type="double" Name="Distance" Value="1.293" />
+      <Property Type="double" Name="Roll" Value="2.521" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="0.6364" />
+      <Property Type="double" Name="Thickness" Value="1.86" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="-0.02269, -0.8809, 0.4727" />
+      <Property Type="QString" Name="NodeName" Value="camera" />
+      <Property Type="QString" Name="objectName" Value="camera" />
+    </Node>
+    <Connection Sender="gridSource" SPathIndex="2" Receiver="filter" RPathIndex="3" />
+    <Connection Sender="filter" SPathIndex="2" Receiver="mapper" RPathIndex="2" />
+    <Connection Sender="mapper" SPathIndex="3" Receiver="actor" RPathIndex="3" />
+    <Connection Sender="actor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="camera" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="200" X="-318.3744557329463" Y="-149.7822931785196" Height="200" >This template provides a simple grid source/filter pipeline. Edit the script in "Script Editor" to experiment with your filters</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[
+// Event handler for OnRequestData event of filter
+function filter_OnRequestData()
+{
+	// Write your filter here. The following commented code block
+	// shows you how to loop through all the points and punch in your
+	// filter code
+	
+	/*
+	var nrPoints = filter.pointCount();
+	for(i=0; i<nrPoints; i++)
+	{
+		var pt = filter.point(i);
+		var x = pt.x;
+		var y = pt.y;
+		var z = pt.z;
+
+		// do something about the point
+
+		filter.setPoint(i, NewPoint3D(x,y,z));
+	}
+	*/
+}
+filter.OnRequestData.connect(filter_OnRequestData);
+
+
+]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

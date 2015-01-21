@@ -1,0 +1,123 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="3.30235" Y="-257.5" Name="quadric" ClassName="vtkQuadric" ID="0" >
+      <Property Type="QList&lt;QVariant>" Name="Coefficients" Value="0.5, 1, 0.2, 0, 0.1, 0, 0, 0.2, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="quadric" />
+      <Property Type="QString" Name="objectName" Value="quadric" />
+    </Node>
+    <Node X="-1.25" Y="-172.5" Name="sample" ClassName="vtkSampleFunction" ID="1" >
+      <Property Type="OutputScalarType" Name="OutputScalarType" Value="11" />
+      <Property Type="QList&lt;QVariant>" Name="ModelBounds" Value="-1, 1, -1, 1, -1, 1" />
+      <Property Type="bool" Name="Capping" Value="false" />
+      <Property Type="double" Name="CapValue" Value="1e+38" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="QList&lt;QVariant>" Name="SampleDimensions" Value="50, 50, 50" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="sample" />
+      <Property Type="QString" Name="objectName" Value="sample" />
+    </Node>
+    <Node X="83.75" Y="-87.5" Name="contour" ClassName="vtkContourFilter" ID="2" >
+      <Property Type="int" Name="NumberOfContours" Value="5" />
+      <Property Type="bool" Name="ComputeNormals" Value="true" />
+      <Property Type="bool" Name="ComputeGradients" Value="false" />
+      <Property Type="bool" Name="ComputeScalars" Value="true" />
+      <Property Type="int" Name="ScalarArrayComponent" Value="0" />
+      <Property Type="ValueRange" Name="ValueRange" Value="0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="contour" />
+      <Property Type="QString" Name="objectName" Value="contour" />
+    </Node>
+    <Node X="86.25" Y="-2.5" Name="contourMapper" ClassName="vtkPolyDataMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="contourMapper" />
+      <Property Type="QString" Name="objectName" Value="contourMapper" />
+    </Node>
+    <Node X="87.8926" Y="82.5" Name="contourActor" ClassName="vtkActor" ID="4" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="contourActor" />
+      <Property Type="QString" Name="objectName" Value="contourActor" />
+    </Node>
+    <Node X="3.75" Y="167.5" Name="renderer" ClassName="vtkRenderer" ID="5" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="6.25" Y="252.5" Name="renderWindow" ClassName="vtkRenderWindow" ID="6" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="-91.25" Y="-87.5" Name="outline" ClassName="vtkOutlineFilter" ID="7" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outline" />
+      <Property Type="QString" Name="objectName" Value="outline" />
+    </Node>
+    <Node X="-92.253" Y="-6.00301" Name="outlineMapper" ClassName="vtkPolyDataMapper" ID="8" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="outlineMapper" />
+      <Property Type="QString" Name="objectName" Value="outlineMapper" />
+    </Node>
+    <Node X="-86.25" Y="81.6426" Name="outlineActor" ClassName="vtkActor" ID="9" >
+      <Property Type="QColor" Name="Color" Value="#000000" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="outlineActor" />
+      <Property Type="QString" Name="objectName" Value="outlineActor" />
+    </Node>
+    <Node X="271.43" Y="77.9028" Name="vtkCamera35" ClassName="vtkCamera" ID="10" >
+      <Property Type="Point3D" Name="Position" Value="4.144, 2.897, 4.438" />
+      <Property Type="Point3D" Name="FocalPoint" Value="0, 0, 0" />
+      <Property Type="Vector3D" Name="ViewUp" Value="-0.2248, 0.8986, -0.3767" />
+      <Property Type="double" Name="Distance" Value="6.727" />
+      <Property Type="double" Name="Roll" Value="5.327" />
+      <Property Type="bool" Name="ParallelProjection" Value="false" />
+      <Property Type="bool" Name="UseHorizontalViewAngle" Value="false" />
+      <Property Type="double" Name="ViewAngle" Value="30" />
+      <Property Type="double" Name="ParallelScale" Value="1" />
+      <Property Type="double" Name="Thickness" Value="7.838" />
+      <Property Type="double" Name="EyeAngle" Value="2" />
+      <Property Type="double" Name="FocalDisk" Value="1" />
+      <Property Type="Point3D" Name="ViewPlaneNormal" Value="0.616, 0.4306, 0.6597" />
+      <Property Type="QString" Name="NodeName" Value="vtkCamera35" />
+      <Property Type="QString" Name="objectName" Value="vtkCamera35" />
+    </Node>
+    <Connection Sender="quadric" SPathIndex="1" Receiver="sample" RPathIndex="3" />
+    <Connection Sender="sample" SPathIndex="2" Receiver="contour" RPathIndex="3" />
+    <Connection Sender="contour" SPathIndex="2" Receiver="contourMapper" RPathIndex="2" />
+    <Connection Sender="contourMapper" SPathIndex="3" Receiver="contourActor" RPathIndex="3" />
+    <Connection Sender="contourActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="sample" SPathIndex="2" Receiver="outline" RPathIndex="3" />
+    <Connection Sender="outline" SPathIndex="2" Receiver="outlineMapper" RPathIndex="2" />
+    <Connection Sender="outlineMapper" SPathIndex="3" Receiver="outlineActor" RPathIndex="3" />
+    <Connection Sender="outlineActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="vtkCamera35" SPathIndex="1" Receiver="renderer" RPathIndex="2" />
+    <Note Width="268.3086642058943" X="-443.7050319954132" Y="-263.093561541951" Height="218.3907942092793" >In this example, a quadric function of specified coeffecients (see property editor) is sampled to give a 3D dataset of which  a wireframe generation (vtkOutlineFilter) and dataset extraction (vtkContourFilter) is done </Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[contour.NumberOfContours = 5;
+renderWindow.render();]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

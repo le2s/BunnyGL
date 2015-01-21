@@ -1,0 +1,80 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="-348.5" Y="-66.9822" Name="bmpReader" ClassName="vtkBMPReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/masonry.bmp" />
+      <Property Type="DataScalarType" Name="DataScalarType" Value="3" />
+      <Property Type="int" Name="FileDimensionality" Value="2" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="bmpReader" />
+      <Property Type="QString" Name="objectName" Value="bmpReader" />
+    </Node>
+    <Node X="-346" Y="18.0178" Name="atext" ClassName="vtkTexture" ID="1" >
+      <Property Type="bool" Name="Repeat" Value="true" />
+      <Property Type="bool" Name="Interpolate" Value="false" />
+      <Property Type="TextureQuality" Name="TextureQuality" Value="0" />
+      <Property Type="bool" Name="MapScalarsThroughLookupTable" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="atext" />
+      <Property Type="QString" Name="objectName" Value="atext" />
+    </Node>
+    <Node X="-173.5" Y="-66.9822" Name="plane" ClassName="vtkPlaneSource" ID="2" >
+      <Property Type="int" Name="XResolution" Value="1" />
+      <Property Type="int" Name="YResolution" Value="1" />
+      <Property Type="Point3D" Name="Origin" Value="-0.5, -0.5, 0" />
+      <Property Type="Point3D" Name="Point1" Value="0.5, -0.5, 0" />
+      <Property Type="Point3D" Name="Point2" Value="-0.5, 0.5, 0" />
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Normal" Value="0, 0, 1" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="plane" />
+      <Property Type="QString" Name="objectName" Value="plane" />
+    </Node>
+    <Node X="-171" Y="18.0178" Name="planeMapper" ClassName="vtkPolyDataMapper" ID="3" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="planeMapper" />
+      <Property Type="QString" Name="objectName" Value="planeMapper" />
+    </Node>
+    <Node X="-255" Y="103.018" Name="planeActor" ClassName="vtkActor" ID="4" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="planeActor" />
+      <Property Type="QString" Name="objectName" Value="planeActor" />
+    </Node>
+    <Node X="-252.5" Y="188.018" Name="renderer" ClassName="vtkRenderer" ID="5" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="-250" Y="273.018" Name="renderWindow" ClassName="vtkRenderWindow" ID="6" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Connection Sender="bmpReader" SPathIndex="2" Receiver="atext" RPathIndex="3" />
+    <Connection Sender="plane" SPathIndex="2" Receiver="planeMapper" RPathIndex="2" />
+    <Connection Sender="planeMapper" SPathIndex="3" Receiver="planeActor" RPathIndex="3" />
+    <Connection Sender="planeActor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="atext" SPathIndex="4" Receiver="planeActor" RPathIndex="4" />
+    <Note Width="197.4544870967931" X="-561.8290217706822" Y="55.60960725689407" Height="134.4530427424222" >This example shows how you can paste textures on models in VTK Designer</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="Mandlebrot" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="MandlebrotVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="LightPosition" value="LightPosition" number_of_elements="3" defaultValue ="0.0,1.0,1.0"/>
+<ApplicationUniform type="float" name="SpecularContribution" value="SpecularContribution" number_of_elements="1" defaultValue ="0.0"/>
+<ApplicationUniform type="float" name="DiffuseContribution" value="DiffuseContribution" number_of_elements="1" defaultValue ="0.20"/>
+<ApplicationUniform type="float" name="Shininess" value="Shininess" number_of_elements="1" defaultValue ="0.4"/>
+
+uniform vec3 LightPosition;          
+uniform float SpecularContribution;  
+uniform float DiffuseContribution;   
+uniform float Shininess;             
+
+varying float LightIntensity;
+varying vec3  Position;
+  
+void main()
+{
+    vec3 ecPosition = vec3(gl_ModelViewMatrix * gl_Vertex);
+    vec3 tnorm      = normalize(gl_NormalMatrix * gl_Normal);
+    vec3 lightVec   = normalize(LightPosition - ecPosition);
+    vec3 reflectVec = reflect(-lightVec, tnorm);
+    vec3 viewVec    = normalize(-ecPosition);
+    float spec      = max(dot(reflectVec, viewVec), 0.0);
+    spec            = pow(spec, Shininess);
+    LightIntensity  = DiffuseContribution * 
+                          max(dot(lightVec, tnorm), 0.0) +
+                          SpecularContribution * spec;
+    Position        = vec3(gl_MultiTexCoord0 - 0.5) * 5.0;
+    gl_Position     = ftransform();
+}
+</Shader>
+
+<Shader scope="Fragment" name="MandlebrotFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="MaxIterations" value="MaxIterations" number_of_elements="1" defaultValue ="50.0"/>
+<ApplicationUniform type="float" name="Zoom" value="Zoom" number_of_elements="1" defaultValue ="0.80"/>
+<ApplicationUniform type="float" name="Xcenter" value="Xcenter" number_of_elements="1" defaultValue ="-0.0002"/>
+<ApplicationUniform type="float" name="Ycenter" value="Ycenter" number_of_elements="1" defaultValue ="0.7383"/>
+<ApplicationUniform type="float" name="InnerColor" value="InnerColor" number_of_elements="3" defaultValue ="1.0,0.70,1.0"/>
+<ApplicationUniform type="float" name="OuterColor1" value="OuterColor1" number_of_elements="3" defaultValue ="3.0,2.0,0.0"/>
+<ApplicationUniform type="float" name="OuterColor2" value="OuterColor2" number_of_elements="3" defaultValue ="3.0,1.0,1.0"/>
+varying vec3  Position;
+varying float LightIntensity;
+
+uniform float MaxIterations;  
+uniform float Zoom;           
+uniform float Xcenter;        
+uniform float Ycenter;        
+uniform vec3  InnerColor;     
+uniform vec3  OuterColor1;    
+uniform vec3  OuterColor2;    
+
+void main()
+{
+    float   real  = Position.x * Zoom + Xcenter;
+    float   imag  = Position.y * Zoom + Ycenter;
+    float   Creal = 0.32 ; 
+    float   Cimag = 0.043; 
+    float r2 = 0.0;
+    float iter;
+
+    for (iter =0.0; iter &lt;MaxIterations &amp;&amp; r2 &lt;4.0; ++iter)
+    {
+        float tempreal = real;
+        real = (tempreal * tempreal) - (imag * imag) + Creal;
+        imag = 2.0 * tempreal * imag + Cimag;
+        r2   = (real * real) + (imag * imag);
+    }
+
+    vec3 color;
+    if (r2 &lt; 4.0)
+        color = InnerColor;
+    else
+        color = mix(OuterColor1, OuterColor2, fract(iter * 0.05));
+
+    color *= LightIntensity;
+    gl_FragColor = vec4(color, 1.0);
+}
+</Shader>
+</Material>

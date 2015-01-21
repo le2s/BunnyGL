@@ -1,0 +1,87 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork">
+    <Node X="2.625" Y="94.5178" Name="vtkPolyDataMapper1" ClassName="vtkPolyDataMapper" ID="0">
+      <Property Type="bool" Name="ShowScalars" Value="true"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="vtkPolyDataMapper1"/>
+      <Property Type="QString" Name="objectName" Value="vtkPolyDataMapper1"/>
+    </Node>
+    <Node X="5.125" Y="179.518" Name="vtkActor2" ClassName="vtkActor" ID="1">
+      <Property Type="QColor" Name="Color" Value="#ffffff"/>
+      <Property Type="double" Name="Opacity" Value="1"/>
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0"/>
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1"/>
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0"/>
+      <Property Type="bool" Name="Visible" Value="true"/>
+      <Property Type="bool" Name="Pickable" Value="true"/>
+      <Property Type="bool" Name="Dragable" Value="true"/>
+      <Property Type="QString" Name="NodeName" Value="vtkActor2"/>
+      <Property Type="QString" Name="objectName" Value="vtkActor2"/>
+    </Node>
+    <Node X="7.625" Y="264.518" Name="vtkRenderer3" ClassName="vtkRenderer" ID="2">
+      <Property Type="QColor" Name="BackgroundColor" Value="#ffffff"/>
+      <Property Type="bool" Name="ShowGrid" Value="false"/>
+      <Property Type="bool" Name="LightsFollowCamera" Value="true"/>
+      <Property Type="bool" Name="TwoSidedLighting" Value="true"/>
+      <Property Type="QRectF" Name="Viewport" Value=""/>
+      <Property Type="QString" Name="NodeName" Value="vtkRenderer3"/>
+      <Property Type="QString" Name="objectName" Value="vtkRenderer3"/>
+    </Node>
+    <Node X="10.125" Y="349.518" Name="vtkRenderWindow4" ClassName="vtkRenderWindow" ID="3">
+      <Property Type="QString" Name="NodeName" Value="vtkRenderWindow4"/>
+      <Property Type="QString" Name="objectName" Value="vtkRenderWindow4"/>
+    </Node>
+    <Node X="181.441" Y="91.8474" Name="vtkProperty5" ClassName="vtkProperty" ID="4">
+      <Property Type="Interpolation" Name="Interpolation" Value="1"/>
+      <Property Type="Representation" Name="Representation" Value="2"/>
+      <Property Type="QColor" Name="Color" Value="#ffffff"/>
+      <Property Type="double" Name="Ambient" Value="0"/>
+      <Property Type="double" Name="Diffuse" Value="1"/>
+      <Property Type="double" Name="Specular" Value="0"/>
+      <Property Type="double" Name="SpecularPower" Value="1"/>
+      <Property Type="double" Name="Opacity" Value="1"/>
+      <Property Type="QColor" Name="AmbientColor" Value="#ffffff"/>
+      <Property Type="QColor" Name="DiffuseColor" Value="#ffffff"/>
+      <Property Type="QColor" Name="SpecularColor" Value="#ffffff"/>
+      <Property Type="bool" Name="EdgeVisibility" Value="false"/>
+      <Property Type="QColor" Name="EdgeColor" Value="#000000"/>
+      <Property Type="double" Name="LineWidth" Value="1"/>
+      <Property Type="int" Name="LineStipplePattern" Value="65535"/>
+      <Property Type="int" Name="LineStippleRepeatFactor" Value="1"/>
+      <Property Type="double" Name="PointSize" Value="1"/>
+      <Property Type="bool" Name="BackfaceCulling" Value="false"/>
+      <Property Type="bool" Name="FrontfaceCulling" Value="false"/>
+      <Property Type="bool" Name="ShaderEnabled" Value="true"/>
+      <Property Type="QString" Name="VertexShaderCode" Value="varying vec3 LightDir;&#xa;varying vec3 EyeDir;&#xa;uniform vec3 LightPosition;&#xa;attribute vec3 Tangent;&#xa;&#xa;void main(void)&#xa;{&#xa;    EyeDir = vec3 (gl_ModelViewMatrix * gl_Vertex);&#xa;&#xa;    gl_Position = ftransform();&#xa;    gl_TexCoord[0] = gl_MultiTexCoord0;&#xa;&#xa;    // convert normal and tangent (from main program) into eye space&#xa;    vec3 n = normalize(gl_NormalMatrix * gl_Normal);&#xa;    vec3 t = normalize(gl_NormalMatrix * Tangent);&#xa;&#xa;    // compute b in eye space&#xa;    vec3 b = cross(n, t);&#xa;&#xa;    // convert light direction from eye space to tangent space&#xa;    vec3 v;&#xa;    v.x = dot(LightPosition, t);&#xa;    v.y = dot(LightPosition, b);&#xa;    v.z = dot(LightPosition, n);&#xa;    LightDir = normalize(v);&#xa;&#xa;    // convert eye direction from eye space to tangent space&#xa;    v.x = dot(EyeDir, t);&#xa;    v.y = dot(EyeDir, b);&#xa;    v.z = dot(EyeDir, n);&#xa;    EyeDir = normalize(v);&#xa;}"/>
+      <Property Type="QString" Name="FragmentShaderCode" Value="varying vec3 LightDir;&#xa;varying vec3 EyeDir;&#xa;vec3 SurfaceColor = vec3(0.7, 0.6, 0.18);&#xa;&#xa;uniform float BumpDensity; //float BumpDensity = 16.0;&#xa;uniform float BumpSize;  //float BumpSize    = 0.15;&#xa;&#xa;float SpecularFactor = 0.5;&#xa;&#xa;void main (void)&#xa;{&#xa;    vec3 litColor;&#xa;    vec2 c = BumpDensity * gl_TexCoord[0].st;&#xa;    vec2 p = fract(c) - vec2 (0.5);&#xa;&#xa;    float d, f;&#xa;    d = p.x * p.x + p.y * p.y;&#xa;    f = 1.0 / sqrt(d + 1.0);&#xa;&#xa;    // if we are outside the area of a bump then&#xa;    // the normal points straight out Z w/ length 1&#xa;    if (d >= BumpSize)&#xa;    {&#xa;        p = vec2(0.0);&#xa;        f = 1.0;&#xa;    }&#xa;&#xa;    // create a new normal of length 1 for this fragment&#xa;    vec3 normDelta = vec3 (p.x, p.y, 1.0) * f;&#xa;&#xa;    litColor = SurfaceColor * max(dot(normDelta, LightDir), 0.0);&#xa;    vec3 reflectDir = reflect(LightDir, normDelta);&#xa;&#xa;    float spec = max(dot(EyeDir, reflectDir), 0.0);&#xa;    spec = pow(spec, 6.0);&#xa;    spec *= SpecularFactor;&#xa;    litColor = min(litColor + spec, vec3 (1.0));&#xa;&#xa;    gl_FragColor = vec4 (litColor, 1.0);&#xa;}"/>
+      <Property Type="QString" Name="ShaderVariables" Value="float|LightPosition|10, 10, 10|float|BumpDensity|5|float|BumpSize|0.07"/>
+      <Property Type="QString" Name="NodeName" Value="vtkProperty5"/>
+      <Property Type="QString" Name="objectName" Value="vtkProperty5"/>
+      <EProperty Type="QString" Name="LightPosition (float)" Value="10, 10, 10" Index="0"/>
+      <EProperty Type="QString" Name="BumpDensity (float)" Value="5" Index="1"/>
+      <EProperty Type="QString" Name="BumpSize (float)" Value="0.07" Index="2"/>
+    </Node>
+    <Node X="10" Y="-19" Name="vtkCubeSource6" ClassName="vtkCubeSource" ID="5">
+      <Property Type="double" Name="XLength" Value="1"/>
+      <Property Type="double" Name="YLength" Value="1"/>
+      <Property Type="double" Name="ZLength" Value="1"/>
+      <Property Type="Point3D" Name="Center" Value="0, 0, 0"/>
+      <Property Type="int" Name="HasExecutive" Value="1"/>
+      <Property Type="bool" Name="AbortExecution" Value="false"/>
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false"/>
+      <Property Type="QString" Name="NodeName" Value="vtkCubeSource6"/>
+      <Property Type="QString" Name="objectName" Value="vtkCubeSource6"/>
+    </Node>
+    <Connection Sender="vtkPolyDataMapper1" SPathIndex="3" Receiver="vtkActor2" RPathIndex="3"/>
+    <Connection Sender="vtkActor2" SPathIndex="2" Receiver="vtkRenderer3" RPathIndex="1"/>
+    <Connection Sender="vtkRenderer3" SPathIndex="3" Receiver="vtkRenderWindow4" RPathIndex="1"/>
+    <Connection Sender="vtkProperty5" SPathIndex="1" Receiver="vtkActor2" RPathIndex="5"/>
+    <Connection Sender="vtkCubeSource6" SPathIndex="2" Receiver="vtkPolyDataMapper1" RPathIndex="2"/>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment"/>
+  <ProjectPart ID="Script"><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem"/>
+</VWVisProject>

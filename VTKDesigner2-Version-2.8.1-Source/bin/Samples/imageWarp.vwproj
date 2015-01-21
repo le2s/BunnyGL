@@ -1,0 +1,97 @@
+<!DOCTYPE VWVisProject>
+<VWVisProject>
+  <ProjectPart ID="VisNetwork" >
+    <Node X="548.298" Y="-78.3667" Name="reader" ClassName="vtkBMPReader" ID="0" >
+      <Property Type="QString" Name="FileName" Value="VTKData/masonry.bmp" />
+      <Property Type="DataScalarType" Name="DataScalarType" Value="3" />
+      <Property Type="int" Name="FileDimensionality" Value="2" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="reader" />
+      <Property Type="QString" Name="objectName" Value="reader" />
+    </Node>
+    <Node X="687.798" Y="338.633" Name="mapper" ClassName="vtkDataSetMapper" ID="1" >
+      <Property Type="bool" Name="ShowScalars" Value="true" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="mapper" />
+      <Property Type="QString" Name="objectName" Value="mapper" />
+    </Node>
+    <Node X="687.798" Y="0.63327" Name="luminance" ClassName="vtkImageLuminance" ID="2" >
+      <Property Type="int" Name="NumberOfThreads" Value="2" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="luminance" />
+      <Property Type="QString" Name="objectName" Value="luminance" />
+    </Node>
+    <Node X="680.298" Y="83.6333" Name="geometry" ClassName="vtkImageDataGeometryFilter" ID="3" >
+      <Property Type="QList&lt;int>" Name="Extent" Value="" />
+      <Property Type="bool" Name="ThresholdCells" Value="false" />
+      <Property Type="double" Name="ThresholdValue" Value="0" />
+      <Property Type="bool" Name="OutputTriangles" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="geometry" />
+      <Property Type="QString" Name="objectName" Value="geometry" />
+    </Node>
+    <Node X="733.798" Y="166.633" Name="warp" ClassName="vtkWarpScalar" ID="4" >
+      <Property Type="double" Name="ScaleFactor" Value="-0.1" />
+      <Property Type="bool" Name="UseNormal" Value="false" />
+      <Property Type="Vector3D" Name="Normal" Value="0, 0, 1" />
+      <Property Type="bool" Name="XYPlane" Value="false" />
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="warp" />
+      <Property Type="QString" Name="objectName" Value="warp" />
+    </Node>
+    <Node X="690.298" Y="423.633" Name="actor" ClassName="vtkActor" ID="5" >
+      <Property Type="QColor" Name="Color" Value="#ffffff" />
+      <Property Type="double" Name="Opacity" Value="1" />
+      <Property Type="Point3D" Name="Position" Value="0, 0, 0" />
+      <Property Type="Point3D" Name="Scale" Value="1, 1, 1" />
+      <Property Type="Point3D" Name="Orientation" Value="0, 0, 0" />
+      <Property Type="QString" Name="NodeName" Value="actor" />
+      <Property Type="QString" Name="objectName" Value="actor" />
+    </Node>
+    <Node X="692.798" Y="508.633" Name="renderer" ClassName="vtkRenderer" ID="6" >
+      <Property Type="QColor" Name="BackgroundColor" Value="#00557f" />
+      <Property Type="bool" Name="ShowGrid" Value="false" />
+      <Property Type="bool" Name="LightsFollowCamera" Value="true" />
+      <Property Type="bool" Name="TwoSidedLighting" Value="true" />
+      <Property Type="QRectF" Name="Viewport" Value="" />
+      <Property Type="QString" Name="NodeName" Value="renderer" />
+      <Property Type="QString" Name="objectName" Value="renderer" />
+    </Node>
+    <Node X="695.298" Y="593.633" Name="renderWindow" ClassName="vtkRenderWindow" ID="7" >
+      <Property Type="QString" Name="NodeName" Value="renderWindow" />
+      <Property Type="QString" Name="objectName" Value="renderWindow" />
+    </Node>
+    <Node X="687.041" Y="262.102" Name="merge" ClassName="vtkMergeFilter" ID="8" >
+      <Property Type="int" Name="HasExecutive" Value="1" />
+      <Property Type="bool" Name="AbortExecution" Value="false" />
+      <Property Type="bool" Name="ReleaseDataFlag" Value="false" />
+      <Property Type="QString" Name="NodeName" Value="merge" />
+      <Property Type="QString" Name="objectName" Value="merge" />
+    </Node>
+    <Connection Sender="mapper" SPathIndex="3" Receiver="actor" RPathIndex="3" />
+    <Connection Sender="renderer" SPathIndex="3" Receiver="renderWindow" RPathIndex="1" />
+    <Connection Sender="actor" SPathIndex="2" Receiver="renderer" RPathIndex="1" />
+    <Connection Sender="reader" SPathIndex="2" Receiver="luminance" RPathIndex="4" />
+    <Connection Sender="luminance" SPathIndex="2" Receiver="geometry" RPathIndex="3" />
+    <Connection Sender="geometry" SPathIndex="2" Receiver="warp" RPathIndex="3" />
+    <Connection Sender="warp" SPathIndex="2" Receiver="merge" RPathIndex="3" />
+    <Connection Sender="merge" SPathIndex="2" Receiver="mapper" RPathIndex="2" />
+    <Connection Sender="reader" SPathIndex="2" Receiver="merge" RPathIndex="4" />
+    <Note Width="235.3846150601406" X="280.2255154412115" Y="2.630747818517563" Height="223.846153627486" >Combining the imaging and visualization pipeline to deform an image in the z-direction
+
+vtkMergeFiter is used to combine the warped surface with the original data</Note>
+  </ProjectPart>
+  <ProjectPart ID="ScriptEnvironment" />
+  <ProjectPart ID="Script" ><![CDATA[]]></ProjectPart>
+  <ProjectPart ID="VtkSystem" />
+</VWVisProject>

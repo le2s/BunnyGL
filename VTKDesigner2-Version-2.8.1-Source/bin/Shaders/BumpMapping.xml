@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="SimpleProceduralTexture" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+
+ /*-------------------------------Vertex Shader------------------------------------------*/
+<Shader scope="Vertex" name="BumpMappingVert" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="int" name="LightPosition" value="LightPosition" number_of_elements="3" defaultValue ="1,1,1" />
+varying vec3 LightDir;
+varying vec3 EyeDir;
+uniform vec3 LightPosition;
+attribute vec3 Tangent;
+
+void main(void)
+{
+	EyeDir = vec3 (gl_ModelViewMatrix * gl_Vertex);
+
+	gl_Position = ftransform();
+	gl_TexCoord[0] = gl_MultiTexCoord0;
+
+	// convert normal and tangent (from main program) into eye space
+	vec3 n = normalize(gl_NormalMatrix * gl_Normal);
+	vec3 t = normalize(gl_NormalMatrix * Tangent);
+    
+	// compute b in eye space
+	vec3 b = cross(n, t);
+
+	// convert light direction from eye space to tangent space
+	vec3 v;
+	v.x = dot(LightPosition, t);
+	v.y = dot(LightPosition, b);
+	v.z = dot(LightPosition, n);
+	LightDir = normalize(v);
+
+	// convert eye direction from eye space to tangent space
+	v.x = dot(EyeDir, t);
+	v.y = dot(EyeDir, b);
+	v.z = dot(EyeDir, n);
+	EyeDir = normalize(v);
+}
+</Shader>
+  
+/* -------------------------------------- Fragment Shader -----------------------------------*/
+<Shader scope="Fragment" name="BumpMappingFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="BumpDensity" value="BumpDensity" number_of_elements="1" defaultValue ="15.0"/>
+<ApplicationUniform type="float" name="BumpSize" value="BumpSize" number_of_elements="1" defaultValue = "0.15"/>
+varying vec3 LightDir;
+varying vec3 EyeDir;
+
+vec3 SurfaceColor = vec3(0.7, 0.6, 0.18);
+float SpecularFactor = 0.5;
+
+uniform float BumpSize;
+uniform float BumpDensity;
+  
+void main (void)
+{
+	vec3 litColor;
+	vec2 c = BumpDensity * gl_TexCoord[0].st;
+	vec2 p = fract(c) - vec2 (0.5);
+
+	float d, f;
+	d = p.x * p.x + p.y * p.y;
+	f = 1.0 / sqrt(d + 1.0);
+
+	// if we are outside the area of a bump then
+	// the normal points straight out Z w/ length 1
+	if (d >= BumpSize)
+	{
+		p = vec2(0.0);
+		f = 1.0;
+	}
+
+	// create a new normal of length 1 for this fragment
+	vec3 normDelta = vec3 (p.x, p.y, 1.0) * f;
+
+	litColor = SurfaceColor * max(dot(normDelta, LightDir), 0.0);
+	vec3 reflectDir = reflect(LightDir, normDelta);
+
+	float spec = max(dot(EyeDir, reflectDir), 0.0);
+	spec = pow(spec, 6.0);
+	spec *= SpecularFactor;
+	litColor = min(litColor + spec, vec3 (1.0));
+
+	gl_FragColor = vec4 (litColor, 1.0);
+}
+</Shader>
+</Material>

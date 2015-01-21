@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material name="SimpleShading" number_of_properties="0" number_of_vertex_shaders="1" number_of_fragment_shaders="1">
+<Shader scope="Vertex" name="SimpleShadingVert" location="Inline" language="GLSL" entry="main">
+void main()
+{	
+    gl_Position = ftransform();
+}
+</Shader>
+
+<Shader scope="Fragment" name="SimpleShadingFrag" location="Inline" language="GLSL" entry="main">
+<ApplicationUniform type="float" name="Color" value="Color" number_of_elements="3" defaultValue ="0.0,0.0,1.0"/>
+uniform vec3 Color ;
+void main()
+{
+	gl_FragColor = vec4(Color,1.0);
+}
+</Shader>
+</Material>

@@ -1,0 +1,21 @@
+<component title="VRMLExporterComponent" name="VRMLExporterComponent" >
+
+    <object name="controller" />
+
+    <action name="exportVRML"
+            title="Export VRML"
+            triggerSlot="VRMLExporterComponent.controller::exportVRML()" />
+    
+    <menu mergeWith="MainWindowComponent.fileMenu">
+        <!-- Separator -->
+        <menuitem before="MainWindowComponent.fileQuit" /> 
+        
+        <!-- Export VRML Action -->
+        <menuitem actionName="VRMLExporterComponent.exportVRML"
+                  before="MainWindowComponent.fileQuit" />
+        
+        <!-- Separator -->
+        <menuitem before="MainWindowComponent.fileQuit" />
+    </menu>
+
+</component>
